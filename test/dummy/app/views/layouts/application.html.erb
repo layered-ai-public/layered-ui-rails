@@ -1,0 +1,49 @@
+<% unless devise_controller? %>
+  <% content_for :l_ui_navigation_items do %>
+    <%= l_ui_navigation_item "Welcome", root_path %>
+    <%= l_ui_navigation_item "Integrations", integrations_path do %>
+      <%= l_ui_navigation_item "Devise", devise_path %>
+      <%= l_ui_navigation_item "Pagy", pagy_path %>
+    <% end %>
+    <%= l_ui_navigation_item "Layouts", layouts_path %>
+    <%= l_ui_navigation_item "Content", content_path %>
+    <%= l_ui_navigation_item "Utilities", utilities_path %>
+    <%= l_ui_navigation_item "Typography", typography_path %>
+    <%= l_ui_navigation_item "Containers", containers_path %>
+    <%= l_ui_navigation_item "Surfaces", surfaces_path %>
+    <%= l_ui_navigation_item "Buttons", buttons_path %>
+    <%= l_ui_navigation_item "Links", links_path %>
+    <%= l_ui_navigation_item "Icons", icons_path %>
+    <%= l_ui_navigation_item "Badges", badges_path %>
+    <%= l_ui_navigation_item "Notices", notices_path %>
+    <%= l_ui_navigation_item "Forms", forms_path do %>
+      <%= l_ui_navigation_item "Errors", form_errors_path %>
+    <% end %>
+    <%= l_ui_navigation_item "Tables", tables_path %>
+    <%= l_ui_navigation_item "Tabs", tabs_path %>
+    <%= l_ui_navigation_item "Conversations", conversations_path %>
+    <%= l_ui_navigation_item "Pagination", pagination_path %>
+  <% end %>
+
+  <% content_for :l_ui_panel_heading do %>
+    <h2>Panel</h2>
+  <% end %>
+
+  <% content_for :l_ui_panel_body do %>
+    <p>The panel provides a slide-out area for secondary content like AI assistance, help text, or contextual information.</p>
+
+    <h3 class="l-ui-utility--mt-xl">Features</h3>
+    <ul class="l-ui-utility--mt-md">
+      <li>Resizable width (drag the left edge)</li>
+      <li>Keyboard accessible (arrow keys)</li>
+      <li>State persisted in localStorage</li>
+      <li>Toggle with Ctrl+i / ⌘i</li>
+    </ul>
+
+    <p class="l-ui-utility--mt-xl">
+      <%= link_to "Learn more about panels on the content page", content_path %>
+    </p>
+  <% end %>
+<% end %>
+
+<%= render template: "layouts/layered_ui/application" %>

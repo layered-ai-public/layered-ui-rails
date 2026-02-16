@@ -1,0 +1,93 @@
+<h1>Badges</h1>
+
+<p class="l-ui-utility--mt-md">Status indicators and labels for categorisation.</p>
+
+<h2 class="l-ui-utility--mt-2xl">Badge variants</h2>
+
+<div class="l-ui-container--spread l-ui-utility--mt-lg">
+  <span class="l-ui-badge--default">Default</span>
+  <span class="l-ui-badge--success">Success</span>
+  <span class="l-ui-badge--warning">Warning</span>
+  <span class="l-ui-badge--danger">Danger</span>
+</div>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View Code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+    <div class="l-ui-modal__header">
+      <h3>Badge variants</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
+        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <code class="l-ui-surface">&lt;span class="l-ui-badge--default"&gt;Default&lt;/span&gt;
+&lt;span class="l-ui-badge--success"&gt;Success&lt;/span&gt;
+&lt;span class="l-ui-badge--warning"&gt;Warning&lt;/span&gt;
+&lt;span class="l-ui-badge--danger"&gt;Danger&lt;/span&gt;</code>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">Rounded badges</h2>
+
+<div class="l-ui-container--spread l-ui-utility--mt-lg">
+  <span class="l-ui-badge--default l-ui-badge--rounded">Default</span>
+  <span class="l-ui-badge--success l-ui-badge--rounded">Success</span>
+  <span class="l-ui-badge--warning l-ui-badge--rounded">Warning</span>
+  <span class="l-ui-badge--danger l-ui-badge--rounded">Danger</span>
+</div>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View Code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+    <div class="l-ui-modal__header">
+      <h3>Rounded badges</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
+        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <code class="l-ui-surface">&lt;span class="l-ui-badge--default l-ui-badge--rounded"&gt;Rounded&lt;/span&gt;</code>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">CSS classes</h2>
+
+<div class="l-ui-container--table l-ui-utility--mt-lg">
+  <table class="l-ui-table">
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell">Class</th>
+        <th class="l-ui-table__header-cell">Description</th>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-badge--default</code></td>
+        <td class="l-ui-table__cell">Neutral gray badge</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-badge--success</code></td>
+        <td class="l-ui-table__cell">Green success badge</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-badge--warning</code></td>
+        <td class="l-ui-table__cell">Yellow warning badge</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-badge--danger</code></td>
+        <td class="l-ui-table__cell">Red danger badge</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-badge--rounded</code></td>
+        <td class="l-ui-table__cell">Modifier for pill-shaped badges</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

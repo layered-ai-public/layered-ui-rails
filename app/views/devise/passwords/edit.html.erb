@@ -1,0 +1,40 @@
+<div class="l-ui-page--vertically-centered">
+  <div class="l-ui-page--width-constrained">
+    <h1>Change your password</h1>
+
+    <%= form_with(model: resource, as: resource_name, url: password_path(resource_name), method: :put, class: 'l-ui-form') do |f| %>
+      <%= render 'layered_ui/shared/form_errors', item: resource %>
+      <%= f.hidden_field :reset_password_token %>
+
+      <div class="l-ui-form__group">
+        <%= render 'layered_ui/shared/label', form: f, field: :password, name: "New password", required: true %>
+        <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class: "l-ui-form__field", "aria-describedby": "#{resource_name}_password_error" %>
+        <%= render 'layered_ui/shared/field_error', object: resource, field: :password %>
+        <% if @minimum_password_length %>
+          <div class="l-ui-form__hint">
+            (<%= @minimum_password_length %> characters minimum)
+          </div>
+        <% end %>
+      </div>
+
+      <div class="l-ui-form__group">
+        <%= render 'layered_ui/shared/label', form: f, field: :password_confirmation, name: "Confirm new password", required: true %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "l-ui-form__field", "aria-describedby": "#{resource_name}_password_confirmation_error" %>
+        <%= render 'layered_ui/shared/field_error', object: resource, field: :password_confirmation %>
+        <% if @minimum_password_length %>
+          <div class="l-ui-form__hint">
+            Please enter the same password again
+          </div>
+        <% end %>
+      </div>
+
+      <div class="l-ui-form__group--large-gap">
+        <%= f.submit "Continue", class: "l-ui-button--primary l-ui-button--full" %>
+      </div>
+    <% end %>
+
+    <div class="l-ui-form__group">
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+</div>

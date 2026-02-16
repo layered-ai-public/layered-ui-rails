@@ -1,0 +1,289 @@
+<h1>Forms</h1>
+
+<p class="l-ui-utility--mt-md">Form styles with accessible labels, inputs, and validation states.</p>
+
+<h2 class="l-ui-utility--mt-2xl">Example form</h2>
+
+<form class="l-ui-form l-ui-utility--mt-lg" action="#" method="post">
+  <div class="l-ui-form__group">
+    <label class="l-ui-label" for="name">
+      Full name
+      <span class="l-ui-form__required">*</span>
+    </label>
+    <input type="text" id="name" name="name" class="l-ui-form__field" placeholder="Enter your full name" required>
+  </div>
+
+  <div class="l-ui-form__group">
+    <label class="l-ui-label" for="email">
+      Email address
+      <span class="l-ui-form__required">*</span>
+    </label>
+    <input type="email" id="email" name="email" class="l-ui-form__field" placeholder="you@example.com" required>
+    <div class="l-ui-form__hint">
+      We'll never share your email with anyone else.
+    </div>
+  </div>
+
+  <div class="l-ui-form__group">
+    <label class="l-ui-label" for="role">
+      Role
+      <span class="l-ui-form__required">*</span>
+    </label>
+    <select id="role" name="role" class="l-ui-select" required>
+      <option value="">Select a role</option>
+      <option value="admin">Admin</option>
+      <option value="editor">Editor</option>
+      <option value="viewer">Viewer</option>
+    </select>
+  </div>
+
+  <div class="l-ui-form__group">
+    <label class="l-ui-label" for="bio">
+      Bio
+    </label>
+    <textarea id="bio" name="bio" class="l-ui-form__field" rows="4" placeholder="Tell us a little about yourself"></textarea>
+    <div class="l-ui-form__hint">
+      Optional: A brief description of yourself.
+    </div>
+  </div>
+
+  <div class="l-ui-form__group--large-gap">
+    <button type="submit" class="l-ui-button--primary l-ui-button--full">
+      Submit
+    </button>
+  </div>
+</form>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View Code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+    <div class="l-ui-modal__header">
+      <h3>Form</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
+        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <code class="l-ui-surface">&lt;form class="l-ui-form"&gt;
+  &lt;div class="l-ui-form__group"&gt;
+    &lt;label class="l-ui-label" for="name"&gt;
+      Full name
+      &lt;span class="l-ui-form__required"&gt;*&lt;/span&gt;
+    &lt;/label&gt;
+    &lt;input type="text" class="l-ui-form__field"&gt;
+  &lt;/div&gt;
+
+  &lt;div class="l-ui-form__group"&gt;
+    &lt;label class="l-ui-label" for="role"&gt;Role&lt;/label&gt;
+    &lt;select class="l-ui-select"&gt;
+      &lt;option value=""&gt;Select a role&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/div&gt;
+
+  &lt;button type="submit" class="l-ui-button--primary"&gt;
+    Submit
+  &lt;/button&gt;
+&lt;/form&gt;</code>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">Checkbox inputs</h2>
+
+<div class="l-ui-form__group l-ui-utility--mt-lg">
+  <label class="l-ui-label">Preferences</label>
+  <div class="l-ui-container--checkbox l-ui-utility--mt-lg">
+    <input type="checkbox" id="newsletter" name="newsletter" value="1" checked>
+    <label class="l-ui-label--checkbox" for="newsletter">Subscribe to newsletter</label>
+  </div>
+  <div class="l-ui-container--checkbox l-ui-utility--mt-lg">
+    <input type="checkbox" id="updates" name="updates" value="1">
+    <label class="l-ui-label--checkbox" for="updates">Receive product updates</label>
+  </div>
+</div>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View Code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+    <div class="l-ui-modal__header">
+      <h3>Checkboxes</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
+        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <code class="l-ui-surface">&lt;div class="l-ui-container--checkbox"&gt;
+  &lt;input type="checkbox" id="opt" value="1"&gt;
+  &lt;label class="l-ui-label--checkbox" for="opt"&gt;Option&lt;/label&gt;
+&lt;/div&gt;</code>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">Switch inputs</h2>
+
+<div class="l-ui-form__group">
+  <label class="l-ui-switch">
+    <input type="checkbox" class="l-ui-switch__input" role="switch" checked>
+    <span class="l-ui-switch__track"></span>
+    Enable notifications
+  </label>
+</div>
+
+<div class="l-ui-form__group">
+  <label class="l-ui-switch">
+    <input type="checkbox" class="l-ui-switch__input" role="switch" checked disabled>
+    <span class="l-ui-switch__track"></span>
+    Disabled (checked)
+  </label>
+</div>
+
+<div class="l-ui-form__group l-ui-utility--mt-lg">
+  <label class="l-ui-switch">
+    <input type="checkbox" class="l-ui-switch__input" role="switch">
+    <span class="l-ui-switch__track"></span>
+    Enable marketing emails
+  </label>
+</div>
+
+<div class="l-ui-form__group">
+  <label class="l-ui-switch">
+    <input type="checkbox" class="l-ui-switch__input" role="switch" disabled>
+    <span class="l-ui-switch__track"></span>
+    Disabled (unchecked)
+  </label>
+</div>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View Code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+    <div class="l-ui-modal__header">
+      <h3>Switch inputs</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
+        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <code class="l-ui-surface">&lt;label class="l-ui-switch"&gt;
+  &lt;input type="checkbox" class="l-ui-switch__input" role="switch"&gt;
+  &lt;span class="l-ui-switch__track"&gt;&lt;/span&gt;
+  Enable notifications
+&lt;/label&gt;</code>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">Radio inputs</h2>
+
+<div class="l-ui-form__group l-ui-utility--mt-lg">
+  <label class="l-ui-label">Notification frequency</label>
+  <div class="l-ui-radio__group">
+    <div class="l-ui-radio__item l-ui-utility--mt-md">
+      <input type="radio" id="notify-daily" name="notify" value="daily" class="l-ui-radio__input">
+      <label class="l-ui-radio__label" for="notify-daily">Daily</label>
+    </div>
+    <div class="l-ui-radio__item l-ui-utility--mt-lg">
+      <input type="radio" id="notify-weekly" name="notify" value="weekly" class="l-ui-radio__input">
+      <label class="l-ui-radio__label" for="notify-weekly">Weekly</label>
+    </div>
+    <div class="l-ui-radio__item l-ui-utility--mt-lg">
+      <input type="radio" id="notify-never" name="notify" value="never" class="l-ui-radio__input">
+      <label class="l-ui-radio__label" for="notify-never">Never</label>
+    </div>
+  </div>
+</div>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View Code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+    <div class="l-ui-modal__header">
+      <h3>Radio inputs</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
+        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <code class="l-ui-surface">&lt;div class="l-ui-radio__group"&gt;
+  &lt;div class="l-ui-radio__item"&gt;
+    &lt;input type="radio" class="l-ui-radio__input"&gt;
+    &lt;label class="l-ui-radio__label"&gt;Option&lt;/label&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">CSS classes</h2>
+
+<div class="l-ui-container--table l-ui-utility--mt-lg">
+  <table class="l-ui-table">
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell">Class</th>
+        <th class="l-ui-table__header-cell">Description</th>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-form</code></td>
+        <td class="l-ui-table__cell">Form container</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-form__group</code></td>
+        <td class="l-ui-table__cell">Field group with label and input</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-form__group--large-gap</code></td>
+        <td class="l-ui-table__cell">Group with extra top margin (for submit)</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-label</code></td>
+        <td class="l-ui-table__cell">Form label</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-form__field</code></td>
+        <td class="l-ui-table__cell">Text input or textarea</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-select</code></td>
+        <td class="l-ui-table__cell">Select dropdown</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-form__hint</code></td>
+        <td class="l-ui-table__cell">Help text below input</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-form__required</code></td>
+        <td class="l-ui-table__cell">Required field indicator (*)</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-form__errors</code></td>
+        <td class="l-ui-table__cell">Validation errors container</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-form__errors-list</code></td>
+        <td class="l-ui-table__cell">List of error messages</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-switch</code></td>
+        <td class="l-ui-table__cell">Switch wrapper label</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-switch__input</code></td>
+        <td class="l-ui-table__cell">Hidden checkbox input (sr-only)</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-switch__track</code></td>
+        <td class="l-ui-table__cell">Visible toggle track and thumb</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

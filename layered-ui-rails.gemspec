@@ -1,0 +1,55 @@
+require_relative "lib/layered/ui/version"
+
+Gem::Specification.new do |spec|
+  spec.name        = "layered-ui-rails"
+  spec.version     = Layered::Ui::VERSION
+  spec.authors     = [ "layered.ai" ]
+  spec.email       = [ "support@layered.ai" ]
+  spec.homepage    = "https://www.layered.ai"
+  spec.description = "An open source Rails 8+ engine that provides WCAG 2.2 AA compliant design tokens, Tailwind CSS utilities, and Stimulus controllers for theme switching, mobile navigation, slide-out panels, modals, and tabs. Ships as pure frontend with no server-side dependencies beyond Rails and Tailwind CSS."
+  spec.summary     = "Open source, minimalist, responsive, accessible UI system with light and dark theme support - and a touch of glass."
+  spec.license     = "Apache-2.0"
+
+  spec.required_ruby_version = ">= 3.2.0"
+
+  # Metadata
+  spec.metadata["homepage_uri"] = spec.homepage
+  spec.metadata["source_code_uri"] = "https://github.com/layered-ai-public/layered-ui-rails"
+  spec.metadata["bug_tracker_uri"] = "https://github.com/layered-ai-public/layered-ui-rails/issues"
+  spec.metadata["changelog_uri"] = "https://github.com/layered-ai-public/layered-ui-rails/blob/main/CHANGELOG.md"
+  spec.metadata["rubygems_mfa_required"] = "true"
+
+  # Files
+  spec.files = Dir.chdir(File.expand_path(__dir__)) do
+    Dir["{app,config,lib}/**/*", "NOTICE", "LICENSE", "TRADEMARK.md", "CLA.md", "CHANGELOG.md", "README.md", "AGENTS.md", "Rakefile"]
+      .reject { |f| File.basename(f) == ".DS_Store" }
+  end
+  spec.require_paths = ["lib"]
+
+  # Dependencies
+  spec.add_dependency "rails", "~> 8.0"
+  spec.add_development_dependency "devise", "~> 5.0"
+  spec.add_development_dependency "importmap-rails", "~> 2.0"
+  spec.add_development_dependency "pagy", "~> 43.2"
+  spec.add_development_dependency "propshaft", "~> 1.0"
+  spec.add_development_dependency "puma", "~> 7.0"
+  spec.add_development_dependency "sqlite3", "~> 2.0"
+  spec.add_development_dependency "stimulus-rails", "~> 1.0"
+  spec.add_development_dependency "tailwindcss-rails", "~> 4.0"
+  spec.add_development_dependency "turbo-rails", "~> 2.0"
+
+  # Post-install message
+  spec.post_install_message = <<~MSG
+    To complete installation, run:
+
+      bin/rails generate layered:ui:install
+
+    This command will:
+      • Copy the layered UI CSS to your host app at app/assets/tailwind/layered_ui.css
+        • This approach ensures the CSS is processed with your host app's Tailwind configuration
+      • Add an import statement to your app/assets/tailwind/application.css
+      • Add `import "layered_ui"` to your app/javascript/application.js (just after `import "@hotwired/turbo-rails"`, if present)
+
+    If these imports already exist, they will not be duplicated.
+  MSG
+end

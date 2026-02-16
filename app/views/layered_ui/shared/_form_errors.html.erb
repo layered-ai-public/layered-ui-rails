@@ -1,0 +1,13 @@
+<% if item.errors.any? %>
+  <div id="error_explanation" class="l-ui-form__errors">
+    <h3>
+      <%= pluralize(item.errors.count, "error") %> found:
+    </h3>
+
+    <ul class="l-ui-form__errors-list l-ui-utility--mt-lg">
+      <% item.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

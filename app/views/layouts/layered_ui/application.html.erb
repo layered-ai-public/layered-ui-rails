@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html class="l-ui-html" lang="<%= I18n.locale %>" data-l-ui-reduce-motion>
+  <head>
+    <% if @page_title.present? %>
+      <title>
+        <%= @page_title %>
+      </title>
+    <% end %>
+
+    <% if @page_description.present? %>
+      <meta name="description" content="<%= @page_description %>">
+    <% end %>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <link rel="icon" href="<%= asset_path('layered_ui/icon_light.svg') %>" media="(prefers-color-scheme: light)">
+    <link rel="icon" href="<%= asset_path('layered_ui/icon_dark.svg') %>" media="(prefers-color-scheme: dark)">
+    <link rel="apple-touch-icon" href="<%= asset_path('layered_ui/apple_touch_icon.png') %>">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="l-ui-body" data-controller="l-ui--mobile-navigation" data-action="click@window->l-ui--mobile-navigation#close keydown.esc@window->l-ui--mobile-navigation#close">
+    <a href="#main-content" class="l-ui-skip-link">Skip to main content</a>
+    <div id="l-ui-live-region" class="l-ui-sr-only" aria-live="polite" aria-atomic="true"></div>
+    <%= render "layouts/layered_ui/header" %>
+    <%= render "layouts/layered_ui/navigation" %>
+    <div class="l-ui-backdrop--navigation" data-l-ui--mobile-navigation-target="backdrop" data-action="click->l-ui--mobile-navigation#close"></div>
+    <% if yield(:l_ui_panel_body).present? %>
+      <%= render "layouts/layered_ui/panel" %>
+    <% end %>
+
+    <main id="main-content" class="l-ui-main" tabindex="-1">
+      <div class="l-ui-page <%= 'l-ui-page--with-navigation' if yield(:l_ui_navigation_items).present? || l_ui_user_signed_in? %>">
+        <%= render "layouts/layered_ui/notice" %>
+        <%= yield %>
+      </div>
+    </main>
+  </body>
+</html>

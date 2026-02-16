@@ -1,0 +1,46 @@
+<h1>Pagy</h1>
+
+<p class="l-ui-utility--mt-md">Pagy is fully supported but entirely optional. The engine works without any pagination system.</p>
+
+<h2 class="l-ui-utility--mt-2xl">When Pagy is installed</h2>
+
+<p class="l-ui-utility--mt-md">The engine automatically detects Pagy and provides:</p>
+
+<ul class="l-ui-list l-ui-utility--mt-lg">
+  <li><code>Pagy::Method</code> included in controllers automatically</li>
+  <li>A <code>PaginationHelper</code> for rendering styled page navigation</li>
+  <li>Styled pagination controls that match the theme</li>
+</ul>
+
+<h2 class="l-ui-utility--mt-2xl">Installation</h2>
+
+<p class="l-ui-utility--mt-md">Add Pagy to your application:</p>
+<code class="l-ui-surface l-ui-utility--mt-md">bundle add pagy</code>
+
+<p class="l-ui-utility--mt-lg">If you want to modify the number of items per page (default is 20), create an initializer at <code>config/initializers/pagy.rb</code>:</p>
+<code class="l-ui-surface l-ui-utility--mt-md">Pagy::DEFAULT[:limit] = 20</code>
+
+<h2 class="l-ui-utility--mt-2xl">Helper methods</h2>
+
+<p class="l-ui-utility--mt-md">The pagination helper provides:</p>
+
+<div class="l-ui-container--table l-ui-utility--mt-lg">
+  <table class="l-ui-table">
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell">Helper</th>
+        <th class="l-ui-table__header-cell">Description</th>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l_ui_pagy</code></td>
+        <td class="l-ui-table__cell">Renders styled pagination links from a Pagy instance</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">Example</h2>
+
+<p class="l-ui-utility--mt-md">See the <%= link_to "pagination page", pagination_path %> for a live example with Pagy in action.</p>

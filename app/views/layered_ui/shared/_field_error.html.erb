@@ -1,0 +1,5 @@
+<% if object.errors[field].any? %>
+  <p id="<%= "#{object.model_name.param_key}_#{field}_error" %>" class="l-ui-form__field-error" role="alert">
+    <%= object.errors[field].first %>
+  </p>
+<% end %>

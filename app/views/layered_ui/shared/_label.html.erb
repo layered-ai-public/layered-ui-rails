@@ -1,0 +1,13 @@
+<% name ||= nil %>
+
+<%= form.label field, class: "l-ui-label" do %>
+  <% if name.present? %>
+    <%= name %>
+  <% else %>
+    <%= field.to_s.humanize %>
+  <% end %>
+  <% if required %>
+    <span class="l-ui-form__required" aria-hidden="true">*</span>
+    <span class="l-ui-sr-only">(required)</span>
+  <% end %>
+<% end %>

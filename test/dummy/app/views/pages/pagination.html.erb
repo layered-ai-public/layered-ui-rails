@@ -1,0 +1,109 @@
+<h1>Pagination</h1>
+
+<p class="l-ui-utility--mt-md">Navigation controls for paginated content with accessible markup.</p>
+
+<h2 class="l-ui-utility--mt-2xl">Basic pagination</h2>
+
+<nav class="l-ui-pagination l-ui-utility--mt-lg" aria-label="Pagination">
+  <a class="l-ui-pagination__item l-ui-pagination__item--disabled" role="link" aria-disabled="true" aria-label="Previous">&lt;</a>
+  <a class="l-ui-pagination__item l-ui-pagination__item--active" role="link" aria-disabled="true" aria-current="page">1</a>
+  <a href="#" class="l-ui-pagination__item">2</a>
+  <a href="#" class="l-ui-pagination__item">3</a>
+  <span class="l-ui-pagination__gap">&hellip;</span>
+  <a href="#" class="l-ui-pagination__item">10</a>
+  <a href="#" class="l-ui-pagination__item" aria-label="Next">&gt;</a>
+</nav>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View Code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+    <div class="l-ui-modal__header">
+      <h3>Pagination</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
+        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <code class="l-ui-surface">&lt;nav class="l-ui-pagination" aria-label="Pagination"&gt;
+  &lt;a class="l-ui-pagination__item l-ui-pagination__item--disabled"
+     role="link" aria-disabled="true" aria-label="Previous"&gt;&amp;lt;&lt;/a&gt;
+  &lt;a class="l-ui-pagination__item l-ui-pagination__item--active"
+     role="link" aria-disabled="true" aria-current="page"&gt;1&lt;/a&gt;
+  &lt;a href="#" class="l-ui-pagination__item"&gt;2&lt;/a&gt;
+  &lt;span class="l-ui-pagination__gap"&gt;&amp;hellip;&lt;/span&gt;
+  &lt;a href="#" class="l-ui-pagination__item"&gt;10&lt;/a&gt;
+  &lt;a href="#" class="l-ui-pagination__item" aria-label="Next"&gt;&amp;gt;&lt;/a&gt;
+&lt;/nav&gt;</code>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">With the pagy gem (optional)</h2>
+
+<p class="l-ui-utility--mt-md">Use the <code>l_ui_pagy</code> helper to render styled pagination. Requires the <code>pagy</code> gem in your Gemfile:</p>
+
+<div class="l-ui-utility--mt-lg">
+  <%= l_ui_pagy(@pagy) %>
+</div>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View Code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+    <div class="l-ui-modal__header">
+      <h3>Pagy helper</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
+        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <code class="l-ui-surface"># Controller
+@pagy, @records = pagy(Model.all, limit: 10)
+
+# View
+&lt;%= l_ui_pagy(@pagy) %&gt;</code>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">CSS classes</h2>
+
+<div class="l-ui-container--table l-ui-utility--mt-lg">
+  <table class="l-ui-table">
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell">Class</th>
+        <th class="l-ui-table__header-cell">Description</th>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-pagination</code></td>
+        <td class="l-ui-table__cell">Pagination container</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-pagination__item</code></td>
+        <td class="l-ui-table__cell">Pagination link/button</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-pagination__item--active</code></td>
+        <td class="l-ui-table__cell">Current page indicator</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-pagination__item--disabled</code></td>
+        <td class="l-ui-table__cell">Disabled state (prev/next at boundaries)</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-pagination__gap</code></td>
+        <td class="l-ui-table__cell">Ellipsis for skipped pages</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-container--pagy</code></td>
+        <td class="l-ui-table__cell">Container for Pagy-generated markup</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

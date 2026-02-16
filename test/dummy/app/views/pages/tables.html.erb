@@ -1,0 +1,117 @@
+<h1>Tables</h1>
+
+<p class="l-ui-utility--mt-md">Data table styles with responsive scrolling and consistent cell styling.</p>
+
+<h2 class="l-ui-utility--mt-2xl">Example table</h2>
+
+<div class="l-ui-container--table l-ui-utility--mt-lg">
+  <table class="l-ui-table">
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell">Name</th>
+        <th class="l-ui-table__header-cell">Email</th>
+        <th class="l-ui-table__header-cell">Joined</th>
+        <th class="l-ui-table__header-cell">Updated</th>
+        <th class="l-ui-table__header-cell"></th>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <% @users.each do |user| %>
+        <tr>
+          <td class="l-ui-table__cell--primary"><%= user.name %></td>
+          <td class="l-ui-table__cell"><%= user.email %></td>
+          <td class="l-ui-table__cell"><%= time_ago_in_words(user.created_at) %> ago</td>
+          <td class="l-ui-table__cell"><%= time_ago_in_words(user.updated_at) %> ago</td>
+          <td class="l-ui-table__cell--action"><a href="#">Edit</a></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="l-ui-utility--mt-lg">
+  <%= l_ui_pagy(@pagy) %>
+</div>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View Code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+    <div class="l-ui-modal__header">
+      <h3>Table</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
+        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <code class="l-ui-surface">&lt;div class="l-ui-container--table"&gt;
+  &lt;table class="l-ui-table"&gt;
+    &lt;thead class="l-ui-table__header"&gt;
+      &lt;tr&gt;
+        &lt;th class="l-ui-table__header-cell"&gt;Name&lt;/th&gt;
+        &lt;th class="l-ui-table__header-cell"&gt;Email&lt;/th&gt;
+        &lt;th class="l-ui-table__header-cell"&gt;&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody class="l-ui-table__body"&gt;
+      &lt;tr&gt;
+        &lt;td class="l-ui-table__cell--primary"&gt;&lt;a href="#"&gt;Alice&lt;/a&gt;&lt;/td&gt;
+        &lt;td class="l-ui-table__cell"&gt;alice@example.com&lt;/td&gt;
+        &lt;td class="l-ui-table__cell--action"&gt;
+          &lt;a href="#"&gt;Edit&lt;/a&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</code>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">CSS classes</h2>
+
+<div class="l-ui-container--table l-ui-utility--mt-lg">
+  <table class="l-ui-table">
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell">Class</th>
+        <th class="l-ui-table__header-cell">Description</th>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-container--table</code></td>
+        <td class="l-ui-table__cell">Scrollable container for responsive tables</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-table</code></td>
+        <td class="l-ui-table__cell">Base table styling</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-table__header</code></td>
+        <td class="l-ui-table__cell">Table header section</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-table__header-cell</code></td>
+        <td class="l-ui-table__cell">Header cell styling</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-table__body</code></td>
+        <td class="l-ui-table__cell">Table body section</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-table__cell</code></td>
+        <td class="l-ui-table__cell">Standard data cell</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-table__cell--primary</code></td>
+        <td class="l-ui-table__cell">Primary cell (first column, links)</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-table__cell--action</code></td>
+        <td class="l-ui-table__cell">Actions cell (right-aligned)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

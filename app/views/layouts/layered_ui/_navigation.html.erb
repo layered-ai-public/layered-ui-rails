@@ -1,0 +1,32 @@
+<% if yield(:l_ui_navigation_items).present? || l_ui_user_signed_in? %>
+  <nav id="mobile-navigation" class="l-ui-container--navigation" aria-label="Main navigation" data-l-ui--mobile-navigation-target="navigation">
+    <div class="l-ui-navigation">
+      <ul class="l-ui-navigation__links" role="list">
+        <%= yield :l_ui_navigation_items %>
+      </ul>
+
+      <% if l_ui_user_signed_in? %>
+        <div class="l-ui-navigation__user">
+          <div class="l-ui-navigation__user-name-and-email">
+            <% if l_ui_current_user.respond_to?(:name) %>
+              <div class="l-ui-navigation__user-name">
+                <%= l_ui_current_user.name %>
+              </div>
+            <% end %>
+
+            <% if l_ui_current_user.respond_to?(:email) %>
+              <div class="l-ui-navigation__user-email">
+                <%= l_ui_current_user.email %>
+              </div>
+            <% end %>
+          </div>
+          <% if l_ui_user_signed_in? && respond_to?(:destroy_user_session_path) %>
+            <div class="l-ui-utility--mt-lg">
+              <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "l-ui-button--outline-danger l-ui-button--full" %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </nav>
+<% end %>

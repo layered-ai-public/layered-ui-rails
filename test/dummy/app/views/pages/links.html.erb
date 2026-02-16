@@ -1,0 +1,39 @@
+<h1>Links</h1>
+
+<p class="l-ui-utility--mt-md">Styled anchor tags within content areas.</p>
+
+<h2 class="l-ui-utility--mt-2xl">Default link style</h2>
+
+<p class="l-ui-utility--mt-lg">
+  This is a paragraph with a <a href="#">link</a> inside it. Links are automatically styled within the main content area.
+</p>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View Code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+    <div class="l-ui-modal__header">
+      <h3>Link</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
+        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <code class="l-ui-surface">&lt;p&gt;Text with a &lt;a href="#"&gt;link&lt;/a&gt;.&lt;/p&gt;</code>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">Usage notes</h2>
+
+<div class="l-ui-surface l-ui-utility--mt-lg">
+  <p>
+    Links within <code>p</code> elements are styled via <code>@layer base</code> (overridable by the host application) with:
+  </p>
+  <ul class="l-ui-list l-ui-utility--mt-md">
+    <li>Accent colour for visibility</li>
+    <li>Underline on hover</li>
+    <li>Focus ring for keyboard navigation</li>
+  </ul>
+</div>

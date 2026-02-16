@@ -1,0 +1,128 @@
+<h1>Layouts</h1>
+
+<p class="l-ui-utility--mt-md">layered-ui provides a layout system with sensible defaults that can be customised.</p>
+<p class="l-ui-utility--mt-md">Use <code>content_for</code> blocks to add <%= link_to "content", content_path %>, instance variables to customise the page structure, and file overrides to change the default logos and icons.</p>
+
+<h2 class="l-ui-utility--mt-2xl">Page title</h2>
+
+<p class="l-ui-utility--mt-md">Set the <code>@page_title</code> instance variable in your controller or view to populate the <code>&lt;title&gt;</code> tag.</p>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View Code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+    <div class="l-ui-modal__header">
+      <h3>Page title</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
+        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <code class="l-ui-surface"># In your controller
+def show
+  @page_title = "Dashboard"
+end
+
+# Or in your view
+&lt;% @page_title = "Dashboard" %&gt;</code>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">Page description</h2>
+
+<p class="l-ui-utility--mt-md">Set the <code>@page_description</code> instance variable to populate the <code>&lt;meta name="description"&gt;</code> tag.</p>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View Code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+    <div class="l-ui-modal__header">
+      <h3>Page description</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
+        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <code class="l-ui-surface"># In your controller
+def show
+  @page_description = "View project details and activity"
+end
+
+# Or in your view
+&lt;% @page_description = "View project details and activity" %&gt;</code>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">Logos and icons</h2>
+<div class="l-ui-container--table l-ui-utility--mt-lg">
+  <table class="l-ui-table">
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell">File</th>
+        <th class="l-ui-table__header-cell">Used for</th>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>logo_light.svg</code></td>
+        <td class="l-ui-table__cell">Header logo (light theme)</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>logo_dark.svg</code></td>
+        <td class="l-ui-table__cell">Header logo (dark theme)</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>icon_light.svg</code></td>
+        <td class="l-ui-table__cell">Header icon and favicon (light theme)</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>icon_dark.svg</code></td>
+        <td class="l-ui-table__cell">Header icon and favicon (dark theme)</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>apple_touch_icon.png</code></td>
+        <td class="l-ui-table__cell">Apple touch icon</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>panel_icon_light.svg</code></td>
+        <td class="l-ui-table__cell">Panel toggle button (light theme)</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>panel_icon_dark.svg</code></td>
+        <td class="l-ui-table__cell">Panel toggle button (dark theme)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">Application layout</h2>
+
+<p class="l-ui-utility--mt-md">Your application layout should render the layered-ui layout template after setting up content blocks.</p>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View Code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+    <div class="l-ui-modal__header">
+      <h3>Application layout</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
+        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <code class="l-ui-surface">&lt;!-- app/views/layouts/application.html.erb --&gt;
+
+&lt;% content_for :l_ui_navigation_items do %&gt;
+  &lt;%= l_ui_navigation_item "Home", root_path %&gt;
+  &lt;%= l_ui_navigation_item "About", about_path %&gt;
+&lt;% end %&gt;
+
+&lt;%= render template: "layouts/layered_ui/application" %&gt;</code>
+    </div>
+  </dialog>
+</div>

@@ -1,0 +1,150 @@
+<h1>Form errors</h1>
+
+<p class="l-ui-utility--mt-md">Error display patterns for form validation with accessible markup.</p>
+
+<h2 class="l-ui-utility--mt-2xl">Form-level errors</h2>
+
+<p class="l-ui-utility--mt-md">Display validation errors at the top of a form.</p>
+
+<div class="l-ui-form__errors l-ui-utility--mt-lg">
+  <h3>2 errors were found:</h3>
+  <ul class="l-ui-form__errors-list l-ui-utility--mt-lg">
+    <li>Name can't be blank</li>
+    <li>Email is invalid</li>
+  </ul>
+</div>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View Code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+    <div class="l-ui-modal__header">
+      <h3>Form errors</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
+        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <code class="l-ui-surface">&lt;div class="l-ui-form__errors"&gt;
+  &lt;h3&gt;2 errors were found:&lt;/h3&gt;
+  &lt;ul class="l-ui-form__errors-list l-ui-utility--mt-lg"&gt;
+    &lt;li&gt;Name can't be blank&lt;/li&gt;
+    &lt;li&gt;Email is invalid&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;</code>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">Field-level errors</h2>
+
+<form class="l-ui-form l-ui-utility--mt-lg" action="#" method="post">
+  <div class="l-ui-form__group">
+    <label class="l-ui-label" for="error-email">
+      Email address
+      <span class="l-ui-form__required">*</span>
+    </label>
+    <div class="field_with_errors">
+      <input type="email" id="error-email" name="email" class="l-ui-form__field" value="invalid@email" required>
+    </div>
+    <span class="l-ui-form__field-error">This email is already registered</span>
+  </div>
+
+  <div class="l-ui-form__group">
+    <label class="l-ui-label" for="error-password">
+      Password
+      <span class="l-ui-form__required">*</span>
+    </label>
+    <div class="field_with_errors">
+      <input type="password" id="error-password" name="password" class="l-ui-form__field" required>
+    </div>
+    <span class="l-ui-form__field-error">Password must be at least 8 characters</span>
+  </div>
+
+  <div class="l-ui-form__group--large-gap">
+    <button type="submit" class="l-ui-button--primary l-ui-button--full">
+      Submit
+    </button>
+  </div>
+</form>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View Code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+    <div class="l-ui-modal__header">
+      <h3>Field errors</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
+        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <code class="l-ui-surface">&lt;div class="l-ui-form__group"&gt;
+  &lt;label class="l-ui-label" for="email"&gt;Email&lt;/label&gt;
+  &lt;div class="field_with_errors"&gt;
+    &lt;input type="email" class="l-ui-form__field"&gt;
+  &lt;/div&gt;
+  &lt;span class="l-ui-form__field-error"&gt;Error message&lt;/span&gt;
+&lt;/div&gt;</code>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">Rails integration</h2>
+
+<p class="l-ui-utility--mt-md">The engine includes partials for rendering errors with Rails form builders:</p>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View Code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+    <div class="l-ui-modal__header">
+      <h3>Rails partials</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
+        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <code class="l-ui-surface">&lt;!-- Form-level errors --&gt;
+&lt;%= render "layered_ui/shared/form_errors", resource: @user %&gt;
+
+&lt;!-- Field-level error --&gt;
+&lt;%= render "layered_ui/shared/field_error",
+    resource: @user, attribute: :email %&gt;</code>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">CSS classes</h2>
+
+<div class="l-ui-container--table l-ui-utility--mt-lg">
+  <table class="l-ui-table">
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell">Class</th>
+        <th class="l-ui-table__header-cell">Description</th>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-form__errors</code></td>
+        <td class="l-ui-table__cell">Container for form-level errors</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-form__errors-list</code></td>
+        <td class="l-ui-table__cell">List of error messages</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>field_with_errors</code></td>
+        <td class="l-ui-table__cell">Rails default wrapper (styled by engine)</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-form__field-error</code></td>
+        <td class="l-ui-table__cell">Inline field error message</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

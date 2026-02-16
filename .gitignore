@@ -1,0 +1,33 @@
+.claude
+.DS_Store
+*.gem
+
+# Ignore bundler config.
+test/dummy/.bundle
+
+# Ignore all environment files.
+test/dummy/.env
+
+# Ignore all logfiles and tempfiles.
+test/dummy/log/*
+test/dummy/tmp/*
+test/dummy!/log/.keep
+test/dummy!/tmp/.keep
+
+# Ignore pidfiles, but keep the directory.
+test/dummy/tmp/pids/*
+test/dummy!/tmp/pids/
+test/dummy!/tmp/pids/.keep
+
+# Ignore storage (uploaded files in development and any SQLite databases).
+test/dummy/storage/*
+test/dummy!/storage/.keep
+test/dummy/tmp/storage/*
+test/dummy!/tmp/storage/
+test/dummy!/tmp/storage/.keep
+
+# Ignore public assets.
+test/dummy/public/assets
+
+# Ignore key files for decrypting credentials and more.
+test/dummy/config/*.key

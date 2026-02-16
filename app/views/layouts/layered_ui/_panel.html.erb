@@ -1,0 +1,66 @@
+<div data-controller="l-ui--panel" data-action="keydown.esc@window->l-ui--panel#handleEscape">
+  <aside
+    id="panel"
+    class="l-ui-container--panel"
+    data-l-ui--panel-target="container"
+    aria-label="Side panel"
+    aria-hidden="true"
+    inert
+  >
+    <div
+      class="l-ui-panel__resize-handle"
+      role="separator"
+      aria-label="Resize panel"
+      aria-orientation="horizontal"
+      aria-valuenow="480"
+      aria-valuemin="240"
+      tabindex="0"
+      data-l-ui--panel-target="resizeHandle"
+      data-action="mousedown->l-ui--panel#startResize dblclick->l-ui--panel#resetWidth keydown->l-ui--panel#handleResizeKeydown"
+    ></div>
+
+    <div class="l-ui-panel">
+      <div class="l-ui-panel__header">
+        <div class="l-ui-panel__header-content">
+          <div class="l-ui-panel__header-buttons">
+            <div class="l-ui-panel__header-heading">
+              <%= yield :l_ui_panel_heading %>
+            </div>
+
+            <div class="l-ui-panel__header-actions">
+              <button type="button"
+                class="l-ui-button--icon l-ui-button--panel-close"
+                aria-label="Hide panel"
+                aria-controls="panel"
+                title="Toggle panel (Ctrl+i / ⌘i)"
+                data-action="click->l-ui--panel#toggle"
+                data-l-ui--panel-target="hideButton">
+                <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="l-ui-panel__body">
+        <%= yield :l_ui_panel_body %>
+      </div>
+    </div>
+  </aside>
+
+  <button
+    type="button"
+    class="l-ui-panel__button"
+    aria-label="Open panel"
+    aria-expanded="false"
+    aria-controls="panel"
+    title="Toggle panel (Ctrl+i / ⌘i)"
+    data-action="click->l-ui--panel#toggle"
+    data-l-ui--panel-target="actionButton"
+  >
+    <%= image_tag("layered_ui/panel_icon_light.svg", alt: "", class: "l-ui-icon--lg l-ui-panel__icon--light", aria: { hidden: true }) %>
+    <%= image_tag("layered_ui/panel_icon_dark.svg", alt: "", class: "l-ui-icon--lg l-ui-panel__icon--dark", aria: { hidden: true }) %>
+  </button>
+</div>

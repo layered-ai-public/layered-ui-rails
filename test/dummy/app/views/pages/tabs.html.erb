@@ -1,0 +1,132 @@
+<h1>Tabs</h1>
+
+<p class="l-ui-utility--mt-md">Tabbed interface for organizing content into panels, with full keyboard navigation.</p>
+
+<h2 class="l-ui-utility--mt-2xl">Example</h2>
+
+<div class="l-ui-utility--mt-lg" data-controller="l-ui--tabs">
+  <div class="l-ui-tabs__list" role="tablist" data-action="keydown->l-ui--tabs#keydown">
+    <button class="l-ui-tabs__tab--active" role="tab"
+            data-action="l-ui--tabs#select"
+            data-l-ui--tabs-target="tab"
+            aria-selected="true" aria-controls="panel-overview" id="tab-overview">
+      Overview
+    </button>
+    <button class="l-ui-tabs__tab" role="tab"
+            data-action="l-ui--tabs#select"
+            data-l-ui--tabs-target="tab"
+            aria-selected="false" aria-controls="panel-features" id="tab-features" tabindex="-1">
+      Features
+    </button>
+    <button class="l-ui-tabs__tab" role="tab"
+            data-action="l-ui--tabs#select"
+            data-l-ui--tabs-target="tab"
+            aria-selected="false" aria-controls="panel-settings" id="tab-settings" tabindex="-1">
+      Settings
+    </button>
+  </div>
+
+  <div class="l-ui-tabs__panel" role="tabpanel"
+       data-l-ui--tabs-target="panel"
+       id="panel-overview" aria-labelledby="tab-overview">
+    <h3>Overview</h3>
+    <p class="l-ui-utility--mt-md">Tabs organise content into separate views where only one view is visible at a time. Each tab activates its associated panel while hiding the others.</p>
+    <p class="l-ui-utility--mt-md">This component follows the WAI-ARIA Tabs pattern for full accessibility support.</p>
+  </div>
+  <div class="l-ui-tabs__panel" role="tabpanel"
+       data-l-ui--tabs-target="panel"
+       id="panel-features" aria-labelledby="tab-features" hidden>
+    <h3>Features</h3>
+    <ul class="l-ui-list l-ui-utility--mt-md">
+      <li>Click or keyboard navigation to switch tabs</li>
+      <li>Arrow keys move between tabs with wrap-around</li>
+      <li>Home and End keys jump to first and last tab</li>
+      <li>Screen reader announcements via live region</li>
+      <li>ARIA attributes for accessible tab/panel relationships</li>
+    </ul>
+  </div>
+  <div class="l-ui-tabs__panel" role="tabpanel"
+       data-l-ui--tabs-target="panel"
+       id="panel-settings" aria-labelledby="tab-settings" hidden>
+    <h3>Settings</h3>
+    <p class="l-ui-utility--mt-md">Tabs adapt to light and dark themes automatically via design tokens. The active tab indicator uses the foreground colour for clear visual distinction.</p>
+  </div>
+</div>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View Code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+    <div class="l-ui-modal__header">
+      <h3>Tabs example</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
+        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <code class="l-ui-surface">&lt;div data-controller="l-ui--tabs"&gt;
+  &lt;div class="l-ui-tabs__list" role="tablist"
+       data-action="keydown-&gt;l-ui--tabs#keydown"&gt;
+    &lt;button class="l-ui-tabs__tab--active" role="tab"
+            data-action="l-ui--tabs#select"
+            data-l-ui--tabs-target="tab"
+            aria-selected="true"
+            aria-controls="panel-1" id="tab-1"&gt;
+      Tab 1
+    &lt;/button&gt;
+    &lt;button class="l-ui-tabs__tab" role="tab"
+            data-action="l-ui--tabs#select"
+            data-l-ui--tabs-target="tab"
+            aria-selected="false"
+            aria-controls="panel-2" id="tab-2"
+            tabindex="-1"&gt;
+      Tab 2
+    &lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;div class="l-ui-tabs__panel" role="tabpanel"
+       data-l-ui--tabs-target="panel"
+       id="panel-1" aria-labelledby="tab-1"&gt;
+    Content 1
+  &lt;/div&gt;
+  &lt;div class="l-ui-tabs__panel" role="tabpanel"
+       data-l-ui--tabs-target="panel"
+       id="panel-2" aria-labelledby="tab-2" hidden&gt;
+    Content 2
+  &lt;/div&gt;
+&lt;/div&gt;</code>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">CSS classes</h2>
+
+<div class="l-ui-container--table l-ui-utility--mt-lg">
+  <table class="l-ui-table">
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell">Class</th>
+        <th class="l-ui-table__header-cell">Description</th>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-tabs__list</code></td>
+        <td class="l-ui-table__cell">Container for tab buttons (use with role="tablist")</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-tabs__tab</code></td>
+        <td class="l-ui-table__cell">Inactive tab button</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-tabs__tab--active</code></td>
+        <td class="l-ui-table__cell">Active tab button with underline indicator</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-tabs__panel</code></td>
+        <td class="l-ui-table__cell">Tab panel content area</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

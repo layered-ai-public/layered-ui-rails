@@ -1,0 +1,57 @@
+<h1>layered-ui-rails (v<%= Layered::Ui::VERSION %>)</h1>
+
+<p class="l-ui-utility--mt-md">
+  <%= Gem.loaded_specs["layered-ui-rails"].summary %>
+</p>
+
+<p class="l-ui-utility--mt-md">
+  <%= Gem.loaded_specs["layered-ui-rails"].description %>
+</p>
+
+<h2 class="l-ui-utility--mt-xl">Features</h2>
+<div class="l-ui-container--grid l-ui-utility--mt-lg">
+    <div class="l-ui-surface">
+      <h3>Dark/light theme</h3>
+      <p class="l-ui-utility--mt-sm">System preference detection with localStorage persistence and manual toggle.</p>
+    </div>
+    <div class="l-ui-surface">
+      <h3>Responsive layout</h3>
+      <p class="l-ui-utility--mt-sm">Header, sidebar navigation, main content area, and optional resizable panel.</p>
+    </div>
+    <div class="l-ui-surface">
+      <h3>WCAG 2.2 AA compliant</h3>
+      <p class="l-ui-utility--mt-sm">Skip links, focus indicators, ARIA attributes, and 4.5:1 contrast ratios.</p>
+    </div>
+    <div class="l-ui-surface">
+      <h3>Optional integrations</h3>
+      <p class="l-ui-utility--mt-sm">Devise authentication with friendly routes and Pagy pagination with styled navigation.</p>
+    </div>
+</div>
+
+<h2 class="l-ui-utility--mt-xl">Requirements</h2>
+<ul class="l-ui-list l-ui-utility--mt-md">
+  <li>Ruby on Rails >= 8.0</li>
+  <li>Tailwind CSS Rails >= 4.0</li>
+</ul>
+
+<h2 class="l-ui-utility--mt-xl">Installation</h2>
+<p class="l-ui-utility--mt-md">Add to your Gemfile:</p>
+<code class="l-ui-surface l-ui-utility--mt-md">gem "layered-ui-rails"</code>
+<p class="l-ui-utility--mt-lg">Then run:</p>
+<code class="l-ui-surface l-ui-utility--mt-md">bundle install</code>
+
+<h2 class="l-ui-utility--mt-xl">Setup</h2>
+<p class="l-ui-utility--mt-md">Run the install generator to copy CSS and JS to your application:</p>
+<code class="l-ui-surface l-ui-utility--mt-md">bin/rails generate layered:ui:install</code>
+<p class="l-ui-utility--mt-lg">This will:</p>
+<ul class="l-ui-list l-ui-utility--mt-sm">
+  <li>Copy <code>layered_ui.css</code> to <code>app/assets/tailwind/</code></li>
+  <li>Add <code>@import "./layered_ui";</code> to your application.css</li>
+  <li>Add <code>import "layered_ui"</code> to your application.js</li>
+</ul>
+
+<p class="l-ui-utility--mt-lg">Next, update your <code>application.html.erb</code> layout to render the layered-ui layout and set up content blocks for navigation, panels, and page titles. See the <%= link_to "layout guide", layouts_path %> for full details.</p>
+
+<p class="l-ui-utility--mt-lg">You can override the default logo by placing your own <code>logo_light.svg</code> and <code>logo_dark.svg</code> files in <code>app/assets/images/layered_ui/</code>. The panel toggle icon can also be overridden with <code>panel_icon_light.svg</code> and <code>panel_icon_dark.svg</code> in the same directory. The asset pipeline will serve your files instead of the defaults provided by the engine.</p>
+
+<p class="l-ui-utility--mt-lg">If you're planning to use Devise for authentication, see the <%= link_to "Devise guide", devise_path %> for integration details.</p>
