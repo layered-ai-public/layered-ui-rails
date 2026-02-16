@@ -8,4 +8,6 @@ class User < ApplicationRecord
     :rememberable,
     :timeoutable,
     :trackable
+
+  after_create :confirm
 end

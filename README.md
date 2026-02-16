@@ -58,6 +58,18 @@ cd test/dummy && bin/rails db:setup && bin/dev
 
 The dummy app serves as both a living style guide and a test harness, with interactive examples and code snippets for every component.
 
+### Deploying the dummy app
+
+The dummy app can be deployed with [Kamal](https://kamal-deploy.org). Set the required environment variables and deploy from `test/dummy`:
+
+```bash
+cd test/dummy
+export KAMAL_DEPLOY_IP=<server-ip>
+export KAMAL_DEPLOY_DOMAIN=<domain>
+export KAMAL_SSH_KEY=<path-to-ssh-key>
+kamal deploy
+```
+
 ## Contributing
 
 This project is still in its early days. We welcome issues, feedback, and ideas - they genuinely help shape the direction of the project. That said, we're holding off on accepting pull requests until after the 1.0 release so we can stay focused on getting the core foundations right. Once we're there, we'd love to open things up to broader contributions. Thanks for your patience and interest!

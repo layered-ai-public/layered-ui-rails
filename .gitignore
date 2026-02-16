@@ -31,3 +31,6 @@ test/dummy/public/assets
 
 # Ignore key files for decrypting credentials and more.
 test/dummy/config/*.key
+
+# Ignore Kamal secrets.
+test/dummy/.kamal/secrets
