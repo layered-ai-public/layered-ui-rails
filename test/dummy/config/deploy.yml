@@ -1,0 +1,31 @@
+service: layered-ui-dummy
+image: layered-ui-dummy
+
+servers:
+  web:
+    - <%= ENV["KAMAL_DEPLOY_IP"] %>
+
+proxy:
+  ssl: true
+  host: <%= ENV["KAMAL_DEPLOY_DOMAIN"] %>
+  app_port: 3000
+
+registry:
+  server: localhost:5555
+
+env:
+  secret:
+    - SECRET_KEY_BASE
+
+volumes:
+  - "layered-ui-dummy_storage:/rails/test/dummy/storage"
+
+ssh:
+  user: root
+  keys:
+    - <%= ENV["KAMAL_SSH_KEY"] || "~/.ssh/id_rsa" %>
+
+builder:
+  arch: amd64
+  context: "../.."
+  dockerfile: "../../Dockerfile"

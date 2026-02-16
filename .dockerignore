@@ -1,0 +1,9 @@
+.git
+.kamal
+test/dummy/.kamal
+tmp/
+test/dummy/tmp/
+log/
+test/dummy/log/
+test/dummy/storage/*.sqlite3
+node_modules/
