@@ -1,31 +1,55 @@
 <h1>layered-ui-rails (v<%= Layered::Ui::VERSION %>)</h1>
 
 <p class="l-ui-utility--mt-md">
-  <%= Gem.loaded_specs["layered-ui-rails"].summary %>
-</p>
-
-<p class="l-ui-utility--mt-md">
   <%= Gem.loaded_specs["layered-ui-rails"].description %>
 </p>
 
+<div class="l-ui-container--grid l-ui-utility--mt-lg" style="gap: 2rem;">
+  <div>
+    <div style="display: flex; gap: 0.5rem; align-items: flex-start;">
+      <%= link_to image_tag("light_desktop.png", alt: "Light theme (desktop)", style: "border-radius: var(--radius-sm); width: 100%;"), image_path("light_desktop.png"), target: "_blank", style: "flex: 1; min-width: 0;" %>
+      <%= link_to image_tag("light_mobile.png", alt: "Light theme (mobile)", style: "border-radius: var(--radius-sm); width: 100%;"), image_path("light_mobile.png"), target: "_blank", style: "width: 21%;" %>
+    </div>
+    <p class="l-ui-utility--mt-sm"><em>Light (desktop and mobile)</em></p>
+  </div>
+
+  <div>
+    <div style="display: flex; gap: 0.5rem; align-items: flex-start;">
+      <%= link_to image_tag("dark_desktop.png", alt: "Dark theme (desktop)", style: "border-radius: var(--radius-sm); width: 100%;"), image_path("dark_desktop.png"), target: "_blank", style: "flex: 1; min-width: 0;" %>
+      <%= link_to image_tag("dark_mobile.png", alt: "Dark theme (mobile)", style: "border-radius: var(--radius-sm); width: 100%;"), image_path("dark_mobile.png"), target: "_blank", style: "width: 21%;" %>
+    </div>
+    <p class="l-ui-utility--mt-sm"><em>Dark (desktop and mobile)</em></p>
+  </div>
+</div>
+
 <h2 class="l-ui-utility--mt-xl">Features</h2>
 <div class="l-ui-container--grid l-ui-utility--mt-lg">
-    <div class="l-ui-surface">
-      <h3>Dark/light theme</h3>
-      <p class="l-ui-utility--mt-sm">System preference detection with localStorage persistence and manual toggle.</p>
-    </div>
-    <div class="l-ui-surface">
-      <h3>Responsive layout</h3>
-      <p class="l-ui-utility--mt-sm">Header, sidebar navigation, main content area, and optional resizable panel.</p>
-    </div>
-    <div class="l-ui-surface">
-      <h3>WCAG 2.2 AA compliant</h3>
-      <p class="l-ui-utility--mt-sm">Skip links, focus indicators, ARIA attributes, and 4.5:1 contrast ratios.</p>
-    </div>
-    <div class="l-ui-surface">
-      <h3>Optional integrations</h3>
-      <p class="l-ui-utility--mt-sm">Devise authentication with friendly routes and Pagy pagination with styled navigation.</p>
-    </div>
+  <div class="l-ui-surface">
+    <h3>Dark/light theme</h3>
+    <p class="l-ui-utility--mt-sm">System preference detection with localStorage persistence and manual toggle.</p>
+  </div>
+  <div class="l-ui-surface">
+    <h3>Responsive layout</h3>
+    <p class="l-ui-utility--mt-sm">Header, sidebar navigation, main content area, and optional resizable panel.</p>
+  </div>
+  <div class="l-ui-surface">
+    <h3>WCAG 2.2 AA compliant</h3>
+    <p class="l-ui-utility--mt-sm">Skip links, focus indicators, ARIA attributes, and 4.5:1 contrast ratios.</p>
+  </div>
+  <div class="l-ui-surface">
+    <h3>Optional integrations</h3>
+    <p class="l-ui-utility--mt-sm">Devise authentication with friendly routes and Pagy pagination with styled navigation.</p>
+  </div>
+
+  <div class="l-ui-surface">
+    <h3>Customisable branding</h3>
+    <p class="l-ui-utility--mt-sm">Override the default logos and icons by dropping your own SVGs into <code>app/assets/images/layered_ui/</code>.</p>
+  </div>
+
+  <div class="l-ui-surface">
+    <h3>Google Lighthouse</h3>
+    <p class="l-ui-utility--mt-sm"><code>layered-ui-rails</code> scores a <%= link_to "perfect 100", image_path("lighthouse.png"), target: "_blank" %> across all four Google Lighthouse categories - performance, accessibility, best practices, and SEO.</p>
+  </div>
 </div>
 
 <h2 class="l-ui-utility--mt-xl">Requirements</h2>

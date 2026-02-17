@@ -1,17 +1,25 @@
 # layered-ui-rails
 
-Open source, minimalist, responsive, accessible UI system with light and dark theme support - and a touch of glass.
-
 An open source, Rails 8+ engine that provides WCAG 2.2 AA compliant design tokens, Tailwind CSS utilities, and Stimulus controllers for theme switching, mobile navigation, slide-out panels, modals, and tabs. Ships as pure frontend with no server-side dependencies beyond Rails and Tailwind CSS.
 
-<p align="center">
-  <img src="docs/images/light.png" alt="Light theme" width="49%">
-  <img src="docs/images/dark.png" alt="Dark theme" width="49%">
-</p>
-
-<p align="center">
-  <img src="docs/images/lighthouse.png" alt="Google Lighthouse score showing 100 in Performance, Accessibility, Best Practices, and SEO" width="400">
-</p>
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="test/dummy/app/assets/images/light_desktop.png" alt="Light theme (desktop)" height="300">
+      <img src="test/dummy/app/assets/images/light_mobile.png" alt="Light theme (mobile)" height="300">
+    </td>
+    <td width="20"></td>
+    <td align="center">
+      <img src="test/dummy/app/assets/images/dark_desktop.png" alt="Dark theme (desktop)" height="300">
+      <img src="test/dummy/app/assets/images/dark_mobile.png" alt="Dark theme (mobile)" height="300">
+    </td>
+  </tr>
+  <tr>
+    <td align="center"><em>Light (desktop and mobile)</em></td>
+    <td></td>
+    <td align="center"><em>Dark (desktop and mobile)</em></td>
+  </tr>
+</table>
 
 ## Getting started
 
@@ -51,6 +59,8 @@ Then update your application layout to render the engine layout:
 - **WCAG 2.2 AA compliant** - skip links, focus indicators, ARIA attributes, and 4.5:1 contrast ratios
 - **Components** - buttons, forms, surfaces, tables, tabs, notices, badges, conversations, modals, and pagination
 - **Optional integrations** - Devise authentication and Pagy pagination with styled views
+- **Customisable branding** - Override the default logos and icons by dropping your own SVGs into `app/assets/images/layered_ui/`
+- **Google Lighthouse** - `layered-ui-rails` scores a [perfect 100](test/dummy/app/assets/images/lighthouse.png) across all four Google Lighthouse categories - performance, accessibility, best practices, and SEO
 
 ## Documentation
 
