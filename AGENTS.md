@@ -22,6 +22,8 @@ Guidance for AI agents working in this repository.
 
 ## Conventions
 
+- Use "layered-ui-rails" not "Layered UI" when referring to the project
+- Use normal dashes '-' not long ones '—'
 - Locale: Favour en-GB (British English), unless terms are defined by technical standards (e.g. LICENSE, COLOR).
 - Titles: capitalise first word only (e.g. "This title")
 - Document new styles in the dummy app

@@ -25,7 +25,7 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential git libyaml-dev pkg-config && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-# Install all gem groups — development deps (puma, devise, tailwindcss-rails…)
+# Install all gem groups - development deps (puma, devise, tailwindcss-rails…)
 # are runtime requirements for the dummy app.
 COPY Gemfile Gemfile.lock layered-ui-rails.gemspec ./
 COPY lib/layered/ui/version.rb lib/layered/ui/version.rb

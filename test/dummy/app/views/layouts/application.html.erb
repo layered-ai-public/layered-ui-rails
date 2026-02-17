@@ -5,8 +5,14 @@
       <%= l_ui_navigation_item "Devise", devise_path %>
       <%= l_ui_navigation_item "Pagy", pagy_path %>
     <% end %>
-    <%= l_ui_navigation_item "Layouts", layouts_path %>
-    <%= l_ui_navigation_item "Content", content_path %>
+    <%= l_ui_navigation_item "Layout", layout_path do %>
+      <%= l_ui_navigation_item "Logos", layout_logos_path %>
+      <%= l_ui_navigation_item "Icons", layout_icons_path %>
+      <%= l_ui_navigation_item "Colors", layout_colors_path %>
+      <%= l_ui_navigation_item "Metadata", layout_metadata_path %>
+      <%= l_ui_navigation_item "Navigation", layout_navigation_path %>
+      <%= l_ui_navigation_item "Panel", layout_panel_path %>
+    <% end %>
     <%= l_ui_navigation_item "Utilities", utilities_path %>
     <%= l_ui_navigation_item "Typography", typography_path %>
     <%= l_ui_navigation_item "Containers", containers_path %>
@@ -41,7 +47,7 @@
     </ul>
 
     <p class="l-ui-utility--mt-xl">
-      <%= link_to "Learn more about panels on the content page", content_path %>
+      <%= link_to "Learn more about panels", layout_panel_path %>
     </p>
   <% end %>
 <% end %>

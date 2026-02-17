@@ -1,0 +1,68 @@
+<h1>Layout</h1>
+
+<p class="l-ui-utility--mt-md">layered-ui-rails provides a layout system with a header, sidebar navigation, and slide-out panel. Use <code>content_for</code> blocks to inject content, instance variables to set metadata, and file overrides to change logos and icons.</p>
+
+<h2 class="l-ui-utility--mt-2xl">Application layout</h2>
+
+<p class="l-ui-utility--mt-md">Your application layout should render the layered-ui-rails layout template after setting up any optional content blocks.</p>
+
+<p class="l-ui-utility--mt-md">Edit your <code>app/views/layouts/application.html.erb</code> with the following content:</p>
+
+<code class="l-ui-surface l-ui-utility--mt-lg">&lt;!-- Optional: sidebar navigation --&gt;
+&lt;% content_for :l_ui_navigation_items do %&gt;
+  &lt;%= l_ui_navigation_item "Home", root_path %&gt;
+  &lt;%= l_ui_navigation_item "About", about_path %&gt;
+&lt;% end %&gt;
+
+&lt;!-- Optional: slide-out panel heading --&gt;
+&lt;% content_for :l_ui_panel_heading do %&gt;
+  &lt;h2&gt;Side Bar&lt;/h2&gt;
+&lt;% end %&gt;
+
+&lt;!-- Optional: slide-out panel body --&gt;
+&lt;% content_for :l_ui_panel_body do %&gt;
+  &lt;p&gt;This is the panel body content.&lt;/p&gt;
+&lt;% end %&gt;
+
+&lt;%= render template: "layouts/layered_ui/application" %&gt;</code>
+
+<h2 class="l-ui-utility--mt-2xl">Features</h2>
+
+<p class="l-ui-utility--mt-md">The layout provides these configurable features.</p>
+
+<div class="l-ui-container--table l-ui-utility--mt-lg">
+  <table class="l-ui-table">
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell">Feature</th>
+        <th class="l-ui-table__header-cell">Description</th>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <tr>
+        <td class="l-ui-table__cell--primary"><%= link_to "Logos", layout_logos_path %></td>
+        <td class="l-ui-table__cell">Header logo overrides for light and dark themes</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><%= link_to "Icons", layout_icons_path %></td>
+        <td class="l-ui-table__cell">Favicon, touch icon, and panel toggle button overrides</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><%= link_to "Colors", layout_colors_path %></td>
+        <td class="l-ui-table__cell">Accent color and full design token overrides</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><%= link_to "Metadata", layout_metadata_path %></td>
+        <td class="l-ui-table__cell">Page title and meta description via instance variables</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><%= link_to "Navigation", layout_navigation_path %></td>
+        <td class="l-ui-table__cell">Sidebar navigation links using <code>content_for</code> and helpers</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><%= link_to "Panel", layout_panel_path %></td>
+        <td class="l-ui-table__cell">Slide-out panel with heading and body content blocks</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

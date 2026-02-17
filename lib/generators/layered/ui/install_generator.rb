@@ -2,7 +2,7 @@ module Layered
   module Ui
     module Generators
       class InstallGenerator < Rails::Generators::Base
-        desc "Install layered-ui into the host application"
+        desc "Install layered-ui-rails into the host application"
 
         def check_dependencies
           unless Gem.loaded_specs.key?("tailwindcss-rails")
@@ -17,6 +17,10 @@ module Layered
 
         def copy_assets
           invoke "layered:ui:copy_assets"
+        end
+
+        def create_overrides
+          invoke "layered:ui:create_overrides"
         end
 
         def import_css

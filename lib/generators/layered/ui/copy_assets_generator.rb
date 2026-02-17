@@ -2,7 +2,7 @@ module Layered
   module Ui
     module Generators
       class CopyAssetsGenerator < Rails::Generators::Base
-        desc "Copy layered-ui CSS assets into the host application"
+        desc "Copy layered-ui-rails CSS assets into the host application"
 
         def self.source_root
           Layered::Ui::Engine.root

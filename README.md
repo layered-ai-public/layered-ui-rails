@@ -1,6 +1,10 @@
 # layered-ui-rails
 
-An open source, Rails 8+ engine that provides WCAG 2.2 AA compliant design tokens, Tailwind CSS utilities, and Stimulus controllers for theme switching, mobile navigation, slide-out panels, modals, and tabs. Ships as pure frontend with no server-side dependencies beyond Rails and Tailwind CSS.
+[![CI](https://github.com/layered-ai-public/layered-ui-rails/actions/workflows/ci.yml/badge.svg)](https://github.com/layered-ai-public/layered-ui-rails/actions/workflows/ci.yml)
+[![WCAG 2.2 AA](https://img.shields.io/badge/WCAG_2.2-AA-green)](https://www.w3.org/WAI/WCAG22/quickref/)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+An open source, Rails 8+ engine that provides WCAG 2.2 AA compliant design tokens, Tailwind CSS utilities, and Stimulus controllers for theme switching, mobile navigation, slide-out panels, modals, and tabs. Ships as pure frontend with no server-side dependencies beyond Rails and Tailwind CSS. See the [live demo](https://layered-ui-rails.layered.ai).
 
 <table align="center">
   <tr>
@@ -38,10 +42,6 @@ The install generator will:
 Then update your application layout to render the engine layout:
 
 ```erb
-<% content_for :l_ui_navigation_items do %>
-  <%= l_ui_navigation_item "Home", root_path %>
-<% end %>
-
 <%= render template: "layouts/layered_ui/application" %>
 ```
 
@@ -59,7 +59,7 @@ Then update your application layout to render the engine layout:
 - **WCAG 2.2 AA compliant** - skip links, focus indicators, ARIA attributes, and 4.5:1 contrast ratios
 - **Components** - buttons, forms, surfaces, tables, tabs, notices, badges, conversations, modals, and pagination
 - **Optional integrations** - Devise authentication and Pagy pagination with styled views
-- **Customisable branding** - Override the default logos and icons by dropping your own SVGs into `app/assets/images/layered_ui/`
+- **Customisable branding** - Override the default logos and icons and colors
 - **Google Lighthouse** - `layered-ui-rails` scores a [perfect 100](test/dummy/app/assets/images/lighthouse.webp) across all four Google Lighthouse categories - performance, accessibility, best practices, and SEO
 
 ## Documentation
