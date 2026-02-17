@@ -2,7 +2,7 @@ module Layered
   module Ui
     module Generators
       class ImportJsGenerator < Rails::Generators::Base
-        desc "Add layered-ui JavaScript import to the host application"
+        desc "Add layered-ui-rails JavaScript import to the host application"
 
         def add_js_import
           application_js = "app/javascript/application.js"

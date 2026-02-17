@@ -1,0 +1,27 @@
+<h1>Metadata</h1>
+
+<p class="l-ui-utility--mt-md">Set instance variables in your controller or view to populate the page's <code>&lt;title&gt;</code> and <code>&lt;meta&gt;</code> tags.</p>
+
+<h2 class="l-ui-utility--mt-2xl">Page title</h2>
+
+<p class="l-ui-utility--mt-md">Set the <code>@page_title</code> instance variable to populate the <code>&lt;title&gt;</code> tag.</p>
+
+<pre class="l-ui-surface l-ui-utility--mt-xl"><code># In your controller
+def show
+  @page_title = "Dashboard"
+end
+
+# Or in your view
+&lt;% @page_title = "Dashboard" %&gt;</code></pre>
+
+<h2 class="l-ui-utility--mt-2xl">Page description</h2>
+
+<p class="l-ui-utility--mt-md">Set the <code>@page_description</code> instance variable to populate the <code>&lt;meta name="description"&gt;</code> tag.</p>
+
+<pre class="l-ui-surface l-ui-utility--mt-xl"><code># In your controller
+def show
+  @page_description = "View project details and activity"
+end
+
+# Or in your view
+&lt;% @page_description = "View project details and activity" %&gt;</code></pre>

@@ -38,10 +38,6 @@ The install generator will:
 Then update your application layout to render the engine layout:
 
 ```erb
-<% content_for :l_ui_navigation_items do %>
-  <%= l_ui_navigation_item "Home", root_path %>
-<% end %>
-
 <%= render template: "layouts/layered_ui/application" %>
 ```
 
@@ -59,7 +55,7 @@ Then update your application layout to render the engine layout:
 - **WCAG 2.2 AA compliant** - skip links, focus indicators, ARIA attributes, and 4.5:1 contrast ratios
 - **Components** - buttons, forms, surfaces, tables, tabs, notices, badges, conversations, modals, and pagination
 - **Optional integrations** - Devise authentication and Pagy pagination with styled views
-- **Customisable branding** - Override the default logos and icons by dropping your own SVGs into `app/assets/images/layered_ui/`
+- **Customisable branding** - Override the default logos and icons and colors
 - **Google Lighthouse** - `layered-ui-rails` scores a [perfect 100](test/dummy/app/assets/images/lighthouse.webp) across all four Google Lighthouse categories - performance, accessibility, best practices, and SEO
 
 ## Documentation

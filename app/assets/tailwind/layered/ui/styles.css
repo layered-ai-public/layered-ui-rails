@@ -32,10 +32,12 @@
 
 @variant dark (&:where(.dark, .dark *));
 
-/* Colours */
+/* Colors */
 
 @layer base {
   :root {
+    --accent: 0 0% 9%;
+    --accent-foreground: 0 0% 100%;
     --background: 0 0% 100%;
     --foreground: 0 0% 13%;
     --foreground-muted: 0 0% 29%;
@@ -43,8 +45,8 @@
     --ring: 0 0% 13%;
     --surface: 0 0% 96%;
     --surface-active: 0 0% 91%;
-    --button-primary-bg: 0 0% 9%;
-    --button-primary-text: 0 0% 100%;
+    --button-primary-bg: var(--accent);
+    --button-primary-text: var(--accent-foreground);
     --danger: 0 72% 38%;
     --danger-light: 0 100% 97%;
     --danger-text: 0 72% 35%;
@@ -59,6 +61,8 @@
   }
 
   .dark {
+    --accent: 0 0% 100%;
+    --accent-foreground: 0 0% 9%;
     --background: 0 0% 0%;
     --foreground: 0 0% 89%;
     --foreground-muted: 0 0% 71%;
@@ -66,8 +70,8 @@
     --ring: 0 0% 89%;
     --surface: 0 0% 8%;
     --surface-active: 0 0% 16%;
-    --button-primary-bg: 0 0% 100%;
-    --button-primary-text: 0 0% 9%;
+    --button-primary-bg: var(--accent);
+    --button-primary-text: var(--accent-foreground);
     --danger: 0 85% 60%;
     --danger-light: 0 93% 15%;
     --danger-text: 0 85% 64%;
@@ -130,6 +134,8 @@
 @theme {
   --font-manrope: 'Manrope', ui-sans-serif, system-ui, sans-serif;
   --font-inter: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
   --color-foreground-muted: hsl(var(--foreground-muted));
@@ -438,7 +444,7 @@
 .l-ui-navigation__item--active {
   @apply navigation__item
          font-bold
-         text-foreground;
+         text-accent;
 
   &::after {
     content: "▸";
@@ -462,7 +468,7 @@
   .l-ui-navigation__item--active {
     @apply bg-transparent
            font-bold
-           text-foreground;
+           text-accent;
 
     &::after {
       content: "▸";
@@ -806,8 +812,8 @@
 
 .l-ui-tabs__tab--active {
   @apply tabs__tab
-         text-foreground
-         border-foreground;
+         text-accent
+         border-accent;
 }
 
 .l-ui-tabs__panel {

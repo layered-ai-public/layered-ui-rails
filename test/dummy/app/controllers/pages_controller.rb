@@ -40,10 +40,22 @@ class PagesController < ApplicationController
   def typography
   end
 
-  def layouts
+  def layout
   end
 
-  def content
+  def layout_metadata
+  end
+
+  def layout_navigation
+  end
+
+  def layout_panel
+  end
+
+  def layout_logos
+  end
+
+  def layout_icons
   end
 
   def tabs
@@ -62,6 +74,9 @@ class PagesController < ApplicationController
   end
 
   def pagy_integration
+  end
+
+  def layout_colors
   end
 
   private

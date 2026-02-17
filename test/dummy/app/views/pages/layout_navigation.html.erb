@@ -1,0 +1,13 @@
+<h1>Navigation</h1>
+
+<p class="l-ui-utility--mt-md">Populate the sidebar navigation using the <code>:l_ui_navigation_items</code> yield and the <code>l_ui_navigation_item</code> helper.</p>
+
+<p class="l-ui-utility--mt-md">For full control, override the partial by creating <code>app/views/layouts/layered_ui/_navigation.html.erb</code> in your application.</p>
+
+<code class="l-ui-surface l-ui-utility--mt-lg">&lt;% content_for :l_ui_navigation_items do %&gt;
+  &lt;%= l_ui_navigation_item "Dashboard", dashboard_path %&gt;
+  &lt;%= l_ui_navigation_item "Settings", settings_path %&gt;
+  &lt;%= l_ui_navigation_item "Users", users_path %&gt;
+&lt;% end %&gt;
+
+&lt;%= render template: "layouts/layered_ui/application" %&gt;</code>
