@@ -15,9 +15,9 @@ An open source, Rails 8+ engine that provides WCAG 2.2 AA compliant design token
     </td>
   </tr>
   <tr>
-    <td align="center"><em>Light (desktop and mobile)</em></td>
+    <td align="center"><em>Light theme (desktop and mobile)</em></td>
     <td></td>
-    <td align="center"><em>Dark (desktop and mobile)</em></td>
+    <td align="center"><em>Dark theme (desktop and mobile)</em></td>
   </tr>
 </table>
 
