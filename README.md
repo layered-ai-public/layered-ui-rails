@@ -5,13 +5,13 @@ An open source, Rails 8+ engine that provides WCAG 2.2 AA compliant design token
 <table align="center">
   <tr>
     <td align="center">
-      <img src="test/dummy/app/assets/images/light_desktop.png" alt="Light theme (desktop)" height="300">
-      <img src="test/dummy/app/assets/images/light_mobile.png" alt="Light theme (mobile)" height="300">
+      <img src="test/dummy/app/assets/images/light_desktop.webp" alt="Light theme (desktop)" height="300">
+      <img src="test/dummy/app/assets/images/light_mobile.webp" alt="Light theme (mobile)" height="300">
     </td>
     <td width="20"></td>
     <td align="center">
-      <img src="test/dummy/app/assets/images/dark_desktop.png" alt="Dark theme (desktop)" height="300">
-      <img src="test/dummy/app/assets/images/dark_mobile.png" alt="Dark theme (mobile)" height="300">
+      <img src="test/dummy/app/assets/images/dark_desktop.webp" alt="Dark theme (desktop)" height="300">
+      <img src="test/dummy/app/assets/images/dark_mobile.webp" alt="Dark theme (mobile)" height="300">
     </td>
   </tr>
   <tr>

@@ -12,6 +12,22 @@
  * This structure improves readability, maintainability, and makes diffs easier to review.
  */
 
+/* Fonts */
+
+@font-face {
+  font-family: 'Manrope';
+  src: url('layered_ui/manrope.woff2') format('woff2');
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('layered_ui/inter.woff2') format('woff2');
+  font-weight: 300 700;
+  font-display: swap;
+}
+
 /* Variants */
 
 @variant dark (&:where(.dark, .dark *));
