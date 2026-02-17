@@ -11,6 +11,7 @@ module Layered
       end
 
       initializer "layered-ui-rails.assets" do |app|
+        app.config.assets.paths << Engine.root.join("app/assets/fonts")
         app.config.assets.paths << Engine.root.join("app/assets/images")
         app.config.assets.paths << Engine.root.join("app/javascript")
       end
