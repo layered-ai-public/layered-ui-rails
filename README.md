@@ -4,6 +4,15 @@ Open source, minimalist, responsive, accessible UI system with light and dark th
 
 An open source, Rails 8+ engine that provides WCAG 2.2 AA compliant design tokens, Tailwind CSS utilities, and Stimulus controllers for theme switching, mobile navigation, slide-out panels, modals, and tabs. Ships as pure frontend with no server-side dependencies beyond Rails and Tailwind CSS.
 
+<p align="center">
+  <img src="docs/images/light.png" alt="Light theme" width="49%">
+  <img src="docs/images/dark.png" alt="Dark theme" width="49%">
+</p>
+
+<p align="center">
+  <img src="docs/images/lighthouse.png" alt="Google Lighthouse score showing 100 in Performance, Accessibility, Best Practices, and SEO" width="400">
+</p>
+
 ## Getting started
 
 Add to your Gemfile and install:
