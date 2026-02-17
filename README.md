@@ -1,5 +1,9 @@
 # layered-ui-rails
 
+[![CI](https://github.com/layered-ai-public/layered-ui-rails/actions/workflows/ci.yml/badge.svg)](https://github.com/layered-ai-public/layered-ui-rails/actions/workflows/ci.yml)
+[![WCAG 2.2 AA](https://img.shields.io/badge/WCAG_2.2-AA-green)](https://www.w3.org/WAI/WCAG22/quickref/)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
 An open source, Rails 8+ engine that provides WCAG 2.2 AA compliant design tokens, Tailwind CSS utilities, and Stimulus controllers for theme switching, mobile navigation, slide-out panels, modals, and tabs. Ships as pure frontend with no server-side dependencies beyond Rails and Tailwind CSS.
 
 <table align="center">
