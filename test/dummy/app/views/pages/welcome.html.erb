@@ -7,15 +7,15 @@
 <div class="l-ui-container--grid l-ui-utility--mt-lg gap-8">
   <div>
     <div class="flex gap-2 items-start">
-      <%= link_to image_tag("light_desktop.webp", alt: "Light theme (desktop)", width: 1071, height: 621, class: "rounded-sm w-full"), image_path("light_desktop.webp"), target: "_blank", class: "flex-1 min-w-0" %>
-      <%= link_to image_tag("light_mobile.webp", alt: "Light theme (mobile)", width: 289, height: 625, class: "rounded-sm w-full"), image_path("light_mobile.webp"), target: "_blank", class: "w-[21%]" %>
+      <%= link_to image_tag("light_desktop.webp", alt: "Light theme (desktop)", width: 1436, height: 832, fetchpriority: "high", class: "rounded-sm w-full"), image_path("light_desktop.webp"), target: "_blank", class: "flex-1 min-w-0" %>
+      <%= link_to image_tag("light_mobile.webp", alt: "Light theme (mobile)", width: 289, height: 625, fetchpriority: "high", class: "rounded-sm w-full"), image_path("light_mobile.webp"), target: "_blank", class: "w-[21%]" %>
     </div>
     <p class="l-ui-utility--mt-sm"><em>Light theme (desktop and mobile)</em></p>
   </div>
 
   <div>
     <div class="flex gap-2 items-start">
-      <%= link_to image_tag("dark_desktop.webp", alt: "Dark theme (desktop)", width: 1071, height: 624, class: "rounded-sm w-full"), image_path("dark_desktop.webp"), target: "_blank", class: "flex-1 min-w-0" %>
+      <%= link_to image_tag("dark_desktop.webp", alt: "Dark theme (desktop)", width: 1436, height: 836, class: "rounded-sm w-full"), image_path("dark_desktop.webp"), target: "_blank", class: "flex-1 min-w-0" %>
       <%= link_to image_tag("dark_mobile.webp", alt: "Dark theme (mobile)", width: 289, height: 625, class: "rounded-sm w-full"), image_path("dark_mobile.webp"), target: "_blank", class: "w-[21%]" %>
     </div>
     <p class="l-ui-utility--mt-sm"><em>Dark theme (desktop and mobile)</em></p>
@@ -48,7 +48,7 @@
 
   <div class="l-ui-surface">
     <h3>Google Lighthouse</h3>
-    <p class="l-ui-utility--mt-sm"><code>layered-ui-rails</code> scores a <%= link_to "perfect 100", image_path("lighthouse.png"), target: "_blank" %> across all four Google Lighthouse categories - performance, accessibility, best practices, and SEO.</p>
+    <p class="l-ui-utility--mt-sm"><code>layered-ui-rails</code> scores a <%= link_to "perfect 100", image_path("lighthouse.webp"), target: "_blank" %> across all four Google Lighthouse categories - performance, accessibility, best practices, and SEO.</p>
   </div>
 </div>
 

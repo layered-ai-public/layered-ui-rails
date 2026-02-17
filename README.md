@@ -60,7 +60,7 @@ Then update your application layout to render the engine layout:
 - **Components** - buttons, forms, surfaces, tables, tabs, notices, badges, conversations, modals, and pagination
 - **Optional integrations** - Devise authentication and Pagy pagination with styled views
 - **Customisable branding** - Override the default logos and icons by dropping your own SVGs into `app/assets/images/layered_ui/`
-- **Google Lighthouse** - `layered-ui-rails` scores a [perfect 100](test/dummy/app/assets/images/lighthouse.png) across all four Google Lighthouse categories - performance, accessibility, best practices, and SEO
+- **Google Lighthouse** - `layered-ui-rails` scores a [perfect 100](test/dummy/app/assets/images/lighthouse.webp) across all four Google Lighthouse categories - performance, accessibility, best practices, and SEO
 
 ## Documentation
 
