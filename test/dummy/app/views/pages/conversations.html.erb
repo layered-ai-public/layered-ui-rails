@@ -50,8 +50,16 @@
         <div class="l-ui-message__avatar">BK</div>
         <div class="l-ui-message__bubble">
           <div class="l-ui-message__author">Bob</div>
-          <div class="l-ui-message__body">
-            I left a few comments on the PR. Nothing major, just some suggestions for the error handling.
+          <div class="l-ui-message__body l-ui-markdown">
+            <p>I left a few comments on the PR. The main issue is the <code>validate_input</code> method - it doesn't handle <strong>empty strings</strong> or <code>nil</code> values. Here's what I'd suggest:</p>
+            <pre><code>def validate_input(value)
+  return false if value.nil? || value.empty?
+  value.match?(/\A[\w\s]+\z/)
+end</code></pre>
+            <p>Also, the error messages could be more descriptive. Instead of <em>"invalid input"</em>, something like:</p>
+            <blockquote>
+              <p>Please enter a value containing only letters, numbers, and spaces.</p>
+            </blockquote>
           </div>
           <div class="l-ui-message__footer">
             <div class="l-ui-message__metadata">Claude Opus 4.6 (~215 tokens)</div>
@@ -62,12 +70,69 @@
 
       <div class="l-ui-message--sent">
         <div class="l-ui-message__bubble">
-          <div class="l-ui-message__body">
-            Good catches, Bob. I agree with both suggestions.
+          <div class="l-ui-message__body l-ui-markdown">
+            <p>Good catches, Bob. I agree with both suggestions. To summarise the changes needed:</p>
+            <ol>
+              <li>Add <strong>nil and empty string</strong> guards to <code>validate_input</code></li>
+              <li>Update error messages to be more descriptive</li>
+              <li>Add unit tests for the new edge cases</li>
+            </ol>
+            <p>I'll push a fix shortly.</p>
           </div>
           <div class="l-ui-message__footer">
             <div class="l-ui-message__metadata">ChatGPT 5.2 (~84 tokens)</div>
             <div class="l-ui-message__timestamp">11:02 AM</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="l-ui-message">
+        <div class="l-ui-message__avatar">AL</div>
+        <div class="l-ui-message__bubble">
+          <div class="l-ui-message__author">Alice</div>
+          <div class="l-ui-message__body l-ui-markdown">
+            <p>I've pushed the fix. Here's what changed:</p>
+            <h3>Validation</h3>
+            <ul>
+              <li>Added <s>early return</s> guard clause for <code>nil</code> and empty strings</li>
+              <li>Improved the regex to also allow <em>hyphens</em> and <em>underscores</em></li>
+            </ul>
+            <h3>Error messages</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Before</th>
+                  <th>After</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>invalid input</code></td>
+                  <td>Please enter a valid name</td>
+                </tr>
+                <tr>
+                  <td><code>too long</code></td>
+                  <td>Name must be under 255 characters</td>
+                </tr>
+              </tbody>
+            </table>
+            <hr>
+            <p>Ready for re-review when you get a chance.</p>
+          </div>
+          <div class="l-ui-message__footer">
+            <div class="l-ui-message__metadata">ChatGPT 5.2 (~340 tokens)</div>
+            <div class="l-ui-message__timestamp">11:30 AM</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="l-ui-message">
+        <div class="l-ui-message__avatar">BK</div>
+        <div class="l-ui-message__bubble">
+          <div class="l-ui-typing-indicator">
+            <div class="l-ui-typing-indicator__dot"></div>
+            <div class="l-ui-typing-indicator__dot"></div>
+            <div class="l-ui-typing-indicator__dot"></div>
           </div>
         </div>
       </div>
@@ -98,9 +163,31 @@
       <code class="l-ui-surface">&lt;div class="l-ui-conversation__container"&gt;
   &lt;div class="l-ui-conversation__messages"&gt;
     &lt;div class="l-ui-conversation"&gt;
-      &lt;!-- Messages go here --&gt;
+      &lt;!-- Plain text message --&gt;
       &lt;div class="l-ui-message"&gt;...&lt;/div&gt;
       &lt;div class="l-ui-message--sent"&gt;...&lt;/div&gt;
+
+      &lt;!-- Markdown message --&gt;
+      &lt;div class="l-ui-message"&gt;
+        &lt;div class="l-ui-message__avatar"&gt;BK&lt;/div&gt;
+        &lt;div class="l-ui-message__bubble"&gt;
+          &lt;div class="l-ui-message__body l-ui-markdown"&gt;
+            &lt;p&gt;Rendered HTML from markdown...&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;!-- Typing indicator --&gt;
+      &lt;div class="l-ui-message"&gt;
+        &lt;div class="l-ui-message__avatar"&gt;BK&lt;/div&gt;
+        &lt;div class="l-ui-message__bubble"&gt;
+          &lt;div class="l-ui-typing-indicator"&gt;
+            &lt;div class="l-ui-typing-indicator__dot"&gt;&lt;/div&gt;
+            &lt;div class="l-ui-typing-indicator__dot"&gt;&lt;/div&gt;
+            &lt;div class="l-ui-typing-indicator__dot"&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;div class="l-ui-conversation__composer"&gt;
@@ -186,6 +273,14 @@
       <tr>
         <td class="l-ui-table__cell--primary"><code>l-ui-message__timestamp</code></td>
         <td class="l-ui-table__cell">Message time, right-aligned in footer</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-typing-indicator</code></td>
+        <td class="l-ui-table__cell">Animated typing indicator with bouncing dots</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-typing-indicator__dot</code></td>
+        <td class="l-ui-table__cell">Individual dot inside the typing indicator</td>
       </tr>
     </tbody>
   </table>

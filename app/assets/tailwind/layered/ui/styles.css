@@ -253,6 +253,137 @@
          space-y-1;
 }
 
+/* Markdown */
+
+.l-ui-markdown > *:first-child {
+  @apply !mt-0;
+}
+
+.l-ui-markdown > *:last-child {
+  @apply !mb-0;
+}
+
+.l-ui-markdown p {
+  @apply my-3
+         text-sm leading-relaxed;
+}
+
+.l-ui-markdown h1 {
+  @apply my-4
+         text-lg font-bold;
+}
+
+.l-ui-markdown h2 {
+  @apply my-3
+         text-base font-bold;
+}
+
+.l-ui-markdown h3 {
+  @apply my-3
+         text-sm font-bold;
+}
+
+.l-ui-markdown h4,
+.l-ui-markdown h5,
+.l-ui-markdown h6 {
+  @apply my-2
+         text-sm font-semibold;
+}
+
+.l-ui-markdown strong {
+  @apply font-bold;
+}
+
+.l-ui-markdown em {
+  @apply italic;
+}
+
+.l-ui-markdown s,
+.l-ui-markdown del {
+  @apply line-through;
+}
+
+.l-ui-markdown a {
+  @apply border-b border-current;
+}
+
+.l-ui-markdown ul {
+  @apply my-3 pl-5
+         text-sm
+         list-disc;
+}
+
+.l-ui-markdown ol {
+  @apply my-3 pl-5
+         text-sm
+         list-decimal;
+}
+
+.l-ui-markdown li {
+  @apply my-1
+         text-sm;
+}
+
+.l-ui-markdown li > ul,
+.l-ui-markdown li > ol {
+  @apply my-1;
+}
+
+.l-ui-markdown code {
+  @apply px-1.5 py-0.5
+         text-xs
+         bg-surface-active
+         rounded;
+}
+
+.l-ui-markdown pre {
+  @apply my-3 p-3
+         bg-surface-active
+         rounded-md
+         overflow-x-auto;
+}
+
+.l-ui-markdown pre code {
+  @apply p-0
+         text-xs
+         bg-transparent
+         rounded-none;
+}
+
+.l-ui-markdown blockquote {
+  @apply my-3 pl-3
+         text-sm
+         text-foreground-muted
+         border-l-2 border-border;
+}
+
+.l-ui-markdown blockquote p {
+  @apply my-1;
+}
+
+.l-ui-markdown table {
+  @apply my-3 w-full
+         text-sm
+         border-collapse;
+}
+
+.l-ui-markdown th {
+  @apply px-3 py-1.5
+         text-left text-sm font-bold
+         border-b border-border;
+}
+
+.l-ui-markdown td {
+  @apply px-3 py-1.5
+         text-sm
+         border-b border-border;
+}
+
+.l-ui-markdown hr {
+  @apply my-4
+         border-t border-border;
+}
+
 /* HTML */
 
 .l-ui-html {
@@ -1227,6 +1358,38 @@
 
 .l-ui-message--sent .l-ui-message__timestamp {
   @apply text-button-primary-text/50;
+}
+
+.l-ui-message--sent .l-ui-message__body p {
+  color: inherit;
+}
+
+/* Typing indicator */
+
+@keyframes l-ui-typing-bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-4px); }
+}
+
+.l-ui-typing-indicator {
+  @apply flex items-center
+         gap-1
+         h-5;
+}
+
+.l-ui-typing-indicator__dot {
+  @apply w-1.5 h-1.5
+         bg-foreground-muted
+         rounded-full;
+  animation: l-ui-typing-bounce 1.2s ease-in-out infinite;
+}
+
+.l-ui-typing-indicator__dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.l-ui-typing-indicator__dot:nth-child(3) {
+  animation-delay: 0.3s;
 }
 
 /* Modal */
