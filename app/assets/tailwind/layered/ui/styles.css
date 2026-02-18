@@ -1338,7 +1338,7 @@
 
 .l-ui-message__footer {
   @apply flex items-center
-         gap-2;
+         gap-4 mt-1;
 }
 
 .l-ui-message__metadata {
