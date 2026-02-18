@@ -1322,7 +1322,7 @@
 }
 
 .l-ui-message__bubble {
-  @apply flex flex-col gap-2
+  @apply flex flex-col gap-4
          p-4
          min-w-0
          bg-surface
@@ -1345,7 +1345,7 @@
 
 .l-ui-message__footer {
   @apply flex items-center
-         gap-2;
+         gap-4;
 }
 
 .l-ui-message__metadata {
