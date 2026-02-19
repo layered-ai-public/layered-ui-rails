@@ -1342,44 +1342,43 @@
 
 .l-ui-message--sent .l-ui-message__bubble {
   @apply bg-button-primary-bg
-         text-button-primary-text;
+         text-foreground;
 }
 
 .l-ui-message__author {
   @apply text-sm font-bold font-manrope
-         text-foreground;
+         text-foreground-muted;
 }
 
 .l-ui-message__body {
-  @apply text-sm;
+  @apply text-sm
+         text-foreground;
 }
 
 .l-ui-message__footer {
   @apply flex items-center
-         gap-4;
-}
-
-.l-ui-message__metadata {
-  @apply text-xs
+         gap-4
          text-foreground-muted;
 }
 
-.l-ui-message--sent .l-ui-message__metadata {
-  @apply text-button-primary-text/60;
+.l-ui-message__metadata {
+  @apply text-xs;
 }
 
 .l-ui-message__timestamp {
   @apply ml-auto
-         text-xs
-         text-foreground-muted;
+         text-xs;
 }
 
-.l-ui-message--sent .l-ui-message__timestamp {
+.l-ui-message--sent .l-ui-message__body,
+.l-ui-message--sent .l-ui-message__body p,
+.l-ui-message--sent .l-ui-message__body ul li,
+.l-ui-message--sent .l-ui-message__body ol li {
+  @apply text-button-primary-text;
+}
+
+.l-ui-message--sent .l-ui-message__footer {
   @apply text-button-primary-text/50;
-}
-
-.l-ui-message--sent .l-ui-message__body p {
-  color: inherit;
 }
 
 /* Typing indicator */
