@@ -1002,11 +1002,16 @@
 
 .l-ui-table__cell--action {
   @apply table-cell-padding
-         text-sm text-right font-medium whitespace-nowrap;
+         flex items-center justify-end gap-4
+         text-sm font-medium whitespace-nowrap;
 
   & button, & a {
     @apply underline text-foreground-muted hover:text-foreground
            bg-transparent border-0 p-0 cursor-pointer;
+  }
+
+  & .l-ui-table__action--danger {
+    @apply text-danger hover:text-danger;
   }
 }
 
@@ -1289,7 +1294,7 @@
 }
 
 .l-ui-conversation__composer .l-ui-button--icon {
-  @apply absolute right-0 bottom-0;
+  @apply absolute right-0 -bottom-0.5;
 }
 
 .l-ui-conversation__separator {
