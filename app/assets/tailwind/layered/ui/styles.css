@@ -1337,22 +1337,21 @@
          p-4
          min-w-0
          bg-surface
+         text-foreground
          rounded-lg;
 }
 
 .l-ui-message--sent .l-ui-message__bubble {
   @apply bg-button-primary-bg
-         text-foreground;
+         text-button-primary-text;
 }
 
 .l-ui-message__author {
-  @apply text-sm font-bold font-manrope
-         text-foreground-muted;
+  @apply text-sm font-bold font-manrope;
 }
 
 .l-ui-message__body {
-  @apply text-sm
-         text-foreground;
+  @apply text-sm;
 }
 
 .l-ui-message__footer {
@@ -1370,7 +1369,12 @@
          text-xs;
 }
 
-.l-ui-message--sent .l-ui-message__body,
+.l-ui-message__body p,
+.l-ui-message__body ul li,
+.l-ui-message__body ol li {
+  @apply text-foreground;
+}
+
 .l-ui-message--sent .l-ui-message__body p,
 .l-ui-message--sent .l-ui-message__body ul li,
 .l-ui-message--sent .l-ui-message__body ol li {
