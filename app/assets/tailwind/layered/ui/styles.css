@@ -226,6 +226,10 @@
   @apply !mt-0 md:!mt-0;
 }
 
+.l-ui-utility---mr-2 {
+  @apply !-mr-2 md:!-mr-2;
+}
+
 .l-ui-utility--mt-sm {
   @apply !mt-1 md:!mt-2;
 }
@@ -999,6 +1003,11 @@
 .l-ui-table__cell--action {
   @apply table-cell-padding
          text-sm text-right font-medium whitespace-nowrap;
+
+  & button, & a {
+    @apply underline text-foreground-muted hover:text-foreground
+           bg-transparent border-0 p-0 cursor-pointer;
+  }
 }
 
 .l-ui-table th:first-child,
