@@ -222,6 +222,10 @@
          transition-[margin] duration-300;
 }
 
+.l-ui-utility--mt-0 {
+  @apply !mt-0 md:!mt-0;
+}
+
 .l-ui-utility--mt-sm {
   @apply !mt-1 md:!mt-2;
 }
@@ -870,12 +874,12 @@
   @apply text-sm cursor-pointer;
 }
 
-.l-ui-form__group:has(> .l-ui-select) {
+.l-ui-select-wrapper {
   @apply relative;
 }
 
-.l-ui-form__group:has(> .l-ui-select)::after {
-  @apply absolute right-3 bottom-[14px]
+.l-ui-select-wrapper::after {
+  @apply absolute right-3 top-1/2 -translate-y-1/2
          w-4 h-4
          pointer-events-none;
   content: '';

@@ -29,12 +29,14 @@
       Role
       <span class="l-ui-form__required">*</span>
     </label>
-    <select id="role" name="role" class="l-ui-select" required>
-      <option value="">Select a role</option>
-      <option value="admin">Admin</option>
-      <option value="editor">Editor</option>
-      <option value="viewer">Viewer</option>
-    </select>
+    <div class="l-ui-select-wrapper">
+      <select id="role" name="role" class="l-ui-select" required>
+        <option value="">Select a role</option>
+        <option value="admin">Admin</option>
+        <option value="editor">Editor</option>
+        <option value="viewer">Viewer</option>
+      </select>
+    </div>
   </div>
 
   <div class="l-ui-form__group">
@@ -77,9 +79,11 @@
 
   &lt;div class="l-ui-form__group"&gt;
     &lt;label class="l-ui-label" for="role"&gt;Role&lt;/label&gt;
-    &lt;select class="l-ui-select"&gt;
-      &lt;option value=""&gt;Select a role&lt;/option&gt;
-    &lt;/select&gt;
+    &lt;div class="l-ui-select-wrapper"&gt;
+      &lt;select class="l-ui-select"&gt;
+        &lt;option value=""&gt;Select a role&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/div&gt;
   &lt;/div&gt;
 
   &lt;button type="submit" class="l-ui-button--primary"&gt;
@@ -251,6 +255,10 @@
       <tr>
         <td class="l-ui-table__cell--primary"><code>l-ui-form__field</code></td>
         <td class="l-ui-table__cell">Text input or textarea</td>
+      </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-select-wrapper</code></td>
+        <td class="l-ui-table__cell">Wrapper for select (adds caret icon)</td>
       </tr>
       <tr>
         <td class="l-ui-table__cell--primary"><code>l-ui-select</code></td>
