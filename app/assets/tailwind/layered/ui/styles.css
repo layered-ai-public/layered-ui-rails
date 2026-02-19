@@ -1405,6 +1405,17 @@
   animation-delay: 0.3s;
 }
 
+/* Token fade-in */
+
+@keyframes l-ui-token-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.l-ui-token-fade {
+  animation: l-ui-token-fade-in 0.3s ease-in;
+}
+
 /* Modal */
 
 .l-ui-modal {

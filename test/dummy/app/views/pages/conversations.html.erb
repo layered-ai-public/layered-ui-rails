@@ -282,6 +282,40 @@ end</code></pre>
         <td class="l-ui-table__cell--primary"><code>l-ui-typing-indicator__dot</code></td>
         <td class="l-ui-table__cell">Individual dot inside the typing indicator</td>
       </tr>
+      <tr>
+        <td class="l-ui-table__cell--primary"><code>l-ui-token-fade</code></td>
+        <td class="l-ui-table__cell">Fade-in animation for streaming tokens (0.3s ease-in)</td>
+      </tr>
     </tbody>
   </table>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">Token fade-in</h2>
+
+<p class="l-ui-utility--mt-md">Apply <code>l-ui-token-fade</code> to each token as it arrives during streaming. The animation fades each token in over 0.3s with ease-in timing, giving a smooth appearance as text is generated.</p>
+
+<div class="l-ui-surface l-ui-utility--mt-lg l-ui-utility--p-lg">
+  <span class="l-ui-token-fade">Hello, </span><span class="l-ui-token-fade" style="animation-delay: 0.1s">I'd </span><span class="l-ui-token-fade" style="animation-delay: 0.2s">be </span><span class="l-ui-token-fade" style="animation-delay: 0.3s">happy </span><span class="l-ui-token-fade" style="animation-delay: 0.4s">to </span><span class="l-ui-token-fade" style="animation-delay: 0.5s">help </span><span class="l-ui-token-fade" style="animation-delay: 0.6s">with </span><span class="l-ui-token-fade" style="animation-delay: 0.7s">that.</span>
+</div>
+
+<div class="l-ui-utility--mt-lg" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+    <div class="l-ui-modal__header">
+      <h3>Token fade-in</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
+        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <code class="l-ui-surface">&lt;!-- Apply to each token span as it streams in --&gt;
+&lt;span class="l-ui-token-fade"&gt;Hello, &lt;/span&gt;
+&lt;span class="l-ui-token-fade"&gt;I'd &lt;/span&gt;
+&lt;span class="l-ui-token-fade"&gt;be &lt;/span&gt;
+&lt;span class="l-ui-token-fade"&gt;happy &lt;/span&gt;
+...</code>
+    </div>
+  </dialog>
 </div>
