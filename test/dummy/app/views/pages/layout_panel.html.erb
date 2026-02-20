@@ -1,6 +1,12 @@
 <h1>Panel</h1>
 
-<p class="l-ui-utility--mt-md">The slide-out panel is only rendered when the <code>:l_ui_panel_body</code> content block is present. Click the panel button in the bottom right corner to see it in action, or use <kbd>⌘i</kbd> / <kbd>Ctrl+i</kbd> to toggle it.</p>
+<p class="l-ui-utility--mt-md">The slide-out panel is only rendered when the <code>:l_ui_panel_body</code> content block is present. Click the panel button in the bottom-right corner to see it in action, or use <kbd>⌘i</kbd> / <kbd>Ctrl+i</kbd> to toggle it.</p>
+
+<h2 class="l-ui-utility--mt-lg">Draggable button</h2>
+
+<p class="l-ui-utility--mt-md">The panel toggle button can be repositioned by dragging it with a mouse or touch. When released, it snaps to the nearest horizontal screen edge. The position is saved to <code>localStorage</code> and restored across sessions.</p>
+
+<p class="l-ui-utility--mt-md">A short tap (under 5px of movement) toggles the panel as normal. Keyboard activation (<kbd>Enter</kbd> / <kbd>Space</kbd>) is unaffected by the drag behaviour.</p>
 
 <p class="l-ui-utility--mt-md">For full control, override the partial by creating <code>app/views/layouts/layered_ui/_panel.html.erb</code> in your application.</p>
 

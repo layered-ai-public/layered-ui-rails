@@ -1155,7 +1155,7 @@
 
 .l-ui-panel__button {
   @apply fixed flex items-center justify-center
-         bottom-4 right-4 md:bottom-8 md:right-8 w-14 h-14
+         w-14 h-14
          z-40
          cursor-pointer
          bg-button-primary-bg/60
@@ -1163,6 +1163,22 @@
          rounded-full shadow-lg backdrop-blur-xs
          focus-ring
          transition-all;
+  touch-action: none;
+}
+
+.l-ui-panel__button > * {
+  pointer-events: none;
+}
+
+.l-ui-panel__button--dragging {
+  transition-property: none;
+  cursor: grabbing;
+}
+
+.l-ui-panel__button--snapping {
+  transition-property: top, left, right;
+  transition-duration: 300ms;
+  transition-timing-function: ease-out;
 }
 
 .l-ui-panel__button.hidden {
