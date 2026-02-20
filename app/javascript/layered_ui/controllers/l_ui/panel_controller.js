@@ -469,16 +469,16 @@ export default class extends Controller {
       const edge = centerX < midpoint ? "left" : "right"
 
       // Snap to edge with animation
+      // Always animate via `left` since CSS cannot transition to/from `auto`
       btn.classList.remove("l-ui-panel__button--dragging")
       btn.classList.add("l-ui-panel__button--snapping")
 
-      if (edge === "left") {
-        btn.style.left = `${leftEdge}px`
-        btn.style.right = "auto"
-      } else {
-        btn.style.right = `${padding}px`
-        btn.style.left = "auto"
-      }
+      const targetLeft = edge === "left"
+        ? leftEdge
+        : window.innerWidth - 56 - padding // 56 = button width (w-14)
+
+      btn.style.left = `${targetLeft}px`
+      btn.style.right = "auto"
 
       const topPercent = rect.top / window.innerHeight * 100
 
@@ -489,6 +489,13 @@ export default class extends Controller {
       const onTransitionEnd = () => {
         btn.classList.remove("l-ui-panel__button--snapping")
         btn.removeEventListener("transitionend", onTransitionEnd)
+
+        // After animation, switch right-edge buttons to right-based positioning
+        // so they stay anchored correctly on window resize
+        if (edge === "right") {
+          btn.style.right = `${padding}px`
+          btn.style.left = "auto"
+        }
       }
       btn.addEventListener("transitionend", onTransitionEnd)
 
@@ -496,6 +503,10 @@ export default class extends Controller {
       setTimeout(() => {
         btn.classList.remove("l-ui-panel__button--snapping")
         btn.removeEventListener("transitionend", onTransitionEnd)
+        if (edge === "right") {
+          btn.style.right = `${padding}px`
+          btn.style.left = "auto"
+        }
       }, 400)
 
       // Suppress the click event that follows mouseup
