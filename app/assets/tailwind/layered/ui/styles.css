@@ -425,12 +425,13 @@
 }
 
 .l-ui-page--vertically-centered {
-  @apply flex flex-col items-center justify-center
-         h-full;
+  @apply flex flex-col items-center
+         min-h-full;
 }
 
 .l-ui-page--width-constrained {
   @apply flex flex-col w-full
+         my-auto
          md:max-w-sm;
 }
 
