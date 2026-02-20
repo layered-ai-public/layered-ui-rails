@@ -5,14 +5,14 @@
 <h2 class="l-ui-utility--mt-2xl">Example table</h2>
 
 <div class="l-ui-container--table l-ui-utility--mt-lg">
-  <table class="l-ui-table">
+  <table class="l-ui-table" aria-label="Users">
     <thead class="l-ui-table__header">
       <tr>
-        <th class="l-ui-table__header-cell">Name</th>
-        <th class="l-ui-table__header-cell">Email</th>
-        <th class="l-ui-table__header-cell">Joined</th>
-        <th class="l-ui-table__header-cell">Updated</th>
-        <th class="l-ui-table__header-cell"></th>
+        <th class="l-ui-table__header-cell" scope="col">Name</th>
+        <th class="l-ui-table__header-cell" scope="col">Email</th>
+        <th class="l-ui-table__header-cell" scope="col">Joined</th>
+        <th class="l-ui-table__header-cell" scope="col">Updated</th>
+        <th class="l-ui-table__header-cell" scope="col"><span class="l-ui-sr-only">Actions</span></th>
       </tr>
     </thead>
     <tbody class="l-ui-table__body">
@@ -46,12 +46,12 @@
     </div>
     <div class="l-ui-modal__body">
       <code class="l-ui-surface">&lt;div class="l-ui-container--table"&gt;
-  &lt;table class="l-ui-table"&gt;
+  &lt;table class="l-ui-table" aria-label="Users"&gt;
     &lt;thead class="l-ui-table__header"&gt;
       &lt;tr&gt;
-        &lt;th class="l-ui-table__header-cell"&gt;Name&lt;/th&gt;
-        &lt;th class="l-ui-table__header-cell"&gt;Email&lt;/th&gt;
-        &lt;th class="l-ui-table__header-cell"&gt;&lt;/th&gt;
+        &lt;th class="l-ui-table__header-cell" scope="col"&gt;Name&lt;/th&gt;
+        &lt;th class="l-ui-table__header-cell" scope="col"&gt;Email&lt;/th&gt;
+        &lt;th class="l-ui-table__header-cell" scope="col"&gt;&lt;span class="l-ui-sr-only"&gt;Actions&lt;/span&gt;&lt;/th&gt;
       &lt;/tr&gt;
     &lt;/thead&gt;
     &lt;tbody class="l-ui-table__body"&gt;
@@ -73,11 +73,11 @@
 <h2 class="l-ui-utility--mt-2xl">CSS classes</h2>
 
 <div class="l-ui-container--table l-ui-utility--mt-lg">
-  <table class="l-ui-table">
+  <table class="l-ui-table" aria-label="Table CSS classes">
     <thead class="l-ui-table__header">
       <tr>
-        <th class="l-ui-table__header-cell">Class</th>
-        <th class="l-ui-table__header-cell">Description</th>
+        <th class="l-ui-table__header-cell" scope="col">Class</th>
+        <th class="l-ui-table__header-cell" scope="col">Description</th>
       </tr>
     </thead>
     <tbody class="l-ui-table__body">
