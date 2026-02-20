@@ -130,7 +130,8 @@ end</code></pre>
       <div class="l-ui-message">
         <div class="l-ui-message__avatar">BK</div>
         <div class="l-ui-message__bubble">
-          <div class="l-ui-typing-indicator">
+          <div class="l-ui-typing-indicator" role="status">
+            <span class="l-ui-sr-only">Someone is typing</span>
             <div class="l-ui-typing-indicator__dot"></div>
             <div class="l-ui-typing-indicator__dot"></div>
             <div class="l-ui-typing-indicator__dot"></div>
@@ -140,20 +141,20 @@ end</code></pre>
     </div>
   </div>
   <div class="l-ui-conversation__composer">
-    <textarea class="l-ui-conversation__composer-input" placeholder="Type a message..." rows="1"></textarea>
+    <textarea class="l-ui-conversation__composer-input" placeholder="Type a message..." rows="1" aria-label="Type a message"></textarea>
     <button class="l-ui-button--icon" aria-label="Send">
-      <%= image_tag "layered_ui/icon_send.svg", class: "l-ui-icon--sm", alt: "Send" %>
+      <%= image_tag "layered_ui/icon_send.svg", class: "l-ui-icon--sm", alt: "", aria: { hidden: true } %>
     </button>
   </div>
 </div>
 
 <div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
   <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
-  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-conversations-container-heading">
     <div class="l-ui-modal__header">
-      <h3>Conversation container</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
-        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <h3 id="modal-conversations-container-heading">Conversation container</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>
@@ -299,11 +300,11 @@ end</code></pre>
 
 <div class="l-ui-utility--mt-lg" data-controller="l-ui--modal">
   <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
-  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-conversations-token-fade-heading">
     <div class="l-ui-modal__header">
-      <h3>Token fade-in</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
-        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <h3 id="modal-conversations-token-fade-heading">Token fade-in</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>

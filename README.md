@@ -9,13 +9,13 @@ An open source, Rails 8+ engine that provides WCAG 2.2 AA compliant design token
 <table align="center">
   <tr>
     <td align="center">
-      <img src="test/dummy/app/assets/images/light_desktop.webp" alt="Light theme (desktop)" height="300">
-      <img src="test/dummy/app/assets/images/light_mobile.webp" alt="Light theme (mobile)" height="300">
+      <img src="https://github.com/layered-ai-public/layered-ui-rails/raw/refs/heads/main/test/dummy/app/assets/images/light_desktop.webp" alt="Light theme (desktop)" height="300">
+      <img src="https://github.com/layered-ai-public/layered-ui-rails/raw/refs/heads/main/test/dummy/app/assets/images/light_mobile.webp" alt="Light theme (mobile)" height="300">
     </td>
     <td width="20"></td>
     <td align="center">
-      <img src="test/dummy/app/assets/images/dark_desktop.webp" alt="Dark theme (desktop)" height="300">
-      <img src="test/dummy/app/assets/images/dark_mobile.webp" alt="Dark theme (mobile)" height="300">
+      <img src="https://github.com/layered-ai-public/layered-ui-rails/raw/refs/heads/main/test/dummy/app/assets/images/dark_desktop.webp" alt="Dark theme (desktop)" height="300">
+      <img src="https://github.com/layered-ai-public/layered-ui-rails/raw/refs/heads/main/test/dummy/app/assets/images/dark_mobile.webp" alt="Dark theme (mobile)" height="300">
     </td>
   </tr>
   <tr>
@@ -60,7 +60,7 @@ Then update your application layout to render the engine layout:
 - **Components** - buttons, forms, surfaces, tables, tabs, notices, badges, conversations, modals, and pagination
 - **Optional integrations** - Devise authentication and Pagy pagination with styled views
 - **Customisable branding** - Override the default logos and icons and colors
-- **Google Lighthouse** - `layered-ui-rails` scores a [perfect 100](test/dummy/app/assets/images/lighthouse.webp) across all four Google Lighthouse categories - performance, accessibility, best practices, and SEO
+- **Google Lighthouse** - `layered-ui-rails` scores a [perfect 100](https://github.com/layered-ai-public/layered-ui-rails/raw/refs/heads/main/test/dummy/app/assets/images/lighthouse.webp) across all four Google Lighthouse categories - performance, accessibility, best practices, and SEO
 
 ## Documentation
 

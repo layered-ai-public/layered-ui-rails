@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-02-20
+
+### Added
+
+- Conversation component with markdown support, typing indicators, and token fade-in animation
+- Movable panel toggle button with drag-and-drop repositioning
+
+### Changed
+
+- Improved message styles and spacing
+- Better table header styling
+- Fixed overflow on code blocks and surfaces
+- Fixed margins on small screens when vertically centred
+- Fixed select element styling
+- Rebuilt CSS from engine source every 5 seconds in development
+
 ## [0.1.1] - 2026-02-17
 
 ### Added

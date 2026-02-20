@@ -121,6 +121,12 @@ export default class extends Controller {
     this.containerTarget.removeAttribute("inert")
     this.actionButtonTarget.setAttribute("aria-expanded", "true")
 
+    // On mobile, prevent background content from being tabbable
+    if (this.isMobile()) {
+      const main = document.querySelector("main")
+      if (main) main.setAttribute("inert", "")
+    }
+
     try { localStorage.setItem("panelOpen", "true") } catch (e) { /* localStorage unavailable */ }
     this.updatePageMargin()
 
@@ -144,6 +150,10 @@ export default class extends Controller {
     this.containerTarget.setAttribute("aria-hidden", "true")
     this.containerTarget.setAttribute("inert", "")
     this.actionButtonTarget.setAttribute("aria-expanded", "false")
+
+    // Restore background content tabbability
+    const main = document.querySelector("main")
+    if (main) main.removeAttribute("inert")
 
     try { localStorage.setItem("panelOpen", "false") } catch (e) { /* localStorage unavailable */ }
     this.updatePageMargin()
@@ -210,6 +220,7 @@ export default class extends Controller {
     if (this.hasResizeHandleTarget) {
       this.resizeHandleTarget.setAttribute("aria-valuenow", width)
       this.resizeHandleTarget.setAttribute("aria-valuemax", this.getMaxWidth())
+      this.resizeHandleTarget.setAttribute("aria-valuetext", `Panel width: ${width} pixels`)
     }
   }
 

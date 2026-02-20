@@ -160,10 +160,9 @@
 /* Accessibility */
 
 @media (prefers-reduced-motion: reduce) {
-  [data-l-ui-reduce-motion],
-  [data-l-ui-reduce-motion] *,
-  [data-l-ui-reduce-motion] *::before,
-  [data-l-ui-reduce-motion] *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -312,7 +311,8 @@
 }
 
 .l-ui-markdown a {
-  @apply border-b border-current;
+  @apply border-b border-current
+         focus-ring rounded-sm;
 }
 
 .l-ui-markdown ul {
@@ -1008,7 +1008,8 @@
 
   & button, & a {
     @apply underline text-foreground-muted hover:text-foreground
-           bg-transparent border-0 p-0 cursor-pointer;
+           bg-transparent border-0 px-0.5 cursor-pointer
+           focus-ring rounded-sm;
   }
 
   & .l-ui-table__action--danger {
@@ -1221,7 +1222,7 @@
          z-50
          cursor-col-resize
          hover:bg-border
-         focus:bg-border focus:outline-none
+         focus-ring
          transition-colors
          hidden md:block;
 }

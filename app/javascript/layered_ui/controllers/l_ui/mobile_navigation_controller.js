@@ -44,6 +44,12 @@ export default class extends Controller {
     if (this.hasOpenIconTarget) this.openIconTarget.style.display = "none"
     if (this.hasCloseIconTarget) this.closeIconTarget.style.display = ""
 
+    // Prevent background content from being tabbable
+    const main = document.querySelector("main")
+    const panel = document.querySelector(".l-ui-container--panel")
+    if (main) main.setAttribute("inert", "")
+    if (panel) panel.setAttribute("inert", "")
+
     // Move focus to the first focusable element in the navigation
     requestAnimationFrame(() => {
       const firstFocusable = this.navigationTarget.querySelector(
@@ -68,6 +74,12 @@ export default class extends Controller {
     }
     if (this.hasOpenIconTarget) this.openIconTarget.style.display = ""
     if (this.hasCloseIconTarget) this.closeIconTarget.style.display = "none"
+
+    // Restore background content tabbability
+    const main = document.querySelector("main")
+    const panel = document.querySelector(".l-ui-container--panel")
+    if (main) main.removeAttribute("inert")
+    if (panel) panel.removeAttribute("inert")
 
     // Restore focus to the element that opened the navigation
     if (this.previousActiveElement && typeof this.previousActiveElement.focus === "function") {

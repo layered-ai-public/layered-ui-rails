@@ -68,6 +68,7 @@ export default class extends Controller {
       if (this.previousActiveElement && typeof this.previousActiveElement.focus === "function") {
         this.previousActiveElement.focus()
       }
+      this.announce("Dialog closed")
     }
     element.addEventListener("close", this._closeHandler)
   }
