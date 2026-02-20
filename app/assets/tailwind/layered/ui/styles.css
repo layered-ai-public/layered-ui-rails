@@ -125,7 +125,7 @@
     font-size: 0.8125rem;
     line-height: 1.25rem;
     @apply text-foreground-muted
-           whitespace-pre;
+           whitespace-pre overflow-x-auto;
   }
 }
 
@@ -749,7 +749,7 @@
 @utility surface {
   @apply block
          p-4
-         rounded-sm;
+         rounded-sm overflow-x-auto;
 }
 
 .l-ui-surface {
