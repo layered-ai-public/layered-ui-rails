@@ -13,6 +13,7 @@ export default class extends Controller {
     this.boundWindowResize = this.handleWindowResize.bind(this)
 
     this.restoreWidth()
+    this.updateHandleAria(this.containerTarget.offsetWidth)
     window.addEventListener('resize', this.boundWindowResize)
   }
 
@@ -116,7 +117,7 @@ export default class extends Controller {
       this.containerTarget.style.width = `${DEFAULT_WIDTH}px`
       try { localStorage.removeItem("panelWidth") } catch (e) { /* unavailable */ }
     }
-    this.updateHandleAria(DEFAULT_WIDTH)
+    this.updateHandleAria(this.containerTarget.offsetWidth)
     this.dispatch("widthChanged")
   }
 
@@ -140,6 +141,7 @@ export default class extends Controller {
   // Handle window resize events
   handleWindowResize() {
     this.restoreWidth()
+    this.updateHandleAria(this.containerTarget.offsetWidth)
     this.dispatch("widthChanged")
   }
 
@@ -152,6 +154,7 @@ export default class extends Controller {
   // Update the resize handle's ARIA values
   updateHandleAria(width) {
     if (this.hasHandleTarget) {
+      this.handleTarget.setAttribute("aria-valuemin", MIN_WIDTH)
       this.handleTarget.setAttribute("aria-valuenow", width)
       this.handleTarget.setAttribute("aria-valuemax", this.getMaxWidth())
       this.handleTarget.setAttribute("aria-valuetext", `Panel width: ${width} pixels`)
