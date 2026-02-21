@@ -31,7 +31,8 @@
 <p class="l-ui-utility--mt-md">The layout provides these configurable features.</p>
 
 <div class="l-ui-container--table l-ui-utility--mt-lg">
-  <table class="l-ui-table" aria-label="Layout features">
+  <table class="l-ui-table">
+    <caption>Layout features</caption>
     <thead class="l-ui-table__header">
       <tr>
         <th class="l-ui-table__header-cell" scope="col">Feature</th>
@@ -40,27 +41,27 @@
     </thead>
     <tbody class="l-ui-table__body">
       <tr>
-        <td class="l-ui-table__cell--primary"><%= link_to "Logos", layout_logos_path %></td>
+        <th class="l-ui-table__cell--primary" scope="row"><%= link_to "Logos", layout_logos_path %></th>
         <td class="l-ui-table__cell">Header logo overrides for light and dark themes</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><%= link_to "Icons", layout_icons_path %></td>
+        <th class="l-ui-table__cell--primary" scope="row"><%= link_to "Icons", layout_icons_path %></th>
         <td class="l-ui-table__cell">Favicon, touch icon, and panel toggle button overrides</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><%= link_to "Colors", layout_colors_path %></td>
+        <th class="l-ui-table__cell--primary" scope="row"><%= link_to "Colors", layout_colors_path %></th>
         <td class="l-ui-table__cell">Accent color and full design token overrides</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><%= link_to "Metadata", layout_metadata_path %></td>
+        <th class="l-ui-table__cell--primary" scope="row"><%= link_to "Metadata", layout_metadata_path %></th>
         <td class="l-ui-table__cell">Page title and meta description via instance variables</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><%= link_to "Navigation", layout_navigation_path %></td>
+        <th class="l-ui-table__cell--primary" scope="row"><%= link_to "Navigation", layout_navigation_path %></th>
         <td class="l-ui-table__cell">Sidebar navigation links using <code>content_for</code> and helpers</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><%= link_to "Panel", layout_panel_path %></td>
+        <th class="l-ui-table__cell--primary" scope="row"><%= link_to "Panel", layout_panel_path %></th>
         <td class="l-ui-table__cell">Slide-out panel with heading and body content blocks</td>
       </tr>
     </tbody>

@@ -375,6 +375,13 @@
          border-collapse;
 }
 
+.l-ui-markdown caption {
+  @apply mb-2
+         text-left text-sm font-bold
+         text-foreground;
+  caption-side: top;
+}
+
 .l-ui-markdown th {
   @apply px-3 py-1.5
          text-left text-sm font-bold
@@ -975,6 +982,13 @@
          divide-y divide-border;
 }
 
+.l-ui-table caption {
+  @apply mb-2
+         text-left text-sm font-bold font-manrope
+         text-foreground;
+  caption-side: top;
+}
+
 .l-ui-table__header {
   @apply font-manrope font-bold;
 }
@@ -998,7 +1012,7 @@
 
 .l-ui-table__cell--primary {
   @apply table-cell-padding
-         text-sm font-medium whitespace-nowrap;
+         text-left text-sm font-medium whitespace-nowrap;
 }
 
 .l-ui-table__cell--action {
