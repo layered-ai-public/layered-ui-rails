@@ -1,6 +1,6 @@
 <div
   data-controller="l-ui--panel-resize l-ui--panel"
-  data-action="keydown.esc@window->l-ui--panel#handleEscape l-ui--panel-resize:widthChanged->l-ui--panel#updatePageMargin"
+  data-action="keydown.esc@window->l-ui--panel#handleEscape l-ui--panel-resize:widthChanged->l-ui--panel#updatePageMargin l-ui--panel-button:toggle->l-ui--panel#toggle"
 >
   <aside
     id="panel"
@@ -60,9 +60,11 @@
     aria-label="Open panel"
     aria-expanded="false"
     aria-controls="panel"
-    title="Toggle panel (Ctrl+i / ⌘i) - drag to move"
+    aria-keyshortcuts="Control+I Meta+I Control+Alt+1 Meta+Alt+1 Control+Alt+2 Meta+Alt+2 Control+Alt+3 Meta+Alt+3 Control+Alt+4 Meta+Alt+4"
+    tabindex="-1"
+    title="Toggle panel (Ctrl/⌘+i). Move to corners (Ctrl/⌘ + Alt/⌥ + 1/2/3/4), double-click, or drag."
     data-controller="l-ui--panel-button"
-    data-action="click->l-ui--panel#toggle mousedown->l-ui--panel-button#startDrag touchstart:passive->l-ui--panel-button#startDrag"
+    data-action="click->l-ui--panel-button#queueToggle dblclick->l-ui--panel-button#cycleCorner mousedown->l-ui--panel-button#startDrag touchstart:passive->l-ui--panel-button#startDrag"
     data-l-ui--panel-target="actionButton"
   >
     <%= image_tag("layered_ui/panel_icon_light.svg", alt: "Panel icon for light theme", class: "l-ui-icon--lg l-ui-panel__icon--light", aria: { hidden: true }) %>

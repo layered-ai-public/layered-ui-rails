@@ -107,7 +107,7 @@ export default class extends Controller {
       this.actionButtonTarget.disabled = false
       this.actionButtonTarget.setAttribute("aria-expanded", "false")
       this.actionButtonTarget.removeAttribute("aria-hidden")
-      this.actionButtonTarget.removeAttribute("tabindex")
+      this.actionButtonTarget.setAttribute("tabindex", "-1")
     }
 
     this.containerTarget.setAttribute("aria-hidden", "true")

@@ -42,6 +42,8 @@
     --foreground: 0 0% 13%;
     --foreground-muted: 0 0% 29%;
     --border: 0 0% 91%;
+    --border-structural: var(--border);
+    --border-control: 0 0% 55%;
     --ring: 0 0% 13%;
     --surface: 0 0% 96%;
     --surface-active: 0 0% 91%;
@@ -68,6 +70,8 @@
     --foreground: 0 0% 89%;
     --foreground-muted: 0 0% 71%;
     --border: 0 0% 16%;
+    --border-structural: var(--border);
+    --border-control: 0 0% 40%;
     --ring: 0 0% 89%;
     --surface: 0 0% 8%;
     --surface-active: 0 0% 16%;
@@ -142,6 +146,8 @@
   --color-foreground: hsl(var(--foreground));
   --color-foreground-muted: hsl(var(--foreground-muted));
   --color-border: hsl(var(--border));
+  --color-border-structural: hsl(var(--border-structural));
+  --color-border-control: hsl(var(--border-control));
   --color-surface: hsl(var(--surface));
   --color-surface-active: hsl(var(--surface-active));
   --color-button-primary-bg: hsl(var(--button-primary-bg));
@@ -180,7 +186,7 @@
          text-sm font-medium
          bg-background
          text-foreground
-         border border-border rounded-sm
+         border border-border-structural rounded-sm
          z-[100]
          focus-ring
          focus:top-4
@@ -365,7 +371,7 @@
   @apply my-3 pl-3
          text-sm
          text-foreground-muted
-         border-l-2 border-border;
+         border-l-2 border-border-structural;
 }
 
 .l-ui-markdown blockquote p {
@@ -388,18 +394,18 @@
 .l-ui-markdown th {
   @apply px-3 py-1.5
          text-left text-sm font-bold
-         border-b border-border;
+         border-b border-border-structural;
 }
 
 .l-ui-markdown td {
   @apply px-3 py-1.5
          text-sm
-         border-b border-border;
+         border-b border-border-structural;
 }
 
 .l-ui-markdown hr {
   @apply my-4
-         border-t border-border;
+         border-t border-border-structural;
 }
 
 /* HTML */
@@ -450,7 +456,7 @@
 .l-ui-container--header {
   @apply fixed top-0 left-0 right-0
          z-50
-         border-b border-border
+         border-b border-border-structural
          bg-background/80 backdrop-blur-xs;
 }
 
@@ -550,7 +556,7 @@
   @apply fixed top-[var(--header-height)] left-0 bottom-0
          w-[240px]
          z-50
-         border-r border-t border-border
+         border-r border-t border-border-structural
          bg-background
          invisible md:visible
          transform -translate-x-full md:translate-x-0
@@ -638,7 +644,7 @@
 .l-ui-navigation__user {
   @apply shrink-0
          p-4
-         border-t border-border;
+         border-t border-border-structural;
 }
 
 .l-ui-navigation__user-name-and-email {
@@ -683,7 +689,7 @@
 
 .l-ui-button--outline {
   @apply button
-         border border-border
+         border border-border-control
          text-foreground;
 }
 
@@ -813,7 +819,7 @@
          w-full mt-2 px-3 py-2.5 min-h-[44px]
          text-sm font-inter
          text-foreground
-         border border-border rounded-sm
+         border border-border-control rounded-sm
          focus-ring;
 }
 
@@ -912,7 +918,7 @@
          text-sm font-inter
          bg-background
          text-foreground
-         border border-border rounded-sm
+         border border-border-control rounded-sm
          cursor-pointer
          focus-ring;
   appearance: none;
@@ -943,7 +949,7 @@
 .l-ui-tabs__list {
   @apply flex
          gap-4
-         border-b border-border;
+         border-b border-border-structural;
 }
 
 @utility tabs__tab {
@@ -983,7 +989,7 @@
 
 .l-ui-table {
   @apply min-w-full
-         divide-y divide-border;
+         divide-y divide-border-structural;
 }
 
 .l-ui-table caption {
@@ -1012,7 +1018,7 @@
 .l-ui-table__body {
   @apply h-full
          bg-background
-         divide-y divide-border;
+         divide-y divide-border-structural;
 }
 
 .l-ui-table__cell {
@@ -1233,7 +1239,7 @@
   @apply fixed top-[var(--header-height)] right-0 bottom-0
          w-full md:w-[480px]
          z-40
-         md:border-l md:border-border
+         md:border-l md:border-border-structural
          bg-background
          transform translate-x-full
          transition-transform duration-300;
@@ -1244,14 +1250,26 @@
 }
 
 .l-ui-panel__resize-handle {
-  @apply absolute left-0 top-0 bottom-0
-         w-1
+  @apply absolute -left-3 top-0 bottom-0
+         w-6
          z-50
          cursor-col-resize
-         hover:bg-border
          focus-ring
-         transition-colors
          hidden md:block;
+
+  &::before {
+    @apply absolute left-1/2 top-0 bottom-0
+           w-px
+           -translate-x-1/2
+           bg-transparent
+           transition-colors;
+    content: "";
+  }
+
+  &:hover::before,
+  &:focus-visible::before {
+    @apply bg-border-structural;
+  }
 }
 
 .l-ui-panel {
@@ -1261,7 +1279,7 @@
 
 .l-ui-panel__header {
   @apply flex flex-col
-         border-b border-border;
+         border-b border-border-structural;
 }
 
 .l-ui-panel__header-content {
@@ -1295,7 +1313,7 @@
 
 .l-ui-panel__input {
   @apply p-4
-         border-t border-border;
+         border-t border-border-structural;
 }
 
 /* Conversation */
@@ -1319,7 +1337,7 @@
 
 .l-ui-conversation__composer {
   @apply relative
-         border border-border rounded-sm;
+         border border-border-control rounded-sm;
 
   &:focus-within {
     @apply focus-ring;
@@ -1475,7 +1493,7 @@
   @apply fixed inset-0
          w-screen h-screen max-w-none max-h-none m-0 p-0
          md:w-full md:h-fit md:max-w-2xl md:max-h-[80vh] md:m-auto
-         border-0 md:border md:border-border
+         border-0 md:border md:border-border-structural
          bg-background
          text-foreground
          rounded-none md:rounded-md;
@@ -1488,7 +1506,7 @@
 .l-ui-modal__header {
   @apply flex items-center justify-between
          px-4 py-2 pr-1
-         border-b border-border;
+         border-b border-border-structural;
 }
 
 .l-ui-modal__body {

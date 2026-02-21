@@ -42,6 +42,7 @@
 <h2 class="l-ui-utility--mt-2xl">Tier 2 - Full color overrides</h2>
 
 <p class="l-ui-utility--mt-md">Override any individual design token for complete control. Uncomment only the variables you need in your overrides file. Values use HSL channels in the format <code>hue saturation% lightness%</code>.</p>
+<p class="l-ui-utility--mt-md">When setting custom colours, check that text, controls, and states still meet WCAG 2.2 AA. See the <%= link_to "WCAG 2.2 quick reference", "https://www.w3.org/WAI/WCAG22/quickref/", target: "_blank", rel: "noopener noreferrer" %> for guidance.</p>
 
 <code class="l-ui-surface l-ui-utility--mt-lg">/* layered_ui_overrides.css */
 
@@ -93,7 +94,15 @@
       </tr>
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><code>--border</code></th>
-        <td class="l-ui-table__cell">Border color for dividers and outlines</td>
+        <td class="l-ui-table__cell">Legacy border token (defaults structural borders)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>--border-structural</code></th>
+        <td class="l-ui-table__cell">Subtle borders for layout separators and surfaces</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>--border-control</code></th>
+        <td class="l-ui-table__cell">Higher-contrast borders for interactive controls</td>
       </tr>
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><code>--ring</code></th>
