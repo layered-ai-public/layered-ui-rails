@@ -1,11 +1,21 @@
 import { Controller } from "@hotwired/stimulus"
+import { announce, clearAnnounceTimeout } from "layered_ui/utilities/announce"
+import { isMobile } from "layered_ui/utilities/layout"
 
 export default class extends Controller {
   static targets = ["navigation", "backdrop", "toggleButton", "openIcon", "closeIcon"]
 
   connect() {
     this.previousActiveElement = null
-    this.boundHandleResize = this.handleResize.bind(this)
+    this.isOpen = false
+    this._resizeFrame = null
+    this.boundHandleResize = () => {
+      if (this._resizeFrame) return
+      this._resizeFrame = requestAnimationFrame(() => {
+        this._resizeFrame = null
+        this.handleResize()
+      })
+    }
     window.addEventListener("resize", this.boundHandleResize)
     this.handleResize()
   }
@@ -14,9 +24,8 @@ export default class extends Controller {
     if (!this.hasNavigationTarget) return
 
     event.stopPropagation()
-    const isOpen = this.navigationTarget.classList.contains("open")
 
-    if (isOpen) {
+    if (this.isOpen) {
       this.closeNavigation()
     } else {
       this.openNavigation()
@@ -27,7 +36,7 @@ export default class extends Controller {
     // Close menu when clicking outside on mobile or pressing Escape
     if (event.type === "keydown" && event.key !== "Escape") return
 
-    if (this.hasNavigationTarget && this.navigationTarget.classList.contains("open")) {
+    if (this.hasNavigationTarget && this.isOpen) {
       // For click events, check if clicking outside
       if (event.type === "click" && this.navigationTarget.contains(event.target)) return
 
@@ -41,6 +50,7 @@ export default class extends Controller {
     // Store the currently focused element to restore focus later
     this.previousActiveElement = document.activeElement
 
+    this.isOpen = true
     this.navigationTarget.classList.add("open")
     this.backdropTarget.classList.add("open")
     this.setNavigationInteractivity(true)
@@ -69,12 +79,13 @@ export default class extends Controller {
     })
 
     // Announce to screen readers
-    this.announce("Navigation menu opened")
+    announce("Navigation menu opened", this)
   }
 
   closeNavigation() {
     if (!this.hasNavigationTarget) return
 
+    this.isOpen = false
     this.navigationTarget.classList.remove("open")
     this.backdropTarget.classList.remove("open")
     this.setNavigationInteractivity(false)
@@ -98,11 +109,12 @@ export default class extends Controller {
     }
 
     // Announce to screen readers
-    this.announce("Navigation menu closed")
+    announce("Navigation menu closed", this)
   }
 
   disconnect() {
-    clearTimeout(this.announceTimeout)
+    clearAnnounceTimeout(this)
+    cancelAnimationFrame(this._resizeFrame)
     window.removeEventListener("resize", this.boundHandleResize)
     this.previousActiveElement = null
   }
@@ -110,12 +122,12 @@ export default class extends Controller {
   handleResize() {
     if (!this.hasNavigationTarget) return
 
-    if (this.isMobile()) {
-      const isOpen = this.navigationTarget.classList.contains("open")
-      this.setNavigationInteractivity(isOpen)
+    if (isMobile()) {
+      this.setNavigationInteractivity(this.isOpen)
       return
     }
 
+    this.isOpen = false
     this.navigationTarget.classList.remove("open")
     this.backdropTarget.classList.remove("open")
     this.setNavigationInteractivity(true)
@@ -133,7 +145,7 @@ export default class extends Controller {
   }
 
   setNavigationInteractivity(isOpen) {
-    if (this.isMobile() && !isOpen) {
+    if (isMobile() && !isOpen) {
       this.navigationTarget.setAttribute("inert", "")
       this.navigationTarget.setAttribute("aria-hidden", "true")
       return
@@ -141,21 +153,5 @@ export default class extends Controller {
 
     this.navigationTarget.removeAttribute("inert")
     this.navigationTarget.removeAttribute("aria-hidden")
-  }
-
-  isMobile() {
-    return window.innerWidth < 768
-  }
-
-  // Announce a message to screen readers via the live region
-  announce(message) {
-    const liveRegion = document.getElementById("l-ui-live-region")
-    if (liveRegion) {
-      liveRegion.textContent = message
-      clearTimeout(this.announceTimeout)
-      this.announceTimeout = setTimeout(() => {
-        liveRegion.textContent = ""
-      }, 3000)
-    }
   }
 }

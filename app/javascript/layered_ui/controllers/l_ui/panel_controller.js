@@ -1,19 +1,21 @@
 import { Controller } from "@hotwired/stimulus"
+import { announce, clearAnnounceTimeout } from "layered_ui/utilities/announce"
+import { storageGet, storageSet } from "layered_ui/utilities/storage"
+import { isMobile } from "layered_ui/utilities/layout"
 
 export default class extends Controller {
   static targets = ["container", "hideButton", "actionButton"]
 
   connect() {
     this.previousActiveElement = null
+    this.isOpen = false
     this.boundKeyboardShortcut = this.handleKeyboardShortcut.bind(this)
 
     const page = document.querySelector(".l-ui-page")
     if (page) page.style.transition = "none"
     this.containerTarget.style.transition = "none"
 
-    let isOpen = false
-    try { isOpen = localStorage.getItem("panelOpen") === "true" } catch (e) { /* unavailable */ }
-    if (isOpen) {
+    if (storageGet("panelOpen") === "true") {
       this.open(false)
     } else {
       this.close(false)
@@ -28,14 +30,14 @@ export default class extends Controller {
   }
 
   disconnect() {
-    clearTimeout(this.announceTimeout)
+    clearAnnounceTimeout(this)
     document.removeEventListener('keydown', this.boundKeyboardShortcut)
     this.previousActiveElement = null
   }
 
   // Handle Escape key to close panel
   handleEscape() {
-    if (this.containerTarget.classList.contains("open")) {
+    if (this.isOpen) {
       this.close()
     }
   }
@@ -44,7 +46,7 @@ export default class extends Controller {
   handleKeyboardShortcut(event) {
     if (event.key === "i" && (event.metaKey || event.ctrlKey)) {
       event.preventDefault()
-      if (this.containerTarget.classList.contains("open")) {
+      if (this.isOpen) {
         this.close()
       } else {
         this.open()
@@ -57,7 +59,7 @@ export default class extends Controller {
     if (this.hasActionButtonTarget && this.actionButtonTarget.dataset.dragging) return
     event.preventDefault()
 
-    if (this.containerTarget.classList.contains("open")) {
+    if (this.isOpen) {
       this.close()
     } else {
       this.open()
@@ -65,9 +67,10 @@ export default class extends Controller {
   }
 
   // Open the panel
-  open(announce = true) {
+  open(shouldAnnounce = true) {
     this.previousActiveElement = document.activeElement
 
+    this.isOpen = true
     this.containerTarget.classList.add("open")
 
     if (this.hasActionButtonTarget) {
@@ -82,24 +85,25 @@ export default class extends Controller {
     this.containerTarget.removeAttribute("inert")
 
     // On mobile, prevent background content from being tabbable
-    if (this.isMobile()) {
+    if (isMobile()) {
       const main = document.querySelector("main")
       if (main) main.setAttribute("inert", "")
     }
 
-    try { localStorage.setItem("panelOpen", "true") } catch (e) { /* unavailable */ }
+    storageSet("panelOpen", "true")
     this.updatePageMargin()
 
-    if (announce) {
+    if (shouldAnnounce) {
       requestAnimationFrame(() => {
         if (this.hasHideButtonTarget) this.hideButtonTarget.focus()
       })
-      this.announce("Panel opened")
+      announce("Panel opened", this)
     }
   }
 
   // Close the panel
-  close(announce = true) {
+  close(shouldAnnounce = true) {
+    this.isOpen = false
     this.containerTarget.classList.remove("open")
 
     if (this.hasActionButtonTarget) {
@@ -116,16 +120,16 @@ export default class extends Controller {
     const main = document.querySelector("main")
     if (main) main.removeAttribute("inert")
 
-    try { localStorage.setItem("panelOpen", "false") } catch (e) { /* unavailable */ }
+    storageSet("panelOpen", "false")
     this.updatePageMargin()
 
-    if (announce) {
+    if (shouldAnnounce) {
       if (this.previousActiveElement && typeof this.previousActiveElement.focus === "function") {
         this.previousActiveElement.focus()
       } else if (this.hasActionButtonTarget) {
         this.actionButtonTarget.focus()
       }
-      this.announce("Panel closed")
+      announce("Panel closed", this)
     }
   }
 
@@ -134,27 +138,10 @@ export default class extends Controller {
     const page = document.querySelector(".l-ui-page")
     if (!page) return
 
-    const isOpen = this.containerTarget.classList.contains("open")
-    if (isOpen && !this.isMobile()) {
+    if (this.isOpen && !isMobile()) {
       page.style.marginRight = `${this.containerTarget.offsetWidth}px`
     } else {
       page.style.marginRight = ""
-    }
-  }
-
-  isMobile() {
-    return window.innerWidth < 768
-  }
-
-  // Announce a message to screen readers via the live region
-  announce(message) {
-    const liveRegion = document.getElementById("l-ui-live-region")
-    if (liveRegion) {
-      liveRegion.textContent = message
-      clearTimeout(this.announceTimeout)
-      this.announceTimeout = setTimeout(() => {
-        liveRegion.textContent = ""
-      }, 3000)
     }
   }
 }

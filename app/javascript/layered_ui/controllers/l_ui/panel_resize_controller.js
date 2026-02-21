@@ -1,4 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
+import { storageGet, storageSet, storageRemove } from "layered_ui/utilities/storage"
+import { isMobile, hasNavigation, NAV_WIDTH } from "layered_ui/utilities/layout"
 
 const MIN_WIDTH = 240
 const DEFAULT_WIDTH = 480
@@ -10,7 +12,14 @@ export default class extends Controller {
     this.isResizing = false
     this.boundResize = this.resize.bind(this)
     this.boundStopResize = this.stopResize.bind(this)
-    this.boundWindowResize = this.handleWindowResize.bind(this)
+    this._resizeFrame = null
+    this.boundWindowResize = () => {
+      if (this._resizeFrame) return
+      this._resizeFrame = requestAnimationFrame(() => {
+        this._resizeFrame = null
+        this.handleWindowResize()
+      })
+    }
 
     this.restoreWidth()
     this.updateHandleAria(this.containerTarget.offsetWidth)
@@ -18,6 +27,7 @@ export default class extends Controller {
   }
 
   disconnect() {
+    cancelAnimationFrame(this._resizeFrame)
     window.removeEventListener('resize', this.boundWindowResize)
 
     if (this.isResizing) {
@@ -65,8 +75,8 @@ export default class extends Controller {
     document.body.style.cursor = ''
     document.body.style.userSelect = ''
 
-    if (!this.isMobile()) {
-      try { localStorage.setItem("panelWidth", this.containerTarget.style.width) } catch (e) { /* unavailable */ }
+    if (!isMobile()) {
+      storageSet("panelWidth", this.containerTarget.style.width)
     }
   }
 
@@ -103,19 +113,19 @@ export default class extends Controller {
     this.updateHandleAria(newWidth)
     this.dispatch("widthChanged")
 
-    if (!this.isMobile()) {
-      try { localStorage.setItem("panelWidth", `${newWidth}px`) } catch (e) { /* unavailable */ }
+    if (!isMobile()) {
+      storageSet("panelWidth", `${newWidth}px`)
     }
   }
 
   // Reset panel width to default
   resetWidth(event) {
     event.preventDefault()
-    if (this.isMobile()) {
+    if (isMobile()) {
       this.containerTarget.style.width = ''
     } else {
       this.containerTarget.style.width = `${DEFAULT_WIDTH}px`
-      try { localStorage.removeItem("panelWidth") } catch (e) { /* unavailable */ }
+      storageRemove("panelWidth")
     }
     this.updateHandleAria(this.containerTarget.offsetWidth)
     this.dispatch("widthChanged")
@@ -123,11 +133,10 @@ export default class extends Controller {
 
   // Restore width from localStorage
   restoreWidth() {
-    if (this.isMobile()) {
+    if (isMobile()) {
       this.containerTarget.style.width = ''
     } else {
-      let savedWidth = null
-      try { savedWidth = localStorage.getItem("panelWidth") } catch (e) { /* unavailable */ }
+      const savedWidth = storageGet("panelWidth")
       if (savedWidth) {
         const maxWidth = this.getMaxWidth()
         const savedValue = parseInt(savedWidth, 10)
@@ -147,7 +156,7 @@ export default class extends Controller {
 
   // Get maximum panel width
   getMaxWidth() {
-    const navWidth = this.hasNavigation() ? 240 : 0
+    const navWidth = hasNavigation() ? NAV_WIDTH : 0
     return window.innerWidth - navWidth - MIN_WIDTH
   }
 
@@ -159,14 +168,5 @@ export default class extends Controller {
       this.handleTarget.setAttribute("aria-valuemax", this.getMaxWidth())
       this.handleTarget.setAttribute("aria-valuetext", `Panel width: ${width} pixels`)
     }
-  }
-
-  isMobile() {
-    return window.innerWidth < 768
-  }
-
-  hasNavigation() {
-    const page = document.querySelector(".l-ui-page")
-    return page && page.classList.contains("l-ui-page--with-navigation") && !this.isMobile()
   }
 }

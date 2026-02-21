@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import { announce, clearAnnounceTimeout } from "layered_ui/utilities/announce"
 
 export default class extends Controller {
   static targets = ["dialog"]
@@ -30,24 +31,12 @@ export default class extends Controller {
     })
 
     // Announce to screen readers
-    this.announce("Dialog opened")
+    announce("Dialog opened", this)
   }
 
-  // Close the modal
+  // Close the modal - cleanup handled by the close event listener
   close() {
-    this.constructor.openCount = Math.max(0, this.constructor.openCount - 1)
-    if (this.constructor.openCount === 0) {
-      document.body.style.overflow = ""
-    }
     this.dialogTarget.close()
-
-    // Restore focus to the element that opened the modal
-    if (this.previousActiveElement && typeof this.previousActiveElement.focus === "function") {
-      this.previousActiveElement.focus()
-    }
-
-    // Announce to screen readers
-    this.announce("Dialog closed")
   }
 
   // Close the modal when clicking outside the dialog
@@ -64,11 +53,11 @@ export default class extends Controller {
       if (this.constructor.openCount === 0) {
         document.body.style.overflow = ""
       }
-      // Restore focus when dialog is closed via Escape key
+      // Restore focus when dialog is closed
       if (this.previousActiveElement && typeof this.previousActiveElement.focus === "function") {
         this.previousActiveElement.focus()
       }
-      this.announce("Dialog closed")
+      announce("Dialog closed", this)
     }
     element.addEventListener("close", this._closeHandler)
   }
@@ -79,23 +68,11 @@ export default class extends Controller {
   }
 
   disconnect() {
-    clearTimeout(this.announceTimeout)
+    clearAnnounceTimeout(this)
     this.constructor.openCount = Math.max(0, this.constructor.openCount - 1)
     if (this.constructor.openCount === 0) {
       document.body.style.overflow = ""
     }
     this.previousActiveElement = null
-  }
-
-  // Announce a message to screen readers via the live region
-  announce(message) {
-    const liveRegion = document.getElementById("l-ui-live-region")
-    if (liveRegion) {
-      liveRegion.textContent = message
-      clearTimeout(this.announceTimeout)
-      this.announceTimeout = setTimeout(() => {
-        liveRegion.textContent = ""
-      }, 3000)
-    }
   }
 }

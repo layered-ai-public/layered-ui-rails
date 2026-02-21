@@ -1,8 +1,8 @@
 import { Controller } from "@hotwired/stimulus"
+import { storageGetJSON, storageSet } from "layered_ui/utilities/storage"
+import { isMobile, hasNavigation, HEADER_HEIGHT, NAV_WIDTH, getPadding, getLeftEdge } from "layered_ui/utilities/layout"
 
-const HEADER_HEIGHT = 63
 const BUTTON_SIZE = 56
-const NAV_WIDTH = 240
 const DRAG_THRESHOLD = 5
 const SNAP_TIMEOUT = 400
 const TOGGLE_DELAY = 220
@@ -17,7 +17,14 @@ export default class extends Controller {
     this.dragStarted = false
     this.boundDrag = this.drag.bind(this)
     this.boundStopDrag = this.stopDrag.bind(this)
-    this.boundWindowResize = this.constrainPosition.bind(this)
+    this._resizeFrame = null
+    this.boundWindowResize = () => {
+      if (this._resizeFrame) return
+      this._resizeFrame = requestAnimationFrame(() => {
+        this._resizeFrame = null
+        this.constrainPosition()
+      })
+    }
     this.boundKeyboardShortcuts = this.handleKeyboardShortcuts.bind(this)
     this.toggleTimeout = null
 
@@ -28,6 +35,7 @@ export default class extends Controller {
 
   disconnect() {
     clearTimeout(this.toggleTimeout)
+    cancelAnimationFrame(this._resizeFrame)
     window.removeEventListener('resize', this.boundWindowResize)
     document.removeEventListener('keydown', this.boundKeyboardShortcuts)
 
@@ -44,20 +52,16 @@ export default class extends Controller {
 
   // Restore position from localStorage or apply default
   restorePosition() {
-    let position = null
-    try {
-      const saved = localStorage.getItem("panelButtonPosition")
-      if (saved) position = JSON.parse(saved)
-    } catch (e) { /* unavailable */ }
+    const position = storageGetJSON("panelButtonPosition")
 
     if (position && position.edge && typeof position.top === "number") {
       const topPx = this.clampTop(position.top / 100 * window.innerHeight)
       this.element.style.top = `${topPx}px`
       if (position.edge === "left") {
-        this.element.style.left = `${this.getLeftEdge()}px`
+        this.element.style.left = `${getLeftEdge()}px`
         this.element.style.right = "auto"
       } else {
-        this.element.style.right = `${this.getPadding()}px`
+        this.element.style.right = `${getPadding()}px`
         this.element.style.left = "auto"
       }
     } else {
@@ -91,8 +95,8 @@ export default class extends Controller {
       ? parseFloat(this.element.style.top)
       : this.element.getBoundingClientRect().top
 
-    const topEdge = this.clampTop(HEADER_HEIGHT + this.getPadding())
-    const bottomEdge = this.clampTop(window.innerHeight - BUTTON_SIZE - this.getPadding())
+    const topEdge = this.clampTop(HEADER_HEIGHT + getPadding())
+    const bottomEdge = this.clampTop(window.innerHeight - BUTTON_SIZE - getPadding())
     const midY = (topEdge + bottomEdge) / 2
     const isTop = topPx <= midY
 
@@ -145,10 +149,10 @@ export default class extends Controller {
   }
 
   moveToCorner(corner) {
-    const leftEdge = this.getLeftEdge()
-    const rightEdge = this.getPadding()
-    const topEdge = this.clampTop(HEADER_HEIGHT + this.getPadding())
-    const bottomEdge = this.clampTop(window.innerHeight - BUTTON_SIZE - this.getPadding())
+    const leftEdge = getLeftEdge()
+    const rightEdge = getPadding()
+    const topEdge = this.clampTop(HEADER_HEIGHT + getPadding())
+    const bottomEdge = this.clampTop(window.innerHeight - BUTTON_SIZE - getPadding())
 
     switch (corner) {
       case TOP_LEFT:
@@ -180,14 +184,12 @@ export default class extends Controller {
 
   savePosition(edge, topPx) {
     const topPercent = topPx / window.innerHeight * 100
-    try {
-      localStorage.setItem("panelButtonPosition", JSON.stringify({ edge, top: topPercent }))
-    } catch (e) { /* unavailable */ }
+    storageSet("panelButtonPosition", JSON.stringify({ edge, top: topPercent }))
   }
 
   // Apply the default bottom-right position
   applyDefault() {
-    const padding = this.getPadding()
+    const padding = getPadding()
     this.element.style.right = `${padding}px`
     this.element.style.left = "auto"
     this.element.style.top = `${window.innerHeight - BUTTON_SIZE - padding}px`
@@ -230,8 +232,8 @@ export default class extends Controller {
 
     event.preventDefault()
 
-    const padding = this.getPadding()
-    const minLeft = this.getLeftEdge()
+    const padding = getPadding()
+    const minLeft = getLeftEdge()
     const newLeft = Math.max(minLeft, Math.min(this.buttonStartX + deltaX, window.innerWidth - BUTTON_SIZE - padding))
     const newTop = this.clampTop(this.buttonStartY + deltaY)
 
@@ -255,8 +257,8 @@ export default class extends Controller {
 
       const rect = this.element.getBoundingClientRect()
       const centerX = rect.left + rect.width / 2
-      const padding = this.getPadding()
-      const leftEdge = this.getLeftEdge()
+      const padding = getPadding()
+      const leftEdge = getLeftEdge()
       const availableLeft = leftEdge + BUTTON_SIZE / 2
       const availableRight = window.innerWidth - padding - BUTTON_SIZE / 2
       const midpoint = (availableLeft + availableRight) / 2
@@ -322,8 +324,8 @@ export default class extends Controller {
     const topPx = this.clampTop(parseFloat(this.element.style.top))
     this.element.style.top = `${topPx}px`
 
-    const padding = this.getPadding()
-    const leftEdge = this.getLeftEdge()
+    const padding = getPadding()
+    const leftEdge = getLeftEdge()
 
     if (this.element.style.right && this.element.style.right !== "auto") {
       this.element.style.right = `${padding}px`
@@ -340,7 +342,7 @@ export default class extends Controller {
 
   // Clamp a top value within viewport bounds, below the header
   clampTop(topPx) {
-    const padding = this.getPadding()
+    const padding = getPadding()
     const minTop = HEADER_HEIGHT + padding
     const maxTop = window.innerHeight - BUTTON_SIZE - padding
     return Math.min(Math.max(topPx, minTop), maxTop)
@@ -355,23 +357,5 @@ export default class extends Controller {
       return { x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY }
     }
     return { x: event.clientX, y: event.clientY }
-  }
-
-  getPadding() {
-    return this.isMobile() ? 16 : 32
-  }
-
-  getLeftEdge() {
-    const navWidth = this.hasNavigation() ? NAV_WIDTH : 0
-    return navWidth + this.getPadding()
-  }
-
-  isMobile() {
-    return window.innerWidth < 768
-  }
-
-  hasNavigation() {
-    const page = document.querySelector(".l-ui-page")
-    return page && page.classList.contains("l-ui-page--with-navigation") && !this.isMobile()
   }
 }

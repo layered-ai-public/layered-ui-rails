@@ -1,4 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
+import { announce, clearAnnounceTimeout } from "layered_ui/utilities/announce"
+import { storageGet, storageSet } from "layered_ui/utilities/storage"
 
 export default class extends Controller {
   static targets = ["button"]
@@ -6,8 +8,7 @@ export default class extends Controller {
   // Set the theme based on the system preference or saved preference
   connect() {
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
-    let saved = null
-    try { saved = localStorage.getItem("theme") } catch (e) { /* localStorage unavailable */ }
+    const saved = storageGet("theme")
 
     const isDark = saved ? saved === "dark" : prefersDark
     document.documentElement.classList.toggle("dark", isDark)
@@ -19,14 +20,13 @@ export default class extends Controller {
   // Toggle the theme between light and dark
   toggle() {
     const isDark = document.documentElement.classList.toggle("dark")
-    const next = isDark ? "dark" : "light"
-    try { localStorage.setItem("theme", next) } catch (e) { /* localStorage unavailable */ }
+    storageSet("theme", isDark ? "dark" : "light")
 
     // Update aria-pressed state
     this.updateAriaPressed(isDark)
 
     // Announce theme change to screen readers
-    this.announce(isDark ? "Dark mode enabled" : "Light mode enabled")
+    announce(isDark ? "Dark mode enabled" : "Light mode enabled", this)
   }
 
   // Update the aria-pressed attribute on the toggle button
@@ -37,18 +37,6 @@ export default class extends Controller {
   }
 
   disconnect() {
-    clearTimeout(this.announceTimeout)
-  }
-
-  // Announce a message to screen readers via the live region
-  announce(message) {
-    const liveRegion = document.getElementById("l-ui-live-region")
-    if (liveRegion) {
-      liveRegion.textContent = message
-      clearTimeout(this.announceTimeout)
-      this.announceTimeout = setTimeout(() => {
-        liveRegion.textContent = ""
-      }, 3000)
-    }
+    clearAnnounceTimeout(this)
   }
 }
