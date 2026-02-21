@@ -550,6 +550,10 @@
   @apply w-8 h-8;
 }
 
+.l-ui-icon--dark-invert {
+  @apply dark:invert;
+}
+
 /* Navigation */
 
 .l-ui-container--navigation {

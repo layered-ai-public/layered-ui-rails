@@ -15,10 +15,13 @@ All notable changes to this project will be documented in this file. This projec
 
 - Improved message styles and spacing
 - Better table header styling
-- Fixed overflow on code blocks and surfaces
-- Fixed margins on small screens when vertically centred
-- Fixed select element styling
 - Rebuilt CSS from engine source every 5 seconds in development
+
+### Fixed
+
+- Overflow on code blocks and surfaces
+- Margins on small screens when vertically centred
+- Select element styling
 
 ## [0.1.1] - 2026-02-17
 
