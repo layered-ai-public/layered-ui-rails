@@ -5,9 +5,14 @@ export default class extends Controller {
 
   connect() {
     this.previousActiveElement = null
+    this.boundHandleResize = this.handleResize.bind(this)
+    window.addEventListener("resize", this.boundHandleResize)
+    this.handleResize()
   }
 
   toggle(event) {
+    if (!this.hasNavigationTarget) return
+
     event.stopPropagation()
     const isOpen = this.navigationTarget.classList.contains("open")
 
@@ -31,11 +36,14 @@ export default class extends Controller {
   }
 
   openNavigation() {
+    if (!this.hasNavigationTarget) return
+
     // Store the currently focused element to restore focus later
     this.previousActiveElement = document.activeElement
 
     this.navigationTarget.classList.add("open")
     this.backdropTarget.classList.add("open")
+    this.setNavigationInteractivity(true)
 
     // Update ARIA attributes and swap icons
     if (this.hasToggleButtonTarget) {
@@ -65,8 +73,11 @@ export default class extends Controller {
   }
 
   closeNavigation() {
+    if (!this.hasNavigationTarget) return
+
     this.navigationTarget.classList.remove("open")
     this.backdropTarget.classList.remove("open")
+    this.setNavigationInteractivity(false)
 
     // Update ARIA attributes and swap icons
     if (this.hasToggleButtonTarget) {
@@ -92,7 +103,48 @@ export default class extends Controller {
 
   disconnect() {
     clearTimeout(this.announceTimeout)
+    window.removeEventListener("resize", this.boundHandleResize)
     this.previousActiveElement = null
+  }
+
+  handleResize() {
+    if (!this.hasNavigationTarget) return
+
+    if (this.isMobile()) {
+      const isOpen = this.navigationTarget.classList.contains("open")
+      this.setNavigationInteractivity(isOpen)
+      return
+    }
+
+    this.navigationTarget.classList.remove("open")
+    this.backdropTarget.classList.remove("open")
+    this.setNavigationInteractivity(true)
+
+    if (this.hasToggleButtonTarget) {
+      this.toggleButtonTarget.setAttribute("aria-expanded", "false")
+    }
+    if (this.hasOpenIconTarget) this.openIconTarget.style.display = ""
+    if (this.hasCloseIconTarget) this.closeIconTarget.style.display = "none"
+
+    const main = document.querySelector("main")
+    const panel = document.querySelector(".l-ui-container--panel")
+    if (main) main.removeAttribute("inert")
+    if (panel) panel.removeAttribute("inert")
+  }
+
+  setNavigationInteractivity(isOpen) {
+    if (this.isMobile() && !isOpen) {
+      this.navigationTarget.setAttribute("inert", "")
+      this.navigationTarget.setAttribute("aria-hidden", "true")
+      return
+    }
+
+    this.navigationTarget.removeAttribute("inert")
+    this.navigationTarget.removeAttribute("aria-hidden")
+  }
+
+  isMobile() {
+    return window.innerWidth < 768
   }
 
   // Announce a message to screen readers via the live region

@@ -549,12 +549,13 @@
          z-50
          border-r border-t border-border
          bg-background
+         invisible md:visible
          transform -translate-x-full md:translate-x-0
          transition-transform duration-200;
 }
 
 .l-ui-container--navigation.open {
-  @apply translate-x-0;
+  @apply visible translate-x-0;
 }
 
 .l-ui-backdrop--navigation {
@@ -1197,7 +1198,8 @@
 }
 
 .l-ui-panel__button.hidden {
-  @apply opacity-0 pointer-events-none;
+  @apply invisible
+         opacity-0 pointer-events-none;
 }
 
 .l-ui-panel__icon--light {
@@ -1414,7 +1416,7 @@
 }
 
 .l-ui-message--sent .l-ui-message__footer {
-  @apply text-button-primary-text/50;
+  @apply text-button-primary-text/70;
 }
 
 /* Typing indicator */

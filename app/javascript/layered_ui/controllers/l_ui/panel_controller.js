@@ -73,6 +73,9 @@ export default class extends Controller {
     if (this.hasActionButtonTarget) {
       this.actionButtonTarget.classList.add("hidden")
       this.actionButtonTarget.setAttribute("aria-expanded", "true")
+      this.actionButtonTarget.setAttribute("aria-hidden", "true")
+      this.actionButtonTarget.setAttribute("tabindex", "-1")
+      this.actionButtonTarget.disabled = true
     }
 
     this.containerTarget.setAttribute("aria-hidden", "false")
@@ -101,7 +104,10 @@ export default class extends Controller {
 
     if (this.hasActionButtonTarget) {
       this.actionButtonTarget.classList.remove("hidden")
+      this.actionButtonTarget.disabled = false
       this.actionButtonTarget.setAttribute("aria-expanded", "false")
+      this.actionButtonTarget.removeAttribute("aria-hidden")
+      this.actionButtonTarget.removeAttribute("tabindex")
     }
 
     this.containerTarget.setAttribute("aria-hidden", "true")
