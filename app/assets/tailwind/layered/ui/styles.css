@@ -1022,9 +1022,11 @@
          text-sm font-medium whitespace-nowrap;
 
   & button, & a {
-    @apply underline text-foreground-muted hover:text-foreground
-           bg-transparent border-0 px-0.5 cursor-pointer
-           focus-ring rounded-sm;
+    @apply inline-flex items-center justify-center
+           min-w-6 min-h-6 px-0.5
+           underline
+           text-foreground-muted hover:text-foreground bg-transparent
+           border-0 cursor-pointer focus-ring rounded-sm;
   }
 
   & .l-ui-table__action--danger {
