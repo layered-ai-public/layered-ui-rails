@@ -21,7 +21,12 @@ export default class extends Controller {
   // Handle keyboard navigation on the tablist
   keydown(event) {
     const tabs = this.tabTargets
-    const currentIndex = tabs.indexOf(event.currentTarget)
+    if (tabs.length === 0) return
+
+    const currentTab = event.target.closest('[role="tab"]')
+    if (!currentTab || !tabs.includes(currentTab)) return
+
+    const currentIndex = tabs.indexOf(currentTab)
 
     let targetIndex
 

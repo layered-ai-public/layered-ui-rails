@@ -52,6 +52,7 @@
     --danger-text: 0 72% 35%;
     --success-bg: 142 76% 65%;
     --success-text: 142 76% 13%;
+    --switch-track-checked: 142 70% 38%;
     --warning-bg: 48 96% 65%;
     --warning-text: 48 96% 15%;
     --error-bg: 0 84% 75%;
@@ -77,6 +78,7 @@
     --danger-text: 0 85% 64%;
     --success-bg: 142 76% 15%;
     --success-text: 142 76% 80%;
+    --switch-track-checked: 142 70% 45%;
     --warning-bg: 48 96% 15%;
     --warning-text: 48 96% 80%;
     --error-bg: 0 93% 12%;
@@ -149,6 +151,7 @@
   --color-danger-text: hsl(var(--danger-text));
   --color-success-bg: hsl(var(--success-bg));
   --color-success-text: hsl(var(--success-text));
+  --color-switch-track-checked: hsl(var(--switch-track-checked));
   --color-warning-bg: hsl(var(--warning-bg));
   --color-warning-text: hsl(var(--warning-text));
   --color-error-bg: hsl(var(--error-bg));
@@ -860,7 +863,7 @@
 }
 
 .l-ui-switch__input:checked + .l-ui-switch__track {
-  @apply bg-success-bg;
+  @apply bg-switch-track-checked;
 }
 
 .l-ui-switch__input:disabled + .l-ui-switch__track {
