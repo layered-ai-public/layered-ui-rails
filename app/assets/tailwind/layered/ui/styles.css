@@ -995,9 +995,15 @@
 }
 
 .l-ui-table__header-cell {
-  @apply px-2 pb-2
+  @apply min-h-6 px-2 py-2
          text-sm font-bold font-manrope
          text-left;
+}
+
+.l-ui-table__header-cell--action {
+  @apply min-h-6 px-2 py-2
+         text-sm font-bold font-manrope
+         text-right;
 }
 
 .l-ui-table__body {

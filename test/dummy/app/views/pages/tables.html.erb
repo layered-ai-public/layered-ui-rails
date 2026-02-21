@@ -6,14 +6,14 @@
 
 <div class="l-ui-container--table l-ui-utility--mt-lg">
   <table class="l-ui-table">
-    <caption>Users</caption>
+    <caption class="l-ui-sr-only">Users</caption>
     <thead class="l-ui-table__header">
       <tr>
         <th class="l-ui-table__header-cell" scope="col">Name</th>
         <th class="l-ui-table__header-cell" scope="col">Email</th>
         <th class="l-ui-table__header-cell" scope="col">Joined</th>
         <th class="l-ui-table__header-cell" scope="col">Updated</th>
-        <th class="l-ui-table__header-cell" scope="col"><span class="l-ui-sr-only">Actions</span></th>
+        <th class="l-ui-table__header-cell--action" scope="col">Actions</th>
       </tr>
     </thead>
     <tbody class="l-ui-table__body">
@@ -53,7 +53,7 @@
       &lt;tr&gt;
         &lt;th class="l-ui-table__header-cell" scope="col"&gt;Name&lt;/th&gt;
         &lt;th class="l-ui-table__header-cell" scope="col"&gt;Email&lt;/th&gt;
-        &lt;th class="l-ui-table__header-cell" scope="col"&gt;&lt;span class="l-ui-sr-only"&gt;Actions&lt;/span&gt;&lt;/th&gt;
+        &lt;th class="l-ui-table__header-cell--action" scope="col"&gt;Actions&lt;/th&gt;
       &lt;/tr&gt;
     &lt;/thead&gt;
     &lt;tbody class="l-ui-table__body"&gt;
@@ -76,7 +76,7 @@
 
 <div class="l-ui-container--table l-ui-utility--mt-lg">
   <table class="l-ui-table">
-    <caption>Table CSS classes</caption>
+    <caption class="l-ui-sr-only">Table CSS classes</caption>
     <thead class="l-ui-table__header">
       <tr>
         <th class="l-ui-table__header-cell" scope="col">Class</th>
@@ -111,6 +111,10 @@
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-table__cell--primary</code></th>
         <td class="l-ui-table__cell">Primary cell (first column, links)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-table__header-cell--action</code></th>
+        <td class="l-ui-table__cell">Right-aligned header cell for action columns</td>
       </tr>
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-table__cell--action</code></th>
