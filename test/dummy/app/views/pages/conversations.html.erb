@@ -143,9 +143,7 @@ end</code></pre>
   </div>
   <div class="l-ui-conversation__composer">
     <textarea class="l-ui-conversation__composer-input" placeholder="Type a message..." rows="1" aria-label="Type a message"></textarea>
-    <button class="l-ui-button--icon" aria-label="Send">
-      <%= image_tag "layered_ui/icon_send.svg", class: "l-ui-icon--sm", alt: "Send icon", aria: { hidden: true } %>
-    </button>
+    <button class="l-ui-button--primary">Send</button>
   </div>
 </div>
 
@@ -195,9 +193,7 @@ end</code></pre>
     &lt;textarea class="l-ui-conversation__composer-input"
       placeholder="Type a message..." rows="1"&gt;
     &lt;/textarea&gt;
-    &lt;button class="l-ui-button--icon" aria-label="Send"&gt;
-      &lt;img src="layered_ui/icon_send.svg" class="l-ui-icon--sm" alt="Send"&gt;
-    &lt;/button&gt;
+    &lt;button class="l-ui-button--primary"&gt;Send&lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code>
     </div>
@@ -234,7 +230,7 @@ end</code></pre>
       </tr>
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-conversation__composer-input</code></th>
-        <td class="l-ui-table__cell">Textarea for composing messages</td>
+        <td class="l-ui-table__cell">Textarea overrides for composing messages (use with <code>l-ui-form__field</code>)</td>
       </tr>
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-conversation__separator</code></th>

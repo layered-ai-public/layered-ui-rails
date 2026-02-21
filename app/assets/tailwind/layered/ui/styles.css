@@ -1333,33 +1333,25 @@
 
 .l-ui-conversation__messages {
   @apply flex-1
+         py-4
+         border-b border-border
          overflow-y-auto;
 }
 
 .l-ui-conversation__composer {
-  @apply relative
-         p-4
-         border-t border-border;
-
-  &:focus-within {
-    @apply focus-ring;
-  }
+  @apply flex items-center
+         gap-2;
 }
 
 .l-ui-conversation__composer-input {
-  @apply block
-         w-full pl-3 pr-12 py-2.5
-         text-sm font-inter
-         text-foreground
+  @apply flex-1
+         px-3 py-2.5
+         text-sm font-inter text-foreground
+         border border-border-control rounded-sm
          bg-transparent
-         rounded-lg
-         outline-none;
+         focus:focus-ring;
   field-sizing: content;
   resize: none;
-}
-
-.l-ui-conversation__composer .l-ui-button--icon {
-  @apply absolute right-0 -bottom-0.5;
 }
 
 .l-ui-conversation__separator {
