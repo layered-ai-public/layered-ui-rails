@@ -15,6 +15,8 @@ All notable changes to this project will be documented in this file. This projec
 
 - Improved message styles and spacing
 - Better table header styling
+- Switch track unchecked state uses neutral colour instead of danger
+- Extracted shared JavaScript into utility modules (announce, layout, storage)
 - Rebuilt CSS from engine source every 5 seconds in development
 
 ### Fixed
