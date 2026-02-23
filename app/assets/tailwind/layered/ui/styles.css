@@ -1442,6 +1442,27 @@
   @apply text-button-primary-text/70;
 }
 
+/* Scroll-to-bottom button */
+
+.l-ui-scroll-to-bottom {
+  @apply
+    sticky bottom-2
+    mx-auto -mt-9
+    flex items-center justify-center
+    h-9 w-9
+    rounded-full
+    cursor-pointer
+    bg-button-primary-bg/60 text-button-primary-text backdrop-blur-xs
+    focus-ring
+    opacity-0 pointer-events-none
+    transition-opacity duration-200;
+}
+
+.l-ui-scroll-to-bottom[data-visible] {
+  @apply
+    opacity-100 pointer-events-auto;
+}
+
 /* Typing indicator */
 
 @keyframes l-ui-typing-bounce {
