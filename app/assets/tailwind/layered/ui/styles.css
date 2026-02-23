@@ -1372,7 +1372,7 @@
 .l-ui-message {
   @apply flex items-end
          gap-2
-         max-w-[80%];
+         w-full;
 }
 
 .l-ui-message--sent {
@@ -1392,7 +1392,7 @@
 .l-ui-message__bubble {
   @apply flex flex-col gap-4
          p-4
-         min-w-0
+         w-full min-w-0
          bg-surface
          text-foreground
          rounded-lg;
@@ -1473,12 +1473,18 @@
 /* Token fade-in */
 
 @keyframes l-ui-token-fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .l-ui-token-fade {
-  animation: l-ui-token-fade-in 0.3s ease-in;
+  animation: l-ui-token-fade-in 0.8s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .l-ui-token-fade {
+    animation: none;
+  }
 }
 
 /* Modal */
