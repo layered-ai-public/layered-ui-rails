@@ -378,7 +378,8 @@
 .l-ui-markdown table {
   @apply my-3 w-full
          text-sm
-         border-collapse;
+         border-collapse
+         block overflow-x-auto;
 }
 
 .l-ui-markdown caption {
