@@ -1502,7 +1502,7 @@
 }
 
 .l-ui-token-fade {
-  animation: l-ui-token-fade-in 0.5s ease-out both;
+  animation: l-ui-token-fade-in 1s ease-out both;
 }
 
 @media (prefers-reduced-motion: reduce) {
