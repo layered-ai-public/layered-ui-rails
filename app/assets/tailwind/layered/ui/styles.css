@@ -532,23 +532,23 @@
 /* Icon */
 
 .l-ui-icon--sm {
-  @apply w-5 h-5;
+  @apply w-5 h-5
+         dark:invert;
 }
 
 .l-ui-icon--md {
-  @apply w-6 h-6;
+  @apply w-6 h-6
+         dark:invert;
 }
 
 .l-ui-icon--lg {
-  @apply w-7 h-7;
+  @apply w-7 h-7
+         dark:invert;
 }
 
 .l-ui-icon--xl {
-  @apply w-8 h-8;
-}
-
-.l-ui-icon--dark-invert {
-  @apply dark:invert;
+  @apply w-8 h-8
+         dark:invert;
 }
 
 /* Navigation */
@@ -1221,11 +1221,13 @@
 }
 
 .l-ui-panel__icon--light {
-  @apply block;
+  @apply block
+         dark:invert-0;
 }
 
 .l-ui-panel__icon--dark {
-  @apply hidden;
+  @apply hidden
+         dark:invert-0;
 }
 
 .dark .l-ui-panel__icon--light {
@@ -1499,7 +1501,7 @@
 }
 
 .l-ui-token-fade {
-  animation: l-ui-token-fade-in 0.8s ease-out both;
+  animation: l-ui-token-fade-in 0.5s ease-out both;
 }
 
 @media (prefers-reduced-motion: reduce) {

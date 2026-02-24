@@ -17,8 +17,8 @@
         aria-label="Toggle dark mode"
         aria-pressed="false"
       >
-        <%= image_tag "layered_ui/icon_moon.svg", alt: "", class: "l-ui-icon--sm l-ui-icon--dark-invert l-ui-theme-toggle__icon--light", aria: { hidden: true } %>
-        <%= image_tag "layered_ui/icon_sun.svg", alt: "", class: "l-ui-icon--sm l-ui-icon--dark-invert l-ui-theme-toggle__icon--dark", aria: { hidden: true } %>
+        <%= image_tag "layered_ui/icon_moon.svg", alt: "", class: "l-ui-icon--sm l-ui-theme-toggle__icon--light", aria: { hidden: true } %>
+        <%= image_tag "layered_ui/icon_sun.svg", alt: "", class: "l-ui-icon--sm l-ui-theme-toggle__icon--dark", aria: { hidden: true } %>
       </button>
 
       <% unless l_ui_user_signed_in? %>
@@ -41,8 +41,8 @@
           aria-expanded="false"
           aria-controls="mobile-navigation"
         >
-          <%= image_tag "layered_ui/icon_hamburger.svg", alt: "", class: "l-ui-icon--md l-ui-icon--dark-invert", data: { "l-ui--mobile-navigation-target": "openIcon" }, aria: { hidden: true } %>
-          <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--md l-ui-icon--dark-invert", style: "display: none;", data: { "l-ui--mobile-navigation-target": "closeIcon" }, aria: { hidden: true } %>
+          <%= image_tag "layered_ui/icon_hamburger.svg", alt: "", class: "l-ui-icon--md", data: { "l-ui--mobile-navigation-target": "openIcon" }, aria: { hidden: true } %>
+          <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--md", style: "display: none;", data: { "l-ui--mobile-navigation-target": "closeIcon" }, aria: { hidden: true } %>
         </button>
       <% end %>
     </nav>
