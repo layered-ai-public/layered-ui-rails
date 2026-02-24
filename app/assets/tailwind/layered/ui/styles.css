@@ -454,7 +454,7 @@
   @apply fixed top-0 left-0 right-0
          z-50
          border-b border-border
-         bg-background/80 backdrop-blur-xs;
+         bg-background;
 }
 
 .l-ui-header {
@@ -1454,7 +1454,7 @@
     h-9 w-9
     rounded-full
     cursor-pointer
-    bg-button-primary-bg/60 text-button-primary-text backdrop-blur-xs
+    bg-button-primary-bg/60 text-button-primary-text shadow-lg backdrop-blur-xs
     focus-ring
     opacity-0 pointer-events-none
     transition-opacity duration-200;
