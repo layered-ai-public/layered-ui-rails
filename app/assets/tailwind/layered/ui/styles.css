@@ -218,9 +218,9 @@
 }
 
 @utility page {
-  @apply h-full
+  @apply min-h-full
          max-w-full px-4 pb-4 pt-[calc(var(--header-height)+1rem)]
-         overflow-x-auto
+         overflow-x-clip
          transition-[margin] duration-300;
 }
 
@@ -417,13 +417,13 @@
 /* Main */
 
 .l-ui-main {
-  @apply h-full;
+  @apply flex-1;
 }
 
 /* Body */
 
 .l-ui-body {
-  @apply h-full
+  @apply min-h-dvh flex flex-col
          antialiased
          font-inter
          bg-background
