@@ -624,7 +624,8 @@
 
 .l-ui-navigation__secondary {
   @apply flex flex-col
-         gap-1 pt-1 pl-4;
+         pl-4
+         border-l-4 border-surface;
 
   .l-ui-navigation__item--active {
     @apply bg-transparent
