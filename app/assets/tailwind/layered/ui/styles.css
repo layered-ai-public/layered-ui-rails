@@ -816,13 +816,18 @@
          text-xs text-foreground-muted;
 }
 
-.l-ui-form__field {
+@utility form__field {
   @apply block
-         w-full mt-2 px-3 py-2.5 min-h-[44px]
+         w-full px-3 py-2.5 min-h-[44px]
          text-sm font-inter
          text-foreground
          border border-border-control rounded-sm
          focus-ring;
+}
+
+.l-ui-form__field {
+  @apply form__field
+         mt-2;
 }
 
 .field_with_errors .l-ui-form__field {
@@ -1347,12 +1352,7 @@
 }
 
 .l-ui-conversation__composer-input {
-  @apply flex-1
-         px-3 py-2.5
-         text-sm font-inter text-foreground
-         border border-border-control rounded-sm
-         bg-transparent
-         focus:focus-ring;
+  @apply form__field;
   field-sizing: content;
   resize: none;
 }
