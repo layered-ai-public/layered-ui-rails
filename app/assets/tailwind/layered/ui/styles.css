@@ -218,7 +218,8 @@
 }
 
 @utility page {
-  @apply min-h-full
+  @apply flex flex-1 flex-col
+         min-h-full
          max-w-full px-4 pb-4 pt-[calc(var(--header-height)+1rem)]
          overflow-x-clip
          transition-[margin] duration-300;
@@ -417,7 +418,7 @@
 /* Main */
 
 .l-ui-main {
-  @apply flex-1;
+  @apply flex flex-1 flex-col;
 }
 
 /* Body */
@@ -441,8 +442,7 @@
 }
 
 .l-ui-page--vertically-centered {
-  @apply flex flex-col items-center
-         min-h-full;
+  @apply flex flex-1 flex-col items-center justify-center;
 }
 
 .l-ui-page--width-constrained {
