@@ -19,7 +19,7 @@
     <tbody class="l-ui-table__body">
       <% @users.each do |user| %>
         <tr>
-          <th class="l-ui-table__cell--primary" scope="row"><%= user.name %></th>
+          <th class="l-ui-table__cell--primary" scope="row"><a href="#"><%= user.name %></a></th>
           <td class="l-ui-table__cell"><%= user.email %></td>
           <td class="l-ui-table__cell"><%= time_ago_in_words(user.created_at) %> ago</td>
           <td class="l-ui-table__cell"><%= time_ago_in_words(user.updated_at) %> ago</td>
