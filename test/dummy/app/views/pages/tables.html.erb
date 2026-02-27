@@ -6,23 +6,24 @@
 
 <div class="l-ui-container--table l-ui-utility--mt-lg">
   <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Users</caption>
     <thead class="l-ui-table__header">
       <tr>
-        <th class="l-ui-table__header-cell">Name</th>
-        <th class="l-ui-table__header-cell">Email</th>
-        <th class="l-ui-table__header-cell">Joined</th>
-        <th class="l-ui-table__header-cell">Updated</th>
-        <th class="l-ui-table__header-cell"></th>
+        <th class="l-ui-table__header-cell" scope="col">Name</th>
+        <th class="l-ui-table__header-cell" scope="col">Email</th>
+        <th class="l-ui-table__header-cell" scope="col">Joined</th>
+        <th class="l-ui-table__header-cell" scope="col">Updated</th>
+        <th class="l-ui-table__header-cell--action" scope="col">Actions</th>
       </tr>
     </thead>
     <tbody class="l-ui-table__body">
       <% @users.each do |user| %>
         <tr>
-          <td class="l-ui-table__cell--primary"><%= user.name %></td>
+          <th class="l-ui-table__cell--primary" scope="row"><a href="#"><%= user.name %></a></th>
           <td class="l-ui-table__cell"><%= user.email %></td>
           <td class="l-ui-table__cell"><%= time_ago_in_words(user.created_at) %> ago</td>
           <td class="l-ui-table__cell"><%= time_ago_in_words(user.updated_at) %> ago</td>
-          <td class="l-ui-table__cell--action"><a href="#">Edit</a></td>
+          <td class="l-ui-table__cell--action"><a href="#">Edit</a> <button class="l-ui-table__action--danger">Delete</button></td>
         </tr>
       <% end %>
     </tbody>
@@ -35,31 +36,31 @@
 
 <div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
   <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
-  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-tables-heading">
     <div class="l-ui-modal__header">
-      <h3>Table</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
-        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
+      <h3 id="modal-tables-heading">Table</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
       <code class="l-ui-surface">&lt;div class="l-ui-container--table"&gt;
   &lt;table class="l-ui-table"&gt;
+    &lt;caption&gt;Users&lt;/caption&gt;
     &lt;thead class="l-ui-table__header"&gt;
       &lt;tr&gt;
-        &lt;th class="l-ui-table__header-cell"&gt;Name&lt;/th&gt;
-        &lt;th class="l-ui-table__header-cell"&gt;Email&lt;/th&gt;
-        &lt;th class="l-ui-table__header-cell"&gt;&lt;/th&gt;
+        &lt;th class="l-ui-table__header-cell" scope="col"&gt;Name&lt;/th&gt;
+        &lt;th class="l-ui-table__header-cell" scope="col"&gt;Email&lt;/th&gt;
+        &lt;th class="l-ui-table__header-cell--action" scope="col"&gt;Actions&lt;/th&gt;
       &lt;/tr&gt;
     &lt;/thead&gt;
     &lt;tbody class="l-ui-table__body"&gt;
       &lt;tr&gt;
-        &lt;td class="l-ui-table__cell--primary"&gt;&lt;a href="#"&gt;Alice&lt;/a&gt;&lt;/td&gt;
+        &lt;th class="l-ui-table__cell--primary" scope="row"&gt;&lt;a href="#"&gt;Alice&lt;/a&gt;&lt;/th&gt;
         &lt;td class="l-ui-table__cell"&gt;alice@example.com&lt;/td&gt;
         &lt;td class="l-ui-table__cell--action"&gt;
           &lt;a href="#"&gt;Edit&lt;/a&gt;
+          &lt;button class="l-ui-table__action--danger"&gt;Delete&lt;/button&gt;
         &lt;/td&gt;
       &lt;/tr&gt;
     &lt;/tbody&gt;
@@ -73,44 +74,53 @@
 
 <div class="l-ui-container--table l-ui-utility--mt-lg">
   <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Table CSS classes</caption>
     <thead class="l-ui-table__header">
       <tr>
-        <th class="l-ui-table__header-cell">Class</th>
-        <th class="l-ui-table__header-cell">Description</th>
+        <th class="l-ui-table__header-cell" scope="col">Class</th>
+        <th class="l-ui-table__header-cell" scope="col">Description</th>
       </tr>
     </thead>
     <tbody class="l-ui-table__body">
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-container--table</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-container--table</code></th>
         <td class="l-ui-table__cell">Scrollable container for responsive tables</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-table</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-table</code></th>
         <td class="l-ui-table__cell">Base table styling</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-table__header</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-table__header</code></th>
         <td class="l-ui-table__cell">Table header section</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-table__header-cell</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-table__header-cell</code></th>
         <td class="l-ui-table__cell">Header cell styling</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-table__body</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-table__body</code></th>
         <td class="l-ui-table__cell">Table body section</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-table__cell</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-table__cell</code></th>
         <td class="l-ui-table__cell">Standard data cell</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-table__cell--primary</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-table__cell--primary</code></th>
         <td class="l-ui-table__cell">Primary cell (first column, links)</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-table__cell--action</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-table__header-cell--action</code></th>
+        <td class="l-ui-table__cell">Right-aligned header cell for action columns</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-table__cell--action</code></th>
         <td class="l-ui-table__cell">Actions cell (right-aligned)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-table__action--danger</code></th>
+        <td class="l-ui-table__cell">Danger styling for destructive actions (used on links or buttons within action cells)</td>
       </tr>
     </tbody>
   </table>

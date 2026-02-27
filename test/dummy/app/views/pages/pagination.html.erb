@@ -5,8 +5,8 @@
 <h2 class="l-ui-utility--mt-2xl">Basic pagination</h2>
 
 <nav class="l-ui-pagination l-ui-utility--mt-lg" aria-label="Pagination">
-  <a class="l-ui-pagination__item l-ui-pagination__item--disabled" role="link" aria-disabled="true" aria-label="Previous">&lt;</a>
-  <a class="l-ui-pagination__item l-ui-pagination__item--active" role="link" aria-disabled="true" aria-current="page">1</a>
+  <span class="l-ui-pagination__item l-ui-pagination__item--disabled" aria-disabled="true" aria-label="Previous">&lt;</span>
+  <span class="l-ui-pagination__item l-ui-pagination__item--active" aria-current="page">1</span>
   <a href="#" class="l-ui-pagination__item">2</a>
   <a href="#" class="l-ui-pagination__item">3</a>
   <span class="l-ui-pagination__gap">&hellip;</span>
@@ -16,21 +16,19 @@
 
 <div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
   <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
-  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-pagination-heading">
     <div class="l-ui-modal__header">
-      <h3>Pagination</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
-        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
+      <h3 id="modal-pagination-heading">Pagination</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
       <code class="l-ui-surface">&lt;nav class="l-ui-pagination" aria-label="Pagination"&gt;
-  &lt;a class="l-ui-pagination__item l-ui-pagination__item--disabled"
-     role="link" aria-disabled="true" aria-label="Previous"&gt;&amp;lt;&lt;/a&gt;
-  &lt;a class="l-ui-pagination__item l-ui-pagination__item--active"
-     role="link" aria-disabled="true" aria-current="page"&gt;1&lt;/a&gt;
+  &lt;span class="l-ui-pagination__item l-ui-pagination__item--disabled"
+     aria-disabled="true" aria-label="Previous"&gt;&amp;lt;&lt;/span&gt;
+  &lt;span class="l-ui-pagination__item l-ui-pagination__item--active"
+     aria-current="page"&gt;1&lt;/span&gt;
   &lt;a href="#" class="l-ui-pagination__item"&gt;2&lt;/a&gt;
   &lt;span class="l-ui-pagination__gap"&gt;&amp;hellip;&lt;/span&gt;
   &lt;a href="#" class="l-ui-pagination__item"&gt;10&lt;/a&gt;
@@ -50,13 +48,11 @@
 
 <div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
   <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
-  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-pagination-pagy-heading">
     <div class="l-ui-modal__header">
-      <h3>Pagy helper</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
-        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
+      <h3 id="modal-pagination-pagy-heading">Pagy helper</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
@@ -73,35 +69,36 @@
 
 <div class="l-ui-container--table l-ui-utility--mt-lg">
   <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Pagination CSS classes</caption>
     <thead class="l-ui-table__header">
       <tr>
-        <th class="l-ui-table__header-cell">Class</th>
-        <th class="l-ui-table__header-cell">Description</th>
+        <th class="l-ui-table__header-cell" scope="col">Class</th>
+        <th class="l-ui-table__header-cell" scope="col">Description</th>
       </tr>
     </thead>
     <tbody class="l-ui-table__body">
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-pagination</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-pagination</code></th>
         <td class="l-ui-table__cell">Pagination container</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-pagination__item</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-pagination__item</code></th>
         <td class="l-ui-table__cell">Pagination link/button</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-pagination__item--active</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-pagination__item--active</code></th>
         <td class="l-ui-table__cell">Current page indicator</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-pagination__item--disabled</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-pagination__item--disabled</code></th>
         <td class="l-ui-table__cell">Disabled state (prev/next at boundaries)</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-pagination__gap</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-pagination__gap</code></th>
         <td class="l-ui-table__cell">Ellipsis for skipped pages</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-container--pagy</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-container--pagy</code></th>
         <td class="l-ui-table__cell">Container for Pagy-generated markup</td>
       </tr>
     </tbody>

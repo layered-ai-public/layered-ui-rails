@@ -1,5 +1,5 @@
 <% if item.errors.any? %>
-  <div id="error_explanation" class="l-ui-form__errors">
+  <div id="error_explanation" class="l-ui-form__errors" role="alert">
     <h3>
       <%= pluralize(item.errors.count, "error") %> found:
     </h3>

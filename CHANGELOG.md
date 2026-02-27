@@ -4,6 +4,35 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-02-27
+
+### Added
+
+- Conversation component with markdown support, typing indicators, and token fade-in animation
+- Scroll-to-bottom button in conversations
+- Movable panel toggle button with drag-and-drop repositioning
+- Link utility class
+- Form field utility class
+
+### Changed
+
+- Improved message styles and spacing
+- Better table header and secondary nav styling
+- Improved WCAG 2.2 AA compliance across components
+- Switch track unchecked state uses neutral colour instead of danger
+- Extracted shared JavaScript into utility modules (announce, layout, storage)
+- Extracted inline SVG icons (close, moon, sun, hamburger, chevron right) into engine assets
+- Rebuilt CSS from engine source every 5 seconds in development
+
+### Fixed
+
+- Use `main_app` Devise routes in engine views
+- Overflow on code blocks, surfaces, and markdown tables
+- Margins on small screens when vertically centred
+- Select element styling
+- Tabs controller issue
+- Odd scrolling behaviour
+
 ## [0.1.1] - 2026-02-17
 
 ### Added

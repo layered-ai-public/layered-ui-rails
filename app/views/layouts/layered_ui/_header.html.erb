@@ -1,10 +1,10 @@
 <header class="l-ui-container--header" role="banner">
   <div class="l-ui-header">
     <%= link_to "/", "aria-label": "Home" do %>
-      <%= image_tag("layered_ui/icon_light.svg", alt: "Home", class: "l-ui-header__icon l-ui-header__icon--light") %>
-      <%= image_tag("layered_ui/icon_dark.svg", alt: "Home", class: "l-ui-header__icon l-ui-header__icon--dark") %>
-      <%= image_tag("layered_ui/logo_light.svg", alt: "Home", class: "l-ui-header__logo l-ui-header__logo--light") %>
-      <%= image_tag("layered_ui/logo_dark.svg", alt: "Home", class: "l-ui-header__logo l-ui-header__logo--dark") %>
+      <%= image_tag("layered_ui/icon_light.svg", alt: "", class: "l-ui-header__icon l-ui-header__icon--light") %>
+      <%= image_tag("layered_ui/icon_dark.svg", alt: "", class: "l-ui-header__icon l-ui-header__icon--dark") %>
+      <%= image_tag("layered_ui/logo_light.svg", alt: "", class: "l-ui-header__logo l-ui-header__logo--light") %>
+      <%= image_tag("layered_ui/logo_dark.svg", alt: "", class: "l-ui-header__logo l-ui-header__logo--dark") %>
     <% end %>
 
     <nav class="l-ui-header__navigation" aria-label="Header navigation">
@@ -17,44 +17,17 @@
         aria-label="Toggle dark mode"
         aria-pressed="false"
       >
-        <svg
-          class="l-ui-icon--sm l-ui-theme-toggle__icon--light"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-          ></path>
-        </svg>
-
-        <svg
-          class="l-ui-icon--sm l-ui-theme-toggle__icon--dark"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-          ></path>
-        </svg>
+        <%= image_tag "layered_ui/icon_moon.svg", alt: "", class: "l-ui-icon--sm l-ui-theme-toggle__icon--light", aria: { hidden: true } %>
+        <%= image_tag "layered_ui/icon_sun.svg", alt: "", class: "l-ui-icon--sm l-ui-theme-toggle__icon--dark", aria: { hidden: true } %>
       </button>
 
       <% unless l_ui_user_signed_in? %>
         <% if respond_to?(:new_user_registration_path) %>
-          <%= link_to "Register", new_user_registration_path, class: "l-ui-button" %>
+          <%= link_to "Register", main_app.new_user_registration_path, class: "l-ui-button" %>
         <% end %>
 
         <% if respond_to?(:new_user_session_path) %>
-          <%= link_to "Login", new_user_session_path, class: "l-ui-button" %>
+          <%= link_to "Login", main_app.new_user_session_path, class: "l-ui-button" %>
         <% end %>
       <% end %>
 
@@ -68,37 +41,8 @@
           aria-expanded="false"
           aria-controls="mobile-navigation"
         >
-          <svg
-            class="l-ui-icon--md"
-            data-l-ui--mobile-navigation-target="openIcon"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            ></path>
-          </svg>
-          <svg
-            class="l-ui-icon--md"
-            data-l-ui--mobile-navigation-target="closeIcon"
-            style="display: none;"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"
-            ></path>
-          </svg>
+          <%= image_tag "layered_ui/icon_hamburger.svg", alt: "", class: "l-ui-icon--md", data: { "l-ui--mobile-navigation-target": "openIcon" }, aria: { hidden: true } %>
+          <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--md", style: "display: none;", data: { "l-ui--mobile-navigation-target": "closeIcon" }, aria: { hidden: true } %>
         </button>
       <% end %>
     </nav>

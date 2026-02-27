@@ -42,6 +42,7 @@
     --foreground: 0 0% 13%;
     --foreground-muted: 0 0% 29%;
     --border: 0 0% 91%;
+    --border-control: 0 0% 55%;
     --ring: 0 0% 13%;
     --surface: 0 0% 96%;
     --surface-active: 0 0% 91%;
@@ -52,6 +53,7 @@
     --danger-text: 0 72% 35%;
     --success-bg: 142 76% 65%;
     --success-text: 142 76% 13%;
+    --switch-track-checked: 142 70% 38%;
     --warning-bg: 48 96% 65%;
     --warning-text: 48 96% 15%;
     --error-bg: 0 84% 75%;
@@ -67,6 +69,7 @@
     --foreground: 0 0% 89%;
     --foreground-muted: 0 0% 71%;
     --border: 0 0% 16%;
+    --border-control: 0 0% 40%;
     --ring: 0 0% 89%;
     --surface: 0 0% 8%;
     --surface-active: 0 0% 16%;
@@ -77,6 +80,7 @@
     --danger-text: 0 85% 64%;
     --success-bg: 142 76% 15%;
     --success-text: 142 76% 80%;
+    --switch-track-checked: 142 70% 45%;
     --warning-bg: 48 96% 15%;
     --warning-text: 48 96% 80%;
     --error-bg: 0 93% 12%;
@@ -105,10 +109,7 @@
 
   p a,
   td a {
-    @apply text-foreground
-           border-b border-foreground-muted
-           focus-ring
-           rounded-sm;
+    @apply link;
   }
 
   ul, ol {
@@ -125,7 +126,7 @@
     font-size: 0.8125rem;
     line-height: 1.25rem;
     @apply text-foreground-muted
-           whitespace-pre;
+           whitespace-pre overflow-x-auto;
   }
 }
 
@@ -140,6 +141,7 @@
   --color-foreground: hsl(var(--foreground));
   --color-foreground-muted: hsl(var(--foreground-muted));
   --color-border: hsl(var(--border));
+  --color-border-control: hsl(var(--border-control));
   --color-surface: hsl(var(--surface));
   --color-surface-active: hsl(var(--surface-active));
   --color-button-primary-bg: hsl(var(--button-primary-bg));
@@ -149,6 +151,7 @@
   --color-danger-text: hsl(var(--danger-text));
   --color-success-bg: hsl(var(--success-bg));
   --color-success-text: hsl(var(--success-text));
+  --color-switch-track-checked: hsl(var(--switch-track-checked));
   --color-warning-bg: hsl(var(--warning-bg));
   --color-warning-text: hsl(var(--warning-text));
   --color-error-bg: hsl(var(--error-bg));
@@ -160,10 +163,9 @@
 /* Accessibility */
 
 @media (prefers-reduced-motion: reduce) {
-  [data-l-ui-reduce-motion],
-  [data-l-ui-reduce-motion] *,
-  [data-l-ui-reduce-motion] *::before,
-  [data-l-ui-reduce-motion] *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -216,10 +218,25 @@
 }
 
 @utility page {
-  @apply h-full
+  @apply flex flex-1 flex-col
+         min-h-full
          max-w-full px-4 pb-4 pt-[calc(var(--header-height)+1rem)]
-         overflow-x-auto
+         overflow-x-clip
          transition-[margin] duration-300;
+}
+
+@utility link {
+  @apply underline
+         text-foreground hover:text-foreground-muted
+         focus-ring rounded-sm;
+}
+
+.l-ui-utility--mt-0 {
+  @apply !mt-0 md:!mt-0;
+}
+
+.l-ui-utility---mr-2 {
+  @apply !-mr-2 md:!-mr-2;
 }
 
 .l-ui-utility--mt-sm {
@@ -253,6 +270,145 @@
          space-y-1;
 }
 
+/* Markdown */
+
+.l-ui-markdown > *:first-child {
+  @apply !mt-0;
+}
+
+.l-ui-markdown > *:last-child {
+  @apply !mb-0;
+}
+
+.l-ui-markdown p {
+  @apply my-3
+         text-sm leading-relaxed;
+}
+
+.l-ui-markdown h1 {
+  @apply my-4
+         text-lg font-bold;
+}
+
+.l-ui-markdown h2 {
+  @apply my-3
+         text-base font-bold;
+}
+
+.l-ui-markdown h3 {
+  @apply my-3
+         text-sm font-bold;
+}
+
+.l-ui-markdown h4,
+.l-ui-markdown h5,
+.l-ui-markdown h6 {
+  @apply my-2
+         text-sm font-semibold;
+}
+
+.l-ui-markdown strong {
+  @apply font-bold;
+}
+
+.l-ui-markdown em {
+  @apply italic;
+}
+
+.l-ui-markdown s,
+.l-ui-markdown del {
+  @apply line-through;
+}
+
+.l-ui-markdown a {
+  @apply link;
+}
+
+.l-ui-markdown ul {
+  @apply my-3 pl-5
+         text-sm
+         list-disc;
+}
+
+.l-ui-markdown ol {
+  @apply my-3 pl-5
+         text-sm
+         list-decimal;
+}
+
+.l-ui-markdown li {
+  @apply my-1
+         text-sm;
+}
+
+.l-ui-markdown li > ul,
+.l-ui-markdown li > ol {
+  @apply my-1;
+}
+
+.l-ui-markdown code {
+  @apply px-1.5 py-0.5
+         text-xs
+         bg-surface-active
+         rounded;
+}
+
+.l-ui-markdown pre {
+  @apply my-3 p-3
+         bg-surface-active
+         rounded-md
+         overflow-x-auto;
+}
+
+.l-ui-markdown pre code {
+  @apply p-0
+         text-xs
+         bg-transparent
+         rounded-none;
+}
+
+.l-ui-markdown blockquote {
+  @apply my-3 pl-3
+         text-sm
+         text-foreground-muted
+         border-l-2 border-border;
+}
+
+.l-ui-markdown blockquote p {
+  @apply my-1;
+}
+
+.l-ui-markdown table {
+  @apply my-3 w-full
+         text-sm
+         border-collapse
+         block overflow-x-auto;
+}
+
+.l-ui-markdown caption {
+  @apply mb-2
+         text-left text-sm font-bold
+         text-foreground;
+  caption-side: top;
+}
+
+.l-ui-markdown th {
+  @apply px-3 py-1.5
+         text-left text-sm font-bold
+         border-b border-border;
+}
+
+.l-ui-markdown td {
+  @apply px-3 py-1.5
+         text-sm
+         border-b border-border;
+}
+
+.l-ui-markdown hr {
+  @apply my-4
+         border-t border-border;
+}
+
 /* HTML */
 
 .l-ui-html {
@@ -262,13 +418,13 @@
 /* Main */
 
 .l-ui-main {
-  @apply h-full;
+  @apply flex flex-1 flex-col;
 }
 
 /* Body */
 
 .l-ui-body {
-  @apply h-full
+  @apply min-h-dvh flex flex-col
          antialiased
          font-inter
          bg-background
@@ -286,12 +442,12 @@
 }
 
 .l-ui-page--vertically-centered {
-  @apply flex flex-col items-center justify-center
-         h-full;
+  @apply flex flex-1 flex-col items-center justify-center;
 }
 
 .l-ui-page--width-constrained {
   @apply flex flex-col w-full
+         my-auto
          md:max-w-sm;
 }
 
@@ -301,7 +457,7 @@
   @apply fixed top-0 left-0 right-0
          z-50
          border-b border-border
-         bg-background/80 backdrop-blur-xs;
+         bg-background;
 }
 
 .l-ui-header {
@@ -379,19 +535,23 @@
 /* Icon */
 
 .l-ui-icon--sm {
-  @apply w-5 h-5;
+  @apply w-5 h-5
+         dark:invert;
 }
 
 .l-ui-icon--md {
-  @apply w-6 h-6;
+  @apply w-6 h-6
+         dark:invert;
 }
 
 .l-ui-icon--lg {
-  @apply w-7 h-7;
+  @apply w-7 h-7
+         dark:invert;
 }
 
 .l-ui-icon--xl {
-  @apply w-8 h-8;
+  @apply w-8 h-8
+         dark:invert;
 }
 
 /* Navigation */
@@ -402,12 +562,13 @@
          z-50
          border-r border-t border-border
          bg-background
+         invisible md:visible
          transform -translate-x-full md:translate-x-0
          transition-transform duration-200;
 }
 
 .l-ui-container--navigation.open {
-  @apply translate-x-0;
+  @apply visible translate-x-0;
 }
 
 .l-ui-backdrop--navigation {
@@ -463,7 +624,8 @@
 
 .l-ui-navigation__secondary {
   @apply flex flex-col
-         gap-1 pt-1 pl-4;
+         pl-4
+         border-l-4 border-surface;
 
   .l-ui-navigation__item--active {
     @apply bg-transparent
@@ -532,7 +694,7 @@
 
 .l-ui-button--outline {
   @apply button
-         border border-border
+         border border-border-control
          text-foreground;
 }
 
@@ -609,7 +771,7 @@
 @utility surface {
   @apply block
          p-4
-         rounded-sm;
+         rounded-sm overflow-x-auto;
 }
 
 .l-ui-surface {
@@ -657,13 +819,18 @@
          text-xs text-foreground-muted;
 }
 
-.l-ui-form__field {
+@utility form__field {
   @apply block
-         w-full mt-2 px-3 py-2.5 min-h-[44px]
+         w-full px-3 py-2.5 min-h-[44px]
          text-sm font-inter
          text-foreground
-         border border-border rounded-sm
+         border border-border-control rounded-sm
          focus-ring;
+}
+
+.l-ui-form__field {
+  @apply form__field
+         mt-2;
 }
 
 .field_with_errors .l-ui-form__field {
@@ -703,7 +870,7 @@
 .l-ui-switch__track {
   @apply relative shrink-0
          w-12 h-7
-         bg-danger rounded-full
+         bg-border-control rounded-full
          transition-colors;
 }
 
@@ -712,7 +879,7 @@
 }
 
 .l-ui-switch__input:checked + .l-ui-switch__track {
-  @apply bg-success-bg;
+  @apply bg-switch-track-checked;
 }
 
 .l-ui-switch__input:disabled + .l-ui-switch__track {
@@ -739,12 +906,12 @@
   @apply text-sm cursor-pointer;
 }
 
-.l-ui-form__group:has(> .l-ui-select) {
+.l-ui-select-wrapper {
   @apply relative;
 }
 
-.l-ui-form__group:has(> .l-ui-select)::after {
-  @apply absolute right-3 bottom-[14px]
+.l-ui-select-wrapper::after {
+  @apply absolute right-3 top-1/2 -translate-y-1/2
          w-4 h-4
          pointer-events-none;
   content: '';
@@ -761,7 +928,7 @@
          text-sm font-inter
          bg-background
          text-foreground
-         border border-border rounded-sm
+         border border-border-control rounded-sm
          cursor-pointer
          focus-ring;
   appearance: none;
@@ -835,14 +1002,27 @@
          divide-y divide-border;
 }
 
+.l-ui-table caption {
+  @apply mb-2
+         text-left text-sm font-bold font-manrope
+         text-foreground;
+  caption-side: top;
+}
+
 .l-ui-table__header {
   @apply font-manrope font-bold;
 }
 
 .l-ui-table__header-cell {
-  @apply px-2 py-3
+  @apply min-h-6 px-2 py-2
          text-sm font-bold font-manrope
          text-left;
+}
+
+.l-ui-table__header-cell--action {
+  @apply min-h-6 px-2 py-2
+         text-sm font-bold font-manrope
+         text-right;
 }
 
 .l-ui-table__body {
@@ -858,12 +1038,29 @@
 
 .l-ui-table__cell--primary {
   @apply table-cell-padding
-         text-sm font-medium whitespace-nowrap;
+         text-left text-sm font-medium whitespace-nowrap;
+
+  & a {
+    @apply link;
+  }
 }
 
 .l-ui-table__cell--action {
   @apply table-cell-padding
-         text-sm text-right font-medium whitespace-nowrap;
+         flex items-center justify-end gap-4
+         text-sm font-medium whitespace-nowrap;
+
+  & button, & a {
+    @apply inline-flex items-center justify-center
+           min-w-6 min-h-6 px-0.5
+           underline
+           text-foreground-muted hover:text-foreground bg-transparent
+           border-0 cursor-pointer focus-ring rounded-sm;
+  }
+
+  & .l-ui-table__action--danger {
+    @apply text-danger hover:text-danger;
+  }
 }
 
 .l-ui-table th:first-child,
@@ -1005,7 +1202,7 @@
 
 .l-ui-panel__button {
   @apply fixed flex items-center justify-center
-         bottom-4 right-4 md:bottom-8 md:right-8 w-14 h-14
+         w-14 h-14
          z-40
          cursor-pointer
          bg-button-primary-bg/60
@@ -1013,18 +1210,37 @@
          rounded-full shadow-lg backdrop-blur-xs
          focus-ring
          transition-all;
+  touch-action: none;
+}
+
+.l-ui-panel__button > * {
+  pointer-events: none;
+}
+
+.l-ui-panel__button--dragging {
+  transition-property: none;
+  cursor: grabbing;
+}
+
+.l-ui-panel__button--snapping {
+  transition-property: top, left, right;
+  transition-duration: 300ms;
+  transition-timing-function: ease-out;
 }
 
 .l-ui-panel__button.hidden {
-  @apply opacity-0 pointer-events-none;
+  @apply invisible
+         opacity-0 pointer-events-none;
 }
 
 .l-ui-panel__icon--light {
-  @apply block;
+  @apply block
+         dark:invert-0;
 }
 
 .l-ui-panel__icon--dark {
-  @apply hidden;
+  @apply hidden
+         dark:invert-0;
 }
 
 .dark .l-ui-panel__icon--light {
@@ -1050,14 +1266,26 @@
 }
 
 .l-ui-panel__resize-handle {
-  @apply absolute left-0 top-0 bottom-0
-         w-1
+  @apply absolute -left-3 top-0 bottom-0
+         w-6
          z-50
          cursor-col-resize
-         hover:bg-border
-         focus:bg-border focus:outline-none
-         transition-colors
+         focus-ring
          hidden md:block;
+
+  &::before {
+    @apply absolute left-1/2 top-0 bottom-0
+           w-px
+           -translate-x-1/2
+           bg-transparent
+           transition-colors;
+    content: "";
+  }
+
+  &:hover::before,
+  &:focus-visible::before {
+    @apply bg-border;
+  }
 }
 
 .l-ui-panel {
@@ -1120,32 +1348,20 @@
 
 .l-ui-conversation__messages {
   @apply flex-1
+         py-4
+         border-b border-border
          overflow-y-auto;
 }
 
 .l-ui-conversation__composer {
-  @apply relative
-         border border-border rounded-sm;
-
-  &:focus-within {
-    @apply focus-ring;
-  }
+  @apply flex items-center
+         gap-2;
 }
 
 .l-ui-conversation__composer-input {
-  @apply block
-         w-full pl-3 pr-12 py-2.5
-         text-sm font-inter
-         text-foreground
-         bg-transparent
-         rounded-lg
-         outline-none;
+  @apply form__field;
   field-sizing: content;
   resize: none;
-}
-
-.l-ui-conversation__composer .l-ui-button--icon {
-  @apply absolute right-0 bottom-0;
 }
 
 .l-ui-conversation__separator {
@@ -1166,7 +1382,7 @@
 .l-ui-message {
   @apply flex items-end
          gap-2
-         max-w-[80%];
+         w-full;
 }
 
 .l-ui-message--sent {
@@ -1184,10 +1400,11 @@
 }
 
 .l-ui-message__bubble {
-  @apply flex flex-col gap-2
+  @apply flex flex-col gap-4
          p-4
-         min-w-0
+         w-full min-w-0
          bg-surface
+         text-foreground
          rounded-lg;
 }
 
@@ -1197,8 +1414,7 @@
 }
 
 .l-ui-message__author {
-  @apply text-sm font-bold font-manrope
-         text-foreground;
+  @apply text-sm font-bold font-manrope;
 }
 
 .l-ui-message__body {
@@ -1207,26 +1423,99 @@
 
 .l-ui-message__footer {
   @apply flex items-center
-         gap-2;
-}
-
-.l-ui-message__metadata {
-  @apply text-xs
+         gap-4
          text-foreground-muted;
 }
 
-.l-ui-message--sent .l-ui-message__metadata {
-  @apply text-button-primary-text/60;
+.l-ui-message__metadata {
+  @apply text-xs;
 }
 
 .l-ui-message__timestamp {
   @apply ml-auto
-         text-xs
-         text-foreground-muted;
+         text-xs;
 }
 
-.l-ui-message--sent .l-ui-message__timestamp {
-  @apply text-button-primary-text/50;
+.l-ui-message__body p,
+.l-ui-message__body ul li,
+.l-ui-message__body ol li {
+  @apply text-foreground;
+}
+
+.l-ui-message--sent .l-ui-message__body p,
+.l-ui-message--sent .l-ui-message__body ul li,
+.l-ui-message--sent .l-ui-message__body ol li {
+  @apply text-button-primary-text;
+}
+
+.l-ui-message--sent .l-ui-message__footer {
+  @apply text-button-primary-text/70;
+}
+
+/* Scroll-to-bottom button */
+
+.l-ui-scroll-to-bottom {
+  @apply
+    sticky bottom-2
+    mx-auto -mt-9
+    flex items-center justify-center
+    h-9 w-9
+    rounded-full
+    cursor-pointer
+    bg-button-primary-bg/60 text-button-primary-text shadow-lg backdrop-blur-xs
+    focus-ring
+    opacity-0 pointer-events-none
+    transition-opacity duration-200;
+}
+
+.l-ui-scroll-to-bottom[data-visible] {
+  @apply
+    opacity-100 pointer-events-auto;
+}
+
+/* Typing indicator */
+
+@keyframes l-ui-typing-bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-4px); }
+}
+
+.l-ui-typing-indicator {
+  @apply flex items-center
+         gap-1
+         h-5;
+}
+
+.l-ui-typing-indicator__dot {
+  @apply w-1.5 h-1.5
+         bg-foreground-muted
+         rounded-full;
+  animation: l-ui-typing-bounce 1.2s ease-in-out infinite;
+}
+
+.l-ui-typing-indicator__dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.l-ui-typing-indicator__dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+/* Token fade-in */
+
+@keyframes l-ui-token-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.l-ui-token-fade {
+  animation: l-ui-token-fade-in 1s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .l-ui-token-fade {
+    animation: none;
+  }
 }
 
 /* Modal */

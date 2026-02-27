@@ -9,14 +9,12 @@
 </p>
 
 <div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
-  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
-  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+  <button type="button" class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-links-heading">
     <div class="l-ui-modal__header">
-      <h3>Link</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
-        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
+      <h3 id="modal-links-heading">Link</h3>
+      <button type="button" class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">

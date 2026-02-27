@@ -9,26 +9,20 @@
   <button class="l-ui-button--outline">Outline button</button>
   <button class="l-ui-button--outline-danger">Danger button</button>
   <button class="l-ui-button--icon" aria-label="Close">
-    <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-    </svg>
+    <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
   </button>
   <button class="l-ui-button--icon" aria-label="Toggle dark mode">
-    <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-    </svg>
+    <%= image_tag "layered_ui/icon_moon.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
   </button>
 </div>
 
 <div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
   <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
-  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-buttons-variants-heading">
     <div class="l-ui-modal__header">
-      <h3>Button variants</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
-        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
+      <h3 id="modal-buttons-variants-heading">Button variants</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
@@ -53,13 +47,11 @@
 
 <div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
   <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
-  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-buttons-full-width-heading">
     <div class="l-ui-modal__header">
-      <h3>Full width</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
-        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
+      <h3 id="modal-buttons-full-width-heading">Full width</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
@@ -74,31 +66,32 @@
 
 <div class="l-ui-container--table l-ui-utility--mt-lg">
   <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Button CSS classes</caption>
     <thead class="l-ui-table__header">
       <tr>
-        <th class="l-ui-table__header-cell">Class</th>
-        <th class="l-ui-table__header-cell">Description</th>
+        <th class="l-ui-table__header-cell" scope="col">Class</th>
+        <th class="l-ui-table__header-cell" scope="col">Description</th>
       </tr>
     </thead>
     <tbody class="l-ui-table__body">
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-button--primary</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-button--primary</code></th>
         <td class="l-ui-table__cell">Primary action button with solid background</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-button--outline</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-button--outline</code></th>
         <td class="l-ui-table__cell">Secondary action button with outline style</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-button--outline-danger</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-button--outline-danger</code></th>
         <td class="l-ui-table__cell">Destructive action button with red outline</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-button--icon</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-button--icon</code></th>
         <td class="l-ui-table__cell">Icon-only button for close, theme toggle, and other actions</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-button--full</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-button--full</code></th>
         <td class="l-ui-table__cell">Modifier for full-width button</td>
       </tr>
     </tbody>

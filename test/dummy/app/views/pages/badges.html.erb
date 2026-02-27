@@ -13,13 +13,11 @@
 
 <div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
   <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
-  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-badges-variants-heading">
     <div class="l-ui-modal__header">
-      <h3>Badge variants</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
-        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
+      <h3 id="modal-badges-variants-heading">Badge variants</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
@@ -42,13 +40,11 @@
 
 <div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
   <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
-  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-badges-rounded-heading">
     <div class="l-ui-modal__header">
-      <h3>Rounded badges</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
-        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
+      <h3 id="modal-badges-rounded-heading">Rounded badges</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
@@ -61,31 +57,32 @@
 
 <div class="l-ui-container--table l-ui-utility--mt-lg">
   <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Badge CSS classes</caption>
     <thead class="l-ui-table__header">
       <tr>
-        <th class="l-ui-table__header-cell">Class</th>
-        <th class="l-ui-table__header-cell">Description</th>
+        <th class="l-ui-table__header-cell" scope="col">Class</th>
+        <th class="l-ui-table__header-cell" scope="col">Description</th>
       </tr>
     </thead>
     <tbody class="l-ui-table__body">
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-badge--default</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-badge--default</code></th>
         <td class="l-ui-table__cell">Neutral gray badge</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-badge--success</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-badge--success</code></th>
         <td class="l-ui-table__cell">Green success badge</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-badge--warning</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-badge--warning</code></th>
         <td class="l-ui-table__cell">Yellow warning badge</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-badge--danger</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-badge--danger</code></th>
         <td class="l-ui-table__cell">Red danger badge</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-badge--rounded</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-badge--rounded</code></th>
         <td class="l-ui-table__cell">Modifier for pill-shaped badges</td>
       </tr>
     </tbody>

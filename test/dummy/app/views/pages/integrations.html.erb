@@ -6,19 +6,20 @@
 
 <div class="l-ui-container--table l-ui-utility--mt-lg">
   <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Supported integrations</caption>
     <thead class="l-ui-table__header">
       <tr>
-        <th class="l-ui-table__header-cell">Gem</th>
-        <th class="l-ui-table__header-cell">Description</th>
+        <th class="l-ui-table__header-cell" scope="col">Gem</th>
+        <th class="l-ui-table__header-cell" scope="col">Description</th>
       </tr>
     </thead>
     <tbody class="l-ui-table__body">
       <tr>
-        <td class="l-ui-table__cell--primary"><%= link_to "Devise", devise_path %></td>
+        <th class="l-ui-table__cell--primary" scope="row"><%= link_to "Devise", devise_path %></th>
         <td class="l-ui-table__cell">Authentication with styled sign in, registration, and password reset forms</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><%= link_to "Pagy", pagy_path %></td>
+        <th class="l-ui-table__cell--primary" scope="row"><%= link_to "Pagy", pagy_path %></th>
         <td class="l-ui-table__cell">Fast pagination with styled navigation controls</td>
       </tr>
     </tbody>

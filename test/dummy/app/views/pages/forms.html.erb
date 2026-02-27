@@ -8,17 +8,19 @@
   <div class="l-ui-form__group">
     <label class="l-ui-label" for="name">
       Full name
-      <span class="l-ui-form__required">*</span>
+      <span class="l-ui-form__required" aria-hidden="true">*</span>
+      <span class="l-ui-sr-only">(required)</span>
     </label>
-    <input type="text" id="name" name="name" class="l-ui-form__field" placeholder="Enter your full name" required>
+    <input type="text" id="name" name="name" class="l-ui-form__field" placeholder="Enter your full name" required autocomplete="name">
   </div>
 
   <div class="l-ui-form__group">
     <label class="l-ui-label" for="email">
       Email address
-      <span class="l-ui-form__required">*</span>
+      <span class="l-ui-form__required" aria-hidden="true">*</span>
+      <span class="l-ui-sr-only">(required)</span>
     </label>
-    <input type="email" id="email" name="email" class="l-ui-form__field" placeholder="you@example.com" required>
+    <input type="email" id="email" name="email" class="l-ui-form__field" placeholder="you@example.com" required autocomplete="email">
     <div class="l-ui-form__hint">
       We'll never share your email with anyone else.
     </div>
@@ -27,14 +29,17 @@
   <div class="l-ui-form__group">
     <label class="l-ui-label" for="role">
       Role
-      <span class="l-ui-form__required">*</span>
+      <span class="l-ui-form__required" aria-hidden="true">*</span>
+      <span class="l-ui-sr-only">(required)</span>
     </label>
-    <select id="role" name="role" class="l-ui-select" required>
-      <option value="">Select a role</option>
-      <option value="admin">Admin</option>
-      <option value="editor">Editor</option>
-      <option value="viewer">Viewer</option>
-    </select>
+    <div class="l-ui-select-wrapper">
+      <select id="role" name="role" class="l-ui-select" required>
+        <option value="">Select a role</option>
+        <option value="admin">Admin</option>
+        <option value="editor">Editor</option>
+        <option value="viewer">Viewer</option>
+      </select>
+    </div>
   </div>
 
   <div class="l-ui-form__group">
@@ -56,13 +61,11 @@
 
 <div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
   <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
-  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-forms-form-heading">
     <div class="l-ui-modal__header">
-      <h3>Form</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
-        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
+      <h3 id="modal-forms-form-heading">Form</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
@@ -77,9 +80,11 @@
 
   &lt;div class="l-ui-form__group"&gt;
     &lt;label class="l-ui-label" for="role"&gt;Role&lt;/label&gt;
-    &lt;select class="l-ui-select"&gt;
-      &lt;option value=""&gt;Select a role&lt;/option&gt;
-    &lt;/select&gt;
+    &lt;div class="l-ui-select-wrapper"&gt;
+      &lt;select class="l-ui-select"&gt;
+        &lt;option value=""&gt;Select a role&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/div&gt;
   &lt;/div&gt;
 
   &lt;button type="submit" class="l-ui-button--primary"&gt;
@@ -106,13 +111,11 @@
 
 <div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
   <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
-  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-forms-checkboxes-heading">
     <div class="l-ui-modal__header">
-      <h3>Checkboxes</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
-        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
+      <h3 id="modal-forms-checkboxes-heading">Checkboxes</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
@@ -160,13 +163,11 @@
 
 <div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
   <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
-  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-forms-switch-heading">
     <div class="l-ui-modal__header">
-      <h3>Switch inputs</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
-        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
+      <h3 id="modal-forms-switch-heading">Switch inputs</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
@@ -201,13 +202,11 @@
 
 <div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
   <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
-  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-forms-radio-heading">
     <div class="l-ui-modal__header">
-      <h3>Radio inputs</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
-        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
+      <h3 id="modal-forms-radio-heading">Radio inputs</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
@@ -225,63 +224,68 @@
 
 <div class="l-ui-container--table l-ui-utility--mt-lg">
   <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Form CSS classes</caption>
     <thead class="l-ui-table__header">
       <tr>
-        <th class="l-ui-table__header-cell">Class</th>
-        <th class="l-ui-table__header-cell">Description</th>
+        <th class="l-ui-table__header-cell" scope="col">Class</th>
+        <th class="l-ui-table__header-cell" scope="col">Description</th>
       </tr>
     </thead>
     <tbody class="l-ui-table__body">
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-form</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-form</code></th>
         <td class="l-ui-table__cell">Form container</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-form__group</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-form__group</code></th>
         <td class="l-ui-table__cell">Field group with label and input</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-form__group--large-gap</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-form__group--large-gap</code></th>
         <td class="l-ui-table__cell">Group with extra top margin (for submit)</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-label</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-label</code></th>
         <td class="l-ui-table__cell">Form label</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-form__field</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-form__field</code></th>
         <td class="l-ui-table__cell">Text input or textarea</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-select</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-select-wrapper</code></th>
+        <td class="l-ui-table__cell">Wrapper for select (adds caret icon)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-select</code></th>
         <td class="l-ui-table__cell">Select dropdown</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-form__hint</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-form__hint</code></th>
         <td class="l-ui-table__cell">Help text below input</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-form__required</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-form__required</code></th>
         <td class="l-ui-table__cell">Required field indicator (*)</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-form__errors</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-form__errors</code></th>
         <td class="l-ui-table__cell">Validation errors container</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-form__errors-list</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-form__errors-list</code></th>
         <td class="l-ui-table__cell">List of error messages</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-switch</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-switch</code></th>
         <td class="l-ui-table__cell">Switch wrapper label</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-switch__input</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-switch__input</code></th>
         <td class="l-ui-table__cell">Hidden checkbox input (sr-only)</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-switch__track</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-switch__track</code></th>
         <td class="l-ui-table__cell">Visible toggle track and thumb</td>
       </tr>
     </tbody>

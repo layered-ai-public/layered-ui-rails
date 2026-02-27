@@ -42,6 +42,7 @@
 <h2 class="l-ui-utility--mt-2xl">Tier 2 - Full color overrides</h2>
 
 <p class="l-ui-utility--mt-md">Override any individual design token for complete control. Uncomment only the variables you need in your overrides file. Values use HSL channels in the format <code>hue saturation% lightness%</code>.</p>
+<p class="l-ui-utility--mt-md">When setting custom colours, check that text, controls, and states still meet WCAG 2.2 AA. See the <%= link_to "WCAG 2.2 quick reference", "https://www.w3.org/WAI/WCAG22/quickref/", target: "_blank", rel: "noopener noreferrer" %> for guidance.</p>
 
 <code class="l-ui-surface l-ui-utility--mt-lg">/* layered_ui_overrides.css */
 
@@ -63,95 +64,100 @@
 
 <div class="l-ui-container--table l-ui-utility--mt-lg">
   <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Design tokens</caption>
     <thead class="l-ui-table__header">
       <tr>
-        <th class="l-ui-table__header-cell">Token</th>
-        <th class="l-ui-table__header-cell">Description</th>
+        <th class="l-ui-table__header-cell" scope="col">Token</th>
+        <th class="l-ui-table__header-cell" scope="col">Description</th>
       </tr>
     </thead>
     <tbody class="l-ui-table__body">
       <tr>
-        <td class="l-ui-table__cell--primary"><code>--accent</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>--accent</code></th>
         <td class="l-ui-table__cell">Brand / accent color (HSL channels)</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>--accent-foreground</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>--accent-foreground</code></th>
         <td class="l-ui-table__cell">Text color on accent backgrounds</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>--background</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>--background</code></th>
         <td class="l-ui-table__cell">Page background</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>--foreground</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>--foreground</code></th>
         <td class="l-ui-table__cell">Primary text color</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>--foreground-muted</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>--foreground-muted</code></th>
         <td class="l-ui-table__cell">Secondary / muted text color</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>--border</code></td>
-        <td class="l-ui-table__cell">Border color for dividers and outlines</td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>--border</code></th>
+        <td class="l-ui-table__cell">Borders for layout separators and surfaces</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>--ring</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>--border-control</code></th>
+        <td class="l-ui-table__cell">Higher-contrast borders for interactive controls</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>--ring</code></th>
         <td class="l-ui-table__cell">Focus ring color</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>--surface</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>--surface</code></th>
         <td class="l-ui-table__cell">Raised surface background</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>--surface-active</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>--surface-active</code></th>
         <td class="l-ui-table__cell">Active / highlighted surface background</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>--button-primary-bg</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>--button-primary-bg</code></th>
         <td class="l-ui-table__cell">Primary button background (defaults to <code>--accent</code>)</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>--button-primary-text</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>--button-primary-text</code></th>
         <td class="l-ui-table__cell">Primary button text (defaults to <code>--accent-foreground</code>)</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>--danger</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>--danger</code></th>
         <td class="l-ui-table__cell">Danger / destructive action color</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>--danger-light</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>--danger-light</code></th>
         <td class="l-ui-table__cell">Light danger background</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>--danger-text</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>--danger-text</code></th>
         <td class="l-ui-table__cell">Text on danger backgrounds</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>--success-bg</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>--success-bg</code></th>
         <td class="l-ui-table__cell">Success state background</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>--success-text</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>--success-text</code></th>
         <td class="l-ui-table__cell">Text on success backgrounds</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>--warning-bg</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>--warning-bg</code></th>
         <td class="l-ui-table__cell">Warning state background</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>--warning-text</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>--warning-text</code></th>
         <td class="l-ui-table__cell">Text on warning backgrounds</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>--error-bg</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>--error-bg</code></th>
         <td class="l-ui-table__cell">Error state background</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>--error-text</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>--error-text</code></th>
         <td class="l-ui-table__cell">Text on error backgrounds</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>--backdrop</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>--backdrop</code></th>
         <td class="l-ui-table__cell">Modal / overlay backdrop color</td>
       </tr>
     </tbody>

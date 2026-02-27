@@ -48,19 +48,20 @@ end</code>
 
 <div class="l-ui-container--table l-ui-utility--mt-lg">
   <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Devise helpers</caption>
     <thead class="l-ui-table__header">
       <tr>
-        <th class="l-ui-table__header-cell">Helper</th>
-        <th class="l-ui-table__header-cell">Description</th>
+        <th class="l-ui-table__header-cell" scope="col">Helper</th>
+        <th class="l-ui-table__header-cell" scope="col">Description</th>
       </tr>
     </thead>
     <tbody class="l-ui-table__body">
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l_ui_devise_installed?</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l_ui_devise_installed?</code></th>
         <td class="l-ui-table__cell">Returns true if Devise is available</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l_ui_user_signed_in?</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l_ui_user_signed_in?</code></th>
         <td class="l-ui-table__cell">Safe wrapper for <code>user_signed_in?</code> that returns false when Devise is not installed</td>
       </tr>
     </tbody>

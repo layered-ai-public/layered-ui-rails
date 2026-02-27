@@ -59,6 +59,7 @@ module Layered
               --foreground: 0 0% 13%;
               --foreground-muted: 0 0% 29%;
               --border: 0 0% 91%;
+              --border-control: 0 0% 55%;
               --ring: 0 0% 13%;
               --surface: 0 0% 96%;
               --surface-active: 0 0% 91%;
@@ -81,6 +82,7 @@ module Layered
               --foreground: 0 0% 89%;
               --foreground-muted: 0 0% 71%;
               --border: 0 0% 16%;
+              --border-control: 0 0% 40%;
               --ring: 0 0% 89%;
               --surface: 0 0% 8%;
               --surface-active: 0 0% 16%;

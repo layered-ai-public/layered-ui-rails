@@ -1,5 +1,11 @@
-<% if object.errors[field].any? %>
-  <p id="<%= "#{object.model_name.param_key}_#{field}_error" %>" class="l-ui-form__field-error" role="alert">
-    <%= object.errors[field].first %>
-  </p>
-<% end %>
+<% error_id = "#{object.model_name.param_key}_#{field}_error" %>
+<% error_message = object.errors[field].first %>
+
+<p
+  id="<%= error_id %>"
+  class="l-ui-form__field-error"
+  <%= 'role="alert"' if error_message.present? %>
+  <%= 'hidden aria-hidden="true"' unless error_message.present? %>
+>
+  <%= error_message %>
+</p>

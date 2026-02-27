@@ -13,13 +13,11 @@
 
 <div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
   <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
-  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-containers-spread-heading">
     <div class="l-ui-modal__header">
-      <h3>Spread container</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
-        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
+      <h3 id="modal-containers-spread-heading">Spread container</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
@@ -56,13 +54,11 @@
 
 <div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
   <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
-  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-containers-grid-heading">
     <div class="l-ui-modal__header">
-      <h3>Grid container</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
-        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
+      <h3 id="modal-containers-grid-heading">Grid container</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
@@ -80,31 +76,32 @@
 
 <div class="l-ui-container--table l-ui-utility--mt-lg">
   <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Container CSS classes</caption>
     <thead class="l-ui-table__header">
       <tr>
-        <th class="l-ui-table__header-cell">Class</th>
-        <th class="l-ui-table__header-cell">Description</th>
+        <th class="l-ui-table__header-cell" scope="col">Class</th>
+        <th class="l-ui-table__header-cell" scope="col">Description</th>
       </tr>
     </thead>
     <tbody class="l-ui-table__body">
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-container--spread</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-container--spread</code></th>
         <td class="l-ui-table__cell">Flexbox with space-between alignment</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-container--grid</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-container--grid</code></th>
         <td class="l-ui-table__cell">Responsive grid, stacked on mobile, two columns on md</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-container--table</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-container--table</code></th>
         <td class="l-ui-table__cell">Scrollable container for <%= link_to "tables", tables_path %></td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-container--checkbox</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-container--checkbox</code></th>
         <td class="l-ui-table__cell">Flexbox container for <%= link_to "checkboxes", forms_path %> and their labels</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-container--pagy</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-container--pagy</code></th>
         <td class="l-ui-table__cell">Container for <%= link_to "Pagy", pagy_path %> pagination</td>
       </tr>
     </tbody>

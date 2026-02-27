@@ -12,13 +12,11 @@
 
 <div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
   <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
-  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-typography-headings-heading">
     <div class="l-ui-modal__header">
-      <h3>Headings</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
-        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
+      <h3 id="modal-typography-headings-heading">Headings</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
@@ -38,13 +36,11 @@
 
 <div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
   <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
-  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-typography-paragraphs-heading">
     <div class="l-ui-modal__header">
-      <h3>Paragraphs</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
-        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
+      <h3 id="modal-typography-paragraphs-heading">Paragraphs</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
@@ -77,13 +73,11 @@
 
 <div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
   <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
-  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-typography-lists-heading">
     <div class="l-ui-modal__header">
-      <h3>Lists</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
-        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
+      <h3 id="modal-typography-lists-heading">Lists</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
@@ -106,21 +100,22 @@
 
 <div class="l-ui-container--table l-ui-utility--mt-lg">
   <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Font family tokens</caption>
     <thead class="l-ui-table__header">
       <tr>
-        <th class="l-ui-table__header-cell">Token</th>
-        <th class="l-ui-table__header-cell">Font stack</th>
-        <th class="l-ui-table__header-cell">Usage</th>
+        <th class="l-ui-table__header-cell" scope="col">Token</th>
+        <th class="l-ui-table__header-cell" scope="col">Font stack</th>
+        <th class="l-ui-table__header-cell" scope="col">Usage</th>
       </tr>
     </thead>
     <tbody class="l-ui-table__body">
       <tr>
-        <td class="l-ui-table__cell--primary"><code>font-manrope</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>font-manrope</code></th>
         <td class="l-ui-table__cell">Manrope, ui-sans-serif, system-ui, sans-serif</td>
         <td class="l-ui-table__cell">Headings and labels</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>font-inter</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>font-inter</code></th>
         <td class="l-ui-table__cell">Inter, ui-sans-serif, system-ui, sans-serif</td>
         <td class="l-ui-table__cell">Body text and form fields</td>
       </tr>
@@ -132,43 +127,44 @@
 
 <div class="l-ui-container--table l-ui-utility--mt-lg">
   <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Typography CSS classes</caption>
     <thead class="l-ui-table__header">
       <tr>
-        <th class="l-ui-table__header-cell">Element / class</th>
-        <th class="l-ui-table__header-cell">Description</th>
+        <th class="l-ui-table__header-cell" scope="col">Element / class</th>
+        <th class="l-ui-table__header-cell" scope="col">Description</th>
       </tr>
     </thead>
     <tbody class="l-ui-table__body">
       <tr>
-        <td class="l-ui-table__cell--primary"><code>h1</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>h1</code></th>
         <td class="l-ui-table__cell">Manrope bold, text-xl</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>h2</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>h2</code></th>
         <td class="l-ui-table__cell">Manrope bold, text-lg</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>h3</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>h3</code></th>
         <td class="l-ui-table__cell">Manrope bold, base size</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>p</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>p</code></th>
         <td class="l-ui-table__cell">Muted foreground, text-sm, relaxed line height</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>p a</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>p a</code></th>
         <td class="l-ui-table__cell">Foreground color with bottom border underline</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>ul, ol, li</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>ul, ol, li</code></th>
         <td class="l-ui-table__cell">Muted foreground, text-sm</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-list</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-list</code></th>
         <td class="l-ui-table__cell">Disc bullets, inside position, vertical spacing</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>code</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>code</code></th>
         <td class="l-ui-table__cell">Muted foreground, text-sm</td>
       </tr>
     </tbody>

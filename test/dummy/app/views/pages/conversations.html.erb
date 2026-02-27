@@ -20,6 +20,7 @@
 
       <div class="l-ui-message--sent">
         <div class="l-ui-message__bubble">
+          <div class="l-ui-message__author">Bob</div>
           <div class="l-ui-message__body">
             I'll take a look this afternoon. The changes look straightforward from the description.
           </div>
@@ -50,8 +51,16 @@
         <div class="l-ui-message__avatar">BK</div>
         <div class="l-ui-message__bubble">
           <div class="l-ui-message__author">Bob</div>
-          <div class="l-ui-message__body">
-            I left a few comments on the PR. Nothing major, just some suggestions for the error handling.
+          <div class="l-ui-message__body l-ui-markdown">
+            <p>I left a few comments on the PR. The main issue is the <code>validate_input</code> method - it doesn't handle <strong>empty strings</strong> or <code>nil</code> values. Here's what I'd suggest:</p>
+            <pre><code>def validate_input(value)
+  return false if value.nil? || value.empty?
+  value.match?(/\A[\w\s]+\z/)
+end</code></pre>
+            <p>Also, the error messages could be more descriptive. Instead of <em>"invalid input"</em>, something like:</p>
+            <blockquote>
+              <p>Please enter a value containing only letters, numbers, and spaces.</p>
+            </blockquote>
           </div>
           <div class="l-ui-message__footer">
             <div class="l-ui-message__metadata">Claude Opus 4.6 (~215 tokens)</div>
@@ -62,8 +71,14 @@
 
       <div class="l-ui-message--sent">
         <div class="l-ui-message__bubble">
-          <div class="l-ui-message__body">
-            Good catches, Bob. I agree with both suggestions.
+          <div class="l-ui-message__body l-ui-markdown">
+            <p>Good catches, Bob. I agree with both suggestions. To summarise the changes needed:</p>
+            <ol>
+              <li>Add <strong>nil and empty string</strong> guards to <code>validate_input</code></li>
+              <li>Update error messages to be more descriptive</li>
+              <li>Add unit tests for the new edge cases</li>
+            </ol>
+            <p>I'll push a fix shortly.</p>
           </div>
           <div class="l-ui-message__footer">
             <div class="l-ui-message__metadata">ChatGPT 5.2 (~84 tokens)</div>
@@ -71,45 +86,112 @@
           </div>
         </div>
       </div>
+
+      <div class="l-ui-message">
+        <div class="l-ui-message__avatar">AL</div>
+        <div class="l-ui-message__bubble">
+          <div class="l-ui-message__author">Alice</div>
+          <div class="l-ui-message__body l-ui-markdown">
+            <p>I've pushed the fix. Here's what changed:</p>
+            <h3>Validation</h3>
+            <ul>
+              <li>Added <s>early return</s> guard clause for <code>nil</code> and empty strings</li>
+              <li>Improved the regex to also allow <em>hyphens</em> and <em>underscores</em></li>
+            </ul>
+            <h3>Error messages</h3>
+            <table>
+              <caption class="l-ui-sr-only">Error message changes</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Before</th>
+                  <th scope="col">After</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>invalid input</code></td>
+                  <td>Please enter a valid name</td>
+                </tr>
+                <tr>
+                  <td><code>too long</code></td>
+                  <td>Name must be under 255 characters</td>
+                </tr>
+              </tbody>
+            </table>
+            <hr>
+            <p>Ready for re-review when you get a chance.</p>
+          </div>
+          <div class="l-ui-message__footer">
+            <div class="l-ui-message__metadata">ChatGPT 5.2 (~340 tokens)</div>
+            <div class="l-ui-message__timestamp">11:30 AM</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="l-ui-message">
+        <div class="l-ui-message__avatar">BK</div>
+        <div class="l-ui-message__bubble">
+          <div class="l-ui-typing-indicator" role="status">
+            <span class="l-ui-sr-only">Someone is typing</span>
+            <div class="l-ui-typing-indicator__dot"></div>
+            <div class="l-ui-typing-indicator__dot"></div>
+            <div class="l-ui-typing-indicator__dot"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="l-ui-conversation__composer">
-    <textarea class="l-ui-conversation__composer-input" placeholder="Type a message..." rows="1"></textarea>
-    <button class="l-ui-button--icon" aria-label="Send">
-      <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"></path>
-      </svg>
-    </button>
+    <textarea class="l-ui-conversation__composer-input" placeholder="Type a message..." rows="1" aria-label="Type a message"></textarea>
+    <button class="l-ui-button--primary">Send</button>
   </div>
 </div>
 
 <div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
   <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
-  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop">
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-conversations-container-heading">
     <div class="l-ui-modal__header">
-      <h3>Conversation container</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close">
-        <svg class="l-ui-icon--sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
+      <h3 id="modal-conversations-container-heading">Conversation container</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
       <code class="l-ui-surface">&lt;div class="l-ui-conversation__container"&gt;
   &lt;div class="l-ui-conversation__messages"&gt;
     &lt;div class="l-ui-conversation"&gt;
-      &lt;!-- Messages go here --&gt;
+      &lt;!-- Plain text message --&gt;
       &lt;div class="l-ui-message"&gt;...&lt;/div&gt;
       &lt;div class="l-ui-message--sent"&gt;...&lt;/div&gt;
+
+      &lt;!-- Markdown message --&gt;
+      &lt;div class="l-ui-message"&gt;
+        &lt;div class="l-ui-message__avatar"&gt;BK&lt;/div&gt;
+        &lt;div class="l-ui-message__bubble"&gt;
+          &lt;div class="l-ui-message__body l-ui-markdown"&gt;
+            &lt;p&gt;Rendered HTML from markdown...&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;!-- Typing indicator --&gt;
+      &lt;div class="l-ui-message"&gt;
+        &lt;div class="l-ui-message__avatar"&gt;BK&lt;/div&gt;
+        &lt;div class="l-ui-message__bubble"&gt;
+          &lt;div class="l-ui-typing-indicator"&gt;
+            &lt;div class="l-ui-typing-indicator__dot"&gt;&lt;/div&gt;
+            &lt;div class="l-ui-typing-indicator__dot"&gt;&lt;/div&gt;
+            &lt;div class="l-ui-typing-indicator__dot"&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;div class="l-ui-conversation__composer"&gt;
     &lt;textarea class="l-ui-conversation__composer-input"
       placeholder="Type a message..." rows="1"&gt;
     &lt;/textarea&gt;
-    &lt;button class="l-ui-button--icon"&gt;
-      &lt;svg&gt;...&lt;/svg&gt;
-    &lt;/button&gt;
+    &lt;button class="l-ui-button--primary"&gt;Send&lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code>
     </div>
@@ -120,73 +202,159 @@
 
 <div class="l-ui-container--table l-ui-utility--mt-lg">
   <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Conversation CSS classes</caption>
     <thead class="l-ui-table__header">
       <tr>
-        <th class="l-ui-table__header-cell">Class</th>
-        <th class="l-ui-table__header-cell">Description</th>
+        <th class="l-ui-table__header-cell" scope="col">Class</th>
+        <th class="l-ui-table__header-cell" scope="col">Description</th>
       </tr>
     </thead>
     <tbody class="l-ui-table__body">
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-conversation</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-conversation</code></th>
         <td class="l-ui-table__cell">Container for a list of messages</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-conversation__container</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-conversation__container</code></th>
         <td class="l-ui-table__cell">Full-height container with scrolling messages and composer</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-conversation__messages</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-conversation__messages</code></th>
         <td class="l-ui-table__cell">Scrollable messages area</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-conversation__composer</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-conversation__composer</code></th>
         <td class="l-ui-table__cell">Message input area pinned to bottom</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-conversation__composer-input</code></td>
-        <td class="l-ui-table__cell">Textarea for composing messages</td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-conversation__composer-input</code></th>
+        <td class="l-ui-table__cell">Textarea overrides for composing messages (use with <code>l-ui-form__field</code>)</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-conversation__separator</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-conversation__separator</code></th>
         <td class="l-ui-table__cell">Date separator with horizontal lines</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-message</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-message</code></th>
         <td class="l-ui-table__cell">Received message (left-aligned with avatar)</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-message--sent</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-message--sent</code></th>
         <td class="l-ui-table__cell">Sent message (right-aligned, no avatar)</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-message__avatar</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-message__avatar</code></th>
         <td class="l-ui-table__cell">Circular avatar aligned to bottom of bubble</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-message__bubble</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-message__bubble</code></th>
         <td class="l-ui-table__cell">Message bubble with background</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-message__author</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-message__author</code></th>
         <td class="l-ui-table__cell">Author name inside bubble</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-message__body</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-message__body</code></th>
         <td class="l-ui-table__cell">Message text</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-message__footer</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-message__footer</code></th>
         <td class="l-ui-table__cell">Container for tokens and timestamp</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-message__metadata</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-message__metadata</code></th>
         <td class="l-ui-table__cell">Metadata text, left-aligned in footer</td>
       </tr>
       <tr>
-        <td class="l-ui-table__cell--primary"><code>l-ui-message__timestamp</code></td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-message__timestamp</code></th>
         <td class="l-ui-table__cell">Message time, right-aligned in footer</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-scroll-to-bottom</code></th>
+        <td class="l-ui-table__cell">Sticky scroll-to-bottom button, hidden by default</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-scroll-to-bottom[data-visible]</code></th>
+        <td class="l-ui-table__cell">Reveals the scroll-to-bottom button</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-typing-indicator</code></th>
+        <td class="l-ui-table__cell">Animated typing indicator with bouncing dots</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-typing-indicator__dot</code></th>
+        <td class="l-ui-table__cell">Individual dot inside the typing indicator</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-token-fade</code></th>
+        <td class="l-ui-table__cell">Fade-in animation for streaming tokens (0.3s ease-in)</td>
       </tr>
     </tbody>
   </table>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">Scroll to bottom</h2>
+
+<p class="l-ui-utility--mt-md">A sticky button that appears when the user scrolls up in the message list. Hidden by default with <code>opacity-0</code> and <code>pointer-events-none</code>; add the <code>data-visible</code> attribute to reveal it. Uses negative margin to overlap the scroll area without taking up space.</p>
+
+<div class="l-ui-surface l-ui-utility--mt-lg l-ui-utility--p-lg" style="position: relative; height: 8rem; overflow-y: auto;">
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi scelerisque dui at dapibus tincidunt. In eleifend ante sit amet rhoncus cursus. Nullam erat lacus, ultrices vel molestie eu, luctus id enim.</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi scelerisque dui at dapibus tincidunt. In eleifend ante sit amet rhoncus cursus. Nullam erat lacus, ultrices vel molestie eu, luctus id enim.</p>
+  <button class="l-ui-scroll-to-bottom" data-visible aria-label="Scroll to bottom">
+    <%= image_tag "layered_ui/icon_chevron_down.svg", class: "l-ui-icon--sm", alt: "" %>
+  </button>
+</div>
+
+<div class="l-ui-utility--mt-lg" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-conversations-scroll-to-bottom-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-conversations-scroll-to-bottom-heading">Scroll to bottom</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <code class="l-ui-surface">&lt;!-- Inside l-ui-conversation__messages --&gt;
+&lt;button class="l-ui-scroll-to-bottom"
+  aria-label="Scroll to bottom"&gt;
+  &lt;svg class="l-ui-icon--sm"&gt;...&lt;/svg&gt;
+&lt;/button&gt;
+
+&lt;!-- Toggle visibility with data-visible --&gt;
+&lt;button class="l-ui-scroll-to-bottom" data-visible
+  aria-label="Scroll to bottom"&gt;
+  &lt;svg class="l-ui-icon--sm"&gt;...&lt;/svg&gt;
+&lt;/button&gt;</code>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">Token fade-in</h2>
+
+<p class="l-ui-utility--mt-md">Apply <code>l-ui-token-fade</code> to each token as it arrives during streaming. The animation fades each token in over 0.3s with ease-in timing, giving a smooth appearance as text is generated.</p>
+
+<div class="l-ui-surface l-ui-utility--mt-lg l-ui-utility--p-lg">
+  <span class="l-ui-token-fade">Hello, </span><span class="l-ui-token-fade" style="animation-delay: 0.1s">I'd </span><span class="l-ui-token-fade" style="animation-delay: 0.2s">be </span><span class="l-ui-token-fade" style="animation-delay: 0.3s">happy </span><span class="l-ui-token-fade" style="animation-delay: 0.4s">to </span><span class="l-ui-token-fade" style="animation-delay: 0.5s">help </span><span class="l-ui-token-fade" style="animation-delay: 0.6s">with </span><span class="l-ui-token-fade" style="animation-delay: 0.7s">that.</span>
+</div>
+
+<div class="l-ui-utility--mt-lg" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-conversations-token-fade-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-conversations-token-fade-heading">Token fade-in</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <code class="l-ui-surface">&lt;!-- Apply to each token span as it streams in --&gt;
+&lt;span class="l-ui-token-fade"&gt;Hello, &lt;/span&gt;
+&lt;span class="l-ui-token-fade"&gt;I'd &lt;/span&gt;
+&lt;span class="l-ui-token-fade"&gt;be &lt;/span&gt;
+&lt;span class="l-ui-token-fade"&gt;happy &lt;/span&gt;
+...</code>
+    </div>
+  </dialog>
 </div>

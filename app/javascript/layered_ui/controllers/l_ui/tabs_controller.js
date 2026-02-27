@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import { announce, clearAnnounceTimeout } from "layered_ui/utilities/announce"
 
 export default class extends Controller {
   static targets = ["tab", "panel"]
@@ -21,7 +22,12 @@ export default class extends Controller {
   // Handle keyboard navigation on the tablist
   keydown(event) {
     const tabs = this.tabTargets
-    const currentIndex = tabs.indexOf(event.currentTarget)
+    if (tabs.length === 0) return
+
+    const currentTab = event.target.closest('[role="tab"]')
+    if (!currentTab || !tabs.includes(currentTab)) return
+
+    const currentIndex = tabs.indexOf(currentTab)
 
     let targetIndex
 
@@ -48,7 +54,7 @@ export default class extends Controller {
   }
 
   disconnect() {
-    clearTimeout(this.announceTimeout)
+    clearAnnounceTimeout(this)
   }
 
   // Private
@@ -73,19 +79,7 @@ export default class extends Controller {
     })
 
     if (shouldAnnounce) {
-      this.announce(`${selectedTab.textContent.trim()} tab selected`)
-    }
-  }
-
-  // Announce a message to screen readers via the live region
-  announce(message) {
-    const liveRegion = document.getElementById("l-ui-live-region")
-    if (liveRegion) {
-      liveRegion.textContent = message
-      clearTimeout(this.announceTimeout)
-      this.announceTimeout = setTimeout(() => {
-        liveRegion.textContent = ""
-      }, 3000)
+      announce(`${selectedTab.textContent.trim()} tab selected`, this)
     }
   }
 }
