@@ -1324,7 +1324,8 @@
 .l-ui-panel__body {
   @apply flex-1
          p-4 space-y-4
-         overflow-y-auto;
+         overflow-y-auto
+         overscroll-contain;
 }
 
 .l-ui-panel__input {

@@ -84,10 +84,11 @@ export default class extends Controller {
     this.containerTarget.setAttribute("aria-hidden", "false")
     this.containerTarget.removeAttribute("inert")
 
-    // On mobile, prevent background content from being tabbable
+    // On mobile, prevent background content from being tabbable and scrollable
     if (isMobile()) {
       const main = document.querySelector("main")
       if (main) main.setAttribute("inert", "")
+      document.body.style.overflow = "hidden"
     }
 
     storageSet("panelOpen", "true")
@@ -119,6 +120,7 @@ export default class extends Controller {
 
     const main = document.querySelector("main")
     if (main) main.removeAttribute("inert")
+    document.body.style.overflow = ""
 
     storageSet("panelOpen", "false")
     this.updatePageMargin()

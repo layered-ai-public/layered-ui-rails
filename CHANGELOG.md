@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [0.1.3] - 2026-02-28
+
+### Fixed
+
+- Panel scrolling on mobile no longer scrolls the page behind it
+
 ## [0.1.2] - 2026-02-27
 
 ### Added
