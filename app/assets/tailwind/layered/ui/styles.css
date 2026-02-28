@@ -451,6 +451,10 @@
          md:max-w-sm;
 }
 
+.l-ui-page:has(.l-ui-conversation__container) {
+  @apply max-h-dvh overflow-hidden;
+}
+
 /* Header */
 
 .l-ui-container--header {
@@ -1343,14 +1347,12 @@
 .l-ui-conversation__container {
   @apply flex flex-col
          gap-4
-         h-full
+         flex-1 min-h-0
          bg-background;
 }
 
 .l-ui-conversation__messages {
   @apply flex-1
-         py-4
-         border-b border-border
          overflow-y-auto;
 }
 

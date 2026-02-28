@@ -1,6 +1,6 @@
 <h1>Conversations</h1>
 
-<p class="l-ui-utility--mt-md">A message list component for displaying conversations and messages. The container uses <code>h-full</code> to fill its parent's height, so the parent must provide an explicit height. Messages scroll within the available space while the composer stays pinned at the bottom. If you have a title bar or other content above the messages, include it inside the container so the remaining height is calculated correctly.</p>
+<p class="l-ui-utility--mt-md">A message list component for displaying conversations and messages. The container uses <code>flex-1 min-h-0</code> to fill available space within a flex parent. When placed inside an <code>l-ui-page</code>, the page is automatically constrained to viewport height so messages scroll within the available space while the composer stays pinned at the bottom. If you have a title bar or other content above the messages, include it inside the container so the remaining height is calculated correctly.</p>
 
 <div class="l-ui-conversation__container l-ui-utility--mt-xl">
   <div class="l-ui-conversation__messages">
