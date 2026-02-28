@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file. This projec
 
 - Panel scrolling on mobile no longer scrolls the page behind it
 - Panel not working on devise based controllers
+- Issue with conversation container height
 
 ## [0.1.2] - 2026-02-27
 

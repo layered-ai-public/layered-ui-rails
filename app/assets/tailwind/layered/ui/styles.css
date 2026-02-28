@@ -1316,6 +1316,10 @@
   @apply flex-1;
 }
 
+.l-ui-panel__header-heading .l-ui-select {
+  @apply mb-2;
+}
+
 .l-ui-panel__header-actions {
   @apply flex items-center
          gap-2;
@@ -1330,6 +1334,16 @@
          p-4 space-y-4
          overflow-y-auto
          overscroll-contain;
+}
+
+.l-ui-panel__body:has(.l-ui-conversation__container) {
+  @apply relative
+         overflow-hidden;
+}
+
+.l-ui-panel__body .l-ui-conversation__container {
+  @apply absolute inset-0
+         p-4;
 }
 
 .l-ui-panel__input {
