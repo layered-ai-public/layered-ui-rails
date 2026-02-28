@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file. This projec
 ### Fixed
 
 - Panel scrolling on mobile no longer scrolls the page behind it
+- Panel not working on devise based controllers
 
 ## [0.1.2] - 2026-02-27
 
