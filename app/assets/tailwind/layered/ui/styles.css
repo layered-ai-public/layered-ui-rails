@@ -1422,7 +1422,7 @@
          w-full min-w-0
          bg-surface
          text-foreground
-         rounded-lg;
+         rounded-md;
 }
 
 .l-ui-message--sent .l-ui-message__bubble {
@@ -1544,7 +1544,7 @@
          border-0 md:border md:border-border
          bg-background
          text-foreground
-         rounded-none md:rounded-md;
+         rounded-none md:rounded-sm;
 }
 
 .l-ui-modal::backdrop {
