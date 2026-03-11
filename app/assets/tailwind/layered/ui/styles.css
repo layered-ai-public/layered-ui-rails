@@ -1411,7 +1411,7 @@
   @apply flex items-center justify-center shrink-0
          w-7 h-7
          text-xs font-bold
-         bg-surface-active
+         bg-surface
          text-foreground
          rounded-full;
 }
