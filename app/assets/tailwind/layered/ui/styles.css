@@ -1377,15 +1377,8 @@
 
 .l-ui-conversation__composer-input {
   @apply form__field;
-  font-size: 1rem; /* Prevent iOS auto-zoom on focus (requires >= 16px) */
   field-sizing: content;
   resize: none;
-}
-
-@media (min-width: 640px) {
-  .l-ui-conversation__composer-input {
-    @apply text-sm;
-  }
 }
 
 .l-ui-conversation__separator {
