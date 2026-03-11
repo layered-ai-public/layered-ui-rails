@@ -10,7 +10,6 @@ export default class extends Controller {
     this.previousActiveElement = null
     this.isOpen = false
     this.boundKeyboardShortcut = this.handleKeyboardShortcut.bind(this)
-
     const page = document.querySelector(".l-ui-page")
     if (page) page.style.transition = "none"
     this.containerTarget.style.transition = "none"
@@ -88,7 +87,9 @@ export default class extends Controller {
     if (isMobile()) {
       const main = document.querySelector("main")
       if (main) main.setAttribute("inert", "")
-      document.body.style.overflow = "hidden"
+      this.savedScrollY = window.scrollY
+      document.body.style.top = `-${this.savedScrollY}px`
+      document.body.classList.add("l-ui-scroll-lock")
     }
 
     storageSet("panelOpen", "true")
@@ -120,7 +121,11 @@ export default class extends Controller {
 
     const main = document.querySelector("main")
     if (main) main.removeAttribute("inert")
-    document.body.style.overflow = ""
+    document.body.classList.remove("l-ui-scroll-lock")
+    document.body.style.top = ""
+    if (this.savedScrollY !== undefined) {
+      window.scrollTo(0, this.savedScrollY)
+    }
 
     storageSet("panelOpen", "false")
     this.updatePageMargin()
