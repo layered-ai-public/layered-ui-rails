@@ -62,7 +62,7 @@
     tabindex="-1"
     title="Toggle panel (Ctrl/⌘+i). Move to corners (Ctrl/⌘ + Alt/⌥ + 1/2/3/4), double-click, or drag."
     data-controller="l-ui--panel-button"
-    data-action="click->l-ui--panel-button#queueToggle dblclick->l-ui--panel-button#cycleCorner mousedown->l-ui--panel-button#startDrag touchstart:passive->l-ui--panel-button#startDrag"
+    data-action="click->l-ui--panel-button#queueToggle dblclick->l-ui--panel-button#cycleCorner mousedown->l-ui--panel-button#startDrag touchstart->l-ui--panel-button#startDrag"
     data-l-ui--panel-target="actionButton"
   >
     <%= image_tag("layered_ui/panel_icon_light.svg", alt: "", class: "l-ui-icon--lg l-ui-panel__icon--light", aria: { hidden: true }) %>
