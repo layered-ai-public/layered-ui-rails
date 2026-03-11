@@ -1,3 +1,5 @@
+<style>.l-ui-page:has(.l-ui-conversation__container) { max-height: none; overflow: visible; }</style>
+
 <h1>Conversations</h1>
 
 <p class="l-ui-utility--mt-md">A message list component for displaying conversations and messages. The container uses <code>flex-1 min-h-0</code> to fill available space within a flex parent. When placed inside an <code>l-ui-page</code>, the page is automatically constrained to viewport height so messages scroll within the available space while the composer stays pinned at the bottom. If you have a title bar or other content above the messages, include it inside the container so the remaining height is calculated correctly.</p>
@@ -298,8 +300,7 @@ end</code></pre>
 
 <p class="l-ui-utility--mt-md">A sticky button that appears when the user scrolls up in the message list. Hidden by default with <code>opacity-0</code> and <code>pointer-events-none</code>; add the <code>data-visible</code> attribute to reveal it. Uses negative margin to overlap the scroll area without taking up space.</p>
 
-<div class="l-ui-surface l-ui-utility--mt-lg l-ui-utility--p-lg" style="position: relative; height: 8rem; overflow-y: auto;">
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi scelerisque dui at dapibus tincidunt. In eleifend ante sit amet rhoncus cursus. Nullam erat lacus, ultrices vel molestie eu, luctus id enim.</p>
+<div class="l-ui-surface l-ui-utility--mt-lg l-ui-utility--p-lg">
   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi scelerisque dui at dapibus tincidunt. In eleifend ante sit amet rhoncus cursus. Nullam erat lacus, ultrices vel molestie eu, luctus id enim.</p>
   <button class="l-ui-scroll-to-bottom" data-visible aria-label="Scroll to bottom">
     <%= image_tag "layered_ui/icon_chevron_down.svg", class: "l-ui-icon--sm", alt: "" %>
