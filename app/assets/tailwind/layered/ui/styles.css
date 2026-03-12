@@ -1339,7 +1339,7 @@
 
 .l-ui-panel__body .l-ui-conversation__container {
   @apply absolute inset-0
-         p-4;
+         p-4 pt-0;
 }
 
 .l-ui-panel__input {
