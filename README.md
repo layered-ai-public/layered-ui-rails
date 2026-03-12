@@ -97,7 +97,7 @@ This project is still in its early days. We welcome issues, feedback, and ideas 
 
 ## License
 
-Released under the [Apache 2.0 License](LICENSE). The source code is fully open, but the layered.ai name and brand are trademarks of Layered AI.
+Released under the [Apache 2.0 License](LICENSE). The source code is fully open, but the layered.ai name and brand are trademarks of LAYERED AI LIMITED (UK company number: 17056830).
 
 - [TRADEMARK.md](TRADEMARK.md) - trademark and brand policy
 - [CLA.md](CLA.md) - contributor license agreement

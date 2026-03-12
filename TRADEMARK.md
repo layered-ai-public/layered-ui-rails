@@ -1,7 +1,7 @@
 # layered.ai Trademark and Brand Policy
 
 The layered.ai name, logo, domain names, and related brand assets are
-trademarks of Layered AI.
+trademarks of LAYERED AI LIMITED (UK company number: 17056830).
 
 ## Scope
 
@@ -11,7 +11,7 @@ but does not grant rights to use the layered.ai name, logo, or branding.
 
 ## Restrictions
 
-Without a separate written brand license from Layered AI, you may not:
+Without a separate written brand license from LAYERED AI LIMITED, you may not:
 
 - Use the name "layered.ai" to identify a fork, derivative work, or hosted service
 - Use the layered.ai logo or visual identity
