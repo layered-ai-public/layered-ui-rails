@@ -1351,23 +1351,6 @@
          border-t border-border;
 }
 
-/* Prevent Safari auto-zoom on input focus inside fixed panel */
-@media (max-width: 767px) {
-  .l-ui-container--panel input,
-  .l-ui-container--panel textarea,
-  .l-ui-container--panel select {
-    font-size: 16px;
-  }
-
-  /* iOS Safari ignores overflow:hidden on body; position:fixed is required */
-  .l-ui-scroll-lock {
-    position: fixed;
-    left: 0;
-    right: 0;
-    overflow: hidden;
-  }
-}
-
 /* Conversation */
 
 .l-ui-conversation {
@@ -1577,4 +1560,22 @@
 .l-ui-modal__body {
   @apply px-5 py-4
          overflow-y-auto;
+}
+
+/* Safari */
+@media (max-width: 767px) {
+  /* Prevent Safari auto-zoom on input focus */
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+
+  /* iOS Safari ignores overflow:hidden on body; position:fixed is required */
+  .l-ui-scroll-lock {
+    position: fixed;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+  }
 }
