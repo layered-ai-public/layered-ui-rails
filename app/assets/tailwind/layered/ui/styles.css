@@ -451,10 +451,6 @@
          md:max-w-sm;
 }
 
-.l-ui-page:has(.l-ui-conversation__container) {
-  @apply max-h-dvh overflow-hidden;
-}
-
 /* Header */
 
 .l-ui-container--header {
@@ -1363,6 +1359,10 @@
          gap-4
          flex-1 min-h-0
          bg-background;
+}
+
+.l-ui-page:has(.l-ui-conversation__container) {
+  @apply max-h-dvh overflow-hidden;
 }
 
 .l-ui-conversation__messages {
