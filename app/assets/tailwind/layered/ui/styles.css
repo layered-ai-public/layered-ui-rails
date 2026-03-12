@@ -676,7 +676,7 @@
 /* Buttons */
 
 @utility button {
-  @apply flex items-center justify-center
+  @apply flex items-center justify-center gap-2
          px-4 min-h-[44px]
          text-sm font-medium
          cursor-pointer

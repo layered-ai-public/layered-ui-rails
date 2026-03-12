@@ -4,6 +4,18 @@
   <%= Gem.loaded_specs["layered-ui-rails"].description %>
 </p>
 
+<div class="flex gap-2 l-ui-utility--mt-md">
+  <%= link_to "https://www.layered.ai/", target: "_blank", rel: "noopener noreferrer", class: "l-ui-button l-ui-button--outline" do %>
+    <%= image_tag "icon_globe.svg", class: "l-ui-icon--sm", alt: "" %> Website
+  <% end %>
+  <%= link_to "https://github.com/layered-ai-public/layered-ui-rails", target: "_blank", rel: "noopener noreferrer", class: "l-ui-button l-ui-button--outline" do %>
+    <%= image_tag "icon_github.svg", class: "l-ui-icon--sm", alt: "" %> GitHub
+  <% end %>
+  <%= link_to "https://discord.gg/aCGqz9Bx", target: "_blank", rel: "noopener noreferrer", class: "l-ui-button l-ui-button--outline" do %>
+    <%= image_tag "icon_discord.svg", class: "l-ui-icon--sm", alt: "" %> Discord
+  <% end %>
+</div>
+
 <div class="l-ui-container--grid l-ui-utility--mt-lg gap-8">
   <div>
     <div class="flex gap-2 items-start">
