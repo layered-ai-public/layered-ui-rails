@@ -14,6 +14,19 @@
   <%= link_to "https://discord.gg/aCGqz9Bx", target: "_blank", rel: "noopener noreferrer", class: "l-ui-button l-ui-button--outline" do %>
     <%= image_tag "icon_discord.svg", class: "l-ui-icon--sm", alt: "" %> Discord
   <% end %>
+
+  <!-- MailerLite Universal -->
+  <script>
+      (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+      .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+      n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+      (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+      ml('account', '1877799');
+  </script>
+  <!-- End MailerLite Universal -->
+  <a class="ml-onclick-form l-ui-button l-ui-button--outline" href="javascript:void(0)" onclick="ml('show', 'CbhpAg', true)">
+    <%= image_tag "icon_mail.svg", class: "l-ui-icon--sm", alt: "" %> Newsletter
+  </a>
 </div>
 
 <div class="l-ui-container--grid l-ui-utility--mt-lg gap-8">
