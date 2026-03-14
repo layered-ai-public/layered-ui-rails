@@ -10,7 +10,7 @@ export default class extends Controller {
     this.previousActiveElement = null
     this.isOpen = false
     this.boundKeyboardShortcut = this.handleKeyboardShortcut.bind(this)
-
+    this.boundCloseOnNavigate = this.closeOnMobileNavigate.bind(this)
     const page = document.querySelector(".l-ui-page")
     if (page) page.style.transition = "none"
     this.containerTarget.style.transition = "none"
@@ -27,11 +27,13 @@ export default class extends Controller {
     })
 
     document.addEventListener('keydown', this.boundKeyboardShortcut)
+    document.addEventListener('turbo:visit', this.boundCloseOnNavigate)
   }
 
   disconnect() {
     clearAnnounceTimeout(this)
     document.removeEventListener('keydown', this.boundKeyboardShortcut)
+    document.removeEventListener('turbo:visit', this.boundCloseOnNavigate)
     this.previousActiveElement = null
   }
 
@@ -84,10 +86,13 @@ export default class extends Controller {
     this.containerTarget.setAttribute("aria-hidden", "false")
     this.containerTarget.removeAttribute("inert")
 
-    // On mobile, prevent background content from being tabbable
+    // On mobile, prevent background content from being tabbable and scrollable
     if (isMobile()) {
       const main = document.querySelector("main")
       if (main) main.setAttribute("inert", "")
+      this.savedScrollY = window.scrollY
+      document.body.style.top = `-${this.savedScrollY}px`
+      document.body.classList.add("l-ui-scroll-lock")
     }
 
     storageSet("panelOpen", "true")
@@ -119,6 +124,11 @@ export default class extends Controller {
 
     const main = document.querySelector("main")
     if (main) main.removeAttribute("inert")
+    document.body.classList.remove("l-ui-scroll-lock")
+    document.body.style.top = ""
+    if (this.savedScrollY !== undefined) {
+      window.scrollTo(0, this.savedScrollY)
+    }
 
     storageSet("panelOpen", "false")
     this.updatePageMargin()
@@ -130,6 +140,13 @@ export default class extends Controller {
         this.actionButtonTarget.focus()
       }
       announce("Panel closed", this)
+    }
+  }
+
+  // Close the panel on mobile when navigating to a new page
+  closeOnMobileNavigate() {
+    if (this.isOpen && isMobile()) {
+      this.close(false)
     }
   }
 

@@ -4,6 +4,31 @@
   <%= Gem.loaded_specs["layered-ui-rails"].description %>
 </p>
 
+<!-- MailerLite Universal -->
+<script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '1877799');
+</script>
+<!-- End MailerLite Universal -->
+
+<div class="flex gap-2 l-ui-utility--mt-md">
+  <%= link_to "https://www.layered.ai/", target: "_blank", rel: "noopener noreferrer", class: "l-ui-button l-ui-button--outline" do %>
+    <%= image_tag "icon_globe.svg", class: "l-ui-icon--sm", alt: "" %> Website
+  <% end %>
+  <%= link_to "https://github.com/layered-ai-public/layered-ui-rails", target: "_blank", rel: "noopener noreferrer", class: "l-ui-button l-ui-button--outline" do %>
+    <%= image_tag "icon_github.svg", class: "l-ui-icon--sm", alt: "" %> GitHub
+  <% end %>
+  <%= link_to "https://discord.gg/aCGqz9Bx", target: "_blank", rel: "noopener noreferrer", class: "l-ui-button l-ui-button--outline" do %>
+    <%= image_tag "icon_discord.svg", class: "l-ui-icon--sm", alt: "" %> Discord
+  <% end %>
+  <button type="button" class="ml-onclick-form l-ui-button l-ui-button--outline" onclick="ml('show', 'CbhpAg', true)">
+    <%= image_tag "icon_mail.svg", class: "l-ui-icon--sm", alt: "" %> Newsletter
+  </button>
+</div>
+
 <div class="l-ui-container--grid l-ui-utility--mt-lg gap-8">
   <div>
     <div class="flex gap-2 items-start">
@@ -95,3 +120,12 @@
 <p class="l-ui-utility--mt-lg">You can override the default logo by placing your own <code>logo_light.svg</code> and <code>logo_dark.svg</code> files in <code>app/assets/images/layered_ui/</code>. The panel toggle icon can also be overridden with <code>panel_icon_light.svg</code> and <code>panel_icon_dark.svg</code> in the same directory. The asset pipeline will serve your files instead of the defaults provided by the engine.</p>
 
 <p class="l-ui-utility--mt-lg">If you're planning to use Devise for authentication, see the <%= link_to "Devise guide", devise_path %> for integration details.</p>
+
+<h2 class="l-ui-utility--mt-xl">Legal</h2>
+<p class="l-ui-utility--mt-md"><code>layered-ui-rails</code> is open source software released under the Apache License, Version 2.0.</p>
+<ul class="l-ui-list l-ui-utility--mt-sm">
+  <li><%= link_to "Copyright notice", "https://github.com/layered-ai-public/layered-ui-rails/blob/main/NOTICE", target: "_blank", rel: "noopener noreferrer" %></li>
+  <li><%= link_to "License (Apache 2.0)", "https://github.com/layered-ai-public/layered-ui-rails/blob/main/LICENSE", target: "_blank", rel: "noopener noreferrer" %></li>
+  <li><%= link_to "Trademark policy", "https://github.com/layered-ai-public/layered-ui-rails/blob/main/TRADEMARK.md", target: "_blank", rel: "noopener noreferrer" %></li>
+  <li><%= link_to "Contributor licence agreement", "https://github.com/layered-ai-public/layered-ui-rails/blob/main/CLA.md", target: "_blank", rel: "noopener noreferrer" %></li>
+</ul>

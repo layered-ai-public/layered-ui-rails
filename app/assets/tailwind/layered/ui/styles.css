@@ -107,11 +107,6 @@
            text-sm text-foreground-muted leading-relaxed;
   }
 
-  p a,
-  td a {
-    @apply link;
-  }
-
   ul, ol {
     @apply mt-0
            text-sm text-foreground-muted;
@@ -225,14 +220,16 @@
          transition-[margin] duration-300;
 }
 
-@utility link {
-  @apply underline
-         text-foreground hover:text-foreground-muted
-         focus-ring rounded-sm;
-}
-
 .l-ui-utility--mt-0 {
   @apply !mt-0 md:!mt-0;
+}
+
+.l-ui-utility--mt-4 {
+  @apply !mt-4 md:!mt-4;
+}
+
+.l-ui-utility--mt-8 {
+  @apply !mt-8 md:!mt-8;
 }
 
 .l-ui-utility---mr-2 {
@@ -318,10 +315,6 @@
 .l-ui-markdown s,
 .l-ui-markdown del {
   @apply line-through;
-}
-
-.l-ui-markdown a {
-  @apply link;
 }
 
 .l-ui-markdown ul {
@@ -435,6 +428,12 @@
 
 .l-ui-page {
   @apply page;
+}
+
+.l-ui-page a:not([class*="l-ui-button"]) {
+  @apply underline
+         text-foreground hover:text-foreground-muted
+         focus-ring rounded-sm;
 }
 
 .l-ui-page--with-navigation {
@@ -668,7 +667,7 @@
 /* Buttons */
 
 @utility button {
-  @apply flex items-center justify-center
+  @apply flex items-center justify-center gap-2
          px-4 min-h-[44px]
          text-sm font-medium
          cursor-pointer
@@ -1039,10 +1038,6 @@
 .l-ui-table__cell--primary {
   @apply table-cell-padding
          text-left text-sm font-medium whitespace-nowrap;
-
-  & a {
-    @apply link;
-  }
 }
 
 .l-ui-table__cell--action {
@@ -1312,6 +1307,10 @@
   @apply flex-1;
 }
 
+.l-ui-panel__header-heading .l-ui-select {
+  @apply mb-2;
+}
+
 .l-ui-panel__header-actions {
   @apply flex items-center
          gap-2;
@@ -1324,7 +1323,18 @@
 .l-ui-panel__body {
   @apply flex-1
          p-4 space-y-4
-         overflow-y-auto;
+         overflow-y-auto
+         overscroll-contain;
+}
+
+.l-ui-panel__body:has(.l-ui-conversation__container) {
+  @apply relative
+         overflow-hidden;
+}
+
+.l-ui-panel__body .l-ui-conversation__container {
+  @apply absolute inset-0
+         p-4 pt-0;
 }
 
 .l-ui-panel__input {
@@ -1342,14 +1352,16 @@
 .l-ui-conversation__container {
   @apply flex flex-col
          gap-4
-         h-full
+         flex-1 min-h-0
          bg-background;
+}
+
+.l-ui-page:has(.l-ui-conversation__container) {
+  @apply max-h-dvh overflow-hidden;
 }
 
 .l-ui-conversation__messages {
   @apply flex-1
-         py-4
-         border-b border-border
          overflow-y-auto;
 }
 
@@ -1394,7 +1406,7 @@
   @apply flex items-center justify-center shrink-0
          w-7 h-7
          text-xs font-bold
-         bg-surface-active
+         bg-surface
          text-foreground
          rounded-full;
 }
@@ -1405,7 +1417,7 @@
          w-full min-w-0
          bg-surface
          text-foreground
-         rounded-lg;
+         rounded-md;
 }
 
 .l-ui-message--sent .l-ui-message__bubble {
@@ -1527,7 +1539,7 @@
          border-0 md:border md:border-border
          bg-background
          text-foreground
-         rounded-none md:rounded-md;
+         rounded-none md:rounded-sm;
 }
 
 .l-ui-modal::backdrop {
@@ -1543,4 +1555,22 @@
 .l-ui-modal__body {
   @apply px-5 py-4
          overflow-y-auto;
+}
+
+/* Safari */
+@media (max-width: 767px) {
+  /* Prevent Safari auto-zoom on input focus */
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+
+  /* iOS Safari ignores overflow:hidden on body; position:fixed is required */
+  .l-ui-scroll-lock {
+    position: fixed;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+  }
 }
