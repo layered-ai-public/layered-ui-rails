@@ -107,11 +107,6 @@
            text-sm text-foreground-muted leading-relaxed;
   }
 
-  p a,
-  td a {
-    @apply link;
-  }
-
   ul, ol {
     @apply mt-0
            text-sm text-foreground-muted;
@@ -225,12 +220,6 @@
          transition-[margin] duration-300;
 }
 
-@utility link {
-  @apply underline
-         text-foreground hover:text-foreground-muted
-         focus-ring rounded-sm;
-}
-
 .l-ui-utility--mt-0 {
   @apply !mt-0 md:!mt-0;
 }
@@ -326,10 +315,6 @@
 .l-ui-markdown s,
 .l-ui-markdown del {
   @apply line-through;
-}
-
-.l-ui-markdown a {
-  @apply link;
 }
 
 .l-ui-markdown ul {
@@ -443,6 +428,12 @@
 
 .l-ui-page {
   @apply page;
+}
+
+.l-ui-page a:not([class*="l-ui-button"]) {
+  @apply underline
+         text-foreground hover:text-foreground-muted
+         focus-ring rounded-sm;
 }
 
 .l-ui-page--with-navigation {
@@ -1047,10 +1038,6 @@
 .l-ui-table__cell--primary {
   @apply table-cell-padding
          text-left text-sm font-medium whitespace-nowrap;
-
-  & a {
-    @apply link;
-  }
 }
 
 .l-ui-table__cell--action {
