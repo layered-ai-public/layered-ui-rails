@@ -4,7 +4,21 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
-## [0.1.3] - 2026-02-28
+## [0.1.3] - 2026-03-14
+
+### Added
+
+- `l-ui-utility--mt-4` and `l-ui-utility--mt-8` margin-top utilities
+
+### Changed
+
+- Panel closes when navigating to a new page on mobile
+- Panel button is now draggable on mobile
+- Better Safari support for panel
+- Cleaner link styles
+- Updated message bubble avatar background
+- Updated conversation rounding
+- Removed top padding from panel conversations
 
 ### Fixed
 
