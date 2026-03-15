@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.email       = [ "support@layered.ai" ]
   spec.homepage    = "https://www.layered.ai"
   spec.description = "An open source Rails 8+ engine that provides WCAG 2.2 AA compliant design tokens, Tailwind CSS utilities, and Stimulus controllers for theme switching, mobile navigation, slide-out panels, modals, and tabs. Ships as pure frontend with no server-side dependencies beyond Rails and Tailwind CSS."
-  spec.summary     = "Open source, minimalist, responsive, accessible UI system with light and dark theme support - and a touch of glass."
+  spec.summary     = "Open source, minimalist, responsive, accessible UI system with light and dark theme support."
   spec.license     = "Apache-2.0"
 
   spec.required_ruby_version = ">= 3.2.0"
