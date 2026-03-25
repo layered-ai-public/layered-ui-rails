@@ -8,7 +8,8 @@ export function isMobile() {
 
 export function hasNavigation() {
   const page = document.querySelector(".l-ui-page")
-  return page && page.classList.contains("l-ui-page--with-navigation") && !isMobile()
+  const alwaysShow = document.body.classList.contains("l-ui-body--always-show-navigation")
+  return page && page.classList.contains("l-ui-page--with-navigation") && !isMobile() && alwaysShow
 }
 
 export function getPadding() {

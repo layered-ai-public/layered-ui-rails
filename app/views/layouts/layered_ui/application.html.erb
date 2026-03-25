@@ -22,12 +22,12 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="l-ui-body" data-controller="l-ui--mobile-navigation" data-action="click@window->l-ui--mobile-navigation#close keydown.esc@window->l-ui--mobile-navigation#close">
+  <body class="l-ui-body <%= yield :l_ui_body_class %>" data-controller="l-ui--navigation" data-action="click@window->l-ui--navigation#close keydown.esc@window->l-ui--navigation#close">
     <a href="#main-content" class="l-ui-skip-link">Skip to main content</a>
     <div id="l-ui-live-region" class="l-ui-sr-only" aria-live="polite" aria-atomic="true"></div>
     <%= render "layouts/layered_ui/header" %>
     <%= render "layouts/layered_ui/navigation" %>
-    <div class="l-ui-backdrop--navigation" data-l-ui--mobile-navigation-target="backdrop" data-action="click->l-ui--mobile-navigation#close"></div>
+    <div class="l-ui-backdrop--navigation" data-l-ui--navigation-target="backdrop" data-action="click->l-ui--navigation#close"></div>
     <% if yield(:l_ui_panel_body).present? %>
       <%= render "layouts/layered_ui/panel" %>
     <% end %>

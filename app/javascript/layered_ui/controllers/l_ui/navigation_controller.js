@@ -33,7 +33,7 @@ export default class extends Controller {
   }
 
   close(event) {
-    // Close menu when clicking outside on mobile or pressing Escape
+    // Close menu when clicking outside or pressing Escape
     if (event.type === "keydown" && event.key !== "Escape") return
 
     if (this.hasNavigationTarget && this.isOpen) {
@@ -122,11 +122,13 @@ export default class extends Controller {
   handleResize() {
     if (!this.hasNavigationTarget) return
 
-    if (isMobile()) {
+    // In overlay mode (default), always respect isOpen state regardless of viewport
+    if (isMobile() || !this.alwaysShow) {
       this.setNavigationInteractivity(this.isOpen)
       return
     }
 
+    // Desktop in always-show mode: force nav visible
     this.isOpen = false
     this.navigationTarget.classList.remove("open")
     this.backdropTarget.classList.remove("open")
@@ -145,7 +147,7 @@ export default class extends Controller {
   }
 
   setNavigationInteractivity(isOpen) {
-    if (isMobile() && !isOpen) {
+    if (!this.alwaysShow && !isOpen) {
       this.navigationTarget.setAttribute("inert", "")
       this.navigationTarget.setAttribute("aria-hidden", "true")
       return
@@ -153,5 +155,9 @@ export default class extends Controller {
 
     this.navigationTarget.removeAttribute("inert")
     this.navigationTarget.removeAttribute("aria-hidden")
+  }
+
+  get alwaysShow() {
+    return this.element.classList.contains("l-ui-body--always-show-navigation")
   }
 }

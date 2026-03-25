@@ -1,6 +1,8 @@
 <h1>Navigation</h1>
 
-<p class="l-ui-utility--mt-md">Populate the sidebar navigation using the <code>:l_ui_navigation_items</code> yield and the <code>l_ui_navigation_item</code> helper.</p>
+<p class="l-ui-utility--mt-md">Populate the navigation using the <code>:l_ui_navigation_items</code> yield and the <code>l_ui_navigation_item</code> helper.</p>
+
+<p class="l-ui-utility--mt-md">The navigation is off-canvas by default and toggled via the header button on all screen sizes. Add <code>l-ui-body--always-show-navigation</code> to the body to pin it as a persistent sidebar on desktop (suitable for admin layouts).</p>
 
 <p class="l-ui-utility--mt-md">For full control, override the partial by creating <code>app/views/layouts/layered_ui/_navigation.html.erb</code> in your application.</p>
 
@@ -9,5 +11,13 @@
   &lt;%= l_ui_navigation_item "Settings", settings_path %&gt;
   &lt;%= l_ui_navigation_item "Users", users_path %&gt;
 &lt;% end %&gt;
+
+&lt;%= render template: "layouts/layered_ui/application" %&gt;</code>
+
+<h2 class="l-ui-utility--mt-xl">Always-show navigation</h2>
+
+<p class="l-ui-utility--mt-md">Pin the navigation open on desktop by passing the <code>l-ui-body--always-show-navigation</code> modifier via the <code>:l_ui_body_class</code> yield.</p>
+
+<code class="l-ui-surface l-ui-utility--mt-lg">&lt;% content_for :l_ui_body_class, "l-ui-body--always-show-navigation" %&gt;
 
 &lt;%= render template: "layouts/layered_ui/application" %&gt;</code>

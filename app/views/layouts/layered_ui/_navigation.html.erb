@@ -1,5 +1,5 @@
 <% if yield(:l_ui_navigation_items).present? || l_ui_user_signed_in? %>
-  <nav id="mobile-navigation" class="l-ui-container--navigation" aria-label="Main navigation" data-l-ui--mobile-navigation-target="navigation">
+  <nav id="l-ui-navigation" class="l-ui-container--navigation" aria-label="Main navigation" data-l-ui--navigation-target="navigation">
     <div class="l-ui-navigation">
       <ul class="l-ui-navigation__links" role="list">
         <%= yield :l_ui_navigation_items %>
