@@ -424,6 +424,10 @@
          text-foreground;
 }
 
+.l-ui-body--hide-header {
+  --header-height: 0px;
+}
+
 /* Page */
 
 .l-ui-page {
@@ -437,7 +441,11 @@
 }
 
 .l-ui-page--with-navigation {
-  @apply page md:ml-[240px];
+  @apply page;
+}
+
+.l-ui-body--always-show-navigation .l-ui-page--with-navigation {
+  @apply md:ml-[240px];
 }
 
 .l-ui-page--vertically-centered {
@@ -457,6 +465,10 @@
          z-50
          border-b border-border
          bg-background;
+}
+
+.l-ui-body--hide-header .l-ui-container--header {
+  @apply hidden;
 }
 
 .l-ui-header {
@@ -561,8 +573,8 @@
          z-50
          border-r border-t border-border
          bg-background
-         invisible md:visible
-         transform -translate-x-full md:translate-x-0
+         invisible
+         -translate-x-full
          transition-transform duration-200;
 }
 
@@ -570,17 +582,24 @@
   @apply visible translate-x-0;
 }
 
+.l-ui-body--always-show-navigation .l-ui-container--navigation {
+  @apply md:visible md:translate-x-0;
+}
+
 .l-ui-backdrop--navigation {
   @apply fixed top-[var(--header-height)] left-0 right-0 bottom-0
          z-[45]
          bg-backdrop/50 backdrop-blur-xs
          opacity-0 pointer-events-none
-         transition-opacity duration-200
-         md:hidden;
+         transition-opacity duration-200;
 }
 
 .l-ui-backdrop--navigation.open {
   @apply opacity-100 pointer-events-auto;
+}
+
+.l-ui-body--always-show-navigation .l-ui-backdrop--navigation {
+  @apply md:hidden;
 }
 
 .l-ui-navigation {
@@ -703,15 +722,18 @@
          text-danger;
 }
 
-.l-ui-button--mobile-navigation {
+.l-ui-button--navigation-toggle {
   @apply flex items-center justify-center
          min-w-[44px] min-h-[44px] p-2
          cursor-pointer
          text-foreground
          rounded-sm
          focus-ring
-         transition-colors
-         md:hidden;
+         transition-colors;
+}
+
+.l-ui-body--always-show-navigation .l-ui-button--navigation-toggle {
+  @apply md:hidden;
 }
 
 .l-ui-button--icon {
@@ -722,6 +744,11 @@
          rounded-sm
          focus-ring
          transition-colors;
+}
+
+.l-ui-button--disabled {
+  @apply opacity-50
+         cursor-not-allowed;
 }
 
 /* Notice */
