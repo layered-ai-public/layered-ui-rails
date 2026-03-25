@@ -8,7 +8,10 @@
 
 <p class="l-ui-utility--mt-md">Edit your <code>app/views/layouts/application.html.erb</code> with the following content:</p>
 
-<code class="l-ui-surface l-ui-utility--mt-lg">&lt;!-- Optional: sidebar navigation --&gt;
+<code class="l-ui-surface l-ui-utility--mt-lg">&lt;!-- Optional: body modifiers --&gt;
+&lt;% content_for :l_ui_body_class, "l-ui-body--always-show-navigation l-ui-body--hide-header" %&gt;
+
+&lt;!-- Optional: sidebar navigation --&gt;
 &lt;% content_for :l_ui_navigation_items do %&gt;
   &lt;%= l_ui_navigation_item "Home", root_path %&gt;
   &lt;%= l_ui_navigation_item "About", about_path %&gt;
@@ -58,7 +61,11 @@
       </tr>
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><%= link_to "Navigation", layout_navigation_path %></th>
-        <td class="l-ui-table__cell">Sidebar navigation links using <code>content_for</code> and helpers</td>
+        <td class="l-ui-table__cell">Navigation links, off-canvas by default - use <code>l-ui-body--always-show-navigation</code> to pin as a sidebar on desktop</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row">Header</th>
+        <td class="l-ui-table__cell">Shown by default - use <code>l-ui-body--hide-header</code> to hide it</td>
       </tr>
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><%= link_to "Panel", layout_panel_path %></th>

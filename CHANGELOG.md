@@ -6,13 +6,14 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Added
 
-- `l-ui-body--always-show-navigation` modifier pins the navigation as a persistent sidebar on desktop (suitable for admin layouts)
 - `yield :l_ui_body_class` in the engine layout body tag, allowing host apps to pass modifier classes via `content_for`
+- `l-ui-body--always-show-navigation` modifier pins the navigation as a persistent sidebar on desktop (suitable for admin layouts)
+- `l-ui-body--hide-header` modifier hides the header and collapses its reserved space
 
 ### Changed
 
-- Navigation is now off-canvas by default on all screen sizes, toggled via the header button - use `l-ui-body--always-show-navigation` to restore the pinned sidebar behaviour
-- Renamed Stimulus controller from `l-ui--mobile-navigation` to `l-ui--navigation`
+- New default: Navigation is now off-canvas on all screen sizes, toggled via the header button - use `l-ui-body--always-show-navigation` to restore the pinned sidebar behaviour
+- Renamed Stimulus controller from `l-ui--mobile-navigation` to `l-ui--navigation` as it now has uutility on both desktop and mobile
 - Renamed `l-ui-button--mobile-navigation` to `l-ui-button--navigation-toggle`
 
 ## [0.1.3] - 2026-03-14

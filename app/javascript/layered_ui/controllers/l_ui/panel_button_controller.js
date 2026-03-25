@@ -1,16 +1,15 @@
 import { Controller } from "@hotwired/stimulus"
 import { storageGetJSON, storageSet } from "layered_ui/utilities/storage"
-import { isMobile, hasNavigation, HEADER_HEIGHT, NAV_WIDTH, getPadding, getLeftEdge } from "layered_ui/utilities/layout"
+import { getHeaderHeight, getPadding, getLeftEdge } from "layered_ui/utilities/layout"
 
 const BUTTON_SIZE = 56
 const DRAG_THRESHOLD = 5
 const SNAP_TIMEOUT = 400
-const TOGGLE_DELAY = 220
+const TOGGLE_DELAY = 160
 const TOP_LEFT = "top-left"
 const TOP_RIGHT = "top-right"
 const BOTTOM_LEFT = "bottom-left"
 const BOTTOM_RIGHT = "bottom-right"
-
 export default class extends Controller {
   connect() {
     this.isDragging = false
@@ -95,7 +94,7 @@ export default class extends Controller {
       ? parseFloat(this.element.style.top)
       : this.element.getBoundingClientRect().top
 
-    const topEdge = this.clampTop(HEADER_HEIGHT + getPadding())
+    const topEdge = this.clampTop(getHeaderHeight() + getPadding())
     const bottomEdge = this.clampTop(window.innerHeight - BUTTON_SIZE - getPadding())
     const midY = (topEdge + bottomEdge) / 2
     const isTop = topPx <= midY
@@ -151,7 +150,7 @@ export default class extends Controller {
   moveToCorner(corner) {
     const leftEdge = getLeftEdge()
     const rightEdge = getPadding()
-    const topEdge = this.clampTop(HEADER_HEIGHT + getPadding())
+    const topEdge = this.clampTop(getHeaderHeight() + getPadding())
     const bottomEdge = this.clampTop(window.innerHeight - BUTTON_SIZE - getPadding())
 
     switch (corner) {
@@ -343,7 +342,7 @@ export default class extends Controller {
   // Clamp a top value within viewport bounds, below the header
   clampTop(topPx) {
     const padding = getPadding()
-    const minTop = HEADER_HEIGHT + padding
+    const minTop = getHeaderHeight() + padding
     const maxTop = window.innerHeight - BUTTON_SIZE - padding
     return Math.min(Math.max(topPx, minTop), maxTop)
   }

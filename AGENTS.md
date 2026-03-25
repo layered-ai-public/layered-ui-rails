@@ -15,6 +15,7 @@ Guidance for AI agents working in this repository.
 - **Generators:** `bin/rails generate layered:ui:install` (copy CSS, import CSS, import JS)
 - **JS** `app/javascript/layered_ui/`: Stimulus controllers registered as `l-ui--theme`, `l-ui--navigation`, `l-ui--panel`, `l-ui--modal`, `l-ui--tabs`
 - **Layout yields** (prefixed `l_ui_`): `:l_ui_navigation_items`, `:l_ui_panel_heading`, `:l_ui_panel_body`, `:l_ui_body_class`
+  - `:l_ui_body_class` modifiers: `l-ui-body--always-show-navigation` (pins nav as sidebar on desktop), `l-ui-body--hide-header` (hides header and collapses its space)
 
 ## Testing
 

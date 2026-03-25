@@ -424,6 +424,10 @@
          text-foreground;
 }
 
+.l-ui-body--hide-header {
+  --header-height: 0px;
+}
+
 /* Page */
 
 .l-ui-page {
@@ -461,6 +465,10 @@
          z-50
          border-b border-border
          bg-background;
+}
+
+.l-ui-body--hide-header .l-ui-container--header {
+  @apply hidden;
 }
 
 .l-ui-header {
