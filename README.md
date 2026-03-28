@@ -65,6 +65,62 @@ Then update your application layout to render the engine layout:
 - **Customisable branding** - Override the default logos and icons and colors
 - **Google Lighthouse** - `layered-ui-rails` scores a [perfect 100](https://github.com/layered-ai-public/layered-ui-rails/raw/refs/heads/main/test/dummy/app/assets/images/lighthouse.webp) across all four Google Lighthouse categories - performance, accessibility, best practices, and SEO
 
+## Customising theme tokens
+
+All colors are CSS custom properties on `:root`. Override any token in your stylesheet (after importing the engine CSS):
+
+```css
+/* app/assets/tailwind/application.css */
+@import "./layered_ui";
+
+:root {
+  --accent: 220 80% 55%;
+  --accent-foreground: 0 0% 100%;
+}
+
+.dark {
+  --accent: 220 80% 65%;
+  --accent-foreground: 0 0% 9%;
+}
+```
+
+For dynamic theming (e.g. per-tenant branding), use `content_for :l_ui_theme` to inject a `<style>` block into the layout `<head>`:
+
+```erb
+<% content_for :l_ui_theme do %>
+  <style>
+    :root { --accent: <%= @tenant.accent_hsl %>; --accent-foreground: 0 0% 100%; }
+  </style>
+<% end %>
+```
+
+See the [Colors documentation](https://layered-ui-rails.layered.ai/pages/layout_colors) for the full list of tokens.
+
+## Customising logos
+
+Replace the default logo and icon by placing files with the same names in `app/assets/images/layered_ui/` in your host app:
+
+| File | Used for |
+|---|---|
+| `logo_light.svg` | Header logo (light theme) |
+| `logo_dark.svg` | Header logo (dark theme) |
+| `icon_light.svg` | Header icon - mobile (light theme) |
+| `icon_dark.svg` | Header icon - mobile (dark theme) |
+
+For per-request branding (e.g. per-tenant logos), use `content_for` to inject image tags:
+
+```erb
+<% content_for :l_ui_logo_light do %>
+  <%= image_tag @tenant.logo_light_url, alt: "", class: "l-ui-header__logo l-ui-header__logo--light" %>
+<% end %>
+
+<% content_for :l_ui_logo_dark do %>
+  <%= image_tag @tenant.logo_dark_url, alt: "", class: "l-ui-header__logo l-ui-header__logo--dark" %>
+<% end %>
+```
+
+The same pattern applies to `:l_ui_icon_light` and `:l_ui_icon_dark` for the mobile icon. All four yields fall back to the default images when not set.
+
 ## Documentation
 
 An online version of the documentation is available at **[layered-ui-rails.layered.ai](https://layered-ui-rails.layered.ai)**.

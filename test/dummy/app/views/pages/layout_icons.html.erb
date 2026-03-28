@@ -1,7 +1,10 @@
 <h1>Icons</h1>
 
 <p class="l-ui-utility--mt-md">Icons are used for the header, favicon, apple touch icon, and panel toggle button.</p>
-<p class="l-ui-utility--mt-md">Override the defaults by placing files in <code>app/assets/images/layered_ui/</code>.</p>
+
+<h2 class="l-ui-utility--mt-2xl">Static override</h2>
+
+<p class="l-ui-utility--mt-md">Replace the defaults by placing files with the same names in <code>app/assets/images/layered_ui/</code> in your host app.</p>
 
 <h2 class="l-ui-utility--mt-2xl">Files</h2>
 
@@ -17,24 +20,38 @@
     <tbody class="l-ui-table__body">
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><code>icon_light.svg</code></th>
-        <td class="l-ui-table__cell">Header icon and favicon (light theme)</td>
+        <td class="l-ui-table__cell">Header icon and favicon (light theme) - also overridable via <code>content_for :l_ui_icon_light</code></td>
       </tr>
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><code>icon_dark.svg</code></th>
-        <td class="l-ui-table__cell">Header icon and favicon (dark theme)</td>
+        <td class="l-ui-table__cell">Header icon and favicon (dark theme) - also overridable via <code>content_for :l_ui_icon_dark</code></td>
       </tr>
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><code>apple_touch_icon.png</code></th>
-        <td class="l-ui-table__cell">Apple touch icon</td>
+        <td class="l-ui-table__cell">Apple touch icon - also overridable via <code>content_for :l_ui_apple_touch_icon</code></td>
       </tr>
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><code>panel_icon_light.svg</code></th>
-        <td class="l-ui-table__cell">Panel toggle button (light theme)</td>
+        <td class="l-ui-table__cell">Panel toggle button (light theme) - also overridable via <code>content_for :l_ui_panel_icon_light</code></td>
       </tr>
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><code>panel_icon_dark.svg</code></th>
-        <td class="l-ui-table__cell">Panel toggle button (dark theme)</td>
+        <td class="l-ui-table__cell">Panel toggle button (dark theme) - also overridable via <code>content_for :l_ui_panel_icon_dark</code></td>
       </tr>
     </tbody>
   </table>
 </div>
+
+<h2 class="l-ui-utility--mt-2xl">Dynamic override</h2>
+
+<p class="l-ui-utility--mt-md">The header icon (not the favicon) can be overridden per-request using <code>content_for</code>:</p>
+
+<code class="l-ui-surface l-ui-utility--mt-lg">&lt;% content_for :l_ui_icon_light do %&gt;
+  &lt;%= image_tag @tenant.icon_light_url, alt: "", class: "l-ui-header__icon l-ui-header__icon--light" %&gt;
+&lt;% end %&gt;
+
+&lt;% content_for :l_ui_icon_dark do %&gt;
+  &lt;%= image_tag @tenant.icon_dark_url, alt: "", class: "l-ui-header__icon l-ui-header__icon--dark" %&gt;
+&lt;% end %&gt;</code>
+
+<p class="l-ui-utility--mt-md">The panel icon can be overridden the same way using <code>:l_ui_panel_icon_light</code> and <code>:l_ui_panel_icon_dark</code>. For the apple touch icon, yield the entire <code>&lt;link&gt;</code> tag via <code>:l_ui_apple_touch_icon</code>. Favicon overrides require static file replacement.</p>

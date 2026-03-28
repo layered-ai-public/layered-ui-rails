@@ -1,13 +1,14 @@
 <h1>Logos</h1>
 
-<p class="l-ui-utility--mt-md">The header displays a logo on wider screens and an icon on mobile.</p>
-<p class="l-ui-utility--mt-md">Override the defaults by placing files in <code>app/assets/images/layered_ui/</code>.</p>
+<p class="l-ui-utility--mt-md">The header displays a logo on wider screens and an icon on mobile. Both have light and dark variants that switch automatically with the theme.</p>
 
-<h2 class="l-ui-utility--mt-2xl">Files</h2>
+<h2 class="l-ui-utility--mt-2xl">Static override</h2>
+
+<p class="l-ui-utility--mt-md">Replace the default images by placing files with the same names in <code>app/assets/images/layered_ui/</code> in your host app.</p>
 
 <div class="l-ui-container--table l-ui-utility--mt-lg">
   <table class="l-ui-table">
-    <caption class="l-ui-sr-only">Logo files</caption>
+    <caption class="l-ui-sr-only">Logo and icon files</caption>
     <thead class="l-ui-table__header">
       <tr>
         <th class="l-ui-table__header-cell" scope="col">File</th>
@@ -23,6 +24,28 @@
         <th class="l-ui-table__cell--primary" scope="row"><code>logo_dark.svg</code></th>
         <td class="l-ui-table__cell">Header logo (dark theme)</td>
       </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>icon_light.svg</code></th>
+        <td class="l-ui-table__cell">Header icon - mobile (light theme)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>icon_dark.svg</code></th>
+        <td class="l-ui-table__cell">Header icon - mobile (dark theme)</td>
+      </tr>
     </tbody>
   </table>
 </div>
+
+<h2 class="l-ui-utility--mt-2xl">Dynamic override</h2>
+
+<p class="l-ui-utility--mt-md">For per-request branding (e.g. per-tenant logos), use <code>content_for</code> to inject image tags. The yields fall back to the default images when not set.</p>
+
+<code class="l-ui-surface l-ui-utility--mt-lg">&lt;% content_for :l_ui_logo_light do %&gt;
+  &lt;%= image_tag @tenant.logo_light_url, alt: "", class: "l-ui-header__logo l-ui-header__logo--light" %&gt;
+&lt;% end %&gt;
+
+&lt;% content_for :l_ui_logo_dark do %&gt;
+  &lt;%= image_tag @tenant.logo_dark_url, alt: "", class: "l-ui-header__logo l-ui-header__logo--dark" %&gt;
+&lt;% end %&gt;</code>
+
+<p class="l-ui-utility--mt-md">The same pattern applies to <code>:l_ui_icon_light</code> and <code>:l_ui_icon_dark</code> for the mobile icon.</p>
