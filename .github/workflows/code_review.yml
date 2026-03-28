@@ -1,0 +1,53 @@
+name: Code review
+
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: PR number to review
+        required: true
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: read
+  id-token: write
+  actions: read
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Diff-aware PR Review
+        uses: anthropics/claude-code-action@v1
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ inputs.pr_number }}
+
+            You are a careful PR reviewer.
+
+            Goal:
+            - Review pull request #${{ inputs.pr_number }}.
+            - Analyze the diff and run lightweight checks (no builds): lint-like reasoning, potential bugs, risky changes.
+            - Post a concise markdown review as a PR comment with:
+              - Summary
+              - Strengths
+              - Risks / Potential bugs
+              - Suggested minimal patch as a unified diff inside a fenced code block
+              - Next actions for the author
+
+            Rules:
+            - Do NOT write or modify any files in the repository.
+            - Post the review directly as a PR comment using: `gh pr comment ${{ inputs.pr_number }} --body "..."`.
+            - Keep suggestions minimal and safe; do not assume project-specific build steps.
+          claude_args: |
+            --allowedTools Read,Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr comment:*)
