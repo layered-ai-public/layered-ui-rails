@@ -1,6 +1,8 @@
-name: Code review
+name: Claude code review
 
 on:
+  pull_request:
+    types: [opened, synchronize]
   workflow_dispatch:
     inputs:
       pr_number:
@@ -31,12 +33,12 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           prompt: |
             REPO: ${{ github.repository }}
-            PR NUMBER: ${{ inputs.pr_number }}
+            PR NUMBER: ${{ github.event.pull_request.number || inputs.pr_number }}
 
             You are a careful PR reviewer.
 
             Goal:
-            - Review pull request #${{ inputs.pr_number }}.
+            - Review pull request #${{ github.event.pull_request.number || inputs.pr_number }}.
             - Analyze the diff and run lightweight checks (no builds): lint-like reasoning, potential bugs, risky changes.
             - Post a concise markdown review as a PR comment with:
               - Summary
@@ -47,7 +49,7 @@ jobs:
 
             Rules:
             - Do NOT write or modify any files in the repository.
-            - Post the review directly as a PR comment using: `gh pr comment ${{ inputs.pr_number }} --body "..."`.
+            - Post the review directly as a PR comment using: `gh pr comment ${{ github.event.pull_request.number || inputs.pr_number }} --body "..."`.
             - Keep suggestions minimal and safe; do not assume project-specific build steps.
           claude_args: |
             --allowedTools Read,Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr comment:*)
