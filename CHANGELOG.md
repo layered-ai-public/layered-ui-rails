@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file. This projec
 - `yield :l_ui_logo_light`, `:l_ui_logo_dark`, `:l_ui_icon_light`, `:l_ui_icon_dark` in the header, allowing host apps to inject custom brand images via `content_for`
 - `yield :l_ui_panel_icon_light`, `:l_ui_panel_icon_dark` in the panel, allowing host apps to inject a custom panel toggle icon via `content_for`
 - `yield :l_ui_apple_touch_icon` in the layout `<head>`, allowing host apps to replace the apple touch icon `<link>` tag via `content_for`
+- `pre.l-ui-surface` style for preformatted code blocks
 
 ## [0.1.4] - 2026-03-25
 

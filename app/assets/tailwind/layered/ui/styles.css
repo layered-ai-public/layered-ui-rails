@@ -805,6 +805,14 @@
          bg-surface;
 }
 
+pre.l-ui-surface {
+  margin: 0;
+
+  > code {
+    background: transparent;
+  }
+}
+
 .l-ui-surface--active {
   @apply surface
          bg-surface-active;
