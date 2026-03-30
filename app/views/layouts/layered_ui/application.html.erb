@@ -14,8 +14,8 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <link rel="icon" href="<%= asset_path('layered_ui/icon_light.svg') %>" media="(prefers-color-scheme: light)">
-    <link rel="icon" href="<%= asset_path('layered_ui/icon_dark.svg') %>" media="(prefers-color-scheme: dark)">
+    <%= yield(:l_ui_favicon_light).presence || tag.link(rel: "icon", href: asset_path('layered_ui/icon_light.svg'), media: "(prefers-color-scheme: light)") %>
+    <%= yield(:l_ui_favicon_dark).presence || tag.link(rel: "icon", href: asset_path('layered_ui/icon_dark.svg'), media: "(prefers-color-scheme: dark)") %>
     <%= yield(:l_ui_apple_touch_icon).presence || tag.link(rel: "apple-touch-icon", href: asset_path('layered_ui/apple_touch_icon.png')) %>
 
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>

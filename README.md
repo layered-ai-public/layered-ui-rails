@@ -94,6 +94,8 @@ For dynamic theming (e.g. per-tenant branding), use `content_for :l_ui_theme` to
 <% end %>
 ```
 
+> **Security:** never interpolate user-supplied strings directly into a `<style>` tag - this allows CSS injection (Important: Validate or sanitise any user-derived values before interpolation).
+
 See the [Colors documentation](https://layered-ui-rails.layered.ai/pages/layout_colors) for the full list of tokens.
 
 ## Customising logos
