@@ -98,18 +98,21 @@ For dynamic theming (e.g. per-tenant branding), use `content_for :l_ui_theme` to
 
 See the [Colors documentation](https://layered-ui-rails.layered.ai/pages/layout_colors) for the full list of tokens.
 
-## Customising logos
+## Customising logos and icons
 
-Replace the default logo and icon by placing files with the same names in `app/assets/images/layered_ui/` in your host app:
+Replace the defaults by placing files with the same names in `app/assets/images/layered_ui/` in your host app:
 
 | File | Used for |
 |---|---|
 | `logo_light.svg` | Header logo (light theme) |
 | `logo_dark.svg` | Header logo (dark theme) |
-| `icon_light.svg` | Header icon - mobile (light theme) |
-| `icon_dark.svg` | Header icon - mobile (dark theme) |
+| `icon_light.svg` | Favicon and header icon (light theme) |
+| `icon_dark.svg` | Favicon and header icon (dark theme) |
+| `apple_touch_icon.png` | Apple touch icon |
+| `panel_icon_light.svg` | Panel toggle button (light theme) |
+| `panel_icon_dark.svg` | Panel toggle button (dark theme) |
 
-For per-request branding (e.g. per-tenant logos), use `content_for` to inject image tags:
+For per-request logos (e.g. per-tenant branding), use `content_for` to inject image tags:
 
 ```erb
 <% content_for :l_ui_logo_light do %>
@@ -121,7 +124,15 @@ For per-request branding (e.g. per-tenant logos), use `content_for` to inject im
 <% end %>
 ```
 
-The same pattern applies to `:l_ui_icon_light` and `:l_ui_icon_dark` for the mobile icon. All four yields fall back to the default images when not set.
+For per-request icons, set instance variables in your controller or view:
+
+```ruby
+@l_ui_icon_light_url = @tenant.icon_light_url
+@l_ui_icon_dark_url = @tenant.icon_dark_url
+@l_ui_apple_touch_icon_url = @tenant.apple_touch_icon_url
+@l_ui_panel_icon_light_url = @tenant.panel_icon_light_url
+@l_ui_panel_icon_dark_url = @tenant.panel_icon_dark_url
+```
 
 ## Documentation
 

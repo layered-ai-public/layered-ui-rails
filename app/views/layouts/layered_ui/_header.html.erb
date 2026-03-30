@@ -1,8 +1,8 @@
 <header class="l-ui-container--header" role="banner">
   <div class="l-ui-header">
     <%= link_to "/", "aria-label": "Home" do %>
-      <%= yield(:l_ui_icon_light).presence || image_tag("layered_ui/icon_light.svg", alt: "", class: "l-ui-header__icon l-ui-header__icon--light") %>
-      <%= yield(:l_ui_icon_dark).presence || image_tag("layered_ui/icon_dark.svg", alt: "", class: "l-ui-header__icon l-ui-header__icon--dark") %>
+      <%= image_tag(@l_ui_icon_light_url || "layered_ui/icon_light.svg", alt: "", class: "l-ui-header__icon l-ui-header__icon--light") %>
+      <%= image_tag(@l_ui_icon_dark_url || "layered_ui/icon_dark.svg", alt: "", class: "l-ui-header__icon l-ui-header__icon--dark") %>
       <%= yield(:l_ui_logo_light).presence || image_tag("layered_ui/logo_light.svg", alt: "", class: "l-ui-header__logo l-ui-header__logo--light") %>
       <%= yield(:l_ui_logo_dark).presence || image_tag("layered_ui/logo_dark.svg", alt: "", class: "l-ui-header__logo l-ui-header__logo--dark") %>
     <% end %>
