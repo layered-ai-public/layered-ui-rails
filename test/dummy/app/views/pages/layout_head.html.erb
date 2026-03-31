@@ -28,7 +28,7 @@
 
 <h2 class="l-ui-utility--mt-2xl">Turbo Drive compatibility</h2>
 
-<p class="l-ui-utility--mt-md">With Turbo Drive, inline <code>&lt;style&gt;</code> blocks in <code>&lt;head&gt;</code> are not re-evaluated on navigation. Per-tenant tokens injected this way will persist stale after a Turbo page transition.</p>
+<p class="l-ui-utility--mt-md">Turbo Drive merges <code>&lt;head&gt;</code> content on each navigation - changed <code>&lt;style&gt;</code> blocks are replaced correctly. The caveat is the preview pass: when Turbo restores a snapshot from its cache before the network response arrives, a cached snapshot may briefly show stale tokens.</p>
 
 <p class="l-ui-utility--mt-md">If tokens are stable for a session (e.g. a single-tenant session where branding only changes on login), add <code>data-turbo-track="reload"</code> to the <code>&lt;style&gt;</code> tag. Turbo will trigger a full page reload only when the tag content changes between visits.</p>
 
