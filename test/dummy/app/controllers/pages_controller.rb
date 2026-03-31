@@ -85,6 +85,9 @@ class PagesController < ApplicationController
   def test_icon_url_override
     @l_ui_icon_light_url = "https://example.com/custom_icon_light.svg"
     @l_ui_icon_dark_url = "https://example.com/custom_icon_dark.svg"
+    @l_ui_apple_touch_icon_url = "https://example.com/custom_apple_touch_icon.png"
+    @l_ui_panel_icon_light_url = "https://example.com/custom_panel_icon_light.svg"
+    @l_ui_panel_icon_dark_url = "https://example.com/custom_panel_icon_dark.svg"
   end
 
   private

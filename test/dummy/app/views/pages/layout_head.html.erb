@@ -28,4 +28,4 @@
 
 <h2 class="l-ui-utility--mt-2xl">Turbo Drive compatibility</h2>
 
-<p class="l-ui-utility--mt-md">With Turbo Drive, inline <code>&lt;style&gt;</code> blocks in <code>&lt;head&gt;</code> are not re-evaluated on navigation. Per-tenant tokens injected this way will persist stale after a Turbo page transition. To update tokens across navigations, either serve the theme as a server-side stylesheet URL or disable Turbo on affected links.</p>
+<p class="l-ui-utility--mt-md">With Turbo Drive, inline <code>&lt;style&gt;</code> blocks in <code>&lt;head&gt;</code> are not re-evaluated on navigation. Per-tenant tokens injected this way will persist stale after a Turbo page transition. To force a reload when tokens change, add <code>data-turbo-track="reload"</code> to the injected <code>&lt;style&gt;</code> tag - Turbo will trigger a full page reload whenever the tag content changes between visits. Alternatively, serve the theme as a server-side stylesheet URL or disable Turbo on affected links.</p>
