@@ -122,7 +122,12 @@ Replace the defaults by placing files with the same names in `app/assets/images/
 | `panel_icon_light.svg` | Panel toggle button (light theme) |
 | `panel_icon_dark.svg` | Panel toggle button (dark theme) |
 
-For per-request logos (e.g. per-tenant branding), use `content_for` to inject image tags:
+layered-ui-rails uses two patterns for per-request overrides:
+
+- **Instance variables** (`@l_ui_*`) - used for small changes like URLs. The engine renders the surrounding markup and just swaps the src/href.
+- **`content_for`** - used when the full markup needs to change. You supply the complete tag, so you can set classes, attributes, or wrap elements as needed.
+
+For per-request logos (e.g. per-tenant branding), use `content_for` because the `<img>` tag itself carries classes that control layout and theme switching:
 
 ```erb
 <% content_for :l_ui_logo_light do %>
@@ -134,7 +139,7 @@ For per-request logos (e.g. per-tenant branding), use `content_for` to inject im
 <% end %>
 ```
 
-For per-request icons, set instance variables in your controller or view:
+For per-request icons, set instance variables - the engine renders `<link>` and `<img>` tags that only need a URL to vary:
 
 ```ruby
 @l_ui_icon_light_url = @tenant.icon_light_url
