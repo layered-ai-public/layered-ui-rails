@@ -62,13 +62,7 @@
 
 <h2 class="l-ui-utility--mt-2xl">Dynamic theming</h2>
 
-<p class="l-ui-utility--mt-md">For per-request theming (e.g. per-tenant branding), use <code>content_for :l_ui_theme</code> to inject a <code>&lt;style&gt;</code> block into the layout <code>&lt;head&gt;</code>. This is injected after the stylesheet so the cascade override takes effect correctly.</p>
-
-<pre class="l-ui-surface l-ui-utility--mt-lg"><code>&lt;% content_for :l_ui_theme do %&gt;
-  &lt;style&gt;
-    :root { --accent: &lt;%= @tenant.accent_hsl %&gt;; --accent-foreground: 0 0% 100%; }
-  &lt;/style&gt;
-&lt;% end %&gt;</code></pre>
+<p class="l-ui-utility--mt-md">Override tokens per request (e.g. per-tenant branding) using <code>content_for :l_ui_head</code>. See the <%= link_to "head", layout_head_path %> page for usage and CSP compatibility notes.</p>
 
 <h2 class="l-ui-utility--mt-2xl">Design tokens</h2>
 

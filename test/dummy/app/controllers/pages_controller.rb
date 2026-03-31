@@ -79,6 +79,9 @@ class PagesController < ApplicationController
   def layout_colors
   end
 
+  def layout_head
+  end
+
   private
 
   def load_users

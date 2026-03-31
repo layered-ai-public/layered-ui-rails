@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get "layout_logos", to: "pages#layout_logos"
   get "layout_icons", to: "pages#layout_icons"
   get "layout_colors", to: "pages#layout_colors"
+  get "layout_head", to: "pages#layout_head"
   get "tabs", to: "pages#tabs"
   get "conversations", to: "pages#conversations"
   get "devise", to: "pages#devise"

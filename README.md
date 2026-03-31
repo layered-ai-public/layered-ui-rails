@@ -84,10 +84,10 @@ All colors are CSS custom properties on `:root`. Override any token in your styl
 }
 ```
 
-For dynamic theming (e.g. per-tenant branding), use `content_for :l_ui_theme` to inject a `<style>` block into the layout `<head>`:
+For dynamic theming (e.g. per-tenant branding), use `content_for :l_ui_head` to inject content into the layout `<head>`:
 
 ```erb
-<% content_for :l_ui_theme do %>
+<% content_for :l_ui_head do %>
   <style>
     :root { --accent: <%= @tenant.accent_hsl %>; --accent-foreground: 0 0% 100%; }
   </style>
@@ -95,6 +95,16 @@ For dynamic theming (e.g. per-tenant branding), use `content_for :l_ui_theme` to
 ```
 
 > **Security:** never interpolate user-supplied strings directly into a `<style>` tag - this allows CSS injection (Important: Validate or sanitise any user-derived values before interpolation).
+
+> **CSP compatibility:** inline `<style>` blocks are blocked by a strict `Content-Security-Policy: style-src 'self'` header. If your app enforces a strict CSP, add a nonce to the style tag using Rails' `content_security_policy_nonce` helper - Rails automatically includes the matching nonce in the CSP header:
+>
+> ```erb
+> <% content_for :l_ui_head do %>
+>   <style nonce="<%= content_security_policy_nonce %>">
+>     :root { --accent: <%= @tenant.accent_hsl %>; --accent-foreground: 0 0% 100%; }
+>   </style>
+> <% end %>
+> ```
 
 See the [Colors documentation](https://layered-ui-rails.layered.ai/pages/layout_colors) for the full list of tokens.
 
