@@ -82,6 +82,11 @@ class PagesController < ApplicationController
   def layout_head
   end
 
+  def test_icon_url_override
+    @l_ui_icon_light_url = "https://example.com/custom_icon_light.svg"
+    @l_ui_icon_dark_url = "https://example.com/custom_icon_dark.svg"
+  end
+
   private
 
   def load_users

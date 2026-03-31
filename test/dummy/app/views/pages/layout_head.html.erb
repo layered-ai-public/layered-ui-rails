@@ -12,6 +12,8 @@
   &lt;/style&gt;
 &lt;% end %&gt;</code></pre>
 
+<p class="l-ui-notice--warning l-ui-utility--mt-lg"><strong>Security:</strong> never interpolate user-supplied strings directly into a <code>&lt;style&gt;</code> tag - this allows CSS injection. Validate or sanitise any user-derived values before interpolation.</p>
+
 <p class="l-ui-utility--mt-lg">See the <%= link_to "colors", layout_colors_path %> page for the full list of design tokens.</p>
 
 <h2 class="l-ui-utility--mt-2xl">CSP compatibility</h2>

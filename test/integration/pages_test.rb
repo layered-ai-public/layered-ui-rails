@@ -23,6 +23,13 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "@l_ui_icon_light_url is rendered in link href when set" do
+    get "/test_icon_url_override"
+    assert_response :success
+    assert_select "link[rel='icon'][media='(prefers-color-scheme: light)'][href='https://example.com/custom_icon_light.svg']"
+    assert_select "link[rel='icon'][media='(prefers-color-scheme: dark)'][href='https://example.com/custom_icon_dark.svg']"
+  end
+
   test "tables page renders" do
     create_test_users
     get "/tables"

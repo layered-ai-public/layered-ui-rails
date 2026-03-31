@@ -31,4 +31,5 @@ Rails.application.routes.draw do
   get "form_errors", to: "pages#form_errors"
   get "integrations", to: "pages#integrations"
   get "pagy", to: "pages#pagy_integration", as: :pagy
+  get "test_icon_url_override", to: "pages#test_icon_url_override"
 end

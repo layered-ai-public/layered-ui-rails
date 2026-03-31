@@ -15,6 +15,10 @@ All notable changes to this project will be documented in this file. This projec
 
 - Panel toggle icon override now uses `@l_ui_panel_icon_light_url` and `@l_ui_panel_icon_dark_url` instance variables, replacing `content_for :l_ui_panel_icon_light` and `:l_ui_panel_icon_dark`
 
+### Removed
+
+- `content_for :l_ui_panel_icon_light` and `content_for :l_ui_panel_icon_dark` - use `@l_ui_panel_icon_light_url` and `@l_ui_panel_icon_dark_url` instance variables instead
+
 ## [0.1.4] - 2026-03-25
 
 ### Added
