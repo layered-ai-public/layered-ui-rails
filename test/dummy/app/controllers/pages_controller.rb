@@ -90,6 +90,12 @@ class PagesController < ApplicationController
     @l_ui_panel_icon_dark_url = "https://example.com/custom_panel_icon_dark.svg"
   end
 
+  def test_logo_override
+  end
+
+  def test_head_injection
+  end
+
   private
 
   def load_users

@@ -32,4 +32,6 @@ Rails.application.routes.draw do
   get "integrations", to: "pages#integrations"
   get "pagy", to: "pages#pagy_integration", as: :pagy
   get "test_icon_url_override", to: "pages#test_icon_url_override"
+  get "test_logo_override", to: "pages#test_logo_override"
+  get "test_head_injection", to: "pages#test_head_injection"
 end

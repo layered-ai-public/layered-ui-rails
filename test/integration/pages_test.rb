@@ -35,6 +35,19 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_select "img[src='https://example.com/custom_panel_icon_dark.svg']"
   end
 
+  test "logo content_for yields are rendered in the header when set" do
+    get "/test_logo_override"
+    assert_response :success
+    assert_select "img[src='https://example.com/custom_logo_light.svg']"
+    assert_select "img[src='https://example.com/custom_logo_dark.svg']"
+  end
+
+  test "l_ui_head content_for is injected into the head when set" do
+    get "/test_head_injection"
+    assert_response :success
+    assert_select "head style[data-test='custom-head']"
+  end
+
   test "tables page renders" do
     create_test_users
     get "/tables"
