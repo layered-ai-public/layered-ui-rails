@@ -24,13 +24,13 @@
       </button>
     </div>
     <div class="l-ui-modal__body">
-      <code class="l-ui-surface">&lt;div class="l-ui-form__errors"&gt;
+      <pre class="l-ui-surface"><code>&lt;div class="l-ui-form__errors"&gt;
   &lt;h3&gt;2 errors were found:&lt;/h3&gt;
   &lt;ul class="l-ui-form__errors-list l-ui-utility--mt-lg"&gt;
     &lt;li&gt;Name can't be blank&lt;/li&gt;
     &lt;li&gt;Email is invalid&lt;/li&gt;
   &lt;/ul&gt;
-&lt;/div&gt;</code>
+&lt;/div&gt;</code></pre>
     </div>
   </dialog>
 </div>
@@ -79,13 +79,13 @@
       </button>
     </div>
     <div class="l-ui-modal__body">
-      <code class="l-ui-surface">&lt;div class="l-ui-form__group"&gt;
+      <pre class="l-ui-surface"><code>&lt;div class="l-ui-form__group"&gt;
   &lt;label class="l-ui-label" for="email"&gt;Email&lt;/label&gt;
   &lt;div class="field_with_errors"&gt;
     &lt;input type="email" class="l-ui-form__field"&gt;
   &lt;/div&gt;
   &lt;span class="l-ui-form__field-error"&gt;Error message&lt;/span&gt;
-&lt;/div&gt;</code>
+&lt;/div&gt;</code></pre>
     </div>
   </dialog>
 </div>
@@ -104,12 +104,12 @@
       </button>
     </div>
     <div class="l-ui-modal__body">
-      <code class="l-ui-surface">&lt;!-- Form-level errors --&gt;
+      <pre class="l-ui-surface"><code>&lt;!-- Form-level errors --&gt;
 &lt;%= render "layered_ui/shared/form_errors", resource: @user %&gt;
 
 &lt;!-- Field-level error --&gt;
 &lt;%= render "layered_ui/shared/field_error",
-    resource: @user, attribute: :email %&gt;</code>
+    resource: @user, attribute: :email %&gt;</code></pre>
     </div>
   </dialog>
 </div>

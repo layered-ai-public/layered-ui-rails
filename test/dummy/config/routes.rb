@@ -24,10 +24,14 @@ Rails.application.routes.draw do
   get "layout_logos", to: "pages#layout_logos"
   get "layout_icons", to: "pages#layout_icons"
   get "layout_colors", to: "pages#layout_colors"
+  get "layout_head", to: "pages#layout_head"
   get "tabs", to: "pages#tabs"
   get "conversations", to: "pages#conversations"
   get "devise", to: "pages#devise"
   get "form_errors", to: "pages#form_errors"
   get "integrations", to: "pages#integrations"
   get "pagy", to: "pages#pagy_integration", as: :pagy
+  get "test_icon_url_override", to: "pages#test_icon_url_override"
+  get "test_logo_override", to: "pages#test_logo_override"
+  get "test_head_injection", to: "pages#test_head_injection"
 end

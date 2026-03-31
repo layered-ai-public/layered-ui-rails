@@ -805,6 +805,14 @@
          bg-surface;
 }
 
+pre.l-ui-surface {
+  @apply m-0 overflow-auto;
+
+  > code {
+    background: transparent;
+  }
+}
+
 .l-ui-surface--active {
   @apply surface
          bg-surface-active;

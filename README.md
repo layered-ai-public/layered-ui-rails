@@ -65,6 +65,92 @@ Then update your application layout to render the engine layout:
 - **Customisable branding** - Override the default logos and icons and colors
 - **Google Lighthouse** - `layered-ui-rails` scores a [perfect 100](https://github.com/layered-ai-public/layered-ui-rails/raw/refs/heads/main/test/dummy/app/assets/images/lighthouse.webp) across all four Google Lighthouse categories - performance, accessibility, best practices, and SEO
 
+## Customising theme tokens
+
+All colors are CSS custom properties on `:root`. Override any token in your stylesheet (after importing the engine CSS):
+
+```css
+/* app/assets/tailwind/application.css */
+@import "./layered_ui";
+
+:root {
+  --accent: 220 80% 55%;
+  --accent-foreground: 0 0% 100%;
+}
+
+.dark {
+  --accent: 220 80% 65%;
+  --accent-foreground: 0 0% 9%;
+}
+```
+
+For dynamic theming (e.g. per-tenant branding), use `content_for :l_ui_head` to inject content into the layout `<head>`:
+
+```erb
+<% content_for :l_ui_head do %>
+  <style>
+    :root { --accent: <%= @tenant.accent_hsl %>; --accent-foreground: 0 0% 100%; }
+  </style>
+<% end %>
+```
+
+> **Security:** never interpolate user-supplied strings directly into a `<style>` tag - this allows CSS injection (Important: Validate or sanitise any user-derived values before interpolation).
+
+> **CSP compatibility:** inline `<style>` blocks are blocked by a strict `Content-Security-Policy: style-src 'self'` header. If your app enforces a strict CSP, add a nonce to the style tag using Rails' `content_security_policy_nonce` helper - Rails automatically includes the matching nonce in the CSP header:
+>
+> ```erb
+> <% content_for :l_ui_head do %>
+>   <style nonce="<%= content_security_policy_nonce %>">
+>     :root { --accent: <%= @tenant.accent_hsl %>; --accent-foreground: 0 0% 100%; }
+>   </style>
+> <% end %>
+> ```
+
+See the [Colors documentation](https://layered-ui-rails.layered.ai/pages/layout_colors) for the full list of tokens.
+
+## Customising logos and icons
+
+Replace the defaults by placing files with the same names in `app/assets/images/layered_ui/` in your host app:
+
+| File | Used for |
+|---|---|
+| `logo_light.svg` | Header logo (light theme) |
+| `logo_dark.svg` | Header logo (dark theme) |
+| `icon_light.svg` | Favicon and header icon (light theme) |
+| `icon_dark.svg` | Favicon and header icon (dark theme) |
+| `apple_touch_icon.png` | Apple touch icon |
+| `panel_icon_light.svg` | Panel toggle button (light theme) |
+| `panel_icon_dark.svg` | Panel toggle button (dark theme) |
+
+layered-ui-rails uses two patterns for per-request overrides:
+
+- **Instance variables** (`@l_ui_*`) - used for small changes like URLs. The engine renders the surrounding markup and just swaps the src/href.
+- **`content_for`** - used when the full markup needs to change. You supply the complete tag, so you can set classes, attributes, or wrap elements as needed.
+
+For per-request logos (e.g. per-tenant branding), use `content_for` because the `<img>` tag itself carries classes that control layout and theme switching:
+
+```erb
+<% content_for :l_ui_logo_light do %>
+  <%= image_tag @tenant.logo_light_url, alt: "", class: "l-ui-header__logo l-ui-header__logo--light" %>
+<% end %>
+
+<% content_for :l_ui_logo_dark do %>
+  <%= image_tag @tenant.logo_dark_url, alt: "", class: "l-ui-header__logo l-ui-header__logo--dark" %>
+<% end %>
+```
+
+For per-request icons, set instance variables - the engine renders `<link>` and `<img>` tags that only need a URL to vary:
+
+```ruby
+@l_ui_icon_light_url = @tenant.icon_light_url
+@l_ui_icon_dark_url = @tenant.icon_dark_url
+@l_ui_apple_touch_icon_url = @tenant.apple_touch_icon_url
+@l_ui_panel_icon_light_url = @tenant.panel_icon_light_url
+@l_ui_panel_icon_dark_url = @tenant.panel_icon_dark_url
+```
+
+> **Security:** Rails HTML-escapes URL values, so XSS via attribute injection is mitigated. However, if values are tenant-controlled, validate that they are legitimate URLs - reject `javascript:` schemes and ensure values point to expected origins.
+
 ## Documentation
 
 An online version of the documentation is available at **[layered-ui-rails.layered.ai](https://layered-ui-rails.layered.ai)**.

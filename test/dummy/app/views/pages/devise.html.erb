@@ -15,32 +15,32 @@
 <h2 class="l-ui-utility--mt-2xl">Installation</h2>
 
 <p class="l-ui-utility--mt-md">Add Devise to your application:</p>
-<code class="l-ui-surface l-ui-utility--mt-md">bundle add devise</code>
+<pre class="l-ui-surface l-ui-utility--mt-md"><code>bundle add devise</code></pre>
 
 <p class="l-ui-utility--mt-lg">Run the Devise installer and generate a User model:</p>
-<code class="l-ui-surface l-ui-utility--mt-md">bin/rails generate devise:install</code>
-<code class="l-ui-surface l-ui-utility--mt-md">bin/rails generate devise User</code>
-<code class="l-ui-surface l-ui-utility--mt-md">bin/rails db:migrate</code>
+<pre class="l-ui-surface l-ui-utility--mt-md"><code>bin/rails generate devise:install</code></pre>
+<pre class="l-ui-surface l-ui-utility--mt-md"><code>bin/rails generate devise User</code></pre>
+<pre class="l-ui-surface l-ui-utility--mt-md"><code>bin/rails db:migrate</code></pre>
 
 <p class="l-ui-utility--mt-lg">Add friendly routes to your <code>routes.rb</code>:</p>
-<code class="l-ui-surface l-ui-utility--mt-md">devise_for :users, path: "", path_names: { sign_in: "login", sign_up: "register", sign_out: "logout" }</code>
+<pre class="l-ui-surface l-ui-utility--mt-md"><code>devise_for :users, path: "", path_names: { sign_in: "login", sign_up: "register", sign_out: "logout" }</code></pre>
 
 <h2 class="l-ui-utility--mt-2xl">Configuration</h2>
 
 <p class="l-ui-utility--mt-md">The engine uses <code>current_user</code> by default. If your app uses a different method, configure it in an initializer:</p>
-<code class="l-ui-surface l-ui-utility--mt-md">Layered::Ui.current_user_method = :current_admin</code>
+<pre class="l-ui-surface l-ui-utility--mt-md"><code>Layered::Ui.current_user_method = :current_admin</code></pre>
 
 <p class="l-ui-utility--mt-lg">The sidebar displays the signed-in user's email. If your user model has a <code>name</code> attribute, it will be displayed as well. To support this, add a name column to your users migration:</p>
-<code class="l-ui-surface l-ui-utility--mt-md">add_column :users, :name, :string</code>
+<pre class="l-ui-surface l-ui-utility--mt-md"><code>add_column :users, :name, :string</code></pre>
 
 <p class="l-ui-utility--mt-lg">Then permit the name parameter in your <code>ApplicationController</code>:</p>
-<code class="l-ui-surface l-ui-utility--mt-md">before_action :configure_permitted_parameters, if: :devise_controller?
+<pre class="l-ui-surface l-ui-utility--mt-md"><code>before_action :configure_permitted_parameters, if: :devise_controller?
 
 protected
 
 def configure_permitted_parameters
   devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
-end</code>
+end</code></pre>
 
 <h2 class="l-ui-utility--mt-2xl">Helper methods</h2>
 

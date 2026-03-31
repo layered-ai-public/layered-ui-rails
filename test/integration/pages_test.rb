@@ -23,6 +23,31 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "icon URL instance variables are rendered in link and img tags when set" do
+    get "/test_icon_url_override"
+    assert_response :success
+    assert_select "link[rel='icon'][media='(prefers-color-scheme: light)'][href='https://example.com/custom_icon_light.svg']"
+    assert_select "link[rel='icon'][media='(prefers-color-scheme: dark)'][href='https://example.com/custom_icon_dark.svg']"
+    assert_select "link[rel='apple-touch-icon'][href='https://example.com/custom_apple_touch_icon.png']"
+    assert_select "img[src='https://example.com/custom_icon_light.svg']"
+    assert_select "img[src='https://example.com/custom_icon_dark.svg']"
+    assert_select "img[src='https://example.com/custom_panel_icon_light.svg']"
+    assert_select "img[src='https://example.com/custom_panel_icon_dark.svg']"
+  end
+
+  test "logo content_for yields are rendered in the header when set" do
+    get "/test_logo_override"
+    assert_response :success
+    assert_select "img[src='https://example.com/custom_logo_light.svg']"
+    assert_select "img[src='https://example.com/custom_logo_dark.svg']"
+  end
+
+  test "l_ui_head content_for is injected into the head when set" do
+    get "/test_head_injection"
+    assert_response :success
+    assert_select "head style[data-test='custom-head']"
+  end
+
   test "tables page renders" do
     create_test_users
     get "/tables"

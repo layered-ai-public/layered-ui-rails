@@ -7,7 +7,7 @@
 
 <p class="l-ui-utility--mt-md">Run the install generator to create the overrides file:</p>
 
-<code class="l-ui-surface l-ui-utility--mt-lg">bin/rails generate layered:ui:install</code>
+<pre class="l-ui-surface l-ui-utility--mt-lg"><code>bin/rails generate layered:ui:install</code></pre>
 
 <p class="l-ui-utility--mt-lg">This creates <code>app/assets/tailwind/layered_ui_overrides.css</code> with all variables commented out. The file is not overwritten on subsequent runs, so your changes are preserved.</p>
 
@@ -15,7 +15,7 @@
 
 <p class="l-ui-utility--mt-md">Set <code>--accent</code> and <code>--accent-foreground</code> in your overrides file. Primary buttons, active tabs, and active navigation items all inherit from these two variables.</p>
 
-<code class="l-ui-surface l-ui-utility--mt-lg">/* layered_ui_overrides.css */
+<pre class="l-ui-surface l-ui-utility--mt-lg"><code>/* layered_ui_overrides.css */
 
 :root {
   --accent: 220 80% 55%;
@@ -25,7 +25,7 @@
 .dark {
   --accent: 220 80% 65%;
   --accent-foreground: 0 0% 9%;
-}</code>
+}</code></pre>
 
 <h3 class="l-ui-utility--mt-xl">Affected elements</h3>
 
@@ -44,7 +44,7 @@
 <p class="l-ui-utility--mt-md">Override any individual design token for complete control. Uncomment only the variables you need in your overrides file. Values use HSL channels in the format <code>hue saturation% lightness%</code>.</p>
 <p class="l-ui-utility--mt-md">When setting custom colours, check that text, controls, and states still meet WCAG 2.2 AA. See the <%= link_to "WCAG 2.2 quick reference", "https://www.w3.org/WAI/WCAG22/quickref/", target: "_blank", rel: "noopener noreferrer" %> for guidance.</p>
 
-<code class="l-ui-surface l-ui-utility--mt-lg">/* layered_ui_overrides.css */
+<pre class="l-ui-surface l-ui-utility--mt-lg"><code>/* layered_ui_overrides.css */
 
 :root {
   --accent: 220 80% 55%;
@@ -58,7 +58,11 @@
   --accent-foreground: 0 0% 9%;
   --background: 220 15% 5%;
   --surface: 220 15% 10%;
-}</code>
+}</code></pre>
+
+<h2 class="l-ui-utility--mt-2xl">Dynamic theming</h2>
+
+<p class="l-ui-utility--mt-md">Override tokens per request (e.g. per-tenant branding) using <code>content_for :l_ui_head</code>. See the <%= link_to "head", layout_head_path %> page for usage and CSP compatibility notes.</p>
 
 <h2 class="l-ui-utility--mt-2xl">Design tokens</h2>
 
