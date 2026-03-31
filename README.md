@@ -149,6 +149,8 @@ For per-request icons, set instance variables - the engine renders `<link>` and 
 @l_ui_panel_icon_dark_url = @tenant.panel_icon_dark_url
 ```
 
+> **Security:** Rails HTML-escapes URL values, so XSS via attribute injection is mitigated. However, if values are tenant-controlled, validate that they are legitimate URLs - reject `javascript:` schemes and ensure values point to expected origins.
+
 ## Documentation
 
 An online version of the documentation is available at **[layered-ui-rails.layered.ai](https://layered-ui-rails.layered.ai)**.
