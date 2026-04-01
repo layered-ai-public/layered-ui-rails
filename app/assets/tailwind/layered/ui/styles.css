@@ -1498,6 +1498,44 @@ pre.l-ui-surface {
   @apply text-button-primary-text/70;
 }
 
+/* Message reasoning */
+
+.l-ui-message__reasoning {
+  @apply rounded
+         border border-border
+         text-sm text-foreground-muted;
+}
+
+.l-ui-message__reasoning[open] {
+  @apply bg-surface;
+}
+
+.l-ui-message__reasoning-summary {
+  @apply flex items-center
+         gap-1.5
+         px-3 py-2
+         cursor-pointer
+         list-none
+         font-medium select-none;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+}
+
+.l-ui-message__reasoning-summary > .l-ui-icon--sm {
+  @apply shrink-0
+         transition-transform duration-200;
+}
+
+.l-ui-message__reasoning[open] > .l-ui-message__reasoning-summary > .l-ui-icon--sm {
+  @apply rotate-90;
+}
+
+.l-ui-message__reasoning-body {
+  @apply px-3 pb-3;
+}
+
 /* Scroll-to-bottom button */
 
 .l-ui-scroll-to-bottom {

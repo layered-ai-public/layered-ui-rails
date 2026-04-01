@@ -1,4 +1,5 @@
 require "tailwindcss-rails"
+
 require "layered/ui/version"
 require "layered/ui/engine"
 

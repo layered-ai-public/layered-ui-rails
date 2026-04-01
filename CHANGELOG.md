@@ -10,6 +10,10 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [0.2.1] - 2026-04-01
 
+### Added
+
+- Collapsible reasoning block for conversation messages (`l-ui-message__reasoning`)
+
 ### Changed
 
 - `tailwindcss-rails` promoted from development dependency to runtime dependency
