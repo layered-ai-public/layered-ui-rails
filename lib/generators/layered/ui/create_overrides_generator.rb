@@ -100,6 +100,23 @@ module Layered
               --backdrop: 0 0% 0%;
             }
             */
+
+            /* ----------------------------------------------------------------
+             * Tier 3 - Component overrides
+             *
+             * Override individual component styles. Uncomment and adjust as needed.
+             * Examples: adjust logo or icon height to suit your brand images.
+             * ---------------------------------------------------------------- */
+
+            /*
+            .l-ui-header__logo {
+              @apply h-7.5 w-auto;
+            }
+
+            .l-ui-header__icon {
+              @apply h-7.5 w-auto;
+            }
+            */
           CSS
         end
       end

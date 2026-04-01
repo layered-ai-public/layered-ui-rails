@@ -30,6 +30,7 @@ Gem::Specification.new do |spec|
 
   # Dependencies
   spec.add_dependency "rails", "~> 8.0"
+  spec.add_dependency "tailwindcss-rails", "~> 4.0"
   spec.add_development_dependency "devise", "~> 5.0"
   spec.add_development_dependency "importmap-rails", "~> 2.0"
   spec.add_development_dependency "pagy", "~> 43.2"
@@ -37,7 +38,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "puma", "~> 7.0"
   spec.add_development_dependency "sqlite3", "~> 2.0"
   spec.add_development_dependency "stimulus-rails", "~> 1.0"
-  spec.add_development_dependency "tailwindcss-rails", "~> 4.0"
   spec.add_development_dependency "turbo-rails", "~> 2.0"
 
   # Post-install message

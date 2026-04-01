@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+## [0.2.1] - 2026-04-01
+
+### Changed
+
+- `tailwindcss-rails` promoted from development dependency to runtime dependency
+- `layered:ui:create_overrides` generator Tier 3 section now includes commented examples for `.l-ui-header__logo` and `.l-ui-header__icon` size overrides
+- Documentation for logo and icon styling overrides, pointing to `layered_ui_overrides.css`
+
 ## [0.2.0] - 2026-03-31
 
 ### Added

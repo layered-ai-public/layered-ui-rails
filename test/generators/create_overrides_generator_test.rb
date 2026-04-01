@@ -13,6 +13,9 @@ class CreateOverridesGeneratorTest < Rails::Generators::TestCase
       assert_match "--accent", content
       assert_match "Tier 1", content
       assert_match "Tier 2", content
+      assert_match "Tier 3", content
+      assert_match ".l-ui-header__logo", content
+      assert_match ".l-ui-header__icon", content
     end
   end
 
