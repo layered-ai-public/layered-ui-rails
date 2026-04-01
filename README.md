@@ -139,6 +139,8 @@ For per-request logos (e.g. per-tenant branding), use `content_for` because the 
 <% end %>
 ```
 
+To adjust the size of the logo or header icon, override `.l-ui-header__logo` or `.l-ui-header__icon` in `layered_ui_overrides.css` (created by `bin/rails generate layered:ui:create_overrides`). Commented examples are included in the Tier 3 section of that file.
+
 For per-request icons, set instance variables - the engine renders `<link>` and `<img>` tags that only need a URL to vary:
 
 ```ruby
