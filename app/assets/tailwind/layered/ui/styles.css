@@ -856,7 +856,7 @@ pre.l-ui-surface {
 @utility form__field {
   @apply block
          w-full px-3 py-2.5 min-h-[44px]
-         text-sm font-inter
+         text-base font-inter
          text-foreground
          border border-border-control rounded-sm
          focus-ring;
@@ -868,8 +868,7 @@ pre.l-ui-surface {
 }
 
 .field_with_errors .l-ui-form__field {
-  @apply text-sm
-         border-2 border-error-bg bg-error-bg/10;
+  @apply border-2 border-error-bg bg-error-bg/10;
 }
 
 .l-ui-form__field-error {
@@ -1594,13 +1593,6 @@ pre.l-ui-surface {
 
 /* Safari */
 @media (max-width: 767px) {
-  /* Prevent Safari auto-zoom on input focus */
-  input,
-  textarea,
-  select {
-    font-size: 16px !important;
-  }
-
   /* iOS Safari ignores overflow:hidden on body; position:fixed is required */
   .l-ui-scroll-lock {
     position: fixed;
