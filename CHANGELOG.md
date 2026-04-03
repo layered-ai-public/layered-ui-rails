@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## Unreleased
+
+### Fixed
+
+- Pagy pagination links still showing underline despite previous fix - broadened page link exclusion to all `l-ui-` classes and added explicit `no-underline` to pagination items
+
 ## [0.2.2] - 2026-04-03
 
 ### Added
@@ -16,6 +22,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Fixed
 
+- Pagination links no longer inherit underline from global page link styles
 - CSS `@apply` ordering now follows the documented convention (layout, spacing, typography, colours, effects) in `code`, `tabs__tab`, and `l-ui-scroll-to-bottom`
 
 ## [0.2.1] - 2026-04-01

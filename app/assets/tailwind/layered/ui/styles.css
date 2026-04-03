@@ -438,7 +438,7 @@
   @apply page;
 }
 
-.l-ui-page a:not([class*="l-ui-button"]) {
+.l-ui-page a:not([class*="l-ui-"]) {
   @apply underline
          text-foreground hover:text-foreground-muted
          focus-ring rounded-sm;
@@ -1221,7 +1221,7 @@ pre.l-ui-surface {
 
 .l-ui-container--pagy .pagy.series-nav a,
 .l-ui-container--pagy .pagy.series-nav span {
-  @apply pagination__item;
+  @apply pagination__item no-underline;
 }
 
 .l-ui-container--pagy .pagy.series-nav a[aria-current="page"] {
