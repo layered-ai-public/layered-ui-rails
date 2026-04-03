@@ -842,7 +842,12 @@ pre.l-ui-surface {
 .l-ui-surface__summary {
   @apply flex items-center justify-between
          cursor-pointer
+         font-bold
          list-none focus-ring;
+
+  &.l-ui-surface__summary--sm {
+    @apply text-sm font-semibold;
+  }
 
   &::-webkit-details-marker {
     display: none;
