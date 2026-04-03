@@ -102,6 +102,10 @@
     @apply heading;
   }
 
+  h4 {
+    @apply heading text-sm;
+  }
+
   p {
     @apply mt-0
            text-sm text-foreground-muted leading-relaxed;
