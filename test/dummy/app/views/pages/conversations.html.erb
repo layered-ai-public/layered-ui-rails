@@ -59,8 +59,8 @@
         <div class="l-ui-message__avatar">BK</div>
         <div class="l-ui-message__bubble">
           <div class="l-ui-message__author">Bob</div>
-          <details class="l-ui-surface--collapsible-active">
-            <summary class="l-ui-surface__summary l-ui-surface__summary--sm">
+          <details class="l-ui-surface--collapsible-active l-ui-surface--sm">
+            <summary class="l-ui-surface__summary">
               <span>Reasoning</span>
               <%= image_tag "layered_ui/icon_chevron_right.svg", alt: "", class: "l-ui-icon--sm l-ui-surface__chevron", aria: { hidden: true } %>
             </summary>
@@ -188,6 +188,22 @@ end</code></pre>
           &lt;div class="l-ui-message__body l-ui-markdown"&gt;
             &lt;p&gt;Rendered HTML from markdown...&lt;/p&gt;
           &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;!-- Collapsible reasoning --&gt;
+      &lt;div class="l-ui-message"&gt;
+        &lt;div class="l-ui-message__avatar"&gt;BK&lt;/div&gt;
+        &lt;div class="l-ui-message__bubble"&gt;
+          &lt;details class="l-ui-surface--collapsible-active l-ui-surface--sm"&gt;
+            &lt;summary class="l-ui-surface__summary"&gt;
+              &lt;span&gt;Reasoning&lt;/span&gt;
+              &lt;img src="layered_ui/icon_chevron_right.svg" alt="" class="l-ui-icon--sm l-ui-surface__chevron" aria-hidden="true"&gt;
+            &lt;/summary&gt;
+            &lt;div class="l-ui-surface__content"&gt;
+              &lt;p&gt;Reasoning text...&lt;/p&gt;
+            &lt;/div&gt;
+          &lt;/details&gt;
         &lt;/div&gt;
       &lt;/div&gt;
 

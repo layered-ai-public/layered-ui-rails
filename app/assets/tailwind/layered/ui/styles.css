@@ -839,15 +839,22 @@ pre.l-ui-surface {
   }
 }
 
-.l-ui-surface__summary {
-  @apply flex items-center justify-between
-         cursor-pointer
-         font-bold
-         list-none focus-ring;
+.l-ui-surface--sm {
+  @apply p-3;
 
-  &.l-ui-surface__summary--sm {
+  .l-ui-surface__summary {
     @apply text-sm font-semibold;
   }
+
+  .l-ui-surface__content {
+    @apply pt-3;
+  }
+}
+
+.l-ui-surface__summary {
+  @apply flex items-center justify-between
+         font-bold
+         list-none cursor-pointer focus-ring;
 
   &::-webkit-details-marker {
     display: none;

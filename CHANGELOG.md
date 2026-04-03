@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file. This projec
 ### Added
 
 - Collapsible surface variants (`.l-ui-surface--collapsible`, `.l-ui-surface--collapsible-active`) using native `<details>`/`<summary>` for WCAG 2.2 AA accessible disclosure
-- `.l-ui-surface__summary--sm` modifier for smaller collapsible summary text
+- `.l-ui-surface--sm` compact surface variant with smaller padding and summary text
 - `h4` base style (Manrope bold, `text-sm`)
 
 ### Changed
