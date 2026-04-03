@@ -818,6 +818,29 @@ pre.l-ui-surface {
          bg-surface-active;
 }
 
+.l-ui-surface--collapsible {
+  @apply surface
+         bg-surface;
+
+  &[open] > .l-ui-surface__summary img {
+    @apply rotate-90;
+  }
+}
+
+.l-ui-surface__summary {
+  @apply flex items-center justify-between
+         cursor-pointer
+         list-none focus-ring;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+}
+
+.l-ui-surface__content {
+  @apply pt-4;
+}
+
 /* Form */
 
 .l-ui-form {

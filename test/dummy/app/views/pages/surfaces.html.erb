@@ -56,6 +56,44 @@
   </dialog>
 </div>
 
+<h2 class="l-ui-utility--mt-2xl">Collapsible surface</h2>
+
+<details class="l-ui-surface--collapsible l-ui-utility--mt-lg">
+  <summary class="l-ui-surface__summary">
+    <span>Collapsible heading</span>
+    <%= image_tag "layered_ui/icon_chevron_right.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
+  </summary>
+  <div class="l-ui-surface__content">
+    <p>
+      This content can be toggled open and closed. Uses native HTML
+      disclosure for full keyboard and screen reader support.
+    </p>
+  </div>
+</details>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-surfaces-collapsible-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-surfaces-collapsible-heading">Collapsible surface</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;details class="l-ui-surface--collapsible"&gt;
+  &lt;summary class="l-ui-surface__summary"&gt;
+    &lt;span&gt;Heading text&lt;/span&gt;
+    &lt;img src="icon_chevron_right.svg" alt="" class="l-ui-icon--sm" aria-hidden="true"&gt;
+  &lt;/summary&gt;
+  &lt;div class="l-ui-surface__content"&gt;
+    &lt;p&gt;Content goes here&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/details&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
 <h2 class="l-ui-utility--mt-2xl">Code block</h2>
 
 <pre class="l-ui-surface l-ui-utility--mt-lg"><code>def greet(name)
@@ -102,6 +140,18 @@ end&lt;/code&gt;&lt;/pre&gt;</code></pre>
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><code>pre.l-ui-surface</code></th>
         <td class="l-ui-table__cell">Preformatted code block</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-surface--collapsible</code></th>
+        <td class="l-ui-table__cell">Collapsible surface with disclosure toggle (use on <code>&lt;details&gt;</code>)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-surface__summary</code></th>
+        <td class="l-ui-table__cell">Summary/heading row inside a collapsible surface</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-surface__content</code></th>
+        <td class="l-ui-table__cell">Content area inside a collapsible surface</td>
       </tr>
     </tbody>
   </table>

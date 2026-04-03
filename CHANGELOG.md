@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+### Added
+
+- Collapsible surface variant (`.l-ui-surface--collapsible`) using native `<details>`/`<summary>` for WCAG 2.2 AA accessible disclosure
+
 ### Changed
 
 - Form inputs now use 16px (`text-base`) font size by default, preventing Safari auto-zoom on iOS without relying on a `!important` hack
