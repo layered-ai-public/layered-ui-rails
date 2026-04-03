@@ -2,11 +2,21 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.2.2] - 2026-04-03
+
+### Added
+
+- Collapsible surface variants (`.l-ui-surface--collapsible`, `.l-ui-surface--collapsible-active`) using native `<details>`/`<summary>` for WCAG 2.2 AA accessible disclosure
+- `.l-ui-surface--sm` compact surface variant with smaller padding and summary text
+- `h4` base style (Manrope bold, `text-sm`)
 
 ### Changed
 
 - Form inputs now use 16px (`text-base`) font size by default, preventing Safari auto-zoom on iOS without relying on a `!important` hack
+
+### Fixed
+
+- CSS `@apply` ordering now follows the documented convention (layout, spacing, typography, colours, effects) in `code`, `tabs__tab`, and `l-ui-scroll-to-bottom`
 
 ## [0.2.1] - 2026-04-01
 
