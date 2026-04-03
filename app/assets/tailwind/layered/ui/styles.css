@@ -120,8 +120,8 @@
   code {
     font-size: 0.8125rem;
     line-height: 1.25rem;
-    @apply text-foreground-muted
-           whitespace-pre overflow-x-auto;
+    @apply whitespace-pre overflow-x-auto
+           text-foreground-muted;
   }
 }
 
@@ -821,8 +821,16 @@ pre.l-ui-surface {
 .l-ui-surface--collapsible {
   @apply surface
          bg-surface;
+}
 
-  &[open] > .l-ui-surface__summary img {
+.l-ui-surface--collapsible-active {
+  @apply surface
+         bg-surface-active;
+}
+
+.l-ui-surface--collapsible,
+.l-ui-surface--collapsible-active {
+  &[open] > .l-ui-surface__summary .l-ui-surface__chevron {
     @apply rotate-90;
   }
 }
@@ -835,6 +843,10 @@ pre.l-ui-surface {
   &::-webkit-details-marker {
     display: none;
   }
+}
+
+.l-ui-surface__chevron {
+  @apply transition-transform duration-200;
 }
 
 .l-ui-surface__content {
@@ -1019,11 +1031,10 @@ pre.l-ui-surface {
 }
 
 @utility tabs__tab {
-  @apply min-h-[44px]
+  @apply -mb-px min-h-[44px]
          text-sm font-medium
          text-foreground-muted
          border-b-2 border-transparent
-         -mb-px
          cursor-pointer
          focus-ring
          transition-colors;
@@ -1525,10 +1536,8 @@ pre.l-ui-surface {
 
 .l-ui-scroll-to-bottom {
   @apply
-    sticky bottom-2
-    mx-auto -mt-9
-    flex items-center justify-center
-    h-9 w-9
+    sticky bottom-2 flex items-center justify-center
+    mx-auto -mt-9 h-9 w-9
     rounded-full
     cursor-pointer
     bg-button-primary-bg/60 text-button-primary-text shadow-lg backdrop-blur-xs
