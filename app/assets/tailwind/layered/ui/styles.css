@@ -1502,18 +1502,13 @@ pre.l-ui-surface {
 
 .l-ui-message__reasoning {
   @apply rounded
-         border border-border
+         bg-surface-active
          text-sm text-foreground-muted;
-}
-
-.l-ui-message__reasoning[open] {
-  @apply bg-surface;
 }
 
 .l-ui-message__reasoning-summary {
   @apply flex items-center
-         gap-1.5
-         px-3 py-2
+         px-2 py-2
          cursor-pointer
          list-none
          font-medium select-none;
@@ -1533,7 +1528,7 @@ pre.l-ui-surface {
 }
 
 .l-ui-message__reasoning-body {
-  @apply px-3 pb-3;
+  @apply px-2 pb-2;
 }
 
 /* Scroll-to-bottom button */

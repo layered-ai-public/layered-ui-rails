@@ -60,7 +60,7 @@
         <div class="l-ui-message__bubble">
           <div class="l-ui-message__author">Bob</div>
           <details class="l-ui-message__reasoning">
-            <summary class="l-ui-message__reasoning-summary"><%= image_tag "layered_ui/icon_chevron_right.svg", class: "l-ui-icon--sm", alt: "" %> Reasoning</summary>
+            <summary class="l-ui-message__reasoning-summary"><%= image_tag "layered_ui/icon_chevron_right.svg", class: "l-ui-icon--sm", alt: "" %>Reasoning</summary>
             <div class="l-ui-message__reasoning-body">
               The user is asking me to review a pull request. Let me look at the key changes... The validate_input method currently accepts any string, but doesn't guard against nil or empty values. This could cause a NoMethodError in production. I should also check the error messages - they're quite generic right now.
             </div>
@@ -184,8 +184,7 @@ end</code></pre>
         &lt;div class="l-ui-message__bubble"&gt;
           &lt;details class="l-ui-message__reasoning"&gt;
             &lt;summary class="l-ui-message__reasoning-summary"&gt;
-              &lt;svg class="l-ui-icon--sm"&gt;...&lt;/svg&gt;
-              Reasoning
+              &lt;svg class="l-ui-icon--sm"&gt;...&lt;/svg&gt;Reasoning
             &lt;/summary&gt;
             &lt;div class="l-ui-message__reasoning-body"&gt;
               Streamed reasoning text...
@@ -338,7 +337,7 @@ end</code></pre>
     <div class="l-ui-message__avatar">AI</div>
     <div class="l-ui-message__bubble">
       <details class="l-ui-message__reasoning" open>
-        <summary class="l-ui-message__reasoning-summary"><%= image_tag "layered_ui/icon_chevron_right.svg", class: "l-ui-icon--sm", alt: "" %> Reasoning</summary>
+        <summary class="l-ui-message__reasoning-summary"><%= image_tag "layered_ui/icon_chevron_right.svg", class: "l-ui-icon--sm", alt: "" %>Reasoning</summary>
         <div class="l-ui-message__reasoning-body">
           The user wants to know about error handling in their validation method. Let me consider the edge cases: nil values would raise a NoMethodError on .empty?, and blank strings would pass the regex. I should suggest guard clauses for both cases and recommend more descriptive error messages.
         </div>
@@ -367,9 +366,7 @@ end</code></pre>
       <pre class="l-ui-surface"><code>&lt;div class="l-ui-message__bubble"&gt;
   &lt;details class="l-ui-message__reasoning"&gt;
     &lt;summary class="l-ui-message__reasoning-summary"&gt;
-      &lt;%= image_tag "layered_ui/icon_chevron_right.svg",
-        class: "l-ui-icon--sm", alt: "" %&gt;
-      Reasoning
+      &lt;svg class="l-ui-icon--sm"&gt;...&lt;/svg&gt;Reasoning
     &lt;/summary&gt;
     &lt;div class="l-ui-message__reasoning-body"&gt;
       Streamed reasoning text...
