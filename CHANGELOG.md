@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file. This projec
 
 ## Unreleased
 
+## [0.2.4] - 2026-04-06
+
+### Added
+
+- YouTube social icon SVG bundled in the gem
+
 ## [0.2.3] - 2026-04-06
 
 ### Added
