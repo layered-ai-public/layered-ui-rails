@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file. This projec
 
 ## Unreleased
 
+## [0.2.3] - 2026-04-06
+
+### Added
+
+- Social icon SVGs (globe, GitHub, X, LinkedIn, Discord, mail) bundled in the gem for reuse by host apps
+
 ### Fixed
 
 - Pagy pagination links still showing underline despite previous fix - broadened page link exclusion to all `l-ui-` classes and added explicit `no-underline` to pagination items

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    layered-ui-rails (0.2.2)
+    layered-ui-rails (0.2.3)
       rails (~> 8.0)
       tailwindcss-rails (~> 4.0)
 
