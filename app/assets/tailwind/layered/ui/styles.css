@@ -907,10 +907,14 @@ pre.l-ui-surface {
 @utility form__field {
   @apply block
          w-full px-3 py-2.5 min-h-[44px]
-         text-sm font-inter
+         text-base font-inter
          text-foreground
          border border-border-control rounded-sm
          focus-ring;
+
+  @media (min-width: 768px) {
+    font-size: var(--text-sm);
+  }
 }
 
 .l-ui-form__field {
