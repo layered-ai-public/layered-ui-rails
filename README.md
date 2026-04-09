@@ -106,7 +106,7 @@ For dynamic theming (e.g. per-tenant branding), use `content_for :l_ui_head` to 
 > <% end %>
 > ```
 
-See the [Colors documentation](https://layered-ui-rails.layered.ai/pages/layout_colors) for the full list of tokens.
+See the [Colors documentation](https://layered-ui-rails.layered.ai/layout_colors) for the full list of tokens.
 
 ## Customising logos and icons
 
@@ -186,6 +186,8 @@ kamal deploy
 
 This project is still in its early days. We welcome issues, feedback, and ideas - they genuinely help shape the direction of the project. That said, we're holding off on accepting pull requests until after the 1.0 release so we can stay focused on getting the core foundations right. Once we're there, we'd love to open things up to broader contributions. Thanks for your patience and interest!
 
+- [CLA.md](CLA.md) - contributor license agreement
+
 ## License
 
 Released under the [Apache 2.0 License](LICENSE).
@@ -196,6 +198,3 @@ Copyright 2026 LAYERED AI LIMITED (UK company number: 17056830). See [NOTICE](NO
 
 The source code is fully open, but the layered.ai name, logo, and brand assets are trademarks of LAYERED AI LIMITED. The Apache 2.0 license does not grant rights to use the layered.ai branding. Forks and redistributions must use a distinct name. See [TRADEMARK.md](TRADEMARK.md) for the full policy.
 
-## Contributing
-
-- [CLA.md](CLA.md) - contributor license agreement
