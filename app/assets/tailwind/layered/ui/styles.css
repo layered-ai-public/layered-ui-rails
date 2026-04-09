@@ -914,6 +914,7 @@ pre.l-ui-surface {
 
   @media (min-width: 768px) {
     font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
   }
 }
 
