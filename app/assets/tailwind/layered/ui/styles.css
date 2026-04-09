@@ -901,13 +901,13 @@ pre.l-ui-surface {
 
 .l-ui-form__hint {
   @apply mt-2
-         text-xs text-foreground-muted;
+         text-sm text-foreground-muted;
 }
 
 @utility form__field {
   @apply block
          w-full px-3 py-2.5 min-h-[44px]
-         text-base font-inter
+         text-sm font-inter
          text-foreground
          border border-border-control rounded-sm
          focus-ring;
