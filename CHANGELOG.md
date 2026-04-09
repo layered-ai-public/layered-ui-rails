@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file. This projec
 
 ## Unreleased
 
+### Changed
+
+- Reduced form field text size from `text-base` (16px) to `text-sm` (14px) on desktop; remains 16px on mobile to prevent iOS auto-zoom
+- Increased form hint text size from `text-xs` (12px) to `text-sm` (14px)
+
 ## [0.2.4] - 2026-04-06
 
 ### Added

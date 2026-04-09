@@ -901,16 +901,21 @@ pre.l-ui-surface {
 
 .l-ui-form__hint {
   @apply mt-2
-         text-xs text-foreground-muted;
+         text-sm text-foreground-muted;
 }
 
 @utility form__field {
   @apply block
          w-full px-3 py-2.5 min-h-[44px]
+         /* text-base at mobile; text-sm at md+ */
          text-base font-inter
          text-foreground
          border border-border-control rounded-sm
          focus-ring;
+
+  @media (min-width: 768px) {
+    @apply text-sm;
+  }
 }
 
 .l-ui-form__field {
