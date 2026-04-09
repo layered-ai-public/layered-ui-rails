@@ -26,6 +26,9 @@ test/dummy/tmp/storage/*
 test/dummy!/tmp/storage/
 test/dummy!/tmp/storage/.keep
 
+# Ignore build artefacts.
+test/dummy/app/assets/builds
+
 # Ignore public assets.
 test/dummy/public/assets
 
