@@ -9,8 +9,16 @@
     <caption class="l-ui-sr-only">Users</caption>
     <thead class="l-ui-table__header">
       <tr>
-        <th class="l-ui-table__header-cell" scope="col">Name</th>
-        <th class="l-ui-table__header-cell" scope="col">Email</th>
+        <th class="l-ui-table__header-cell l-ui-table__header-cell--sortable" scope="col" aria-sort="ascending">
+          <a href="#" class="l-ui-table__sort-link">
+            Name
+            <span class="l-ui-table__sort-indicator" aria-hidden="true">▲</span>
+            <span class="l-ui-sr-only">, sorted ascending</span>
+          </a>
+        </th>
+        <th class="l-ui-table__header-cell l-ui-table__header-cell--sortable" scope="col" aria-sort="none">
+          <a href="#" class="l-ui-table__sort-link">Email</a>
+        </th>
         <th class="l-ui-table__header-cell" scope="col">Joined</th>
         <th class="l-ui-table__header-cell" scope="col">Updated</th>
         <th class="l-ui-table__header-cell--action" scope="col">Actions</th>
@@ -49,8 +57,18 @@
     &lt;caption&gt;Users&lt;/caption&gt;
     &lt;thead class="l-ui-table__header"&gt;
       &lt;tr&gt;
-        &lt;th class="l-ui-table__header-cell" scope="col"&gt;Name&lt;/th&gt;
-        &lt;th class="l-ui-table__header-cell" scope="col"&gt;Email&lt;/th&gt;
+        &lt;th class="l-ui-table__header-cell l-ui-table__header-cell--sortable"
+            scope="col" aria-sort="ascending"&gt;
+          &lt;a href="?sort=name" class="l-ui-table__sort-link"&gt;
+            Name
+            &lt;span class="l-ui-table__sort-indicator" aria-hidden="true"&gt;▲&lt;/span&gt;
+            &lt;span class="l-ui-sr-only"&gt;, sorted ascending&lt;/span&gt;
+          &lt;/a&gt;
+        &lt;/th&gt;
+        &lt;th class="l-ui-table__header-cell l-ui-table__header-cell--sortable"
+            scope="col" aria-sort="none"&gt;
+          &lt;a href="?sort=email" class="l-ui-table__sort-link"&gt;Email&lt;/a&gt;
+        &lt;/th&gt;
         &lt;th class="l-ui-table__header-cell--action" scope="col"&gt;Actions&lt;/th&gt;
       &lt;/tr&gt;
     &lt;/thead&gt;
@@ -121,6 +139,18 @@
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-table__action--danger</code></th>
         <td class="l-ui-table__cell">Danger styling for destructive actions (used on links or buttons within action cells)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-table__header-cell--sortable</code></th>
+        <td class="l-ui-table__cell">Header cell containing a sort link (applied automatically by <code>l_ui_sort_link</code>)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-table__sort-link</code></th>
+        <td class="l-ui-table__cell">Styled sort link inside a sortable header cell</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-table__sort-indicator</code></th>
+        <td class="l-ui-table__cell">Sort direction indicator (▲/▼) shown next to the active sort link</td>
       </tr>
     </tbody>
   </table>

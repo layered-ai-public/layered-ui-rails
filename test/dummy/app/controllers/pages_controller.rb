@@ -78,7 +78,8 @@ class PagesController < ApplicationController
 
   def ransack_integration
     @q = User.ransack(params[:q])
-    @users = @q.result(distinct: true).order(:name)
+    @users = @q.result(distinct: true)
+    @users = @users.order(:name) if @q.sorts.empty?
   end
 
   def search

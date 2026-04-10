@@ -12,16 +12,8 @@ module Layered
       #     f.submit "Go", class: "l-ui-button--primary"
       #   end
       def l_ui_search_form(query, url: nil, fields: [], predicate: :cont, combinator: :or, label: "Search", placeholder: nil, button: "Search", clear: nil, html: {}, &block)
-        unless ransack_available?
-          message = "l_ui_search_form requires the ransack gem. Add `gem \"ransack\"` to your Gemfile."
-
-          if Rails.env.development?
-            return tag.p(message, class: "l-ui-notice--warning")
-          end
-
-          Rails.logger.warn("[layered-ui-rails] #{message} The search form has been hidden.")
-          return
-        end
+        result = require_ransack("l_ui_search_form") { |msg| tag.p(msg, class: "l-ui-notice--warning") }
+        return result unless result == true
 
         html = html.merge(class: ["l-ui-form", html[:class]].compact.join(" "))
 
@@ -48,10 +40,73 @@ module Layered
         end
       end
 
+      SORT_INDICATORS = {
+        "asc"  => { symbol: "▲", label: ", sorted ascending",  aria: "ascending" },
+        "desc" => { symbol: "▼", label: ", sorted descending", aria: "descending" }
+      }.freeze
+
+      # Renders a styled, accessible Ransack sort header cell.
+      #
+      # Returns a +<th>+ element containing a sort link and an accessible sort
+      # direction indicator. The +aria-sort+ attribute is set on the +<th>+
+      # so screen readers announce the current sort state.
+      #
+      # Usage:
+      #   l_ui_sort_link(@q, :name)
+      #   l_ui_sort_link(@q, :name, "Full name")
+      #   l_ui_sort_link(@q, :created_at, "Joined", default_order: :desc)
+      #   l_ui_sort_link(@q, :name, html: { data: { turbo_action: "replace" } })
+      def l_ui_sort_link(query, attribute, label = nil, default_order: nil, html: {})
+        label ||= attribute.to_s.humanize
+        link_class = ["l-ui-table__sort-link", html[:class]].compact.join(" ")
+
+        result = require_ransack("l_ui_sort_link") { |msg| tag.th(tag.span(label, title: msg), class: "l-ui-table__header-cell", scope: "col") }
+        return (result || tag.th(label, class: "l-ui-table__header-cell", scope: "col")) unless result == true
+
+        current_dir = sort_direction_for(query, attribute)
+        indicator = SORT_INDICATORS[current_dir]
+        aria_sort = indicator&.dig(:aria) || "none"
+
+        url = sort_url(query, attribute, { default_order: default_order }.compact)
+        link = link_to(url, **html.except(:class), class: link_class) do
+          parts = [label]
+          if indicator
+            parts << tag.span(indicator[:symbol], aria: { hidden: true }, class: "l-ui-table__sort-indicator")
+            parts << tag.span(indicator[:label], class: "l-ui-sr-only")
+          end
+          safe_join(parts)
+        end
+
+        tag.th(link, class: "l-ui-table__header-cell l-ui-table__header-cell--sortable",
+               scope: "col", aria: { sort: aria_sort })
+      end
+
       private
 
       def ransack_available?
         defined?(Ransack)
+      end
+
+      # Returns +true+ if Ransack is available. In development, returns the
+      # block's result so the caller can render a visible fallback. In
+      # production/test, logs and returns +nil+.
+      def require_ransack(helper_name)
+        return true if ransack_available?
+
+        message = "#{helper_name} requires the ransack gem. Add `gem \"ransack\"` to your Gemfile."
+
+        if Rails.env.development?
+          return yield(message)
+        end
+
+        Rails.logger.warn("[layered-ui-rails] #{message} The output has been hidden.")
+        nil
+      end
+
+      def sort_direction_for(query, attribute)
+        return unless query.respond_to?(:sorts)
+        sort = query.sorts.detect { |s| s.name == attribute.to_s }
+        sort&.dir
       end
     end
   end

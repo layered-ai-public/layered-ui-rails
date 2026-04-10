@@ -41,6 +41,26 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_select "th", /Test User/
   end
 
+  test "ransack page renders sort links" do
+    create_test_users
+    get "/ransack"
+    assert_response :success
+    assert_select "th.l-ui-table__header-cell--sortable", minimum: 3
+    assert_select "th[aria-sort]", minimum: 3
+    assert_select "a.l-ui-table__sort-link", minimum: 3
+  end
+
+  test "ransack page sorts by column" do
+    create_test_users
+    get "/ransack", params: { q: { s: "name desc" } }
+    assert_response :success
+    # The sortable table has header cells with aria-sort attributes
+    sortable_table = css_select("table.l-ui-table").detect { |t| t.css("th[aria-sort]").any? }
+    assert_not_nil sortable_table, "Expected a table with sortable headers (th[aria-sort])"
+    names = sortable_table.css("tbody th[scope='row']").map(&:text)
+    assert_equal names.sort.reverse, names, "Expected rows sorted by name descending"
+  end
+
   test "icon URL instance variables are rendered in link and img tags when set" do
     get "/test_icon_url_override"
     assert_response :success
