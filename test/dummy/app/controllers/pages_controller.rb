@@ -76,6 +76,11 @@ class PagesController < ApplicationController
   def pagy_integration
   end
 
+  def ransack_integration
+    @q = User.ransack(params[:q])
+    @users = @q.result(distinct: true).order(:name)
+  end
+
   def layout_colors
   end
 

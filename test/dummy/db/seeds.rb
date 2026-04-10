@@ -29,7 +29,7 @@ users = [
 users.each do |attrs|
   User.find_or_create_by!(email: attrs[:email]) do |user|
     user.name = attrs[:name]
-    user.password = "password123"
+    user.password = SecureRandom.hex(12)
     user.confirmed_at = Time.current
   end
 end

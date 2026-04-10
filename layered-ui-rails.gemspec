@@ -36,6 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "pagy", "~> 43.2"
   spec.add_development_dependency "propshaft", "~> 1.0"
   spec.add_development_dependency "puma", "~> 7.0"
+  spec.add_development_dependency "ransack", "~> 4.0"
   spec.add_development_dependency "sqlite3", "~> 2.0"
   spec.add_development_dependency "stimulus-rails", "~> 1.0"
   spec.add_development_dependency "turbo-rails", "~> 2.0"

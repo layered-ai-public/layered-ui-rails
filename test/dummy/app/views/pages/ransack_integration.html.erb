@@ -1,0 +1,158 @@
+<h1>Ransack</h1>
+
+<p class="l-ui-utility--mt-md">Ransack is fully supported but entirely optional. The engine works without any search system.</p>
+
+<h2 class="l-ui-utility--mt-2xl">When Ransack is installed</h2>
+
+<p class="l-ui-utility--mt-md">The engine automatically detects Ransack and provides:</p>
+
+<ul class="l-ui-list l-ui-utility--mt-lg">
+  <li>A <code>SearchHelper</code> for rendering styled search forms</li>
+  <li>Partials for search fields and selects for custom layouts</li>
+</ul>
+
+<h2 class="l-ui-utility--mt-2xl">Without Ransack</h2>
+
+<p class="l-ui-utility--mt-md">If Ransack is not installed, calling <code>l_ui_search_form</code> degrades gracefully:</p>
+
+<ul class="l-ui-list l-ui-utility--mt-lg">
+  <li>In <strong>development</strong> and <strong>test</strong>, a visible warning is rendered in place of the form explaining that the ransack gem is required</li>
+  <li>In <strong>production</strong>, the form is silently hidden and a warning is logged to <code>Rails.logger</code></li>
+</ul>
+
+<p class="l-ui-utility--mt-md">This means you can safely include <code>l_ui_search_form</code> in shared views without guarding against Ransack's presence - the helper handles it for you.</p>
+
+<h2 class="l-ui-utility--mt-2xl">Installation</h2>
+
+<p class="l-ui-utility--mt-md">Add Ransack to your application:</p>
+<pre class="l-ui-surface l-ui-utility--mt-md"><code>bundle add ransack</code></pre>
+
+<p class="l-ui-utility--mt-lg">Ransack 4+ requires you to allowlist searchable attributes on your models:</p>
+<pre class="l-ui-surface l-ui-utility--mt-md"><code>class User &lt; ApplicationRecord
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[name email created_at]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    []
+  end
+end</code></pre>
+
+<h2 class="l-ui-utility--mt-2xl">Example</h2>
+
+<p class="l-ui-utility--mt-md">Search users by name or email:</p>
+
+<%= l_ui_search_form(@q, url: ransack_path, fields: [:name, :email], clear: true) %>
+
+<% if params[:q].present? %>
+  <% if @users.present? %>
+    <div class="l-ui-container--table l-ui-utility--mt-lg">
+      <table class="l-ui-table">
+        <caption class="l-ui-sr-only">Search results</caption>
+        <thead class="l-ui-table__header">
+          <tr>
+            <th class="l-ui-table__header-cell" scope="col">Name</th>
+            <th class="l-ui-table__header-cell" scope="col">Email</th>
+          </tr>
+        </thead>
+        <tbody class="l-ui-table__body">
+          <% @users.each do |user| %>
+            <tr>
+              <th class="l-ui-table__cell--primary" scope="row"><%= user.name %></th>
+              <td class="l-ui-table__cell"><%= user.email %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p class="l-ui-utility--mt-lg">No users found matching your search.</p>
+  <% end %>
+<% end %>
+
+<h2 class="l-ui-utility--mt-2xl">Simple usage</h2>
+
+<p class="l-ui-utility--mt-md">Pass <code>fields:</code> to generate a single search input that searches across multiple columns:</p>
+
+<pre class="l-ui-surface l-ui-utility--mt-md"><code>&lt;%= l_ui_search_form(@q, url: users_path, fields: [:name, :email]) %&gt;</code></pre>
+
+<p class="l-ui-utility--mt-md">This generates a combined <code>name_or_email_cont</code> predicate - a single input that matches any of the listed fields.</p>
+
+<h3 class="l-ui-utility--mt-lg">Options</h3>
+
+<div class="l-ui-container--table l-ui-utility--mt-lg">
+  <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Helper options</caption>
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell" scope="col">Option</th>
+        <th class="l-ui-table__header-cell" scope="col">Default</th>
+        <th class="l-ui-table__header-cell" scope="col">Description</th>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>fields</code></th>
+        <td class="l-ui-table__cell"><code>[]</code></td>
+        <td class="l-ui-table__cell">Attribute names to search. Combined with OR into a single input.</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>predicate</code></th>
+        <td class="l-ui-table__cell"><code>:cont</code></td>
+        <td class="l-ui-table__cell">Ransack predicate (<code>:cont</code>, <code>:eq</code>, <code>:start</code>, etc.)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>combinator</code></th>
+        <td class="l-ui-table__cell"><code>:or</code></td>
+        <td class="l-ui-table__cell">How fields are combined (<code>:or</code> matches any field, <code>:and</code> requires all)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>label</code></th>
+        <td class="l-ui-table__cell"><code>"Search"</code></td>
+        <td class="l-ui-table__cell">Label text for the input</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>placeholder</code></th>
+        <td class="l-ui-table__cell">Auto-generated</td>
+        <td class="l-ui-table__cell">Placeholder text. Defaults to "Search by name, email, ..."</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>button</code></th>
+        <td class="l-ui-table__cell"><code>"Search"</code></td>
+        <td class="l-ui-table__cell">Submit button text</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>clear</code></th>
+        <td class="l-ui-table__cell"><code>nil</code></td>
+        <td class="l-ui-table__cell">Pass <code>true</code> for a "Clear" button, or a string for a custom label</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>url</code></th>
+        <td class="l-ui-table__cell"><code>nil</code></td>
+        <td class="l-ui-table__cell">Form action URL</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>html</code></th>
+        <td class="l-ui-table__cell"><code>{}</code></td>
+        <td class="l-ui-table__cell">Additional HTML attributes for the form tag</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">Custom usage</h2>
+
+<p class="l-ui-utility--mt-md">Pass a block for full control over the form layout. The partials <code>search_field</code> and <code>search_select</code> apply l-ui styling to individual fields:</p>
+
+<pre class="l-ui-surface l-ui-utility--mt-md"><code>&lt;%= l_ui_search_form(@q, url: users_path) do |f| %&gt;
+  &lt;%= render "layered_ui/shared/search_field",
+              form: f, field: :name_cont, label: "Name" %&gt;
+
+  &lt;%= render "layered_ui/shared/search_select",
+              form: f, field: :role_eq, label: "Role",
+              options: %w[admin editor viewer] %&gt;
+
+  &lt;div class="l-ui-form__group--large-gap"&gt;
+    &lt;%= f.submit "Search", class: "l-ui-button--primary" %&gt;
+  &lt;/div&gt;
+&lt;% end %&gt;</code></pre>
