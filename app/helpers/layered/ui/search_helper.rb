@@ -12,10 +12,8 @@ module Layered
       #     f.submit "Go", class: "l-ui-button--primary"
       #   end
       def l_ui_search_form(query, url: nil, fields: [], predicate: :cont, combinator: :or, label: "Search", placeholder: nil, button: "Search", clear: nil, html: {}, &block)
-        fallback = nil
-        unless require_ransack("l_ui_search_form") { |msg| fallback = tag.p(msg, class: "l-ui-notice--warning") }
-          return fallback
-        end
+        result = require_ransack("l_ui_search_form") { |msg| tag.p(msg, class: "l-ui-notice--warning") }
+        return result unless result == true
 
         html = html.merge(class: ["l-ui-form", html[:class]].compact.join(" "))
 
@@ -62,10 +60,8 @@ module Layered
         label ||= attribute.to_s.humanize
         link_class = ["l-ui-table__sort-link", html[:class]].compact.join(" ")
 
-        fallback = nil
-        unless require_ransack("l_ui_sort_link") { |msg| fallback = tag.th(tag.span(label, title: msg, class: link_class), class: "l-ui-table__header-cell", scope: "col") }
-          return fallback || tag.th(tag.span(label, class: link_class), class: "l-ui-table__header-cell", scope: "col")
-        end
+        result = require_ransack("l_ui_sort_link") { |msg| tag.th(tag.span(label, title: msg, class: link_class), class: "l-ui-table__header-cell", scope: "col") }
+        return (result || tag.th(tag.span(label, class: link_class), class: "l-ui-table__header-cell", scope: "col")) unless result == true
 
         current_dir = sort_direction_for(query, attribute)
         indicator = SORT_INDICATORS[current_dir]
@@ -91,17 +87,16 @@ module Layered
         defined?(Ransack)
       end
 
-      # Returns truthy if Ransack is available. In development, yields the
-      # warning message so the caller can render a visible fallback. In
-      # production/test, logs and returns nil.
+      # Returns +true+ if Ransack is available. In development, returns the
+      # block's result so the caller can render a visible fallback. In
+      # production/test, logs and returns +nil+.
       def require_ransack(helper_name)
         return true if ransack_available?
 
         message = "#{helper_name} requires the ransack gem. Add `gem \"ransack\"` to your Gemfile."
 
         if Rails.env.development?
-          yield(message)
-          return nil
+          return yield(message)
         end
 
         Rails.logger.warn("[layered-ui-rails] #{message} The output has been hidden.")

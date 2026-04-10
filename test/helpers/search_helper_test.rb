@@ -12,7 +12,9 @@ class SearchHelperTest < ActionView::TestCase
       block ? block.call(MockFormBuilder.new) : ""
     end
 
-    # Stub sort_url to return a URL string (mirrors Ransack's sort_url)
+    # Stub sort_url to return a plausible URL string (mirrors Ransack's sort_url).
+    # The direction always defaults to asc here; tests that need to verify URL
+    # content should use integration tests with real Ransack instead.
     define_singleton_method(:sort_url) do |_q, attribute, _options = {}|
       "/test?q%5Bs%5D=#{attribute}+asc"
     end
