@@ -1124,6 +1124,16 @@ pre.l-ui-surface {
          text-right;
 }
 
+.l-ui-table__sort-link {
+  @apply inline-flex items-center gap-1
+         no-underline
+         text-foreground hover:text-accent;
+}
+
+.l-ui-table__sort-indicator {
+  @apply text-foreground-muted;
+}
+
 .l-ui-table__body {
   @apply h-full
          bg-background
@@ -1156,16 +1166,6 @@ pre.l-ui-surface {
   & .l-ui-table__action--danger {
     @apply text-danger hover:text-danger;
   }
-}
-
-.l-ui-table__sort-link {
-  @apply inline-flex items-center gap-1
-         no-underline
-         text-foreground hover:text-accent;
-}
-
-.l-ui-table__sort-indicator {
-  @apply text-foreground-muted;
 }
 
 .l-ui-table th:first-child,
