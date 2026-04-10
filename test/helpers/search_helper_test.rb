@@ -13,7 +13,7 @@ class SearchHelperTest < ActionView::TestCase
     end
 
     # Stub sort_url to return a URL string (mirrors Ransack's sort_url)
-    define_singleton_method(:sort_url) do |_q, attribute, *_args|
+    define_singleton_method(:sort_url) do |_q, attribute, _options = {}|
       "/test?q%5Bs%5D=#{attribute}+asc"
     end
   end
