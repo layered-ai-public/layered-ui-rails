@@ -890,15 +890,6 @@ pre.l-ui-surface {
   @apply mt-8;
 }
 
-.l-ui-search__inline {
-  @apply flex items-center
-         gap-2;
-
-  .l-ui-form__field {
-    @apply mt-0;
-  }
-}
-
 .l-ui-form__errors {
   @apply notice mt-4
          bg-error-bg;
@@ -950,6 +941,17 @@ pre.l-ui-surface {
          accent-foreground
          focus-ring
          rounded-sm;
+}
+
+/* Search */
+
+.l-ui-search__inline {
+  @apply flex items-center
+         gap-2;
+
+  .l-ui-form__field {
+    @apply mt-0;
+  }
 }
 
 /* Switch */

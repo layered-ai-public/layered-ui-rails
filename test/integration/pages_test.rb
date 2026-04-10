@@ -23,6 +23,11 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "search page renders" do
+    get "/search"
+    assert_response :success
+  end
+
   test "ransack page renders" do
     get "/ransack"
     assert_response :success

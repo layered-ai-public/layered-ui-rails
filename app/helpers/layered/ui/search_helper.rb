@@ -15,7 +15,7 @@ module Layered
         unless defined?(Ransack)
           message = "l_ui_search_form requires the ransack gem. Add `gem \"ransack\"` to your Gemfile."
 
-          unless Rails.env.production?
+          if Rails.env.development?
             return tag.p(message, class: "l-ui-notice--warning")
           end
 

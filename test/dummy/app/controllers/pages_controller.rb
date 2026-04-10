@@ -81,6 +81,9 @@ class PagesController < ApplicationController
     @users = @q.result(distinct: true).order(:name)
   end
 
+  def search
+  end
+
   def layout_colors
   end
 
