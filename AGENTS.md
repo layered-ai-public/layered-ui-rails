@@ -2,10 +2,6 @@
 
 Guidance for AI agents working in this repository.
 
-## Project
-
-**layered-ui-rails** - Rails 8+ engine gem: design tokens, Tailwind CSS, Stimulus controllers (theme, mobile nav, panel, modal, tabs). Pure frontend, no server-side logic.
-
 ## Architecture
 
 - **Entry:** `require "layered-ui-rails"` → `lib/layered/ui.rb` → `lib/layered/ui/engine.rb`

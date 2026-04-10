@@ -1,0 +1,6 @@
+<% placeholder = local_assigns.fetch(:placeholder, nil) %>
+
+<div class="l-ui-form__group">
+  <%= form.label field, label, class: "l-ui-label" %>
+  <%= form.text_field field, class: "l-ui-form__field", **(placeholder ? { placeholder: placeholder } : {}) %>
+</div>

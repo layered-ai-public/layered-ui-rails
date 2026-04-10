@@ -943,6 +943,17 @@ pre.l-ui-surface {
          rounded-sm;
 }
 
+/* Search */
+
+.l-ui-search__inline {
+  @apply flex items-center
+         gap-2;
+
+  .l-ui-form__field {
+    @apply mt-0;
+  }
+}
+
 /* Switch */
 
 .l-ui-switch {

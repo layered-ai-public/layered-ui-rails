@@ -1,0 +1,62 @@
+<h1>Ransack</h1>
+
+<p class="l-ui-utility--mt-md">Ransack is fully supported but entirely optional. The engine works without any search system.</p>
+
+<h2 class="l-ui-utility--mt-2xl">Installation</h2>
+
+<p class="l-ui-utility--mt-md">Add Ransack to your application:</p>
+<pre class="l-ui-surface l-ui-utility--mt-md"><code>bundle add ransack</code></pre>
+
+<p class="l-ui-utility--mt-lg">Ransack 4+ requires you to allowlist searchable attributes on your models:</p>
+<pre class="l-ui-surface l-ui-utility--mt-md"><code>class User &lt; ApplicationRecord
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[name email created_at]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    []
+  end
+end</code></pre>
+
+<h2 class="l-ui-utility--mt-2xl">Helper</h2>
+
+<p class="l-ui-utility--mt-md">The engine provides a <%= link_to "SearchHelper", search_path %> that wraps Ransack with styled form controls. If Ransack is not installed, the helper degrades gracefully:</p>
+
+<ul class="l-ui-list l-ui-utility--mt-lg">
+  <li>In <strong>development</strong>, a visible warning replaces the form</li>
+  <li>In <strong>production</strong> and <strong>test</strong>, the form is silently hidden and a warning is logged</li>
+</ul>
+
+<h2 class="l-ui-utility--mt-2xl">Example</h2>
+
+<p class="l-ui-utility--mt-md">Search users by name or email:</p>
+
+<%= l_ui_search_form(@q, url: ransack_path, fields: [:name, :email], clear: true) %>
+
+<% if params[:q].present? %>
+  <% if @users.present? %>
+    <div class="l-ui-container--table l-ui-utility--mt-lg">
+      <table class="l-ui-table">
+        <caption class="l-ui-sr-only">Search results</caption>
+        <thead class="l-ui-table__header">
+          <tr>
+            <th class="l-ui-table__header-cell" scope="col">Name</th>
+            <th class="l-ui-table__header-cell" scope="col">Email</th>
+          </tr>
+        </thead>
+        <tbody class="l-ui-table__body">
+          <% @users.each do |user| %>
+            <tr>
+              <th class="l-ui-table__cell--primary" scope="row"><%= user.name %></th>
+              <td class="l-ui-table__cell"><%= user.email %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p class="l-ui-utility--mt-lg">No users found matching your search.</p>
+  <% end %>
+<% end %>
+
+<p class="l-ui-utility--mt-lg">See the <%= link_to "search page", search_path %> for the full helper API, options, and partials reference.</p>

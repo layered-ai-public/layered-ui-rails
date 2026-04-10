@@ -31,6 +31,8 @@ Rails.application.routes.draw do
   get "form_errors", to: "pages#form_errors"
   get "integrations", to: "pages#integrations"
   get "pagy", to: "pages#pagy_integration", as: :pagy
+  get "ransack", to: "pages#ransack_integration", as: :ransack
+  get "search", to: "pages#search", as: :search
   get "test_icon_url_override", to: "pages#test_icon_url_override"
   get "test_logo_override", to: "pages#test_logo_override"
   get "test_head_injection", to: "pages#test_head_injection"

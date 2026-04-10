@@ -23,6 +23,24 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "search page renders" do
+    get "/search"
+    assert_response :success
+  end
+
+  test "ransack page renders" do
+    get "/ransack"
+    assert_response :success
+  end
+
+  test "ransack page renders search results" do
+    create_test_users
+    get "/ransack", params: { q: { name_cont: "Test" } }
+    assert_response :success
+    assert_select "caption", "Search results"
+    assert_select "th", /Test User/
+  end
+
   test "icon URL instance variables are rendered in link and img tags when set" do
     get "/test_icon_url_override"
     assert_response :success
