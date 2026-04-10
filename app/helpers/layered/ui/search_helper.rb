@@ -60,8 +60,8 @@ module Layered
         label ||= attribute.to_s.humanize
         link_class = ["l-ui-table__sort-link", html[:class]].compact.join(" ")
 
-        result = require_ransack("l_ui_sort_link") { |msg| tag.th(tag.span(label, title: msg, class: link_class), class: "l-ui-table__header-cell", scope: "col") }
-        return (result || tag.th(tag.span(label, class: link_class), class: "l-ui-table__header-cell", scope: "col")) unless result == true
+        result = require_ransack("l_ui_sort_link") { |msg| tag.th(tag.span(label, title: msg), class: "l-ui-table__header-cell", scope: "col") }
+        return (result || tag.th(label, class: "l-ui-table__header-cell", scope: "col")) unless result == true
 
         current_dir = sort_direction_for(query, attribute)
         indicator = SORT_INDICATORS[current_dir]

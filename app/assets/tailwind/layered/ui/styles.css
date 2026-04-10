@@ -1127,7 +1127,7 @@ pre.l-ui-surface {
 .l-ui-table__sort-link {
   @apply inline-flex items-center gap-1
          no-underline
-         text-foreground hover:text-accent;
+         text-foreground;
 }
 
 .l-ui-table__sort-indicator {

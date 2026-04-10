@@ -165,7 +165,7 @@ class SearchHelperTest < ActionView::TestCase
       result = l_ui_sort_link(nil, :name)
       assert_includes result, "<th"
       assert_includes result, "Name"
-      assert_includes result, "l-ui-table__sort-link"
+      assert_not_includes result, "l-ui-table__sort-link"
       assert_includes result, "l-ui-table__header-cell"
     end
   end
