@@ -48,10 +48,71 @@ module Layered
         end
       end
 
+      # Renders a styled, accessible Ransack sort header cell.
+      #
+      # Returns a +<th>+ element containing a sort link and an accessible sort
+      # direction indicator. The +aria-sort+ attribute is set on the +<th>+
+      # so screen readers announce the current sort state.
+      #
+      # Usage:
+      #   l_ui_sort_link(@q, :name)
+      #   l_ui_sort_link(@q, :name, "Full name")
+      #   l_ui_sort_link(@q, :created_at, "Joined", default_order: :desc)
+      #   l_ui_sort_link(@q, :name, html: { data: { turbo_action: "replace" } })
+      def l_ui_sort_link(query, attribute, label = nil, default_order: nil, html: {})
+        label ||= attribute.to_s.humanize
+
+        url_options = { default_order: default_order }.compact
+        link_class = ["l-ui-table__sort-link", html[:class]].compact.join(" ")
+        link_options = html.except(:class)
+
+        unless ransack_available?
+          message = "l_ui_sort_link requires the ransack gem. Add `gem \"ransack\"` to your Gemfile."
+
+          if Rails.env.development?
+            return tag.th(tag.span(label, title: message, class: link_class),
+                          class: "l-ui-table__header-cell", scope: "col")
+          end
+
+          Rails.logger.warn("[layered-ui-rails] #{message} The sort link has been rendered as plain text.")
+          return tag.th(tag.span(label, class: link_class),
+                        class: "l-ui-table__header-cell", scope: "col")
+        end
+
+        current_dir = sort_direction_for(query, attribute)
+        aria_sort = case current_dir
+                    when "asc" then "ascending"
+                    when "desc" then "descending"
+                    else "none"
+                    end
+
+        url = sort_url(query, attribute, label, url_options)
+        link = link_to(label, url, **link_options, class: link_class)
+
+        indicator = if current_dir == "asc"
+          tag.span("▲", aria: { hidden: true }, class: "l-ui-table__sort-indicator") +
+            tag.span(", sorted ascending", class: "l-ui-sr-only")
+        elsif current_dir == "desc"
+          tag.span("▼", aria: { hidden: true }, class: "l-ui-table__sort-indicator") +
+            tag.span(", sorted descending", class: "l-ui-sr-only")
+        else
+          "".html_safe
+        end
+
+        tag.th(link + indicator, class: "l-ui-table__header-cell l-ui-table__header-cell--sortable",
+               scope: "col", aria: { sort: aria_sort })
+      end
+
       private
 
       def ransack_available?
         defined?(Ransack)
+      end
+
+      def sort_direction_for(query, attribute)
+        return unless query.respond_to?(:sorts)
+        sort = query.sorts.detect { |s| s.name == attribute.to_s }
+        sort&.dir
       end
     end
   end

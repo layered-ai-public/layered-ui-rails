@@ -1158,6 +1158,16 @@ pre.l-ui-surface {
   }
 }
 
+.l-ui-table__sort-link {
+  @apply inline-flex items-center gap-1
+         no-underline
+         text-foreground hover:text-accent;
+}
+
+.l-ui-table__sort-indicator {
+  @apply text-foreground-muted;
+}
+
 .l-ui-table th:first-child,
 .l-ui-table td:first-child {
   @apply pl-0;

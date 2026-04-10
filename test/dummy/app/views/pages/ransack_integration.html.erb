@@ -18,45 +18,112 @@
   end
 end</code></pre>
 
-<h2 class="l-ui-utility--mt-2xl">Helper</h2>
+<h2 class="l-ui-utility--mt-2xl">Search and sort helpers</h2>
 
-<p class="l-ui-utility--mt-md">The engine provides a <%= link_to "SearchHelper", search_path %> that wraps Ransack with styled form controls. If Ransack is not installed, the helper degrades gracefully:</p>
+<p class="l-ui-utility--mt-md">The engine provides helpers that wrap Ransack with styled controls. If Ransack is not installed, both helpers degrade gracefully:</p>
 
 <ul class="l-ui-list l-ui-utility--mt-lg">
-  <li>In <strong>development</strong>, a visible warning replaces the form</li>
-  <li>In <strong>production</strong> and <strong>test</strong>, the form is silently hidden and a warning is logged</li>
+  <li>In <strong>development</strong>, a visible warning replaces the form or sort link</li>
+  <li>In <strong>production</strong> and <strong>test</strong>, <code>l_ui_search_form</code> returns nothing and <code>l_ui_sort_link</code> renders a plain-text header cell; both log a warning</li>
 </ul>
 
-<h2 class="l-ui-utility--mt-2xl">Example</h2>
+<div class="l-ui-container--table l-ui-utility--mt-lg">
+  <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Available helpers</caption>
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell" scope="col">Helper</th>
+        <th class="l-ui-table__header-cell" scope="col">Purpose</th>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l_ui_search_form</code></th>
+        <td class="l-ui-table__cell">Styled search form wrapping Ransack's <code>search_form_for</code></td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l_ui_sort_link</code></th>
+        <td class="l-ui-table__cell">Styled sort link wrapping Ransack's <code>sort_link</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">Search example</h2>
 
 <p class="l-ui-utility--mt-md">Search users by name or email:</p>
 
 <%= l_ui_search_form(@q, url: ransack_path, fields: [:name, :email], clear: true) %>
 
-<% if params[:q].present? %>
-  <% if @users.present? %>
-    <div class="l-ui-container--table l-ui-utility--mt-lg">
-      <table class="l-ui-table">
-        <caption class="l-ui-sr-only">Search results</caption>
-        <thead class="l-ui-table__header">
+<% if params[:q].present? && @users.present? %>
+  <div class="l-ui-container--table l-ui-utility--mt-lg">
+    <table class="l-ui-table">
+      <caption class="l-ui-sr-only">Search results</caption>
+      <thead class="l-ui-table__header">
+        <tr>
+          <th class="l-ui-table__header-cell" scope="col">Name</th>
+          <th class="l-ui-table__header-cell" scope="col">Email</th>
+        </tr>
+      </thead>
+      <tbody class="l-ui-table__body">
+        <% @users.each do |user| %>
           <tr>
-            <th class="l-ui-table__header-cell" scope="col">Name</th>
-            <th class="l-ui-table__header-cell" scope="col">Email</th>
+            <th class="l-ui-table__cell--primary" scope="row"><%= user.name %></th>
+            <td class="l-ui-table__cell"><%= user.email %></td>
           </tr>
-        </thead>
-        <tbody class="l-ui-table__body">
-          <% @users.each do |user| %>
-            <tr>
-              <th class="l-ui-table__cell--primary" scope="row"><%= user.name %></th>
-              <td class="l-ui-table__cell"><%= user.email %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  <% else %>
-    <p class="l-ui-utility--mt-lg">No users found matching your search.</p>
-  <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% elsif params[:q].present? %>
+  <p class="l-ui-utility--mt-lg">No users found matching your search.</p>
 <% end %>
 
-<p class="l-ui-utility--mt-lg">See the <%= link_to "search page", search_path %> for the full helper API, options, and partials reference.</p>
+<h2 class="l-ui-utility--mt-2xl">Sorting example</h2>
+
+<p class="l-ui-utility--mt-md">Click column headers to sort. The helper wraps Ransack's <code>sort_link</code> and applies the <code>l-ui-table__sort-link</code> class automatically.</p>
+
+<div class="l-ui-container--table l-ui-utility--mt-lg">
+  <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Sortable users</caption>
+    <thead class="l-ui-table__header">
+      <tr>
+        <%= l_ui_sort_link(@q, :name) %>
+        <%= l_ui_sort_link(@q, :email) %>
+        <%= l_ui_sort_link(@q, :created_at, "Joined", default_order: :desc) %>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <% @users.each do |user| %>
+        <tr>
+          <th class="l-ui-table__cell--primary" scope="row"><%= user.name %></th>
+          <td class="l-ui-table__cell"><%= user.email %></td>
+          <td class="l-ui-table__cell"><%= time_ago_in_words(user.created_at) %> ago</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">Sort link usage</h2>
+
+<pre class="l-ui-surface l-ui-utility--mt-md"><code>&lt;!-- Basic sort link --&gt;
+&lt;%= l_ui_sort_link(@q, :name) %&gt;
+
+&lt;!-- Custom label --&gt;
+&lt;%= l_ui_sort_link(@q, :created_at, "Joined") %&gt;
+
+&lt;!-- Default descending order --&gt;
+&lt;%= l_ui_sort_link(@q, :created_at, "Joined", default_order: :desc) %&gt;
+
+&lt;!-- With HTML options --&gt;
+&lt;%= l_ui_sort_link(@q, :name, html: { data: { turbo_action: "replace" } }) %&gt;</code></pre>
+
+<p class="l-ui-utility--mt-lg">In your controller, let Ransack handle ordering:</p>
+
+<pre class="l-ui-surface l-ui-utility--mt-md"><code>def index
+  @q = User.ransack(params[:q])
+  @users = @q.result(distinct: true)
+end</code></pre>
+
+<p class="l-ui-utility--mt-lg">See the <%= link_to "search page", search_path %> for the full search helper API, options, and partials reference.</p>

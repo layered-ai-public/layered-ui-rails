@@ -11,6 +11,11 @@ class SearchHelperTest < ActionView::TestCase
       @captured_html = html
       block ? block.call(MockFormBuilder.new) : ""
     end
+
+    # Stub sort_url to return a URL string (mirrors Ransack's sort_url)
+    define_singleton_method(:sort_url) do |_q, attribute, *_args|
+      "/test?q%5Bs%5D=#{attribute}+asc"
+    end
   end
 
   test "does not mutate the caller's html hash" do
@@ -96,6 +101,77 @@ class SearchHelperTest < ActionView::TestCase
     without_ransack do
       result = l_ui_search_form(nil, url: "/search", fields: [:name])
       assert_nil result
+    end
+  end
+
+  # -- l_ui_sort_link --
+
+  test "sort_link renders a th with sort link inside" do
+    q = User.ransack({})
+    result = l_ui_sort_link(q, :name)
+    assert_includes result, "<th"
+    assert_includes result, "Name"
+    assert_includes result, "l-ui-table__sort-link"
+    assert_includes result, "l-ui-table__header-cell"
+    assert_includes result, 'aria-sort="none"'
+    assert_includes result, 'scope="col"'
+  end
+
+  test "sort_link uses custom label" do
+    q = User.ransack({})
+    result = l_ui_sort_link(q, :created_at, "Joined")
+    assert_includes result, "Joined"
+  end
+
+  test "sort_link merges custom CSS classes on the anchor" do
+    q = User.ransack({})
+    result = l_ui_sort_link(q, :name, html: { class: "extra" })
+    assert_includes result, "l-ui-table__sort-link extra"
+  end
+
+  test "sort_link does not mutate the caller's html hash" do
+    q = User.ransack({})
+    opts = { class: "extra" }
+    l_ui_sort_link(q, :name, html: opts)
+    assert_equal({ class: "extra" }, opts)
+  end
+
+  test "sort_link forwards non-class HTML options to the anchor" do
+    q = User.ransack({})
+    result = l_ui_sort_link(q, :name, html: { data: { turbo_action: "replace" } })
+    assert_includes result, 'data-turbo-action="replace"'
+  end
+
+  test "sort_link shows ascending indicator and aria-sort" do
+    q = User.ransack(s: "name asc")
+    result = l_ui_sort_link(q, :name)
+    assert_includes result, "▲"
+    assert_includes result, "sorted ascending"
+    assert_includes result, 'aria-sort="ascending"'
+  end
+
+  test "sort_link shows descending indicator and aria-sort" do
+    q = User.ransack(s: "name desc")
+    result = l_ui_sort_link(q, :name)
+    assert_includes result, "▼"
+    assert_includes result, "sorted descending"
+    assert_includes result, 'aria-sort="descending"'
+  end
+
+  test "sort_link renders th when Ransack is not available" do
+    without_ransack do
+      result = l_ui_sort_link(nil, :name)
+      assert_includes result, "<th"
+      assert_includes result, "Name"
+      assert_includes result, "l-ui-table__sort-link"
+      assert_includes result, "l-ui-table__header-cell"
+    end
+  end
+
+  test "sort_link uses custom label when Ransack is not available" do
+    without_ransack do
+      result = l_ui_sort_link(nil, :created_at, "Joined")
+      assert_includes result, "Joined"
     end
   end
 
