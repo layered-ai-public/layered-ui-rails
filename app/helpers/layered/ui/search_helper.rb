@@ -42,6 +42,11 @@ module Layered
         end
       end
 
+      SORT_INDICATORS = {
+        "asc"  => { symbol: "▲", label: ", sorted ascending",  aria: "ascending" },
+        "desc" => { symbol: "▼", label: ", sorted descending", aria: "descending" }
+      }.freeze
+
       # Renders a styled, accessible Ransack sort header cell.
       #
       # Returns a +<th>+ element containing a sort link and an accessible sort
@@ -53,11 +58,6 @@ module Layered
       #   l_ui_sort_link(@q, :name, "Full name")
       #   l_ui_sort_link(@q, :created_at, "Joined", default_order: :desc)
       #   l_ui_sort_link(@q, :name, html: { data: { turbo_action: "replace" } })
-      SORT_INDICATORS = {
-        "asc"  => { symbol: "▲", label: ", sorted ascending",  aria: "ascending" },
-        "desc" => { symbol: "▼", label: ", sorted descending", aria: "descending" }
-      }.freeze
-
       def l_ui_sort_link(query, attribute, label = nil, default_order: nil, html: {})
         label ||= attribute.to_s.humanize
         link_class = ["l-ui-table__sort-link", html[:class]].compact.join(" ")
@@ -100,7 +100,8 @@ module Layered
         message = "#{helper_name} requires the ransack gem. Add `gem \"ransack\"` to your Gemfile."
 
         if Rails.env.development?
-          return yield(message)
+          yield(message)
+          return nil
         end
 
         Rails.logger.warn("[layered-ui-rails] #{message}")
