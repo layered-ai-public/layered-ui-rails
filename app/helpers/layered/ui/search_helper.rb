@@ -12,7 +12,7 @@ module Layered
       #     f.submit "Go", class: "l-ui-button--primary"
       #   end
       def l_ui_search_form(query, url: nil, fields: [], predicate: :cont, combinator: :or, label: "Search", placeholder: nil, button: "Search", clear: nil, html: {}, &block)
-        unless defined?(Ransack)
+        unless ransack_available?
           message = "l_ui_search_form requires the ransack gem. Add `gem \"ransack\"` to your Gemfile."
 
           if Rails.env.development?
@@ -43,6 +43,11 @@ module Layered
               end
           end
         end
+      end
+      private
+
+      def ransack_available?
+        defined?(Ransack)
       end
     end
   end

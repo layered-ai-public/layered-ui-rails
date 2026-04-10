@@ -87,6 +87,23 @@ class SearchHelperTest < ActionView::TestCase
     assert yielded
   end
 
+  test "returns nil when Ransack is not available" do
+    without_ransack do
+      result = l_ui_search_form(nil, url: "/search", fields: [:name])
+      assert_nil result
+    end
+  end
+
+  private
+
+  def without_ransack
+    define_singleton_method(:ransack_available?) { false }
+    yield
+  ensure
+    define_singleton_method(:ransack_available?) { defined?(Ransack) }
+  end
+
+
   # Minimal form builder stand-in for unit tests
   class MockFormBuilder
     def label(field, text = nil, **opts)
