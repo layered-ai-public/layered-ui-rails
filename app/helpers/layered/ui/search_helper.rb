@@ -12,7 +12,10 @@ module Layered
       #     f.submit "Go", class: "l-ui-button--primary"
       #   end
       def l_ui_search_form(query, url: nil, fields: [], predicate: :cont, combinator: :or, label: "Search", placeholder: nil, button: "Search", clear: nil, html: {}, &block)
-        return unless require_ransack("l_ui_search_form") { |msg| tag.p(msg, class: "l-ui-notice--warning") }
+        fallback = nil
+        unless require_ransack("l_ui_search_form") { |msg| fallback = tag.p(msg, class: "l-ui-notice--warning") }
+          return fallback
+        end
 
         html = html.merge(class: ["l-ui-form", html[:class]].compact.join(" "))
 
@@ -59,8 +62,9 @@ module Layered
         label ||= attribute.to_s.humanize
         link_class = ["l-ui-table__sort-link", html[:class]].compact.join(" ")
 
-        unless require_ransack("l_ui_sort_link") { |msg| tag.th(tag.span(label, title: msg, class: link_class), class: "l-ui-table__header-cell", scope: "col") }
-          return tag.th(tag.span(label, class: link_class), class: "l-ui-table__header-cell", scope: "col")
+        fallback = nil
+        unless require_ransack("l_ui_sort_link") { |msg| fallback = tag.th(tag.span(label, title: msg, class: link_class), class: "l-ui-table__header-cell", scope: "col") }
+          return fallback || tag.th(tag.span(label, class: link_class), class: "l-ui-table__header-cell", scope: "col")
         end
 
         current_dir = sort_direction_for(query, attribute)

@@ -56,6 +56,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_response :success
     # The sortable table has header cells with aria-sort attributes
     sortable_table = css_select("table.l-ui-table").detect { |t| t.css("th[aria-sort]").any? }
+    assert_not_nil sortable_table, "Expected a table with sortable headers (th[aria-sort])"
     names = sortable_table.css("tbody th[scope='row']").map(&:text)
     assert_equal names.sort.reverse, names, "Expected rows sorted by name descending"
   end
