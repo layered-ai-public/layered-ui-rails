@@ -23,7 +23,7 @@ module Layered
           return
         end
 
-        html = html.merge(class: "l-ui-form #{html[:class]}".strip)
+        html = html.merge(class: ["l-ui-form", html[:class]].compact.join(" "))
 
         if block
           search_form_for(query, url: url, html: html, &block)
@@ -38,12 +38,16 @@ module Layered
               tag.div(class: "l-ui-search__inline") do
                 content = f.text_field(combined_field, class: "l-ui-form__field", placeholder: placeholder) +
                   f.submit(button, class: "l-ui-button--primary")
-                content += link_to(clear == true ? "Clear" : clear, url || request.path, class: "l-ui-button--outline") if clear
+                if clear
+                  raise ArgumentError, "l_ui_search_form requires an explicit url: when clear: is set" unless url
+                  content += link_to(clear == true ? "Clear" : clear, url, class: "l-ui-button--outline")
+                end
                 content
               end
           end
         end
       end
+
       private
 
       def ransack_available?

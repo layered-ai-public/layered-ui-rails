@@ -80,6 +80,11 @@ class SearchHelperTest < ActionView::TestCase
     assert_raises(ArgumentError) { l_ui_search_form(q, url: "/search") }
   end
 
+  test "simple mode raises when clear is set without url" do
+    q = User.ransack({})
+    assert_raises(ArgumentError) { l_ui_search_form(q, fields: [:name], clear: true) }
+  end
+
   test "block mode yields form builder" do
     q = User.ransack({})
     yielded = false
