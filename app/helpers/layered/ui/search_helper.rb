@@ -104,7 +104,7 @@ module Layered
           return nil
         end
 
-        Rails.logger.warn("[layered-ui-rails] #{message}")
+        Rails.logger.warn("[layered-ui-rails] #{message} The output has been hidden.")
         nil
       end
 
