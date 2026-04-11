@@ -25,11 +25,11 @@ module Layered
           existing_action = existing_data[:action]
           action = [existing_action, "submit->l-ui--search-form#preserve"].compact.join(" ")
 
-          html[:data] = existing_data.merge(
+          html[:data] = {
             turbo_frame: turbo_frame, turbo_action: "advance",
             controller: controller, action: action,
             l_ui__search_form_scope_value: scope
-          )
+          }.merge(existing_data.except(:controller, :action))
         end
 
         if block
@@ -48,7 +48,7 @@ module Layered
                 if clear
                   raise ArgumentError, "l_ui_search_form requires an explicit url: when clear: is set" unless url
                   clear_options = { class: "l-ui-button--outline" }
-                  clear_options[:data] = { turbo_frame: turbo_frame, turbo_action: "advance" } if turbo_frame
+                  clear_options[:data] = { turbo_frame: turbo_frame, turbo_action: html.dig(:data, :turbo_action) || "advance" } if turbo_frame
                   content += link_to(clear == true ? "Clear" : clear, url, **clear_options)
                 end
                 content
@@ -87,7 +87,7 @@ module Layered
         url = sort_url(query, attribute, { default_order: default_order }.compact)
         link_html = html.except(:class)
         if turbo_frame
-          link_html[:data] = (link_html[:data] || {}).merge(turbo_frame: turbo_frame, turbo_action: "advance")
+          link_html[:data] = { turbo_frame: turbo_frame, turbo_action: "advance" }.merge(link_html[:data] || {})
         end
         link = link_to(url, **link_html, class: link_class) do
           parts = [label]
