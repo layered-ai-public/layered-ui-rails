@@ -5,8 +5,10 @@ import PanelController from "layered_ui/controllers/l_ui/panel_controller"
 import PanelResizeController from "layered_ui/controllers/l_ui/panel_resize_controller"
 import PanelButtonController from "layered_ui/controllers/l_ui/panel_button_controller"
 import ModalController from "layered_ui/controllers/l_ui/modal_controller"
+import SearchFormController from "layered_ui/controllers/l_ui/search_form_controller"
 import TabsController from "layered_ui/controllers/l_ui/tabs_controller"
 
+application.register("l-ui--search-form", SearchFormController)
 application.register("l-ui--theme", ThemeController)
 application.register("l-ui--navigation", NavigationController)
 application.register("l-ui--panel", PanelController)

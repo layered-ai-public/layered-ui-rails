@@ -35,9 +35,9 @@ class PagesTest < ActionDispatch::IntegrationTest
 
   test "ransack page renders search results" do
     create_test_users
-    get "/ransack", params: { q: { name_cont: "Test" } }
+    get "/ransack", params: { users_q: { name_cont: "Test" } }
     assert_response :success
-    assert_select "caption", "Search results"
+    assert_select "caption", "Users"
     assert_select "th", /Test User/
   end
 
@@ -52,7 +52,7 @@ class PagesTest < ActionDispatch::IntegrationTest
 
   test "ransack page sorts by column" do
     create_test_users
-    get "/ransack", params: { q: { s: "name desc" } }
+    get "/ransack", params: { users_q: { s: "name desc" } }
     assert_response :success
     # The sortable table has header cells with aria-sort attributes
     sortable_table = css_select("table.l-ui-table").detect { |t| t.css("th[aria-sort]").any? }

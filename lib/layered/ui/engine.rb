@@ -29,7 +29,7 @@ module Layered
           helper Layered::Ui::AuthenticationHelper
           helper Layered::Ui::NavigationHelper
           helper Layered::Ui::PaginationHelper
-          helper Layered::Ui::SearchHelper
+          helper Layered::Ui::RansackHelper
         end
       end
 

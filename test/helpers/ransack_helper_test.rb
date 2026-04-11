@@ -1,14 +1,16 @@
 require "test_helper"
 
-class SearchHelperTest < ActionView::TestCase
-  include Layered::Ui::SearchHelper
+class RansackHelperTest < ActionView::TestCase
+  include Layered::Ui::RansackHelper
 
   setup do
-    # Stub search_form_for to capture the html options and yield a mock form builder
+    # Stub search_form_for to capture the html and as options and yield a mock form builder
     @captured_html = nil
+    @captured_as = nil
     @form_output = ""
-    define_singleton_method(:search_form_for) do |_q, url: nil, html: {}, &block|
+    define_singleton_method(:search_form_for) do |_q, url: nil, html: {}, as: :q, &block|
       @captured_html = html
+      @captured_as = as
       block ? block.call(MockFormBuilder.new) : ""
     end
 
@@ -106,6 +108,44 @@ class SearchHelperTest < ActionView::TestCase
     end
   end
 
+  # -- search_key / as: --
+
+  test "search_form passes as: matching the search object's search_key" do
+    q = User.ransack({}, search_key: :users_q)
+    l_ui_search_form(q, url: "/search", fields: [:name])
+    assert_equal :users_q, @captured_as
+  end
+
+  test "search_form defaults as: to :q when no custom search_key" do
+    q = User.ransack({})
+    l_ui_search_form(q, url: "/search", fields: [:name])
+    assert_equal :q, @captured_as
+  end
+
+  # -- turbo_frame on search_form --
+
+  test "search_form with turbo_frame adds data attributes to form HTML" do
+    q = User.ransack({})
+    l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "my_frame")
+    assert_equal "my_frame", @captured_html[:data][:turbo_frame]
+    assert_equal "advance", @captured_html[:data][:turbo_action]
+  end
+
+  test "search_form turbo_frame does not clobber existing data in html" do
+    q = User.ransack({})
+    l_ui_search_form(q, url: "/search", fields: [:name],
+                     turbo_frame: "my_frame", html: { data: { controller: "search" } })
+    assert_includes @captured_html[:data][:controller], "search"
+    assert_includes @captured_html[:data][:controller], "l-ui--search-form"
+    assert_equal "my_frame", @captured_html[:data][:turbo_frame]
+  end
+
+  test "search_form without turbo_frame does not add turbo data attributes" do
+    q = User.ransack({})
+    l_ui_search_form(q, url: "/search", fields: [:name])
+    assert_nil @captured_html[:data]
+  end
+
   # -- l_ui_sort_link --
 
   test "sort_link renders a th with sort link inside" do
@@ -158,6 +198,29 @@ class SearchHelperTest < ActionView::TestCase
     assert_includes result, "▼"
     assert_includes result, "sorted descending"
     assert_includes result, 'aria-sort="descending"'
+  end
+
+  # -- turbo_frame on sort_link --
+
+  test "sort_link with turbo_frame adds data attributes to link" do
+    q = User.ransack({})
+    result = l_ui_sort_link(q, :name, turbo_frame: "my_frame")
+    assert_includes result, 'data-turbo-frame="my_frame"'
+    assert_includes result, 'data-turbo-action="advance"'
+  end
+
+  test "sort_link turbo_frame does not clobber existing data in html" do
+    q = User.ransack({})
+    result = l_ui_sort_link(q, :name, turbo_frame: "my_frame", html: { data: { controller: "sort" } })
+    assert_includes result, 'data-controller="sort"'
+    assert_includes result, 'data-turbo-frame="my_frame"'
+  end
+
+  test "sort_link without turbo_frame does not add turbo data attributes" do
+    q = User.ransack({})
+    result = l_ui_sort_link(q, :name)
+    assert_not_includes result, "data-turbo-frame"
+    assert_not_includes result, "data-turbo-action"
   end
 
   test "sort_link renders th when Ransack is not available" do
