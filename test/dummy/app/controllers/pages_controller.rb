@@ -90,6 +90,7 @@ class PagesController < ApplicationController
   end
 
   def managed_resources
+    @posts_for_table = Post.order(created_at: :desc).limit(5)
   end
 
   def layout_colors

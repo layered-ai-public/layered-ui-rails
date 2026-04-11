@@ -34,6 +34,7 @@ module Layered
           helper Layered::Ui::BreadcrumbsHelper
           helper Layered::Ui::NavigationHelper
           helper Layered::Ui::PaginationHelper
+          helper Layered::Ui::ManagedTableHelper
           helper Layered::Ui::RansackHelper
         end
       end
