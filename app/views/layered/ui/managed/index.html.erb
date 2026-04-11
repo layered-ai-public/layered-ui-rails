@@ -1,0 +1,55 @@
+<% turbo_frame_name = "managed_#{@managed_route_key}" %>
+
+<h1 class="l-ui-heading"><%= @managed_route_key.humanize %></h1>
+
+<%= turbo_frame_tag turbo_frame_name, data: { turbo_action: "advance" } do %>
+  <% if @q %>
+    <%= l_ui_search_form(@q,
+          url: @managed_path,
+          fields: @model.l_ui_managed_search_fields,
+          clear: true,
+          turbo_frame: turbo_frame_name) %>
+  <% end %>
+
+  <div class="l-ui-container--table l-ui-utility--mt-lg">
+    <table class="l-ui-table">
+      <caption class="l-ui-sr-only"><%= @managed_route_key.humanize %></caption>
+      <thead class="l-ui-table__header">
+        <tr>
+          <% @columns.each do |col| %>
+            <% if col[:sortable] && @q %>
+              <%= l_ui_sort_link(@q, col[:attribute], col[:label],
+                    turbo_frame: turbo_frame_name) %>
+            <% else %>
+              <th class="l-ui-table__header-cell" scope="col"><%= col[:label] %></th>
+            <% end %>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody class="l-ui-table__body">
+        <% if @records.empty? %>
+          <tr>
+            <td class="l-ui-table__cell" colspan="<%= @columns.size %>">No records found.</td>
+          </tr>
+        <% else %>
+          <% @records.each do |record| %>
+            <tr>
+              <% @columns.each do |col| %>
+                <% value = record.public_send(col[:attribute]) %>
+                <% if col[:primary] %>
+                  <th class="l-ui-table__cell--primary" scope="row"><%= value %></th>
+                <% else %>
+                  <td class="l-ui-table__cell"><%= value.respond_to?(:strftime) ? value.strftime("%-d %b %Y %H:%M") : value %></td>
+                <% end %>
+              <% end %>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <% if @pagy %>
+    <%= l_ui_pagy(@pagy) %>
+  <% end %>
+<% end %>
