@@ -63,6 +63,8 @@ module Layered
         end
       end
 
+      attr_reader :managed_route_key
+
       private
 
       def resolve_managed_resource
@@ -82,8 +84,8 @@ module Layered
         @crud_enabled = @fields.any?
 
         managed_actions = Layered::Ui::Routing.lookup_actions(@managed_route_key)
-        @can_create  = @crud_enabled && managed_actions.include?(:new)
-        @can_update  = @crud_enabled && managed_actions.include?(:edit)
+        @can_create = @crud_enabled && managed_actions.include?(:new)
+        @can_update = @crud_enabled && managed_actions.include?(:edit)
         @can_destroy = @crud_enabled && managed_actions.include?(:destroy)
       end
 

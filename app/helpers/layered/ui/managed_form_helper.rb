@@ -1,6 +1,8 @@
 module Layered
   module Ui
     module ManagedFormHelper
+      MANAGED_FIELD_TYPES = %i[string text email number date datetime select checkbox hidden].freeze
+
       # Renders a complete managed form with all fields, error summary,
       # and submit button.
       #
@@ -17,6 +19,13 @@ module Layered
       def l_ui_normalise_managed_field(record, config)
         attribute = config[:attribute]
         as = config[:as] || record.class.l_ui_managed_field_type_for(attribute)
+
+        unless MANAGED_FIELD_TYPES.include?(as)
+          raise ArgumentError,
+                "Unsupported field type :#{as} for :#{attribute}. " \
+                "Supported types: #{MANAGED_FIELD_TYPES.map { |t| ":#{t}" }.join(', ')}"
+        end
+
         label = config[:label] || attribute.to_s.humanize
 
         extras = config.except(:attribute, :as, :label, :required, :hint,

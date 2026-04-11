@@ -188,6 +188,16 @@ class ManagedFormHelperTest < ActionView::TestCase
     assert_includes result, 'rows="8"'
   end
 
+  # -- type validation --
+
+  test "raises ArgumentError for unsupported field type" do
+    error = assert_raises(ArgumentError) do
+      l_ui_normalise_managed_field(Post.new, { attribute: :title, as: :banana })
+    end
+    assert_includes error.message, ":banana"
+    assert_includes error.message, "Unsupported field type"
+  end
+
   private
 
   def render_field(field_config)
