@@ -258,6 +258,6 @@ Layered::Ui.l_ui_managed_before_action = :authenticate_user!</code></pre>
         { attribute: :body, render: ->(r) { truncate(r.body, length: 40) } },
         { attribute: :created_at, label: "Created" },
       ],
-      actions: ->(r) { link_to "View", managed_posts_path },
+      actions: ->(r) { link_to "View", "#" },
       caption: "Posts (standalone)"
     ) %>
