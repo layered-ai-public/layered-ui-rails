@@ -47,7 +47,9 @@ module Layered
                   f.submit(button, class: "l-ui-button--primary")
                 if clear
                   raise ArgumentError, "l_ui_search_form requires an explicit url: when clear: is set" unless url
-                  content += link_to(clear == true ? "Clear" : clear, url, class: "l-ui-button--outline")
+                  clear_options = { class: "l-ui-button--outline" }
+                  clear_options[:data] = { turbo_frame: turbo_frame, turbo_action: "advance" } if turbo_frame
+                  content += link_to(clear == true ? "Clear" : clear, url, **clear_options)
                 end
                 content
               end
