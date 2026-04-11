@@ -10,7 +10,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     buttons icons notices badges links surfaces forms containers
     utilities typography layout layout_metadata layout_navigation layout_panel
     layout_logos layout_icons layout_colors tabs
-    conversations devise integrations
+    conversations devise integrations managed_resources
   ].each do |page|
     test "#{page} page renders" do
       get "/#{page}"

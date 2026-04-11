@@ -19,28 +19,14 @@ module Layered
         @managed_route_key = route_key
         @managed_url_helper = :"managed_#{route_key}_path"
 
-        if defined?(Ransack)
-          @q = @model.ransack(params[:q])
-          scope = @q.result(distinct: true)
-          if @q.sorts.empty?
-            ds = @model.l_ui_managed_default_sort
-            scope = scope.order(ds[:attribute] => ds[:direction])
-          end
-        else
-          @q = nil
+        @q = @model.ransack(params[:q])
+        scope = @q.result(distinct: true)
+        if @q.sorts.empty?
           ds = @model.l_ui_managed_default_sort
-          scope = @model.order(ds[:attribute] => ds[:direction])
+          scope = scope.order(ds[:attribute] => ds[:direction])
         end
 
-        if defined?(Pagy)
-          @pagy, @records = pagy(scope, limit: @model.l_ui_managed_per_page)
-        else
-          limit = @model.l_ui_managed_per_page
-          @records = scope.limit(limit + 1).to_a
-          @pagy = nil
-          @l_ui_managed_truncated = @records.size > limit
-          @records = @records.first(limit) if @l_ui_managed_truncated
-        end
+        @pagy, @records = pagy(scope, limit: @model.l_ui_managed_per_page)
       end
 
       private

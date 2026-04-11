@@ -3,6 +3,11 @@ module Layered
     module ManagedResource
       extend ActiveSupport::Concern
 
+      included do
+        raise LoadError, "Layered::Ui::ManagedResource requires the ransack gem. Add `gem \"ransack\"` to your Gemfile." unless defined?(Ransack)
+        raise LoadError, "Layered::Ui::ManagedResource requires the pagy gem. Add `gem \"pagy\"` to your Gemfile." unless defined?(Pagy)
+      end
+
       class_methods do
         def l_ui_managed_columns
           [{ attribute: :id }]
