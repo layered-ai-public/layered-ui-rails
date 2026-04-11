@@ -3,6 +3,8 @@ module Layered
     class ManagedResourceController < ::ApplicationController
       helper Rails.application.routes.url_helpers
 
+      before_action :l_ui_managed_authenticate
+
       def index
         route_key = params[:_managed_route_key]
         model_name = Layered::Ui::Routing.lookup(route_key)
@@ -33,12 +35,18 @@ module Layered
         if defined?(Pagy)
           @pagy, @records = pagy(scope, limit: @model.l_ui_managed_per_page)
         else
-          @records = scope.limit(@model.l_ui_managed_per_page)
+          @records = scope.limit(@model.l_ui_managed_per_page).to_a
           @pagy = nil
+          @l_ui_managed_truncated = (@records.size == @model.l_ui_managed_per_page)
         end
       end
 
       private
+
+      def l_ui_managed_authenticate
+        method = Layered::Ui.l_ui_managed_before_action
+        send(method) if method
+      end
 
       def default_url_options
         main_app.default_url_options

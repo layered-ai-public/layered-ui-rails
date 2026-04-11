@@ -21,11 +21,16 @@ module Layered
         model_class_name = model || resource_name.to_s.classify
         route_key = resource_name.to_s
 
-        Layered::Ui::Routing.register(route_key, model_class_name)
+        # Build a scoped registry key so the same resource name under different
+        # scopes (e.g. /admin/posts vs /posts) gets its own registry entry.
+        prefix = @scope[:path].to_s.delete_prefix("/").tr("/", "_").presence
+        scoped_key = [prefix, route_key].compact.join("_")
 
-        route_name = :"managed_#{route_key}"
+        Layered::Ui::Routing.register(scoped_key, model_class_name)
 
-        route_defaults = (options[:defaults] || {}).merge(_managed_route_key: route_key)
+        route_name = :"managed_#{scoped_key}"
+
+        route_defaults = (options[:defaults] || {}).merge(_managed_route_key: scoped_key)
         options = options.except(:defaults)
 
         get route_key, to: "layered/ui/managed_resource#index",

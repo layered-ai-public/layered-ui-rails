@@ -51,5 +51,7 @@
 
   <% if @pagy %>
     <%= l_ui_pagy(@pagy) %>
+  <% elsif @l_ui_managed_truncated %>
+    <p class="l-ui-text--muted l-ui-utility--mt-md">Showing first <%= @model.l_ui_managed_per_page %> records. Add the <code>pagy</code> gem for pagination.</p>
   <% end %>
 <% end %>
