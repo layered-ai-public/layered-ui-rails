@@ -15,7 +15,7 @@ module Layered
           raise ActionController::RoutingError, "Model is not a managed resource"
         end
 
-        @columns = normalise_columns(@model.l_ui_managed_columns)
+        @columns = @model.l_ui_managed_columns
         @managed_route_key = route_key
         @managed_url_helper = :"managed_#{route_key}_path"
 
@@ -38,18 +38,6 @@ module Layered
 
       def default_url_options
         main_app.default_url_options
-      end
-
-      def normalise_columns(columns)
-        has_primary = columns.any? { |c| c[:primary] }
-        columns.each_with_index.map do |col, i|
-          {
-            attribute: col[:attribute],
-            label: col[:label] || col[:attribute].to_s.gsub("_", " ").sub(/\A\w/, &:upcase),
-            sortable: col.fetch(:sortable, true),
-            primary: has_primary ? col.fetch(:primary, false) : i == 0
-          }
-        end
       end
     end
   end

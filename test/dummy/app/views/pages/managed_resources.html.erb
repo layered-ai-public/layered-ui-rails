@@ -142,7 +142,7 @@ Layered::Ui.l_ui_managed_before_action = :authenticate_user!</code></pre>
 
 <p class="l-ui-utility--mt-md">The concern is secure by default - only <code>:id</code> is shown unless you explicitly whitelist columns. Ransack's <code>ransackable_attributes</code> and <code>ransackable_associations</code> are automatically derived from your column and search field definitions, so you don't need to set them manually. If your model already defines its own <code>ransackable_attributes</code> or <code>ransackable_associations</code>, those take precedence - the concern only provides defaults.</p>
 
-<p class="l-ui-utility--mt-md">Ransack and Pagy are optional. Without Ransack, search and sort links are disabled. Without Pagy, results are capped at <code>l_ui_managed_per_page</code> with no pagination controls.</p>
+<p class="l-ui-utility--mt-md">Managed resources require the <code>ransack</code> and <code>pagy</code> gems. Add both to your Gemfile before including the concern.</p>
 
 <h2 class="l-ui-utility--mt-2xl">Live example</h2>
 
@@ -193,6 +193,11 @@ Layered::Ui.l_ui_managed_before_action = :authenticate_user!</code></pre>
         <th class="l-ui-table__cell--primary" scope="row"><code>actions:</code></th>
         <td class="l-ui-table__cell"><code>nil</code></td>
         <td class="l-ui-table__cell">Proc receiving a record, returns HTML for a right-aligned actions cell.</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>actions_label:</code></th>
+        <td class="l-ui-table__cell"><code>"Actions"</code></td>
+        <td class="l-ui-table__cell">Header text for the actions column.</td>
       </tr>
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><code>query:</code></th>
