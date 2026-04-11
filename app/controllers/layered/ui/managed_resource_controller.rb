@@ -1,16 +1,16 @@
 module Layered
   module Ui
-    class ManagedModelController < ::ApplicationController
+    class ManagedResourceController < ::ApplicationController
       helper Rails.application.routes.url_helpers
 
       def index
         route_key = params[:_managed_route_key]
         model_name = Layered::Ui::Routing.lookup(route_key)
-        raise ActionController::RoutingError, "No managed model registered for route" unless model_name
+        raise ActionController::RoutingError, "No managed resource registered for route" unless model_name
 
         @model = model_name.constantize
         unless @model.respond_to?(:l_ui_managed_columns)
-          raise ActionController::RoutingError, "Model is not a managed model"
+          raise ActionController::RoutingError, "Model is not a managed resource"
         end
 
         @columns = normalise_columns(@model.l_ui_managed_columns)

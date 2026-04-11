@@ -1,6 +1,6 @@
 class Post < ApplicationRecord
   # Includes
-  include Layered::Ui::ManagedModel
+  include Layered::Ui::ManagedResource
 
   # Associations
   belongs_to :user

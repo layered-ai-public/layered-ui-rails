@@ -1,15 +1,15 @@
-<h1>Managed models</h1>
+<h1>Managed resources</h1>
 
-<p class="l-ui-utility--mt-md">Managed models give your Rails models a convention-over-configuration index view with search, sorting, and pagination. Include the concern, define your columns, and add a route - the engine handles the rest.</p>
+<p class="l-ui-utility--mt-md">Managed resources give your Rails models a convention-over-configuration index view with search, sorting, and pagination. Include the concern, define your columns, and add a route - the engine handles the rest.</p>
 
 <h2 class="l-ui-utility--mt-2xl">Setup</h2>
 
 <h3 class="l-ui-utility--mt-xl">1. Include the concern</h3>
 
-<p class="l-ui-utility--mt-md">Add <code>Layered::Ui::ManagedModel</code> to any model you want to manage. Override the class methods to configure which columns, search fields, and sort order to use:</p>
+<p class="l-ui-utility--mt-md">Add <code>Layered::Ui::ManagedResource</code> to any model you want to manage. Override the class methods to configure which columns, search fields, and sort order to use:</p>
 
 <pre class="l-ui-surface l-ui-utility--mt-md"><code>class Post &lt; ApplicationRecord
-  include Layered::Ui::ManagedModel
+  include Layered::Ui::ManagedResource
 
   belongs_to :user
 
@@ -137,4 +137,4 @@ end
 
 <h2 class="l-ui-utility--mt-2xl">Live example</h2>
 
-<p class="l-ui-utility--mt-md">The <%= link_to "Posts", managed_posts_path %> page is a managed model using the configuration shown above. Try searching, sorting by column headers, and paginating.</p>
+<p class="l-ui-utility--mt-md">The <%= link_to "Posts", managed_posts_path %> page is a managed resource using the configuration shown above. Try searching, sorting by column headers, and paginating.</p>

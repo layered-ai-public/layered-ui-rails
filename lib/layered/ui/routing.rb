@@ -2,7 +2,7 @@ module Layered
   module Ui
     module Routing
       # Registry lives here (in lib/, not autoloaded) so it survives code
-      # reloads in development. The autoloaded ManagedModel concern delegates to it.
+      # reloads in development. The autoloaded ManagedResource concern delegates to it.
       @registry = Concurrent::Map.new
 
       class << self
@@ -25,7 +25,7 @@ module Layered
 
         route_defaults = (options.delete(:defaults) || {}).merge(_managed_route_key: route_key)
 
-        get route_key, to: "layered/ui/managed_model#index",
+        get route_key, to: "layered/ui/managed_resource#index",
                         as: route_name,
                         defaults: route_defaults,
                         **options

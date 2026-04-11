@@ -89,7 +89,7 @@ class PagesController < ApplicationController
   def search
   end
 
-  def managed_models
+  def managed_resources
   end
 
   def layout_colors

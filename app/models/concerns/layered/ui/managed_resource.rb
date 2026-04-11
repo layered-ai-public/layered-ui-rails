@@ -1,6 +1,6 @@
 module Layered
   module Ui
-    module ManagedModel
+    module ManagedResource
       extend ActiveSupport::Concern
 
       class << self
