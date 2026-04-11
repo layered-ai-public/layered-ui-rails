@@ -1,11 +1,24 @@
 class Post < ApplicationRecord
+  # Includes
+  include Layered::Ui::ManagedResource
+
+  # Associations
   belongs_to :user
 
-  def self.ransackable_attributes(_auth_object = nil)
-    %w[title body created_at]
+  # l_ui_managed
+  def self.l_ui_managed_columns
+    [
+      { attribute: :title, primary: true },
+      { attribute: :body },
+      { attribute: :created_at, label: "Created" }
+    ]
   end
 
-  def self.ransackable_associations(_auth_object = nil)
-    []
+  def self.l_ui_managed_search_fields
+    [:title, :body]
+  end
+
+  def self.l_ui_managed_default_sort
+    { attribute: :created_at, direction: :desc }
   end
 end

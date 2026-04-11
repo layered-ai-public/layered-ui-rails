@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     layered-ui-rails (0.3.0)
+      concurrent-ruby (>= 1.0)
       rails (~> 8.0)
       tailwindcss-rails (~> 4.0)
 
