@@ -90,7 +90,7 @@ module Layered
         link_html = html.except(:class)
         if turbo_frame
           existing_data = (link_html[:data] || {}).symbolize_keys
-          link_html[:data] = existing_data.merge(turbo_frame: turbo_frame, turbo_action: "advance")
+          link_html[:data] = existing_data.merge(turbo_frame: turbo_frame, turbo_action: existing_data[:turbo_action] || "advance")
         end
         link = link_to(url, **link_html, class: link_class) do
           parts = [label]
