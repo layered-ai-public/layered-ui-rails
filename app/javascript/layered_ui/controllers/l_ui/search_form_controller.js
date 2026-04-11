@@ -16,7 +16,7 @@ export default class extends Controller {
     const scope = this.scopeValue
 
     for (const [key, value] of currentParams) {
-      if (key.startsWith(scope) || key === "commit") continue
+      if (key === scope || key.startsWith(scope + "[") || key === "commit") continue
 
       const input = document.createElement("input")
       input.type = "hidden"

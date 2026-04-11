@@ -87,7 +87,8 @@ module Layered
         url = sort_url(query, attribute, { default_order: default_order }.compact)
         link_html = html.except(:class)
         if turbo_frame
-          link_html[:data] = { turbo_frame: turbo_frame, turbo_action: "advance" }.merge(link_html[:data] || {})
+          existing_data = link_html[:data] || {}
+          link_html[:data] = { turbo_frame: turbo_frame, turbo_action: "advance" }.merge(existing_data)
         end
         link = link_to(url, **link_html, class: link_class) do
           parts = [label]
