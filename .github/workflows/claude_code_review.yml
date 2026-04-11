@@ -42,12 +42,12 @@ jobs:
             - Only review the changed lines and their immediate visible context in the diff.
             - Do not infer behaviour from files or code not in the diff or codebase.
             - Do not comment on unchanged code.
-            - Do not be pedantic. Focus on issues that meaningfully impact correctness, safety, or maintainability.
             - Keep suggestions minimal, actionable, and safe.
             - Avoid generic best-practice advice unless directly relevant to the change.
             - If uncertain, state uncertainty rather than guessing.
-            - Provide a complete review in a single pass. Include all relevant issues you can identify to avoid requiring multiple review cycles.
-            - Do not hold back lower-severity issues if they are still actionable and relevant.
+            - Focus on issues that meaningfully impact correctness, safety, or maintainability.
+            - Do not hold back lower-severity issues if they are still actionable and relevant, but do not be pedantic.
+            - CRITICAL: Provide a complete review in a single pass. Include all relevant issues you can identify to avoid requiring multiple review cycles as this wastes developer momentum.
 
             Context access:
             - Use git to obtain the PR diff against the base branch (e.g. `git diff origin/${{ github.base_ref }}...HEAD`). If unavailable, determine the correct base via git.
@@ -71,6 +71,6 @@ jobs:
             2. **Issues** - A table with columns: Severity | File | Line(s) | Description.
                - Each issue must reference a specific line or change in the diff.
                - Omit this section entirely if there are no issues.
-            3. **Verdict** - One of: ✅ **Ship with nits** / 🚫 **Needs changes** - with a one-sentence justification.
+            3. **Verdict** - One of: ✅ **Ship** / 🟧 **Ship (with risk-accepted issues)** / 🚫 **Needs changes** - with a one-sentence justification.
           claude_args: |
             --allowedTools Read,Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr comment:*),Bash(git diff:*),Bash(git log:*)
