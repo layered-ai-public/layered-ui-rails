@@ -19,7 +19,7 @@ module Layered
         @managed_route_key = route_key
         @managed_url_helper = :"managed_#{route_key}_path"
 
-        if defined?(Ransack) && @model.l_ui_managed_search_fields.any?
+        if defined?(Ransack)
           @q = @model.ransack(params[:q])
           scope = @q.result(distinct: true)
           if @q.sorts.empty?
@@ -35,9 +35,11 @@ module Layered
         if defined?(Pagy)
           @pagy, @records = pagy(scope, limit: @model.l_ui_managed_per_page)
         else
-          @records = scope.limit(@model.l_ui_managed_per_page).to_a
+          limit = @model.l_ui_managed_per_page
+          @records = scope.limit(limit + 1).to_a
           @pagy = nil
-          @l_ui_managed_truncated = (@records.size == @model.l_ui_managed_per_page)
+          @l_ui_managed_truncated = @records.size > limit
+          @records = @records.first(limit) if @l_ui_managed_truncated
         end
       end
 

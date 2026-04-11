@@ -3,7 +3,7 @@
 <h1 class="l-ui-heading"><%= @managed_route_key.humanize %></h1>
 
 <%= turbo_frame_tag turbo_frame_name, data: { turbo_action: "advance" } do %>
-  <% if @q %>
+  <% if @q && @model.l_ui_managed_search_fields.any? %>
     <%= l_ui_search_form(@q,
           url: send(@managed_url_helper),
           fields: @model.l_ui_managed_search_fields,
