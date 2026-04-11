@@ -45,12 +45,10 @@ module Layered
         options = options.except(:defaults, :only)
 
         # Collection routes (plural)
-        collection_named = false
         if actions.include?(:index)
           get route_key, to: "#{controller}#index",
                          as: :"managed_#{scoped_key}",
                          defaults: route_defaults, **options
-          collection_named = true
         end
 
         if actions.include?(:new)
@@ -60,11 +58,9 @@ module Layered
         end
 
         if actions.include?(:create)
-          create_as = collection_named ? nil : :"managed_#{scoped_key}"
           post route_key, to: "#{controller}#create",
-                          as: create_as,
+                          as: nil,
                           defaults: route_defaults, **options
-          collection_named = true unless collection_named
         end
 
         # Member routes (singular, with :id)

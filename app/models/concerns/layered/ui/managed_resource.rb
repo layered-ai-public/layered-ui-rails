@@ -52,9 +52,10 @@ module Layered
         end
 
         # Redirect target after create/update. Override to redirect
-        # to a show page or other destination.
+        # to a show page or other destination. Requires :index in the
+        # only: list; override this method if :index is excluded.
         def l_ui_managed_after_save_path(controller, _record)
-          controller.send(:"managed_#{controller.managed_route_key}_path")
+          controller.send(:managed_collection_path)
         end
 
         # Auto-detect field type from the database column.

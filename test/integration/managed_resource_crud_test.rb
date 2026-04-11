@@ -135,4 +135,18 @@ class ManagedResourceCrudTest < ActionDispatch::IntegrationTest
     delete "/readonly/posts/#{record.id}"
     assert_response :not_found
   end
+
+  test "destroy works without l_ui_managed_fields" do
+    record = Post.create!(title: "Hello", user: @user)
+    original_fields = Post.method(:l_ui_managed_fields)
+    Post.define_singleton_method(:l_ui_managed_fields) { [] }
+    begin
+      assert_difference "Post.count", -1 do
+        delete "/deletable/posts/#{record.id}"
+      end
+      assert_redirected_to "/deletable/posts"
+    ensure
+      Post.define_singleton_method(:l_ui_managed_fields, original_fields)
+    end
+  end
 end

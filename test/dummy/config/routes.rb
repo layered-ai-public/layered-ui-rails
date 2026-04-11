@@ -43,4 +43,8 @@ Rails.application.routes.draw do
   scope "/readonly" do
     l_ui_managed_resources :posts, only: [:index]
   end
+
+  scope "/deletable" do
+    l_ui_managed_resources :posts, only: %i[index destroy]
+  end
 end

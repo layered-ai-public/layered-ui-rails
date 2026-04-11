@@ -26,6 +26,12 @@ module Layered
                 "Supported types: #{MANAGED_FIELD_TYPES.map { |t| ":#{t}" }.join(', ')}"
         end
 
+        if as == :select && config[:collection].nil?
+          raise ArgumentError,
+                "Field :#{attribute} is declared as :select but has no :collection. " \
+                "Provide collection: [['Label', value], ...] or collection: -> { Model.pluck(:name, :id) }"
+        end
+
         label = config[:label] || attribute.to_s.humanize
 
         extras = config.except(:attribute, :as, :label, :required, :hint,

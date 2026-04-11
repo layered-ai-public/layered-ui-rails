@@ -5,7 +5,7 @@ module Layered
 
       before_action :l_ui_managed_authenticate
       before_action :resolve_managed_resource
-      before_action :require_managed_fields, only: %i[new create edit update destroy]
+      before_action :require_managed_fields, only: %i[new create edit update]
 
       def index
         @q = @model.l_ui_managed_scope(self).ransack(params[:q])
@@ -102,12 +102,23 @@ module Layered
       end
 
       def managed_collection_path
+        unless respond_to?(@managed_url_helper, true)
+          raise ActionController::RoutingError,
+                "No collection route registered for #{@managed_route_key}. " \
+                "Include :index in the only: list, or override l_ui_managed_after_save_path."
+        end
         send(@managed_url_helper)
       end
 
       def managed_member_path(record)
         singular = @managed_route_key.singularize
-        send(:"managed_#{singular}_path", record)
+        helper = :"managed_#{singular}_path"
+        unless respond_to?(helper, true)
+          raise ActionController::RoutingError,
+                "No member route registered for #{@managed_route_key}. " \
+                "Include :update or :destroy in the only: list."
+        end
+        send(helper, record)
       end
 
       def l_ui_managed_authenticate

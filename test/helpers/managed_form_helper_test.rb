@@ -198,6 +198,14 @@ class ManagedFormHelperTest < ActionView::TestCase
     assert_includes error.message, "Unsupported field type"
   end
 
+  test "raises ArgumentError for select without collection" do
+    error = assert_raises(ArgumentError) do
+      l_ui_normalise_managed_field(Post.new, { attribute: :user_id, as: :select })
+    end
+    assert_includes error.message, ":select"
+    assert_includes error.message, ":collection"
+  end
+
   private
 
   def render_field(field_config)
