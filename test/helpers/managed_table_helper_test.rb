@@ -136,6 +136,16 @@ class ManagedTableHelperTest < ActionView::TestCase
     assert_includes result, "Edit"
   end
 
+  test "uses custom actions label" do
+    result = l_ui_managed_table([mock_record("Alice")],
+      columns: [{ attribute: :name }],
+      actions: ->(r) { "Edit" },
+      actions_label: "Options"
+    )
+    assert_includes result, "Options"
+    assert_not_includes result, "Actions"
+  end
+
   test "does not render actions column when actions is nil" do
     result = build_table([mock_record("Alice")])
     assert_not_includes result, "Actions"
