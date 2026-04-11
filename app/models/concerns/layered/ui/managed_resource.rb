@@ -25,6 +25,56 @@ module Layered
           20
         end
 
+        # --- CRUD support ---
+
+        # Array of field hashes defining form fields. Empty = CRUD disabled.
+        # Override in your model to enable new/edit/destroy actions.
+        def l_ui_managed_fields
+          []
+        end
+
+        # Attributes permitted for mass assignment. Auto-derived from fields.
+        # Override for nested attributes or other special cases.
+        def l_ui_managed_permitted_params
+          l_ui_managed_fields.map { |f| f[:attribute] }
+        end
+
+        # How to build a new record. Override for scoped builds
+        # (e.g. controller.current_user.posts.build).
+        def l_ui_managed_build_record(_controller)
+          new
+        end
+
+        # Base scope for finding records. Used in index (Ransack) and
+        # edit/update/destroy (find). Override for tenant scoping.
+        def l_ui_managed_scope(_controller)
+          all
+        end
+
+        # Redirect target after create/update. Override to redirect
+        # to a show page or other destination.
+        def l_ui_managed_after_save_path(controller, _record)
+          route_key = controller.params[:_managed_route_key]
+          controller.send(:"managed_#{route_key}_path")
+        end
+
+        # Auto-detect field type from the database column.
+        def l_ui_managed_field_type_for(attribute)
+          col = columns_hash[attribute.to_s]
+          return :string unless col
+
+          case col.type
+          when :text then :text
+          when :integer, :float, :decimal then :number
+          when :boolean then :checkbox
+          when :date then :date
+          when :datetime then :datetime
+          else :string
+          end
+        end
+
+        # --- Ransack ---
+
         def ransackable_attributes(_auth_object = nil)
           attrs = l_ui_managed_columns.map { |c| c[:attribute].to_s }
           attrs |= l_ui_managed_search_fields.map(&:to_s)

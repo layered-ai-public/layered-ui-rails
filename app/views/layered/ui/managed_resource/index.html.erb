@@ -1,6 +1,17 @@
 <% turbo_frame_name = "managed_#{@managed_route_key}" %>
+<% singular_key = @managed_route_key.singularize %>
 
-<h1 class="l-ui-heading"><%= @managed_route_key.humanize %></h1>
+<div class="l-ui-container--spread">
+  <h1 class="l-ui-heading">
+    <%= @managed_route_key.humanize %>
+  </h1>
+
+  <% if @can_create %>
+    <%= link_to "New",
+          send(:"new_managed_#{singular_key}_path"),
+          class: "l-ui-button l-ui-button--primary" %>
+  <% end %>
+</div>
 
 <%= turbo_frame_tag turbo_frame_name, data: { turbo_action: "advance" } do %>
   <% if @model.l_ui_managed_search_fields.any? %>
@@ -11,10 +22,29 @@
           turbo_frame: turbo_frame_name) %>
   <% end %>
 
+  <% actions_proc = if @can_update || @can_destroy
+    ->(record) do
+      parts = []
+      if @can_update
+        parts << link_to("Edit", send(:"edit_managed_#{singular_key}_path", record),
+                  class: "l-ui-button l-ui-button--outline",
+                  data: { turbo_frame: "_top" })
+      end
+      if @can_destroy
+        parts << button_to("Delete", send(:"managed_#{singular_key}_path", record),
+                    method: :delete,
+                    class: "l-ui-button l-ui-button--outline-danger",
+                    data: { turbo_confirm: "Are you sure?", turbo_frame: "_top" })
+      end
+      safe_join(parts, " ")
+    end
+  end %>
+
   <%= l_ui_managed_table(@records,
         columns: @columns,
         caption: @managed_route_key.humanize,
         query: @q,
+        actions: actions_proc,
         turbo_frame: turbo_frame_name) %>
 
   <%= l_ui_pagy(@pagy) %>
