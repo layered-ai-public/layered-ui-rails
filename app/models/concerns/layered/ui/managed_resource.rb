@@ -54,7 +54,7 @@ module Layered
         # Redirect target after create/update. Override to redirect
         # to a show page or other destination.
         def l_ui_managed_after_save_path(controller, _record)
-          route_key = controller.params[:_managed_route_key]
+          route_key = controller.instance_variable_get(:@managed_route_key)
           controller.send(:"managed_#{route_key}_path")
         end
 

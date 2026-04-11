@@ -8,12 +8,16 @@ module Layered
       @registry = Concurrent::Map.new
 
       class << self
-        def register(route_key, model_class_name)
-          @registry[route_key.to_s] = model_class_name.to_s
+        def register(route_key, model_class_name, actions: [])
+          @registry[route_key.to_s] = { model: model_class_name.to_s, actions: actions }
         end
 
         def lookup(route_key)
-          @registry[route_key.to_s]
+          @registry.fetch(route_key.to_s, {})[:model]
+        end
+
+        def lookup_actions(route_key)
+          @registry.fetch(route_key.to_s, {})[:actions] || []
         end
       end
 
@@ -30,16 +34,15 @@ module Layered
         scoped_key = [prefix, route_key].compact.join("_")
         scoped_singular = [prefix, singular_key].compact.join("_")
 
-        Layered::Ui::Routing.register(scoped_key, model_class_name)
-
         controller = "layered/ui/managed_resource"
-        options = options.except(:defaults, :only)
         actions = Array(only).map(&:to_sym)
 
+        Layered::Ui::Routing.register(scoped_key, model_class_name, actions: actions)
+
         route_defaults = (options[:defaults] || {}).merge(
-          _managed_route_key: scoped_key,
-          _managed_actions: actions.join(",")
+          _managed_route_key: scoped_key
         )
+        options = options.except(:defaults, :only)
 
         # Collection routes (plural)
         if actions.include?(:index)

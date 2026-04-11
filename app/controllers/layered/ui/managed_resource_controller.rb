@@ -54,9 +54,13 @@ module Layered
 
       def destroy
         @record = @model.l_ui_managed_scope(self).find(params[:id])
-        @record.destroy!
-        redirect_to managed_collection_path,
-                    notice: "#{@model.model_name.human} deleted"
+        if @record.destroy
+          redirect_to managed_collection_path,
+                      notice: "#{@model.model_name.human} deleted"
+        else
+          redirect_to managed_collection_path,
+                      alert: "#{@model.model_name.human} could not be deleted"
+        end
       end
 
       private
@@ -77,7 +81,7 @@ module Layered
         @fields = @model.l_ui_managed_fields
         @crud_enabled = @fields.any?
 
-        managed_actions = params[:_managed_actions].to_s.split(",").map(&:to_sym)
+        managed_actions = Layered::Ui::Routing.lookup_actions(@managed_route_key)
         @can_create  = @crud_enabled && managed_actions.include?(:new)
         @can_update  = @crud_enabled && managed_actions.include?(:edit)
         @can_destroy = @crud_enabled && managed_actions.include?(:destroy)

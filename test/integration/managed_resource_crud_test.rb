@@ -100,4 +100,39 @@ class ManagedResourceCrudTest < ActionDispatch::IntegrationTest
     delete "/posts/999999"
     assert_response :not_found
   end
+
+  test "destroy handles halted callback gracefully" do
+    record = Post.create!(title: "Protected", user: @user)
+    Post.before_destroy { throw :abort }
+    begin
+      assert_no_difference "Post.count" do
+        delete "/posts/#{record.id}"
+      end
+      assert_redirected_to "/posts"
+      follow_redirect!
+      assert_select ".l-ui-notice--warning", /could not be deleted/i
+    ensure
+      Post.reset_callbacks(:destroy)
+    end
+  end
+
+  # -- only: option --
+
+  test "only: [:index] hides new link" do
+    get "/readonly/posts"
+    assert_response :success
+    assert_select "a[href='/readonly/posts/new']", count: 0
+  end
+
+  test "only: [:index] excludes CRUD routes" do
+    record = Post.create!(title: "Hello", user: @user)
+    get "/readonly/posts/new"
+    assert_response :not_found
+
+    get "/readonly/posts/#{record.id}/edit"
+    assert_response :not_found
+
+    delete "/readonly/posts/#{record.id}"
+    assert_response :not_found
+  end
 end

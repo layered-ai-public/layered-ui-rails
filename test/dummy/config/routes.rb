@@ -39,4 +39,8 @@ Rails.application.routes.draw do
   get "managed_resources", to: "pages#managed_resources"
 
   l_ui_managed_resources :posts
+
+  scope "/readonly" do
+    l_ui_managed_resources :posts, only: [:index]
+  end
 end
