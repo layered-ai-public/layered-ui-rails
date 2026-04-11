@@ -1,16 +1,16 @@
 module Layered
   module Ui
-    class ManagedController < ::ApplicationController
+    class ManagedModelController < ::ApplicationController
       helper Rails.application.routes.url_helpers
 
       def index
-        route_key = params.delete(:_managed_route_key)
-        model_name = Layered::Ui::Managed.lookup(route_key)
-        raise "No managed model registered for '#{route_key}'" unless model_name
+        route_key = params[:_managed_route_key]
+        model_name = Layered::Ui::Routing.lookup(route_key)
+        raise ActionController::RoutingError, "No managed model registered for route" unless model_name
 
         @model = model_name.constantize
         unless @model.respond_to?(:l_ui_managed_columns)
-          raise "#{@model.name} must `include Layered::Ui::Managed`"
+          raise ActionController::RoutingError, "Model is not a managed model"
         end
 
         @columns = normalise_columns(@model.l_ui_managed_columns)
@@ -40,12 +40,9 @@ module Layered
 
       private
 
-      # Routes are defined in the host app, not the engine, so route helpers
-      # and url_for must resolve against the main app's route set.
-      def url_for(options = nil)
-        main_app.url_for(options)
+      def default_url_options
+        main_app.default_url_options
       end
-      helper_method :url_for
 
       def normalise_columns(columns)
         has_primary = columns.any? { |c| c[:primary] }

@@ -1,17 +1,11 @@
 module Layered
   module Ui
-    module Managed
+    module ManagedModel
       extend ActiveSupport::Concern
 
-      @registry = {}
-
       class << self
-        def register(route_key, model_class_name)
-          @registry[route_key.to_s] = model_class_name.to_s
-        end
-
         def lookup(route_key)
-          @registry[route_key.to_s]
+          Layered::Ui::Routing.lookup(route_key)
         end
       end
 

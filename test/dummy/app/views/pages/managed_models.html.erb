@@ -6,10 +6,10 @@
 
 <h3 class="l-ui-utility--mt-xl">1. Include the concern</h3>
 
-<p class="l-ui-utility--mt-md">Add <code>Layered::Ui::Managed</code> to any model you want to manage. Override the class methods to configure which columns, search fields, and sort order to use:</p>
+<p class="l-ui-utility--mt-md">Add <code>Layered::Ui::ManagedModel</code> to any model you want to manage. Override the class methods to configure which columns, search fields, and sort order to use:</p>
 
 <pre class="l-ui-surface l-ui-utility--mt-md"><code>class Post &lt; ApplicationRecord
-  include Layered::Ui::Managed
+  include Layered::Ui::ManagedModel
 
   belongs_to :user
 
