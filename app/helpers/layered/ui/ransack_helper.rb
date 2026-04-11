@@ -16,6 +16,7 @@ module Layered
         return result unless result == true
 
         scope = query.context&.search_key || :q
+        turbo_action = "advance"
         html = html.merge(class: ["l-ui-form", html[:class]].compact.join(" "))
 
         if turbo_frame
@@ -24,12 +25,13 @@ module Layered
           controller = [existing_controller, "l-ui--search-form"].compact.join(" ")
           existing_action = existing_data[:action]
           action = [existing_action, "submit->l-ui--search-form#preserve"].compact.join(" ")
+          turbo_action = existing_data[:turbo_action] || turbo_action
 
-          html[:data] = {
-            turbo_frame: turbo_frame, turbo_action: "advance",
+          html[:data] = existing_data.except(:controller, :action, :l_ui__search_form_scope_value).merge(
+            turbo_frame: turbo_frame, turbo_action: turbo_action,
             controller: controller, action: action,
             l_ui__search_form_scope_value: scope
-          }.merge(existing_data.except(:controller, :action, :l_ui__search_form_scope_value))
+          )
         end
 
         if block
@@ -48,7 +50,7 @@ module Layered
                 if clear
                   raise ArgumentError, "l_ui_search_form requires an explicit url: when clear: is set" unless url
                   clear_options = { class: "l-ui-button--outline" }
-                  clear_options[:data] = { turbo_frame: turbo_frame, turbo_action: html.dig(:data, :turbo_action) || "advance" } if turbo_frame
+                  clear_options[:data] = { turbo_frame: turbo_frame, turbo_action: turbo_action, action: "click->l-ui--search-form#clear" } if turbo_frame
                   content += link_to(clear == true ? "Clear" : clear, url, **clear_options)
                 end
                 content
@@ -88,7 +90,7 @@ module Layered
         link_html = html.except(:class)
         if turbo_frame
           existing_data = (link_html[:data] || {}).symbolize_keys
-          link_html[:data] = { turbo_frame: turbo_frame, turbo_action: "advance" }.merge(existing_data)
+          link_html[:data] = existing_data.merge(turbo_frame: turbo_frame, turbo_action: "advance")
         end
         link = link_to(url, **link_html, class: link_class) do
           parts = [label]
