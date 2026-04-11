@@ -3,12 +3,6 @@ module Layered
     module ManagedResource
       extend ActiveSupport::Concern
 
-      class << self
-        def lookup(route_key)
-          Layered::Ui::Routing.lookup(route_key)
-        end
-      end
-
       class_methods do
         def l_ui_managed_columns
           [{ attribute: :id }]

@@ -8,8 +8,8 @@ module Layered
         model_name = Layered::Ui::Routing.lookup(route_key)
         raise ActionController::RoutingError, "No managed resource registered for route" unless model_name
 
-        @model = model_name.constantize
-        unless @model.respond_to?(:l_ui_managed_columns)
+        @model = model_name.safe_constantize
+        unless @model && @model < ActiveRecord::Base && @model.respond_to?(:l_ui_managed_columns)
           raise ActionController::RoutingError, "Model is not a managed resource"
         end
 
