@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.3.0] - 2026-04-11
+
+### Added
+
+- Optional Ransack search helper (`l_ui_search_form`) with styled search form wrapping Ransack's `search_form_for`
+- Sort link helper (`l_ui_sort_link`) with styled header cells wrapping Ransack's `sort_link`
+- Stimulus controller (`l-ui--search-form`) for clear button and Turbo Frame targeting
+- Support for multiple independent Ransack collections on a single page using Turbo Frames and `search_key`
+- Graceful degradation when Ransack is not installed (visible warning in development, silent fallback in production)
+- Ransack integration documentation and search helper API reference pages in the dummy app
+
+### Changed
+
+- Updated gem description and summary to clarify that the engine is built on Tailwind CSS and integrates with Devise, Pagy, and Ransack
+
 ## [0.2.5] - 2026-04-09
 
 ### Changed

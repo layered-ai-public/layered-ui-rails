@@ -4,8 +4,6 @@
   <%= Gem.loaded_specs["layered-ui-rails"].description %>
 </p>
 
-<%= render "socials" %>
-
 <div class="l-ui-container--grid l-ui-utility--mt-lg gap-8">
   <div>
     <div class="flex gap-2 items-start">
@@ -23,6 +21,8 @@
     <p class="l-ui-utility--mt-sm"><em>Dark theme (desktop and mobile)</em></p>
   </div>
 </div>
+
+<%= render "socials" %>
 
 <h2 class="l-ui-utility--mt-xl">Features</h2>
 <div class="l-ui-container--grid l-ui-utility--mt-lg">
@@ -52,7 +52,7 @@
       <%= image_tag "icon_puzzle.svg", class: "l-ui-icon--md", alt: "Puzzle piece icon representing optional integrations" %>
       <h3>Optional integrations</h3>
     </div>
-    <p class="l-ui-utility--mt-sm">Devise authentication with friendly routes and Pagy pagination with styled navigation.</p>
+    <p class="l-ui-utility--mt-sm"><%= link_to "Devise", devise_path %> authentication, <%= link_to "Pagy", pagy_path %> pagination, and <%= link_to "Ransack", ransack_path %> search and sort with styled controls.</p>
   </div>
   <div class="l-ui-surface">
     <div class="flex items-center gap-2">
@@ -96,7 +96,7 @@
 
 <p class="l-ui-utility--mt-lg">You can override the default logo by placing your own <code>logo_light.svg</code> and <code>logo_dark.svg</code> files in <code>app/assets/images/layered_ui/</code>. The panel toggle icon can also be overridden with <code>panel_icon_light.svg</code> and <code>panel_icon_dark.svg</code> in the same directory. The asset pipeline will serve your files instead of the defaults provided by the engine.</p>
 
-<p class="l-ui-utility--mt-lg">If you're planning to use Devise for authentication, see the <%= link_to "Devise guide", devise_path %> for integration details.</p>
+<p class="l-ui-utility--mt-lg">See the <%= link_to "integrations page", integrations_path %> for optional Devise, Pagy, and Ransack support.</p>
 
 <h2 class="l-ui-utility--mt-xl">License</h2>
 <p class="l-ui-utility--mt-md">
