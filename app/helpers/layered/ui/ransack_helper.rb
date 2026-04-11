@@ -19,7 +19,7 @@ module Layered
         html = html.merge(class: ["l-ui-form", html[:class]].compact.join(" "))
 
         if turbo_frame
-          existing_data = html[:data] || {}
+          existing_data = (html[:data] || {}).symbolize_keys
           existing_controller = existing_data[:controller]
           controller = [existing_controller, "l-ui--search-form"].compact.join(" ")
           existing_action = existing_data[:action]
@@ -87,7 +87,7 @@ module Layered
         url = sort_url(query, attribute, { default_order: default_order }.compact)
         link_html = html.except(:class)
         if turbo_frame
-          existing_data = link_html[:data] || {}
+          existing_data = (link_html[:data] || {}).symbolize_keys
           link_html[:data] = { turbo_frame: turbo_frame, turbo_action: "advance" }.merge(existing_data)
         end
         link = link_to(url, **link_html, class: link_class) do
