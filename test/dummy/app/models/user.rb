@@ -9,6 +9,8 @@ class User < ApplicationRecord
     :timeoutable,
     :trackable
 
+  has_many :posts, dependent: :destroy
+
   after_create :confirm
 
   def self.ransackable_attributes(_auth_object = nil)

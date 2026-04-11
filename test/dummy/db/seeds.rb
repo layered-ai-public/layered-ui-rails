@@ -33,3 +33,26 @@ users.each do |attrs|
     user.confirmed_at = Time.current
   end
 end
+
+post_titles = [
+  "Getting started with Rails",
+  "Understanding Active Record",
+  "Turbo Frames in practice",
+  "Stimulus controllers",
+  "Deploying to production",
+  "Testing best practices",
+  "Background jobs with Solid Queue",
+  "Authentication with Devise",
+  "Search with Ransack",
+  "Pagination with Pagy",
+  "CSS architecture patterns",
+  "Importmap and modern JS"
+]
+
+all_users = User.all.to_a
+post_titles.each_with_index do |title, i|
+  Post.find_or_create_by!(title: title) do |post|
+    post.body = "This is the body of \"#{title}\". It covers important concepts for Rails developers."
+    post.user = all_users[i % all_users.size]
+  end
+end

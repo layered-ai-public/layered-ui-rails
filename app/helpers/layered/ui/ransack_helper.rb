@@ -1,6 +1,6 @@
 module Layered
   module Ui
-    module SearchHelper
+    module RansackHelper
       # Renders a styled Ransack search form.
       #
       # Simple usage (single input searching across fields):
@@ -11,21 +11,36 @@ module Layered
       #     render "layered_ui/shared/search_field", form: f, field: :name_cont, label: "Name"
       #     f.submit "Go", class: "l-ui-button--primary"
       #   end
-      def l_ui_search_form(query, url: nil, fields: [], predicate: :cont, combinator: :or, label: "Search", placeholder: nil, button: "Search", clear: nil, html: {}, &block)
+      def l_ui_search_form(query, url: nil, fields: [], predicate: :cont, combinator: :or, label: "Search", placeholder: nil, button: "Search", clear: nil, turbo_frame: nil, html: {}, &block)
         result = require_ransack("l_ui_search_form") { |msg| tag.p(msg, class: "l-ui-notice--warning") }
         return result unless result == true
 
+        scope = query.context&.search_key || :q
         html = html.merge(class: ["l-ui-form", html[:class]].compact.join(" "))
 
+        if turbo_frame
+          existing_data = html[:data] || {}
+          existing_controller = existing_data[:controller]
+          controller = [existing_controller, "l-ui--search-form"].compact.join(" ")
+          existing_action = existing_data[:action]
+          action = [existing_action, "submit->l-ui--search-form#preserve"].compact.join(" ")
+
+          html[:data] = existing_data.merge(
+            turbo_frame: turbo_frame, turbo_action: "advance",
+            controller: controller, action: action,
+            l_ui__search_form_scope_value: scope
+          )
+        end
+
         if block
-          search_form_for(query, url: url, html: html, &block)
+          search_form_for(query, url: url, html: html, as: scope, &block)
         else
           raise ArgumentError, "l_ui_search_form requires at least one field in simple mode (e.g. fields: [:name])" if fields.empty?
 
           combined_field = fields.map(&:to_s).join("_#{combinator}_") + "_#{predicate}"
           placeholder ||= "Search by #{fields.map { |f| f.to_s.humanize.downcase }.join(', ')}"
 
-          search_form_for(query, url: url, html: html) do |f|
+          search_form_for(query, url: url, html: html, as: scope) do |f|
             f.label(combined_field, label, class: "l-ui-sr-only") +
               tag.div(class: "l-ui-search__inline") do
                 content = f.text_field(combined_field, class: "l-ui-form__field", placeholder: placeholder) +
@@ -56,7 +71,7 @@ module Layered
       #   l_ui_sort_link(@q, :name, "Full name")
       #   l_ui_sort_link(@q, :created_at, "Joined", default_order: :desc)
       #   l_ui_sort_link(@q, :name, html: { data: { turbo_action: "replace" } })
-      def l_ui_sort_link(query, attribute, label = nil, default_order: nil, html: {})
+      def l_ui_sort_link(query, attribute, label = nil, default_order: nil, turbo_frame: nil, html: {})
         label ||= attribute.to_s.humanize
         link_class = ["l-ui-table__sort-link", html[:class]].compact.join(" ")
 
@@ -68,7 +83,11 @@ module Layered
         aria_sort = indicator&.dig(:aria) || "none"
 
         url = sort_url(query, attribute, { default_order: default_order }.compact)
-        link = link_to(url, **html.except(:class), class: link_class) do
+        link_html = html.except(:class)
+        if turbo_frame
+          link_html[:data] = (link_html[:data] || {}).merge(turbo_frame: turbo_frame, turbo_action: "advance")
+        end
+        link = link_to(url, **link_html, class: link_class) do
           parts = [label]
           if indicator
             parts << tag.span(indicator[:symbol], aria: { hidden: true }, class: "l-ui-table__sort-indicator")

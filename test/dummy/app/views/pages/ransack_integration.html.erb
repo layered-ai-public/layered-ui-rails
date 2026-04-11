@@ -49,20 +49,24 @@ end</code></pre>
   </table>
 </div>
 
-<h2 class="l-ui-utility--mt-2xl">Search example</h2>
+<h2 class="l-ui-utility--mt-2xl">Search and sort example</h2>
 
-<p class="l-ui-utility--mt-md">Search users by name or email:</p>
+<p class="l-ui-utility--mt-md">Two independent collections on one page, each in a Turbo Frame. Searching or sorting one does not affect the other. The URL updates for back/forward navigation.</p>
 
-<%= l_ui_search_form(@q, url: ransack_path, fields: [:name, :email], clear: true) %>
+<h3 class="l-ui-utility--mt-xl">Users</h3>
 
-<% if params[:q].present? && @users.present? %>
+<%= turbo_frame_tag "users_collection", data: { turbo_action: "advance" } do %>
+  <%= l_ui_search_form(@users_q, url: ransack_path, fields: [:name, :email],
+                       clear: true, turbo_frame: "users_collection") %>
+
   <div class="l-ui-container--table l-ui-utility--mt-lg">
     <table class="l-ui-table">
-      <caption class="l-ui-sr-only">Search results</caption>
+      <caption class="l-ui-sr-only">Users</caption>
       <thead class="l-ui-table__header">
         <tr>
-          <th class="l-ui-table__header-cell" scope="col">Name</th>
-          <th class="l-ui-table__header-cell" scope="col">Email</th>
+          <%= l_ui_sort_link(@users_q, :name, turbo_frame: "users_collection") %>
+          <%= l_ui_sort_link(@users_q, :email, turbo_frame: "users_collection") %>
+          <%= l_ui_sort_link(@users_q, :created_at, "Joined", default_order: :desc, turbo_frame: "users_collection") %>
         </tr>
       </thead>
       <tbody class="l-ui-table__body">
@@ -70,42 +74,72 @@ end</code></pre>
           <tr>
             <th class="l-ui-table__cell--primary" scope="row"><%= user.name %></th>
             <td class="l-ui-table__cell"><%= user.email %></td>
+            <td class="l-ui-table__cell"><%= time_ago_in_words(user.created_at) %> ago</td>
           </tr>
         <% end %>
       </tbody>
     </table>
   </div>
-<% elsif params[:q].present? %>
-  <p class="l-ui-utility--mt-lg">No users found matching your search.</p>
 <% end %>
 
-<h2 class="l-ui-utility--mt-2xl">Sorting example</h2>
+<h3 class="l-ui-utility--mt-xl">Posts</h3>
 
-<p class="l-ui-utility--mt-md">Click column headers to sort. The helper wraps Ransack's <code>sort_link</code> and applies the <code>l-ui-table__sort-link</code> class automatically.</p>
+<%= turbo_frame_tag "posts_collection", data: { turbo_action: "advance" } do %>
+  <%= l_ui_search_form(@posts_q, url: ransack_path, fields: [:title],
+                       clear: true, turbo_frame: "posts_collection") %>
 
-<div class="l-ui-container--table l-ui-utility--mt-lg">
-  <table class="l-ui-table">
-    <caption class="l-ui-sr-only">Sortable users</caption>
-    <thead class="l-ui-table__header">
-      <tr>
-        <%= l_ui_sort_link(@q, :name) %>
-        <%= l_ui_sort_link(@q, :email) %>
-        <%= l_ui_sort_link(@q, :created_at, "Joined", default_order: :desc) %>
-      </tr>
-    </thead>
-    <tbody class="l-ui-table__body">
-      <% @users.each do |user| %>
+  <div class="l-ui-container--table l-ui-utility--mt-lg">
+    <table class="l-ui-table">
+      <caption class="l-ui-sr-only">Posts</caption>
+      <thead class="l-ui-table__header">
         <tr>
-          <th class="l-ui-table__cell--primary" scope="row"><%= user.name %></th>
-          <td class="l-ui-table__cell"><%= user.email %></td>
-          <td class="l-ui-table__cell"><%= time_ago_in_words(user.created_at) %> ago</td>
+          <%= l_ui_sort_link(@posts_q, :title, turbo_frame: "posts_collection") %>
+          <%= l_ui_sort_link(@posts_q, :created_at, "Created", default_order: :desc, turbo_frame: "posts_collection") %>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+      </thead>
+      <tbody class="l-ui-table__body">
+        <% @posts.each do |post| %>
+          <tr>
+            <th class="l-ui-table__cell--primary" scope="row"><%= post.title %></th>
+            <td class="l-ui-table__cell"><%= time_ago_in_words(post.created_at) %> ago</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
 
-<h2 class="l-ui-utility--mt-2xl">Sort link usage</h2>
+<h2 class="l-ui-utility--mt-2xl">Usage</h2>
+
+<p class="l-ui-utility--mt-md">In your controller, use Ransack's <code>search_key</code> to namespace each collection:</p>
+
+<pre class="l-ui-surface l-ui-utility--mt-md"><code>def index
+  @users_q = User.ransack(params[:users_q], search_key: :users_q)
+  @users   = @users_q.result(distinct: true)
+
+  @posts_q = Post.ransack(params[:posts_q], search_key: :posts_q)
+  @posts   = @posts_q.result(distinct: true)
+end</code></pre>
+
+<p class="l-ui-utility--mt-lg">In your view, wrap each collection in a <code>turbo_frame_tag</code> and pass <code>turbo_frame:</code> to the helpers:</p>
+
+<pre class="l-ui-surface l-ui-utility--mt-md"><code>&lt;%= turbo_frame_tag "users_collection", data: { turbo_action: "advance" } do %&gt;
+  &lt;%= l_ui_search_form(@users_q, url: users_path, fields: [:name, :email],
+                       clear: true, turbo_frame: "users_collection") %&gt;
+  &lt;table&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;%= l_ui_sort_link(@users_q, :name, turbo_frame: "users_collection") %&gt;
+        &lt;%= l_ui_sort_link(@users_q, :email, turbo_frame: "users_collection") %&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;!-- table body --&gt;
+  &lt;/table&gt;
+&lt;% end %&gt;</code></pre>
+
+<p class="l-ui-utility--mt-lg">The <code>search_key</code> flows through automatically - <code>l_ui_search_form</code> reads it from the query object and passes it as <code>as:</code> to <code>search_form_for</code>. The clear button preserves other collections' params. <code>data-turbo-action="advance"</code> pushes state to the URL for back/forward navigation.</p>
+
+<h2 class="l-ui-utility--mt-2xl">Sort link options</h2>
 
 <pre class="l-ui-surface l-ui-utility--mt-md"><code>&lt;!-- Basic sort link --&gt;
 &lt;%= l_ui_sort_link(@q, :name) %&gt;
@@ -116,15 +150,10 @@ end</code></pre>
 &lt;!-- Default descending order --&gt;
 &lt;%= l_ui_sort_link(@q, :created_at, "Joined", default_order: :desc) %&gt;
 
+&lt;!-- With Turbo Frame --&gt;
+&lt;%= l_ui_sort_link(@q, :name, turbo_frame: "my_frame") %&gt;
+
 &lt;!-- With HTML options --&gt;
 &lt;%= l_ui_sort_link(@q, :name, html: { data: { turbo_action: "replace" } }) %&gt;</code></pre>
-
-<p class="l-ui-utility--mt-lg">In your controller, let Ransack handle ordering:</p>
-
-<pre class="l-ui-surface l-ui-utility--mt-md"><code>def index
-  @q = User.ransack(params[:q])
-  @users = @q.result(distinct: true)
-  @users = @users.order(:name) if @q.sorts.empty?
-end</code></pre>
 
 <p class="l-ui-utility--mt-lg">See the <%= link_to "search page", search_path %> for the full search helper API, options, and partials reference.</p>
