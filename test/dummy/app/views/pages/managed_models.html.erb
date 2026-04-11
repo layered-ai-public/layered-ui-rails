@@ -1,0 +1,140 @@
+<h1>Managed models</h1>
+
+<p class="l-ui-utility--mt-md">Managed models give your Rails models a convention-over-configuration index view with search, sorting, and pagination. Include the concern, define your columns, and add a route - the engine handles the rest.</p>
+
+<h2 class="l-ui-utility--mt-2xl">Setup</h2>
+
+<h3 class="l-ui-utility--mt-xl">1. Include the concern</h3>
+
+<p class="l-ui-utility--mt-md">Add <code>Layered::Ui::Managed</code> to any model you want to manage. Override the class methods to configure which columns, search fields, and sort order to use:</p>
+
+<pre class="l-ui-surface l-ui-utility--mt-md"><code>class Post &lt; ApplicationRecord
+  include Layered::Ui::Managed
+
+  belongs_to :user
+
+  def self.l_ui_managed_columns
+    [
+      { attribute: :title, primary: true },
+      { attribute: :body },
+      { attribute: :created_at, label: "Created" }
+    ]
+  end
+
+  def self.l_ui_managed_search_fields
+    [:title, :body]
+  end
+
+  def self.l_ui_managed_default_sort
+    { attribute: :created_at, direction: :desc }
+  end
+end</code></pre>
+
+<h3 class="l-ui-utility--mt-xl">2. Add a route</h3>
+
+<p class="l-ui-utility--mt-md">Register the model in your routes file:</p>
+
+<pre class="l-ui-surface l-ui-utility--mt-md"><code>l_ui_managed_resources :posts</code></pre>
+
+<p class="l-ui-utility--mt-md">This generates <code>GET /posts</code> pointing to a shared controller that reads the model's configuration and renders the index view. The named route helper is <code>managed_posts_path</code>.</p>
+
+<p class="l-ui-utility--mt-md">To specify a different model class:</p>
+
+<pre class="l-ui-surface l-ui-utility--mt-md"><code>l_ui_managed_resources :articles, model: "BlogPost"</code></pre>
+
+<p class="l-ui-utility--mt-md">Routes work inside scopes:</p>
+
+<pre class="l-ui-surface l-ui-utility--mt-md"><code>scope "/admin" do
+  l_ui_managed_resources :posts
+end
+# Generates GET /admin/posts</code></pre>
+
+<p class="l-ui-utility--mt-md">That's it. No controller to write, no view to create.</p>
+
+<h2 class="l-ui-utility--mt-2xl">Configuration</h2>
+
+<p class="l-ui-utility--mt-md">All configuration is done via class methods on the model. Each has a sensible default that you can override:</p>
+
+<div class="l-ui-container--table l-ui-utility--mt-lg">
+  <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Configuration methods</caption>
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell" scope="col">Method</th>
+        <th class="l-ui-table__header-cell" scope="col">Default</th>
+        <th class="l-ui-table__header-cell" scope="col">Purpose</th>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l_ui_managed_columns</code></th>
+        <td class="l-ui-table__cell"><code>[{ attribute: :id }]</code></td>
+        <td class="l-ui-table__cell">Columns to display. Only whitelisted attributes are shown.</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l_ui_managed_search_fields</code></th>
+        <td class="l-ui-table__cell"><code>[]</code></td>
+        <td class="l-ui-table__cell">Fields to search via Ransack. Empty disables search.</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l_ui_managed_default_sort</code></th>
+        <td class="l-ui-table__cell"><code>{ attribute: :id, direction: :desc }</code></td>
+        <td class="l-ui-table__cell">Default sort when no sort is active.</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l_ui_managed_per_page</code></th>
+        <td class="l-ui-table__cell"><code>20</code></td>
+        <td class="l-ui-table__cell">Records per page (requires Pagy).</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="l-ui-utility--mt-xl">Column options</h3>
+
+<p class="l-ui-utility--mt-md">Each column hash supports:</p>
+
+<div class="l-ui-container--table l-ui-utility--mt-lg">
+  <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Column options</caption>
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell" scope="col">Key</th>
+        <th class="l-ui-table__header-cell" scope="col">Default</th>
+        <th class="l-ui-table__header-cell" scope="col">Description</th>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>attribute</code></th>
+        <td class="l-ui-table__cell">Required</td>
+        <td class="l-ui-table__cell">The model attribute to display.</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>label</code></th>
+        <td class="l-ui-table__cell">Derived from attribute</td>
+        <td class="l-ui-table__cell">Column header text. Auto-generated as sentence case if omitted.</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>sortable</code></th>
+        <td class="l-ui-table__cell"><code>true</code></td>
+        <td class="l-ui-table__cell">Whether the column header is a sort link.</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>primary</code></th>
+        <td class="l-ui-table__cell">First column</td>
+        <td class="l-ui-table__cell">Renders as <code>&lt;th scope="row"&gt;</code> for accessibility.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">How it works</h2>
+
+<p class="l-ui-utility--mt-md">The concern is secure by default - only <code>:id</code> is shown unless you explicitly whitelist columns. Ransack's <code>ransackable_attributes</code> and <code>ransackable_associations</code> are automatically derived from your column and search field definitions, so you don't need to set them manually. You can still override them if needed.</p>
+
+<p class="l-ui-utility--mt-md">Ransack and Pagy are optional. Without Ransack, search and sort are disabled. Without Pagy, all records up to <code>l_ui_managed_per_page</code> are shown without pagination controls.</p>
+
+<h2 class="l-ui-utility--mt-2xl">Live example</h2>
+
+<p class="l-ui-utility--mt-md">The <%= link_to "Posts", managed_posts_path %> page is a managed model using the configuration shown above. Try searching, sorting by column headers, and paginating.</p>

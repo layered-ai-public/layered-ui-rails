@@ -4,18 +4,18 @@ module Layered
       helper Rails.application.routes.url_helpers
 
       def index
-        path = request.path.delete_prefix("/").chomp("/")
-        entry = Layered::Ui::Managed.lookup_by_path(path)
-        raise "No managed model registered for path '/#{path}'" unless entry
+        route_key = params.delete(:_managed_route_key)
+        model_name = Layered::Ui::Managed.lookup(route_key)
+        raise "No managed model registered for '#{route_key}'" unless model_name
 
-        @model = entry[:model].constantize
+        @model = model_name.constantize
         unless @model.respond_to?(:l_ui_managed_columns)
           raise "#{@model.name} must `include Layered::Ui::Managed`"
         end
 
         @columns = normalise_columns(@model.l_ui_managed_columns)
-        @managed_route_key = entry[:route_key]
-        @managed_path = "/#{entry[:path]}"
+        @managed_route_key = route_key
+        @managed_url_helper = :"managed_#{route_key}_path"
 
         if defined?(Ransack) && @model.l_ui_managed_search_fields.any?
           @q = @model.ransack(params[:q])

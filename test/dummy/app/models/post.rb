@@ -1,8 +1,11 @@
 class Post < ApplicationRecord
+  # Includes
   include Layered::Ui::Managed
 
+  # Associations
   belongs_to :user
 
+  # l_ui_managed
   def self.l_ui_managed_columns
     [
       { attribute: :title, primary: true },
@@ -17,13 +20,5 @@ class Post < ApplicationRecord
 
   def self.l_ui_managed_default_sort
     { attribute: :created_at, direction: :desc }
-  end
-
-  def self.ransackable_attributes(_auth_object = nil)
-    %w[title body created_at]
-  end
-
-  def self.ransackable_associations(_auth_object = nil)
-    []
   end
 end

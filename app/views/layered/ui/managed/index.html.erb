@@ -5,7 +5,7 @@
 <%= turbo_frame_tag turbo_frame_name, data: { turbo_action: "advance" } do %>
   <% if @q %>
     <%= l_ui_search_form(@q,
-          url: @managed_path,
+          url: send(@managed_url_helper),
           fields: @model.l_ui_managed_search_fields,
           clear: true,
           turbo_frame: turbo_frame_name) %>
