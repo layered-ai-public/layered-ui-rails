@@ -29,7 +29,7 @@ module Layered
             turbo_frame: turbo_frame, turbo_action: "advance",
             controller: controller, action: action,
             l_ui__search_form_scope_value: scope
-          }.merge(existing_data.except(:controller, :action))
+          }.merge(existing_data.except(:controller, :action, :l_ui__search_form_scope_value))
         end
 
         if block
