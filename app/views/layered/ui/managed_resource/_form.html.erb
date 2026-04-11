@@ -1,1 +1,21 @@
-<%= l_ui_managed_form(@record, fields: @fields, url: @form_url) %>
+<% record = local_assigns.fetch(:record, @record) %>
+<% fields = local_assigns.fetch(:fields, @fields) %>
+<% url    = local_assigns.fetch(:url, @form_url) %>
+<% method = local_assigns.fetch(:method, nil) %>
+
+<% form_opts = { url: url, class: "l-ui-form" } %>
+<% form_opts[:method] = method if method %>
+
+<%= form_with(model: record, **form_opts) do |f| %>
+  <%= render "layered_ui/shared/form_errors", item: record %>
+
+  <% fields.each do |field_config| %>
+    <% config = l_ui_normalise_managed_field(record, field_config) %>
+    <%= render "layered/ui/managed_resource/field", form: f, record: record, config: config %>
+  <% end %>
+
+  <div class="l-ui-form__group">
+    <%= f.submit(record.new_record? ? "Create" : "Save changes",
+                 class: "l-ui-button l-ui-button--primary") %>
+  </div>
+<% end %>

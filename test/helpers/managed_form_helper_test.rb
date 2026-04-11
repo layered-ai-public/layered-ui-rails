@@ -25,6 +25,17 @@ class ManagedFormHelperTest < ActionView::TestCase
     assert_equal :string, Post.l_ui_managed_field_type_for(:nonexistent_attr)
   end
 
+  # -- normalise --
+
+  test "normalise sets defaults from column type" do
+    config = l_ui_normalise_managed_field(Post.new, { attribute: :title })
+    assert_equal :title, config[:attribute]
+    assert_equal :string, config[:as]
+    assert_equal "Title", config[:label]
+    assert_equal false, config[:required]
+    assert_nil config[:hint]
+  end
+
   # -- field rendering --
 
   test "renders string field with correct class" do
@@ -181,8 +192,12 @@ class ManagedFormHelperTest < ActionView::TestCase
 
   def render_field(field_config)
     record = Post.new
-    form_with(model: record, url: "/test") do |f|
-      return l_ui_managed_field(f, record, field_config)
-    end
+    config = l_ui_normalise_managed_field(record, field_config)
+    builder = ActionView::Helpers::FormBuilder.new(
+      record.model_name.param_key, record, self, {}
+    )
+    render partial: "layered/ui/managed_resource/field",
+           locals: { form: builder, record: record, config: config }
+    rendered
   end
 end
