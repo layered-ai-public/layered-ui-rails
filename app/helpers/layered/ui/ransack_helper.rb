@@ -75,7 +75,7 @@ module Layered
       #   l_ui_sort_link(@q, :name, "Full name")
       #   l_ui_sort_link(@q, :created_at, "Joined", default_order: :desc)
       #   l_ui_sort_link(@q, :name, html: { data: { turbo_action: "replace" } })
-      def l_ui_sort_link(query, attribute, label = nil, default_order: nil, turbo_frame: nil, html: {})
+      def l_ui_sort_link(query, attribute, label = nil, default_order: nil, turbo_frame: nil, url: nil, html: {})
         label ||= attribute.to_s.humanize
         link_class = ["l-ui-table__sort-link", html[:class]].compact.join(" ")
 
@@ -86,7 +86,11 @@ module Layered
         indicator = SORT_INDICATORS[current_dir]
         aria_sort = indicator&.dig(:aria) || "none"
 
-        url = sort_url(query, attribute, { default_order: default_order }.compact)
+        url = if url
+                build_sort_url(url, query, attribute, default_order: default_order)
+              else
+                sort_url(query, attribute, { default_order: default_order }.compact)
+              end
         link_html = html.except(:class)
         if turbo_frame
           existing_data = (link_html[:data] || {}).symbolize_keys
@@ -131,6 +135,27 @@ module Layered
         return unless query.respond_to?(:sorts)
         sort = query.sorts.detect { |s| s.name == attribute.to_s }
         sort&.dir
+      end
+
+      # Mirrors Ransack's sort-cycling logic (asc -> desc -> asc) for cases
+      # where the sort link must point to a custom base URL instead of the
+      # current request path. If Ransack changes its cycling behaviour,
+      # this will need updating to match.
+      def build_sort_url(base_url, query, attribute, default_order: nil)
+        current_dir = sort_direction_for(query, attribute)
+        next_dir = case current_dir
+                   when "asc" then "desc"
+                   when "desc" then "asc"
+                   else (default_order || "asc").to_s
+                   end
+
+        scope = query.context&.search_key || :q
+        uri = URI.parse(base_url)
+        existing = uri.query ? URI.decode_www_form(uri.query) : []
+        existing.reject! { |k, _| k == "#{scope}[s]" }
+        existing << ["#{scope}[s]", "#{attribute} #{next_dir}"]
+        uri.query = URI.encode_www_form(existing)
+        uri.to_s
       end
     end
   end

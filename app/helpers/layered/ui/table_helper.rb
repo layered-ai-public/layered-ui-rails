@@ -28,7 +28,7 @@ module Layered
       #
       # Pass +query:+ (a Ransack search object) and +turbo_frame:+ to enable
       # sortable column headers via +l_ui_sort_link+.
-      def l_ui_table(records, columns:, caption: nil, actions: nil, actions_label: "Actions", query: nil, turbo_frame: nil)
+      def l_ui_table(records, columns:, caption: nil, actions: nil, actions_label: "Actions", query: nil, url: nil, turbo_frame: nil)
         columns = normalise_table_columns(columns)
         col_count = columns.size + (actions ? 1 : 0)
 
@@ -36,7 +36,7 @@ module Layered
           tag.tr do
             cells = columns.map do |col|
               if col[:sortable] && query
-                l_ui_sort_link(query, col[:attribute], col[:label], turbo_frame: turbo_frame)
+                l_ui_sort_link(query, col[:attribute], col[:label], url: url, turbo_frame: turbo_frame)
               else
                 tag.th(col[:label], class: "l-ui-table__header-cell", scope: "col")
               end
