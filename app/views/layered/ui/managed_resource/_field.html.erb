@@ -1,0 +1,22 @@
+<% if config[:as] == :hidden %>
+  <%= render "layered/ui/managed_resource/field_input", form: form, record: record, config: config %>
+<% else %>
+  <div class="l-ui-form__group">
+    <% unless config[:as] == :checkbox %>
+      <%= render "layered_ui/shared/label",
+                 form: form, field: config[:attribute],
+                 required: config[:required], name: config[:label] %>
+    <% end %>
+
+    <%= render "layered/ui/managed_resource/field_input", form: form, record: record, config: config %>
+
+    <% if config[:hint] %>
+      <p class="l-ui-form__hint" id="<%= l_ui_managed_field_hint_id(record, config[:attribute]) %>">
+        <%= config[:hint] %>
+      </p>
+    <% end %>
+
+    <%= render "layered_ui/shared/field_error",
+               object: record, field: config[:attribute] %>
+  </div>
+<% end %>
