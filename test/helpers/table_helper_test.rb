@@ -190,6 +190,33 @@ class TableHelperTest < ActionView::TestCase
     assert_includes result, '<th class="l-ui-table__header-cell" scope="col">Name</th>'
   end
 
+  # -- hash records --
+
+  test "renders hash records without render procs" do
+    records = [
+      { name: "Alice", role: "Admin" },
+      { name: "Bob", role: "Editor" },
+    ]
+    result = l_ui_table(records, columns: [{ attribute: :name }, { attribute: :role }], caption: "People")
+    assert_includes result, '<th class="l-ui-table__cell--primary" scope="row">Alice</th>'
+    assert_includes result, '<td class="l-ui-table__cell">Admin</td>'
+    assert_includes result, '<th class="l-ui-table__cell--primary" scope="row">Bob</th>'
+    assert_includes result, '<td class="l-ui-table__cell">Editor</td>'
+  end
+
+  test "hash records work with render procs" do
+    records = [{ key: "Ctrl+S", action: "Save" }]
+    result = l_ui_table(records,
+      columns: [
+        { attribute: :key, render: ->(r) { tag.kbd(r[:key]) } },
+        { attribute: :action },
+      ],
+      caption: "Shortcuts"
+    )
+    assert_includes result, "<kbd>Ctrl+S</kbd>"
+    assert_includes result, '<td class="l-ui-table__cell">Save</td>'
+  end
+
   # -- nil values --
 
   test "handles nil attribute values" do

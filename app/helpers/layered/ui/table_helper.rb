@@ -24,7 +24,8 @@ module Layered
       #   render:    (Proc)    Receives (record), returns cell content.
       #
       # When no +render:+ proc is given, the cell value is extracted via
-      # +record.public_send(attribute)+ with automatic date formatting.
+      # +record[attribute]+ for hashes or +record.public_send(attribute)+
+      # for objects, with automatic date formatting.
       #
       # Pass +query:+ (a Ransack search object) and +turbo_frame:+ to enable
       # sortable column headers via +l_ui_sort_link+.
@@ -88,7 +89,7 @@ module Layered
         if col[:render]
           value = col[:render].call(record)
         else
-          raw = record.public_send(col[:attribute])
+          raw = record.is_a?(Hash) ? record[col[:attribute]] : record.public_send(col[:attribute])
           value = raw.respond_to?(:strftime) ? raw.strftime("%-d %b %Y %H:%M") : raw
         end
 

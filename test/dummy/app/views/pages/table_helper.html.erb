@@ -130,6 +130,47 @@
   </dialog>
 </div>
 
+<h2 class="l-ui-utility--mt-2xl">Hash data</h2>
+
+<p class="l-ui-utility--mt-md">Collections don't have to be ActiveRecord - arrays of hashes work too. The helper reads values via <code>hash[:attribute]</code> instead of <code>record.public_send(:attribute)</code>, so you only need <code>render:</code> procs when you're actually transforming the output.</p>
+
+<% keyboard_shortcuts = [
+  { key: "Ctrl+S", action: "Save" },
+  { key: "Ctrl+Z", action: "Undo" },
+  { key: "Ctrl+Shift+P", action: "Command palette" },
+] %>
+
+<%= l_ui_table(keyboard_shortcuts, columns: [
+      { attribute: :key, label: "Shortcut", render: ->(r) { tag.kbd(r[:key]) } },
+      { attribute: :action },
+    ],
+    caption: "Keyboard shortcuts") %>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-table-hash-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-table-hash-heading">Hash data</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;% shortcuts = [
+  { key: "Ctrl+S", action: "Save" },
+  { key: "Ctrl+Z", action: "Undo" },
+] %&gt;
+
+&lt;%= l_ui_table(shortcuts, columns: [
+      { attribute: :key, label: "Shortcut",
+        render: -&gt;(r) { tag.kbd(r[:key]) } },
+      { attribute: :action },
+    ],
+    caption: "Keyboard shortcuts") %&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
 <h2 class="l-ui-utility--mt-2xl">Empty state</h2>
 
 <p class="l-ui-utility--mt-md">When the collection is empty, the table renders a single "No records found." row spanning all columns.</p>
@@ -175,7 +216,7 @@
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><code>records</code></th>
         <td class="l-ui-table__cell">Collection</td>
-        <td class="l-ui-table__cell">The collection to render (first positional argument)</td>
+        <td class="l-ui-table__cell">The collection to render - ActiveRecord relations, arrays of objects, or arrays of hashes (first positional argument)</td>
       </tr>
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><code>columns:</code></th>
