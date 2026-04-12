@@ -1,0 +1,254 @@
+<h1>Table helper</h1>
+
+<p class="l-ui-utility--mt-md">The <code>l_ui_table</code> helper renders a fully styled, accessible data table from a collection and column configuration. It handles header cells, row scoping, custom rendering, actions, and empty states.</p>
+
+<h2 class="l-ui-utility--mt-2xl">Basic table</h2>
+
+<p class="l-ui-utility--mt-md">Pass a collection and an array of column hashes. The first column is automatically treated as the primary (<code>&lt;th scope="row"&gt;</code>) column.</p>
+
+<%= l_ui_table(@users, columns: [
+      { attribute: :name },
+      { attribute: :email },
+    ],
+    caption: "Users") %>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-table-basic-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-table-basic-heading">Basic table</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;%= l_ui_table(@users, columns: [
+      { attribute: :name },
+      { attribute: :email },
+    ],
+    caption: "Users") %&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">Custom cell rendering</h2>
+
+<p class="l-ui-utility--mt-md">Use <code>render:</code> procs to customise how each cell is displayed. You can also set <code>label:</code> to override the column header text.</p>
+
+<%= l_ui_table(@posts, columns: [
+      { attribute: :title, render: ->(r) { link_to r.title, "#" } },
+      { attribute: :body, label: "Summary", render: ->(r) { truncate(r.body, length: 60) } },
+      { attribute: :created_at, label: "Created" },
+    ],
+    caption: "Posts") %>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-table-render-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-table-render-heading">Custom cell rendering</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;%= l_ui_table(@posts, columns: [
+      { attribute: :title,
+        render: -&gt;(r) { link_to r.title, post_path(r) } },
+      { attribute: :body, label: "Summary",
+        render: -&gt;(r) { truncate(r.body, length: 60) } },
+      { attribute: :created_at, label: "Created" },
+    ],
+    caption: "Posts") %&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">Complex cell rendering with partials</h2>
+
+<p class="l-ui-utility--mt-md">For cells with complex markup, call <code>render</code> inside the <code>render:</code> proc to delegate to a partial. This keeps your table call clean while allowing rich cell layouts.</p>
+
+<%= l_ui_table(@posts, columns: [
+      { attribute: :title, render: ->(r) { render("posts/title_cell", post: r) } },
+      { attribute: :created_at, label: "Created" },
+    ],
+    caption: "Posts with partial rendering") %>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-table-partial-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-table-partial-heading">Complex cell rendering with partials</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;%= l_ui_table(@posts, columns: [
+      { attribute: :title,
+        render: -&gt;(r) { render("posts/title_cell", post: r) } },
+      { attribute: :created_at, label: "Created" },
+    ],
+    caption: "Posts with partial rendering") %&gt;</code></pre>
+
+      <p class="l-ui-utility--mt-md"><strong>posts/_title_cell.html.erb</strong></p>
+
+      <pre class="l-ui-surface"><code>&lt;%= link_to post.title, "#" %&gt;
+&lt;span class="l-ui-text--subtle"&gt;&lt;%= post.user.name %&gt;&lt;/span&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">Actions column</h2>
+
+<p class="l-ui-utility--mt-md">Pass an <code>actions:</code> proc to add a right-aligned actions column. The <code>actions_label:</code> option sets the header text (defaults to "Actions").</p>
+
+<%= l_ui_table(@users.first(5), columns: [
+      { attribute: :name },
+      { attribute: :email },
+    ],
+    actions: ->(r) { link_to("Edit", "#") },
+    caption: "Users with actions") %>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-table-actions-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-table-actions-heading">Actions column</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;%= l_ui_table(@users, columns: [
+      { attribute: :name },
+      { attribute: :email },
+    ],
+    actions: -&gt;(r) { link_to("Edit", edit_user_path(r)) },
+    caption: "Users with actions") %&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">Empty state</h2>
+
+<p class="l-ui-utility--mt-md">When the collection is empty, the table renders a single "No records found." row spanning all columns.</p>
+
+<%= l_ui_table([], columns: [
+      { attribute: :name },
+      { attribute: :email },
+    ],
+    caption: "Empty table") %>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-table-empty-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-table-empty-heading">Empty state</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;%= l_ui_table([], columns: [
+      { attribute: :name },
+      { attribute: :email },
+    ],
+    caption: "Empty table") %&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">Options</h2>
+
+<div class="l-ui-container--table l-ui-utility--mt-lg">
+  <table class="l-ui-table">
+    <caption class="l-ui-sr-only">l_ui_table options</caption>
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell" scope="col">Option</th>
+        <th class="l-ui-table__header-cell" scope="col">Type</th>
+        <th class="l-ui-table__header-cell" scope="col">Description</th>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>records</code></th>
+        <td class="l-ui-table__cell">Collection</td>
+        <td class="l-ui-table__cell">The collection to render (first positional argument)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>columns:</code></th>
+        <td class="l-ui-table__cell">Array</td>
+        <td class="l-ui-table__cell">Array of column hashes (see column options below)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>caption:</code></th>
+        <td class="l-ui-table__cell">String</td>
+        <td class="l-ui-table__cell">Accessible table caption (rendered as screen-reader-only text)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>actions:</code></th>
+        <td class="l-ui-table__cell">Proc</td>
+        <td class="l-ui-table__cell">Receives each record, returns content for the actions cell</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>actions_label:</code></th>
+        <td class="l-ui-table__cell">String</td>
+        <td class="l-ui-table__cell">Header text for the actions column (defaults to "Actions")</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>query:</code></th>
+        <td class="l-ui-table__cell">Ransack::Search</td>
+        <td class="l-ui-table__cell">Ransack search object to enable sortable column headers</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>turbo_frame:</code></th>
+        <td class="l-ui-table__cell">String</td>
+        <td class="l-ui-table__cell">Turbo Frame ID for sort links</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">Column options</h2>
+
+<div class="l-ui-container--table l-ui-utility--mt-lg">
+  <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Column options</caption>
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell" scope="col">Option</th>
+        <th class="l-ui-table__header-cell" scope="col">Type</th>
+        <th class="l-ui-table__header-cell" scope="col">Description</th>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>attribute:</code></th>
+        <td class="l-ui-table__cell">Symbol</td>
+        <td class="l-ui-table__cell">Model attribute for data and label generation</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>label:</code></th>
+        <td class="l-ui-table__cell">String</td>
+        <td class="l-ui-table__cell">Custom header text (defaults to humanised attribute name)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>primary:</code></th>
+        <td class="l-ui-table__cell">Boolean</td>
+        <td class="l-ui-table__cell">Renders as <code>&lt;th scope="row"&gt;</code> (defaults to first column)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>sortable:</code></th>
+        <td class="l-ui-table__cell">Boolean</td>
+        <td class="l-ui-table__cell">Show sort link when <code>query:</code> is provided (defaults to true)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>render:</code></th>
+        <td class="l-ui-table__cell">Proc</td>
+        <td class="l-ui-table__cell">Receives the record, returns cell content</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
