@@ -29,7 +29,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # Dependencies
-  spec.add_dependency "concurrent-ruby", ">= 1.0"
   spec.add_dependency "rails", "~> 8.0"
   spec.add_dependency "tailwindcss-rails", "~> 4.0"
   spec.add_development_dependency "devise", "~> 5.0"

@@ -3,26 +3,31 @@ require "test_helper"
 class FormHelperTest < ActionView::TestCase
   include Layered::Ui::FormHelper
 
-  # -- type auto-detection --
+  # -- type auto-detection (via normalise) --
 
   test "detects string type for string column" do
-    assert_equal :string, l_ui_field_type_for(Post, :title)
+    config = l_ui_normalise_field(Post.new, { attribute: :title })
+    assert_equal :string, config[:as]
   end
 
   test "detects text type for text column" do
-    assert_equal :text, l_ui_field_type_for(Post, :body)
+    config = l_ui_normalise_field(Post.new, { attribute: :body })
+    assert_equal :text, config[:as]
   end
 
   test "detects datetime type for datetime column" do
-    assert_equal :datetime, l_ui_field_type_for(Post, :created_at)
+    config = l_ui_normalise_field(Post.new, { attribute: :created_at })
+    assert_equal :datetime, config[:as]
   end
 
   test "detects number type for integer column" do
-    assert_equal :number, l_ui_field_type_for(Post, :user_id)
+    config = l_ui_normalise_field(Post.new, { attribute: :user_id })
+    assert_equal :number, config[:as]
   end
 
   test "falls back to string for virtual attributes" do
-    assert_equal :string, l_ui_field_type_for(Post, :nonexistent_attr)
+    config = l_ui_normalise_field(Post.new, { attribute: :nonexistent_attr })
+    assert_equal :string, config[:as]
   end
 
   # -- normalise --
