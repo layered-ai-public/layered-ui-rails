@@ -25,6 +25,13 @@ module Layered
           20
         end
 
+        # Whether index queries should use SELECT DISTINCT. Defaults to
+        # true when ransackable_associations is non-empty. Override to
+        # return true if l_ui_managed_scope introduces joins directly.
+        def l_ui_managed_distinct?
+          ransackable_associations.any?
+        end
+
         # --- CRUD support ---
 
         # Array of field hashes defining form fields. Empty = CRUD disabled.
