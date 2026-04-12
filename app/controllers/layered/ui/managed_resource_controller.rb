@@ -9,7 +9,7 @@ module Layered
 
       def index
         @q = @model.l_ui_managed_scope(self).ransack(params[:q])
-        scope = @q.result(distinct: @model.ransackable_associations.any?)
+        scope = @q.result(distinct: @model.l_ui_managed_distinct?)
         if @q.sorts.empty?
           ds = @model.l_ui_managed_default_sort
           scope = scope.order(ds[:attribute] => ds[:direction])
