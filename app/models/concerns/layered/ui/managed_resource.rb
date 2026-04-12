@@ -39,10 +39,10 @@ module Layered
           l_ui_managed_fields.map { |f| f[:attribute] }
         end
 
-        # How to build a new record. Override for scoped builds
-        # (e.g. controller.current_user.posts.build).
-        def l_ui_managed_build_record(_controller)
-          new
+        # How to build a new record. Delegates to l_ui_managed_scope by
+        # default so tenant-scoped overrides apply automatically.
+        def l_ui_managed_build_record(controller)
+          l_ui_managed_scope(controller).build
         end
 
         # Base scope for finding records. Used in index (Ransack) and
@@ -55,7 +55,7 @@ module Layered
         # to a show page or other destination. Requires :index in the
         # only: list; override this method if :index is excluded.
         def l_ui_managed_after_save_path(controller, _record)
-          controller.send(:managed_collection_path)
+          controller.l_ui_managed_collection_url
         end
 
         # Auto-detect field type from the database column.

@@ -63,7 +63,9 @@ module Layered
         end
       end
 
-      attr_reader :l_ui_managed_route_key
+      def l_ui_managed_collection_url
+        managed_collection_path
+      end
 
       private
 
