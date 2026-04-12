@@ -54,11 +54,12 @@ module Layered
 
       def destroy
         @record = @model.l_ui_managed_scope(self).find(params[:id])
+        redirect_path = @model.l_ui_managed_after_save_path(self, @record)
         if @record.destroy
-          redirect_to managed_collection_path,
+          redirect_to redirect_path,
                       notice: "#{@model.model_name.human} deleted"
         else
-          redirect_to managed_collection_path,
+          redirect_to redirect_path,
                       alert: "#{@model.model_name.human} could not be deleted"
         end
       end
