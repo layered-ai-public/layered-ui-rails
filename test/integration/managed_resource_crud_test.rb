@@ -116,6 +116,15 @@ class ManagedResourceCrudTest < ActionDispatch::IntegrationTest
     end
   end
 
+  # -- route key injection --
+
+  test "query string cannot override _managed_route_key" do
+    get "/readonly/posts", params: { _managed_route_key: "posts" }
+    assert_response :success
+    assert_select "a[href='/readonly/posts/new']", count: 0,
+      message: "Full-CRUD actions must not leak via query string override"
+  end
+
   # -- only: option --
 
   test "only: [:index] hides new link" do
