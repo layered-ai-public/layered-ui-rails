@@ -76,7 +76,7 @@ module Layered
         columns.each_with_index.map do |col, i|
           {
             attribute: col[:attribute],
-            label: col[:label] || col[:attribute].to_s.gsub("_", " ").sub(/\A\w/, &:upcase),
+            label: col[:label] || col[:attribute].to_s.humanize,
             sortable: col.fetch(:sortable, true),
             primary: has_primary ? col.fetch(:primary, false) : i == 0,
             render: col[:render]

@@ -71,7 +71,7 @@ module Layered
       private
 
       def resolve_managed_resource
-        route_key = params[:_managed_route_key]
+        route_key = request.path_parameters[:_managed_route_key]
         model_name = Layered::Ui::Routing.lookup(route_key)
         raise ActionController::RoutingError, "No managed resource registered for route" unless model_name
 
