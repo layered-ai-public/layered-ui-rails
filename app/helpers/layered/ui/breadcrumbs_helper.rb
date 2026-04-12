@@ -13,7 +13,7 @@ module Layered
           if path
             link_to(label, path, class: "l-ui-breadcrumbs__link")
           else
-            content_tag(:span, label, class: "l-ui-breadcrumbs__text", aria: { current: "page" })
+            content_tag(:span, label, aria: { current: "page" })
           end
         end
       end

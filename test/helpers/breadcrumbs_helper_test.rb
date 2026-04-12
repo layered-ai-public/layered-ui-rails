@@ -29,7 +29,6 @@ class BreadcrumbsHelperTest < ActionView::TestCase
   test "renders text breadcrumb item without path" do
     result = l_ui_breadcrumb_item("Current")
     assert_includes result, "l-ui-breadcrumbs__item"
-    assert_includes result, "l-ui-breadcrumbs__text"
     assert_includes result, 'aria-current="page"'
     assert_includes result, "Current"
     assert_not_includes result, "<a "
