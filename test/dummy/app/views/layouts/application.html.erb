@@ -2,7 +2,7 @@
 
 <% unless devise_controller? %>
   <% content_for :l_ui_navigation_items do %>
-    <%= l_ui_navigation_item "Welcome", root_path %>
+    <%= l_ui_navigation_item "Home", root_path %>
     <%= l_ui_navigation_item "Integrations", integrations_path do %>
       <%= l_ui_navigation_item "Devise", devise_path %>
       <%= l_ui_navigation_item "Pagy", pagy_path %>

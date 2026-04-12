@@ -8,9 +8,13 @@ module Layered
         end
       end
 
-      def l_ui_breadcrumb_item(label, path)
+      def l_ui_breadcrumb_item(label, path = nil)
         content_tag(:li, class: "l-ui-breadcrumbs__item") do
-          link_to(label, path, class: "l-ui-breadcrumbs__link")
+          if path
+            link_to(label, path, class: "l-ui-breadcrumbs__link")
+          else
+            content_tag(:span, label, class: "l-ui-breadcrumbs__text")
+          end
         end
       end
     end

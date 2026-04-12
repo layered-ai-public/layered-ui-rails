@@ -711,9 +711,12 @@
 }
 
 .l-ui-breadcrumbs__link {
-  @apply underline
-         text-foreground
+  @apply text-foreground-muted
          focus-ring rounded-sm;
+}
+
+.l-ui-breadcrumbs__text {
+  @apply text-foreground-muted;
 }
 
 /* Buttons */

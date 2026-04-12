@@ -1,7 +1,7 @@
 require "test_helper"
 
 class PagesTest < ActionDispatch::IntegrationTest
-  test "welcome page renders" do
+  test "home page renders" do
     get "/"
     assert_response :success
   end
