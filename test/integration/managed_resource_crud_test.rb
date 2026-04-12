@@ -145,6 +145,36 @@ class ManagedResourceCrudTest < ActionDispatch::IntegrationTest
     assert_response :not_found
   end
 
+  test "destroy without index route does not delete the record" do
+    record = Post.create!(title: "Hello", user: @user)
+    assert_no_difference "Post.count" do
+      delete "/destroy-only/posts/#{record.id}"
+    end
+    assert_response :not_found
+  end
+
+  test "only: [:new] without :index raises at route definition" do
+    error = assert_raises(ArgumentError) do
+      Rails.application.routes.draw do
+        l_ui_managed_resources :posts, only: [:new]
+      end
+    end
+    assert_match(/without :index/, error.message)
+  ensure
+    Rails.application.reload_routes!
+  end
+
+  test "only: [:create] without :index raises at route definition" do
+    error = assert_raises(ArgumentError) do
+      Rails.application.routes.draw do
+        l_ui_managed_resources :posts, only: [:create]
+      end
+    end
+    assert_match(/without :index/, error.message)
+  ensure
+    Rails.application.reload_routes!
+  end
+
   test "destroy works without l_ui_managed_fields" do
     record = Post.create!(title: "Hello", user: @user)
     original_fields = Post.method(:l_ui_managed_fields)

@@ -65,7 +65,9 @@ module Layered
       end
 
       def l_ui_managed_collection_url
-        managed_collection_path
+        if respond_to?(@managed_url_helper, true)
+          send(@managed_url_helper)
+        end
       end
 
       private

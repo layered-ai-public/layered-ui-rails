@@ -51,11 +51,17 @@ module Layered
           all
         end
 
-        # Redirect target after create/update. Override to redirect
-        # to a show page or other destination. Requires :index in the
-        # only: list; override this method if :index is excluded.
+        # Redirect target after create, update, and destroy. Override
+        # to redirect to a show page or other destination. Requires
+        # :index in the only: list; override this method if :index
+        # is excluded.
         def l_ui_managed_after_save_path(controller, _record)
-          controller.l_ui_managed_collection_url
+          url = controller.l_ui_managed_collection_url
+          return url if url
+
+          raise ActionController::RoutingError,
+                "No :index route for #{model_name.human.pluralize}. " \
+                "Add :index to only: or override l_ui_managed_after_save_path."
         end
 
         # Auto-detect field type from the database column.
