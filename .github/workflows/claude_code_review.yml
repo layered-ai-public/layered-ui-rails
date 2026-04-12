@@ -47,6 +47,10 @@ jobs:
             - If uncertain, state uncertainty rather than guessing.
             - Focus on issues that meaningfully impact correctness, safety, or maintainability.
             - Do not hold back lower-severity issues if they are still actionable and relevant, but do not be pedantic.
+            - Do not flag standard framework behaviour as an issue (e.g. how Rails helpers handle unknown keys).
+            - Do not speculate about compatibility with versions, environments, or configurations that are not evidenced in the diff or codebase.
+            - Do not flag design decisions (API defaults, naming conventions) unless they introduce a concrete bug or safety issue. "I would have done it differently" is not a finding.
+            - Only flag hypothetical edge cases if they are reachable through normal use of the public API as shown in the diff. Do not invent exotic configurations to create a problem.
             - CRITICAL: Provide a complete review in a single pass. Include all relevant issues you can identify to avoid requiring multiple review cycles as this wastes developer momentum.
 
             Context access:
