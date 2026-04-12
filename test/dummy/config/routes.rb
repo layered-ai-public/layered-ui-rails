@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get "links", to: "pages#links"
   get "surfaces", to: "pages#surfaces"
   get "tables", to: "pages#tables"
-  get "table_helper", to: "pages#table_helper"
+  get "tables_helper", to: "pages#tables_helper"
   get "pagination", to: "pages#pagination"
   get "forms", to: "pages#forms"
   get "containers", to: "pages#containers"
@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   get "tabs", to: "pages#tabs"
   get "conversations", to: "pages#conversations"
   get "devise", to: "pages#devise"
-  get "form_helper", to: "pages#form_helper"
+  get "forms_helper", to: "pages#forms_helper"
   get "form_errors", to: "pages#form_errors"
   get "integrations", to: "pages#integrations"
   get "pagy", to: "pages#pagy_integration", as: :pagy
