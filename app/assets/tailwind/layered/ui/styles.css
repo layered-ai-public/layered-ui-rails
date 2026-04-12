@@ -439,7 +439,7 @@
 }
 
 .l-ui-page a:not([class*="l-ui-"]) {
-  @apply underline underline-offset-4
+  @apply underline underline-offset-4 decoration-foreground-muted/60
          text-foreground
          focus-ring rounded-sm;
 }
@@ -690,19 +690,20 @@
 /* Breadcrumbs */
 
 .l-ui-breadcrumbs {
-  @apply mt-1;
+  @apply mb-0.5;
 }
 
 .l-ui-breadcrumbs__list {
   @apply flex flex-wrap items-center
          gap-1
          list-none
-         text-sm text-foreground-muted;
+         text-xs text-foreground-muted;
 }
 
 .l-ui-breadcrumbs__item {
   @apply flex items-center
-         gap-1;
+         gap-1
+         text-xs;
 
   &:not(:last-child)::after {
     content: "/";
@@ -711,13 +712,9 @@
 }
 
 .l-ui-breadcrumbs__link {
-  @apply underline underline-offset-2
+  @apply underline underline-offset-2 decoration-foreground-muted/30
          text-foreground-muted
          focus-ring rounded-sm;
-}
-
-.l-ui-breadcrumbs__text {
-  @apply text-foreground-muted;
 }
 
 /* Buttons */
@@ -1191,13 +1188,12 @@ pre.l-ui-surface {
   & button, & a {
     @apply inline-flex items-center justify-center
            min-w-6 min-h-6 px-0.5
-           underline underline-offset-4
            text-foreground-muted bg-transparent
            border-0 cursor-pointer focus-ring rounded-sm;
   }
 
   & .l-ui-table__action--danger {
-    @apply text-danger;
+    @apply text-danger underline underline-offset-2 decoration-danger/60;
   }
 }
 
