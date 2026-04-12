@@ -18,6 +18,8 @@
     <%= tag.link(rel: "icon", href: @l_ui_icon_dark_url.presence || asset_path('layered_ui/icon_dark.svg'), media: "(prefers-color-scheme: dark)") %>
     <%= tag.link(rel: "apple-touch-icon", href: @l_ui_apple_touch_icon_url.presence || asset_path('layered_ui/apple_touch_icon.png')) %>
 
+    <%# Apply dark class before paint to prevent white flash on reload %>
+    <script>try{var s=localStorage.getItem("theme");(s==="dark"||(!s&&matchMedia("(prefers-color-scheme:dark)").matches))&&document.documentElement.classList.add("dark")}catch(e){}</script>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= yield(:l_ui_head) %>
     <%= javascript_importmap_tags %>

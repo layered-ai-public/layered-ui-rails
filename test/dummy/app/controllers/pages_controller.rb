@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   before_action :load_users, only: [:tables, :pagination]
 
-  def welcome
+  def home
   end
 
   def buttons

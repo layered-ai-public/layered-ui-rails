@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- Breadcrumbs helper (`l_ui_breadcrumbs`, `l_ui_breadcrumb_item`) for hierarchical navigation
+- Inline dark mode script in layout `<head>` to prevent white flash on page reload
+- Breadcrumbs added to all dummy app documentation pages with "Home" as the new root item
+
+### Changed
+
+- Default page link underline uses `decoration-foreground-muted/60` for subtler appearance
+- Table action buttons no longer have underlines; danger actions use `decoration-danger/60`
+
 ## [0.3.0] - 2026-04-11
 
 ### Added
