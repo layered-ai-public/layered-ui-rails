@@ -1,9 +1,9 @@
-<% turbo_frame_name = "managed_#{@managed_route_key}" %>
-<% singular_key = @managed_route_key.singularize %>
+<% turbo_frame_name = "managed_#{@l_ui_managed_route_key}" %>
+<% singular_key = @l_ui_managed_route_key.singularize %>
 
 <div class="l-ui-container--spread">
   <h1 class="l-ui-heading">
-    <%= @managed_route_key.humanize %>
+    <%= @l_ui_managed_route_key.humanize %>
   </h1>
 
   <% if @can_create %>
@@ -42,7 +42,7 @@
 
   <%= l_ui_managed_table(@records,
         columns: @columns,
-        caption: @managed_route_key.humanize,
+        caption: @l_ui_managed_route_key.humanize,
         query: @q,
         actions: actions_proc,
         turbo_frame: turbo_frame_name) %>

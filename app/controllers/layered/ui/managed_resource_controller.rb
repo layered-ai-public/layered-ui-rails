@@ -63,7 +63,7 @@ module Layered
         end
       end
 
-      attr_reader :managed_route_key
+      attr_reader :l_ui_managed_route_key
 
       private
 
@@ -78,15 +78,15 @@ module Layered
         end
 
         @columns = @model.l_ui_managed_columns
-        @managed_route_key = route_key
+        @l_ui_managed_route_key = route_key
         @managed_url_helper = :"managed_#{route_key}_path"
         @fields = @model.l_ui_managed_fields
         @crud_enabled = @fields.any?
 
-        managed_actions = Layered::Ui::Routing.lookup_actions(@managed_route_key)
+        managed_actions = Layered::Ui::Routing.lookup_actions(@l_ui_managed_route_key)
         @can_create = @crud_enabled && managed_actions.include?(:new)
         @can_update = @crud_enabled && managed_actions.include?(:edit)
-        @can_destroy = @crud_enabled && managed_actions.include?(:destroy)
+        @can_destroy = managed_actions.include?(:destroy)
       end
 
       def require_managed_fields
@@ -104,18 +104,18 @@ module Layered
       def managed_collection_path
         unless respond_to?(@managed_url_helper, true)
           raise ActionController::RoutingError,
-                "No collection route registered for #{@managed_route_key}. " \
+                "No collection route registered for #{@l_ui_managed_route_key}. " \
                 "Include :index in the only: list, or override l_ui_managed_after_save_path."
         end
         send(@managed_url_helper)
       end
 
       def managed_member_path(record)
-        singular = @managed_route_key.singularize
+        singular = @l_ui_managed_route_key.singularize
         helper = :"managed_#{singular}_path"
         unless respond_to?(helper, true)
           raise ActionController::RoutingError,
-                "No member route registered for #{@managed_route_key}. " \
+                "No member route registered for #{@l_ui_managed_route_key}. " \
                 "Include :update or :destroy in the only: list."
         end
         send(helper, record)

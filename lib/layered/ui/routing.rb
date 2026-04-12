@@ -42,7 +42,7 @@ module Layered
         route_defaults = (options[:defaults] || {}).merge(
           _managed_route_key: scoped_key
         )
-        options = options.except(:defaults, :only)
+        options = options.except(:defaults)
 
         # Collection routes (plural)
         if actions.include?(:index)
