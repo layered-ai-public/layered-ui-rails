@@ -175,6 +175,28 @@ class ManagedResourceCrudTest < ActionDispatch::IntegrationTest
     Rails.application.reload_routes!
   end
 
+  test "only: [:index, :new] without :create raises at route definition" do
+    error = assert_raises(ArgumentError) do
+      Rails.application.routes.draw do
+        l_ui_managed_resources :posts, only: %i[index new]
+      end
+    end
+    assert_match(/without :create/, error.message)
+  ensure
+    Rails.application.reload_routes!
+  end
+
+  test "only: [:index, :edit] without :update raises at route definition" do
+    error = assert_raises(ArgumentError) do
+      Rails.application.routes.draw do
+        l_ui_managed_resources :posts, only: %i[index edit]
+      end
+    end
+    assert_match(/without :update/, error.message)
+  ensure
+    Rails.application.reload_routes!
+  end
+
   test "destroy works without l_ui_managed_fields" do
     record = Post.create!(title: "Hello", user: @user)
     original_fields = Post.method(:l_ui_managed_fields)
