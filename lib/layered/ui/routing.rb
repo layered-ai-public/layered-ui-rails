@@ -43,6 +43,18 @@ module Layered
                 "The form actions require a collection route; add :index to only:."
         end
 
+        if actions.include?(:new) && !actions.include?(:create)
+          raise ArgumentError,
+                "l_ui_managed_resources :#{resource_name} includes :new without :create. " \
+                "The new form posts to the collection route; add :create to only:."
+        end
+
+        if actions.include?(:edit) && !actions.include?(:update)
+          raise ArgumentError,
+                "l_ui_managed_resources :#{resource_name} includes :edit without :update. " \
+                "The edit form patches the member route; add :update to only:."
+        end
+
         Layered::Ui::Routing.register(scoped_key, model_class_name, actions: actions)
 
         route_defaults = (options[:defaults] || {}).merge(
