@@ -5,6 +5,9 @@ class Post < ApplicationRecord
   # Associations
   belongs_to :user
 
+  # Validations
+  validates :title, presence: true
+
   # l_ui_managed
   def self.l_ui_managed_columns
     [
@@ -20,5 +23,13 @@ class Post < ApplicationRecord
 
   def self.l_ui_managed_default_sort
     { attribute: :created_at, direction: :desc }
+  end
+
+  def self.l_ui_managed_fields
+    [
+      { attribute: :title, required: true },
+      { attribute: :body, as: :text },
+      { attribute: :user_id, as: :select, label: "Author", collection: -> { User.pluck(:email, :id) } }
+    ]
   end
 end
