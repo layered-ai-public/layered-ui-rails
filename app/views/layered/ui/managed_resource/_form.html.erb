@@ -10,7 +10,7 @@
   <%= render "layered_ui/shared/form_errors", item: record %>
 
   <% fields.each do |field_config| %>
-    <% config = l_ui_normalise_managed_field(record, field_config) %>
+    <% config = l_ui_normalise_field(record, field_config) %>
     <%= render "layered/ui/managed_resource/field", form: f, record: record, config: config %>
   <% end %>
 

@@ -1,13 +1,13 @@
 module Layered
   module Ui
-    module ManagedTableHelper
+    module TableHelper
       # Renders a styled, accessible data table.
       #
       # Use this helper in any view to render a table with the engine's
       # +l-ui-table+ styles. It supports custom cell rendering via procs,
       # an optional actions column, and Ransack sort links.
       #
-      #   l_ui_managed_table(@personas,
+      #   l_ui_table(@personas,
       #     columns: [
       #       { attribute: :name, primary: true, render: ->(r) { link_to r.name, persona_path(r) } },
       #       { attribute: :description, render: ->(r) { truncate(r.description, length: 60) } },
@@ -28,8 +28,8 @@ module Layered
       #
       # Pass +query:+ (a Ransack search object) and +turbo_frame:+ to enable
       # sortable column headers via +l_ui_sort_link+.
-      def l_ui_managed_table(records, columns:, caption: nil, actions: nil, actions_label: "Actions", query: nil, turbo_frame: nil)
-        columns = normalise_managed_columns(columns)
+      def l_ui_table(records, columns:, caption: nil, actions: nil, actions_label: "Actions", query: nil, turbo_frame: nil)
+        columns = normalise_table_columns(columns)
         col_count = columns.size + (actions ? 1 : 0)
 
         thead = tag.thead(class: "l-ui-table__header") do
@@ -55,7 +55,7 @@ module Layered
             safe_join(records.map do |record|
               tag.tr do
                 cells = columns.map do |col|
-                  managed_table_cell(record, col)
+                  table_cell(record, col)
                 end
                 cells << tag.td(class: "l-ui-table__cell--action") { actions.call(record) } if actions
                 safe_join(cells)
@@ -71,7 +71,7 @@ module Layered
 
       private
 
-      def normalise_managed_columns(columns)
+      def normalise_table_columns(columns)
         has_primary = columns.any? { |c| c[:primary] }
         columns.each_with_index.map do |col, i|
           {
@@ -84,7 +84,7 @@ module Layered
         end
       end
 
-      def managed_table_cell(record, col)
+      def table_cell(record, col)
         if col[:render]
           value = col[:render].call(record)
         else

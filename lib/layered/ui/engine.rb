@@ -24,18 +24,14 @@ module Layered
         end
       end
 
-      initializer "layered-ui-rails.routing", before: :add_routing_paths do
-        ActionDispatch::Routing::Mapper.include(Layered::Ui::Routing)
-      end
-
       initializer "layered-ui-rails.helpers" do
         ActiveSupport.on_load(:action_controller) do
           helper Layered::Ui::AuthenticationHelper
           helper Layered::Ui::BreadcrumbsHelper
           helper Layered::Ui::NavigationHelper
           helper Layered::Ui::PaginationHelper
-          helper Layered::Ui::ManagedTableHelper
-          helper Layered::Ui::ManagedFormHelper
+          helper Layered::Ui::TableHelper
+          helper Layered::Ui::FormHelper
           helper Layered::Ui::RansackHelper
         end
       end

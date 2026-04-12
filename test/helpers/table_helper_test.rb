@@ -1,7 +1,7 @@
 require "test_helper"
 
-class ManagedTableHelperTest < ActionView::TestCase
-  include Layered::Ui::ManagedTableHelper
+class TableHelperTest < ActionView::TestCase
+  include Layered::Ui::TableHelper
   include Layered::Ui::RansackHelper
 
   setup do
@@ -137,7 +137,7 @@ class ManagedTableHelperTest < ActionView::TestCase
   end
 
   test "uses custom actions label" do
-    result = l_ui_managed_table([mock_record("Alice")],
+    result = l_ui_table([mock_record("Alice")],
       columns: [{ attribute: :name }],
       actions: ->(r) { "Edit" },
       actions_label: "Options"
@@ -166,7 +166,7 @@ class ManagedTableHelperTest < ActionView::TestCase
 
   test "renders sort links when query is provided" do
     q = User.ransack({})
-    result = l_ui_managed_table([mock_record("Alice")],
+    result = l_ui_table([mock_record("Alice")],
       columns: [{ attribute: :name }],
       query: q
     )
@@ -182,7 +182,7 @@ class ManagedTableHelperTest < ActionView::TestCase
 
   test "non-sortable columns render plain headers even with query" do
     q = User.ransack({})
-    result = l_ui_managed_table([mock_record("Alice")],
+    result = l_ui_table([mock_record("Alice")],
       columns: [{ attribute: :name, sortable: false }],
       query: q
     )
@@ -204,7 +204,7 @@ class ManagedTableHelperTest < ActionView::TestCase
   private
 
   def build_table(records, columns: [{ attribute: :name }], caption: nil, actions: nil)
-    l_ui_managed_table(records, columns: columns, caption: caption, actions: actions)
+    l_ui_table(records, columns: columns, caption: caption, actions: actions)
   end
 
   MockRecord = Struct.new(:name, :email, :created_at, keyword_init: true)

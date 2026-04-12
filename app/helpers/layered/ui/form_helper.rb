@@ -1,29 +1,29 @@
 module Layered
   module Ui
-    module ManagedFormHelper
-      MANAGED_FIELD_TYPES = %i[string text email number date datetime select checkbox hidden].freeze
+    module FormHelper
+      FIELD_TYPES = %i[string text email number date datetime select checkbox hidden].freeze
 
-      # Renders a complete managed form with all fields, error summary,
+      # Renders a complete form with all fields, error summary,
       # and submit button.
       #
-      #   l_ui_managed_form(@post,
-      #     fields: Post.l_ui_managed_fields,
+      #   l_ui_form(@post,
+      #     fields: Post.l_managed_resource_fields,
       #     url: managed_posts_path)
       #
-      def l_ui_managed_form(record, fields:, url:, method: nil)
+      def l_ui_form(record, fields:, url:, method: nil)
         render partial: "layered/ui/managed_resource/form",
                locals: { record: record, fields: fields, url: url, method: method }
       end
 
       # Normalises a raw field config hash into a canonical form.
-      def l_ui_normalise_managed_field(record, config)
+      def l_ui_normalise_field(record, config)
         attribute = config[:attribute]
-        as = config[:as] || record.class.l_ui_managed_field_type_for(attribute)
+        as = config[:as] || l_ui_field_type_for(record.class, attribute)
 
-        unless MANAGED_FIELD_TYPES.include?(as)
+        unless FIELD_TYPES.include?(as)
           raise ArgumentError,
                 "Unsupported field type :#{as} for :#{attribute}. " \
-                "Supported types: #{MANAGED_FIELD_TYPES.map { |t| ":#{t}" }.join(', ')}"
+                "Supported types: #{FIELD_TYPES.map { |t| ":#{t}" }.join(', ')}"
         end
 
         if as == :select && config[:collection].nil?
@@ -49,12 +49,30 @@ module Layered
         }
       end
 
-      def l_ui_managed_field_error_id(record, attribute)
+      def l_ui_field_error_id(record, attribute)
         "#{record.model_name.param_key}_#{attribute}_error"
       end
 
-      def l_ui_managed_field_hint_id(record, attribute)
+      def l_ui_field_hint_id(record, attribute)
         "#{record.model_name.param_key}_#{attribute}_hint"
+      end
+
+      private
+
+      def l_ui_field_type_for(model_class, attribute)
+        return :string unless model_class.respond_to?(:columns_hash)
+
+        col = model_class.columns_hash[attribute.to_s]
+        return :string unless col
+
+        case col.type
+        when :text then :text
+        when :integer, :float, :decimal then :number
+        when :boolean then :checkbox
+        when :date then :date
+        when :datetime then :datetime
+        else :string
+        end
       end
     end
   end

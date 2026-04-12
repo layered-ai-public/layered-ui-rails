@@ -1,34 +1,34 @@
 require "test_helper"
 
-class ManagedFormHelperTest < ActionView::TestCase
-  include Layered::Ui::ManagedFormHelper
+class FormHelperTest < ActionView::TestCase
+  include Layered::Ui::FormHelper
 
   # -- type auto-detection --
 
   test "detects string type for string column" do
-    assert_equal :string, Post.l_ui_managed_field_type_for(:title)
+    assert_equal :string, l_ui_field_type_for(Post, :title)
   end
 
   test "detects text type for text column" do
-    assert_equal :text, Post.l_ui_managed_field_type_for(:body)
+    assert_equal :text, l_ui_field_type_for(Post, :body)
   end
 
   test "detects datetime type for datetime column" do
-    assert_equal :datetime, Post.l_ui_managed_field_type_for(:created_at)
+    assert_equal :datetime, l_ui_field_type_for(Post, :created_at)
   end
 
   test "detects number type for integer column" do
-    assert_equal :number, Post.l_ui_managed_field_type_for(:user_id)
+    assert_equal :number, l_ui_field_type_for(Post, :user_id)
   end
 
   test "falls back to string for virtual attributes" do
-    assert_equal :string, Post.l_ui_managed_field_type_for(:nonexistent_attr)
+    assert_equal :string, l_ui_field_type_for(Post, :nonexistent_attr)
   end
 
   # -- normalise --
 
   test "normalise sets defaults from column type" do
-    config = l_ui_normalise_managed_field(Post.new, { attribute: :title })
+    config = l_ui_normalise_field(Post.new, { attribute: :title })
     assert_equal :title, config[:attribute]
     assert_equal :string, config[:as]
     assert_equal "Title", config[:label]
@@ -192,7 +192,7 @@ class ManagedFormHelperTest < ActionView::TestCase
 
   test "raises ArgumentError for unsupported field type" do
     error = assert_raises(ArgumentError) do
-      l_ui_normalise_managed_field(Post.new, { attribute: :title, as: :banana })
+      l_ui_normalise_field(Post.new, { attribute: :title, as: :banana })
     end
     assert_includes error.message, ":banana"
     assert_includes error.message, "Unsupported field type"
@@ -200,7 +200,7 @@ class ManagedFormHelperTest < ActionView::TestCase
 
   test "raises ArgumentError for select without collection" do
     error = assert_raises(ArgumentError) do
-      l_ui_normalise_managed_field(Post.new, { attribute: :user_id, as: :select })
+      l_ui_normalise_field(Post.new, { attribute: :user_id, as: :select })
     end
     assert_includes error.message, ":select"
     assert_includes error.message, ":collection"
@@ -210,7 +210,7 @@ class ManagedFormHelperTest < ActionView::TestCase
 
   def render_field(field_config)
     record = Post.new
-    config = l_ui_normalise_managed_field(record, field_config)
+    config = l_ui_normalise_field(record, field_config)
     builder = ActionView::Helpers::FormBuilder.new(
       record.model_name.param_key, record, self, {}
     )
