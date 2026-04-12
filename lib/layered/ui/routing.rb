@@ -30,12 +30,18 @@ module Layered
 
         # Build a scoped registry key so the same resource name under different
         # scopes (e.g. /admin/posts vs /posts) gets its own registry entry.
-        prefix = @scope[:path].to_s.delete_prefix("/").tr("/", "_").presence
+        prefix = @scope[:path].to_s.delete_prefix("/").tr("/", "_").gsub(/[^a-zA-Z0-9_]/, "_").squeeze("_").presence
         scoped_key = [prefix, route_key].compact.join("_")
         scoped_singular = [prefix, singular_key].compact.join("_")
 
         controller = "layered/ui/managed_resource"
         actions = Array(only).map(&:to_sym)
+
+        if (actions & %i[new create]).any? && !actions.include?(:index)
+          raise ArgumentError,
+                "l_ui_managed_resources :#{resource_name} includes :new or :create without :index. " \
+                "The form actions require a collection route; add :index to only:."
+        end
 
         Layered::Ui::Routing.register(scoped_key, model_class_name, actions: actions)
 
