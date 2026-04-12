@@ -687,6 +687,29 @@
   @apply text-xs text-foreground-muted;
 }
 
+/* Breadcrumbs */
+
+.l-ui-breadcrumbs {
+  @apply mt-1;
+}
+
+.l-ui-breadcrumbs__list {
+  @apply flex flex-wrap items-center
+         gap-1
+         list-none
+         text-sm text-foreground-muted;
+}
+
+.l-ui-breadcrumbs__item {
+  @apply flex items-center
+         gap-1;
+
+  &:not(:last-child)::after {
+    content: "/";
+    @apply text-foreground-muted/50;
+  }
+}
+
 /* Buttons */
 
 @utility button {
