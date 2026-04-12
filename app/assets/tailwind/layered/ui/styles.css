@@ -710,6 +710,12 @@
   }
 }
 
+.l-ui-breadcrumbs__link {
+  @apply underline
+         text-foreground
+         focus-ring rounded-sm;
+}
+
 /* Buttons */
 
 @utility button {
