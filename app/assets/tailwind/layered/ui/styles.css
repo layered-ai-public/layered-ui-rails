@@ -439,8 +439,8 @@
 }
 
 .l-ui-page a:not([class*="l-ui-"]) {
-  @apply underline
-         text-foreground hover:text-foreground-muted
+  @apply underline underline-offset-4
+         text-foreground
          focus-ring rounded-sm;
 }
 
@@ -711,7 +711,8 @@
 }
 
 .l-ui-breadcrumbs__link {
-  @apply text-foreground-muted
+  @apply underline underline-offset-2
+         text-foreground-muted
          focus-ring rounded-sm;
 }
 
@@ -1190,13 +1191,13 @@ pre.l-ui-surface {
   & button, & a {
     @apply inline-flex items-center justify-center
            min-w-6 min-h-6 px-0.5
-           underline
-           text-foreground-muted hover:text-foreground bg-transparent
+           underline underline-offset-4
+           text-foreground-muted bg-transparent
            border-0 cursor-pointer focus-ring rounded-sm;
   }
 
   & .l-ui-table__action--danger {
-    @apply text-danger hover:text-danger;
+    @apply text-danger;
   }
 }
 
