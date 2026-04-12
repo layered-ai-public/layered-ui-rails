@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_action :load_users, only: [:tables, :pagination]
+  before_action :load_users, only: [:tables, :pagination, :table_helper, :form_helper]
 
   def home
   end
@@ -62,6 +62,14 @@ class PagesController < ApplicationController
   end
 
   def conversations
+  end
+
+  def table_helper
+    @posts = Post.order(:title).limit(10)
+  end
+
+  def form_helper
+    @post = Post.new
   end
 
   def form_errors
