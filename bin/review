@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Local code review using the same prompt as the CI workflow.
+# Usage:
+#   bin/review              - review current branch against main
+#   bin/review main         - review against a specific base branch
+#   bin/review abc123       - review against a specific commit
+
+BASE="${1:-main}"
+
+# Verify we have something to review
+if git diff --quiet "${BASE}"...HEAD 2>/dev/null; then
+  echo "No changes found between ${BASE} and HEAD."
+  exit 0
+fi
+
+claude --print --allowedTools \
+  'Read' \
+  'Bash(git diff:*)' \
+  'Bash(git log:*)' \
+  'Bash(grep:*)' \
+  'Bash(find:*)' \
+  --prompt "$(cat <<EOF
+Goal: Catch real bugs, security issues, and risky changes through static reasoning (no builds, no tests).
+
+Read .github/REVIEW_PROMPT.md for the full review instructions, severity definitions, and output format. Follow them exactly.
+
+Context access:
+- Run \`git diff ${BASE}...HEAD\` to obtain the diff to review.
+- Base your review primarily on this diff.
+- You may open files and search the codebase to understand context and verify assumptions about changed lines.
+- Do not explore unrelated parts of the repository.
+
+Output: Print the review directly to stdout. Do not post it anywhere. Respond with ONLY the markdown review (no preamble, no code fences).
+EOF
+)"

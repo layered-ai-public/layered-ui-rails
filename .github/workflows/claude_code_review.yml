@@ -32,49 +32,17 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           prompt: |
-            Role: You are a senior code reviewer.
             Task: Review the pull request #${{ github.event.pull_request.number || inputs.pr_number }}
-            Goal: Identify potential bugs, risky changes, and code quality issues through static reasoning (no builds, no tests).
+            Goal: Catch real bugs, security issues, and risky changes through static reasoning (no builds, no tests).
 
-            Rules:
-            - Do NOT write or modify any files in the repository.
-            - If a CLAUDE.md or AGENTS.md file exists, read it for repository-specific guidance.
-            - Only review the changed lines and their immediate visible context in the diff.
-            - Do not infer behaviour from files or code not in the diff or codebase.
-            - Do not comment on unchanged code.
-            - Keep suggestions minimal, actionable, and safe.
-            - Avoid generic best-practice advice unless directly relevant to the change.
-            - If uncertain, state uncertainty rather than guessing.
-            - Focus on issues that meaningfully impact correctness, safety, or maintainability.
-            - Do not hold back lower-severity issues if they are still actionable and relevant, but do not be pedantic.
-            - Do not flag standard framework behaviour as an issue (e.g. how Rails helpers handle unknown keys).
-            - Do not speculate about compatibility with versions, environments, or configurations that are not evidenced in the diff or codebase.
-            - Do not flag design decisions (API defaults, naming conventions) unless they introduce a concrete bug or safety issue. "I would have done it differently" is not a finding.
-            - Only flag hypothetical edge cases if they are reachable through normal use of the public API as shown in the diff. Do not invent exotic configurations to create a problem.
-            - CRITICAL: Provide a complete review in a single pass. Include all relevant issues you can identify to avoid requiring multiple review cycles as this wastes developer momentum.
+            Read .github/REVIEW_PROMPT.md for the full review instructions, severity definitions, and output format. Follow them exactly.
 
             Context access:
             - Use git to obtain the PR diff against the base branch (e.g. `git diff origin/${{ github.base_ref }}...HEAD`). If unavailable, determine the correct base via git.
             - Base your review primarily on this diff.
-            - You may open files only to understand the immediate context of changed lines.
+            - You may open files and search the codebase to understand context and verify assumptions about changed lines.
             - Do not explore unrelated parts of the repository.
 
-            Severity guide:
-            - CRITICAL - Data loss, security vulnerability, silent corruption, or outage risk.
-            - HIGH - Likely bug, race condition, or serious logic error.
-            - MEDIUM - Code smell, unclear intent, or moderate maintainability concern.
-            - LOW - Style nit, minor readability issue, or small improvement opportunity.
-            - INFORMATIONAL - Observation or question, no action needed.
-            - Prefer the lowest reasonable severity if unsure.
-
             Output: Post the review as a PR comment using `gh pr comment ${{ github.event.pull_request.number || inputs.pr_number }} --body "..."`. Respond with ONLY the markdown review (no preamble, no code fences).
-
-            - If no issues are found, keep the response concise and do not add filler commentary.
-
-            1. **Summary** - One or two sentences on what the PR does.
-            2. **Issues** - A table with columns: Severity | File | Line(s) | Description.
-               - Each issue must reference a specific line or change in the diff.
-               - Omit this section entirely if there are no issues.
-            3. **Verdict** - One of: ✅ **Ship** / 🟧 **Ship (with risk-accepted issues)** / 🚫 **Needs changes** - with a one-sentence justification.
           claude_args: |
-            --allowedTools Read,Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr comment:*),Bash(git diff:*),Bash(git log:*)
+            --allowedTools Read,Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr comment:*),Bash(git diff:*),Bash(git log:*),Bash(grep:*),Bash(find:*)
