@@ -28,9 +28,12 @@
     <%= l_ui_navigation_item "Badges", badges_path %>
     <%= l_ui_navigation_item "Notices", notices_path %>
     <%= l_ui_navigation_item "Forms", forms_path do %>
+      <%= l_ui_navigation_item "Helper", forms_helper_path %>
       <%= l_ui_navigation_item "Errors", form_errors_path %>
     <% end %>
-    <%= l_ui_navigation_item "Tables", tables_path %>
+    <%= l_ui_navigation_item "Tables", tables_path do %>
+      <%= l_ui_navigation_item "Helper", tables_helper_path %>
+    <% end %>
     <%= l_ui_navigation_item "Tabs", tabs_path %>
     <%= l_ui_navigation_item "Conversations", conversations_path %>
     <%= l_ui_navigation_item "Pagination", pagination_path %>
