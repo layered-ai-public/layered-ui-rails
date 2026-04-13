@@ -1,5 +1,4 @@
-.claude/*
-!.claude/commands/
+.claude
 .DS_Store
 *.gem
 

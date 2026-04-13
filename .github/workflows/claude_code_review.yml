@@ -9,40 +9,10 @@ on:
         description: PR number to review
         required: true
 
-permissions:
-  contents: read
-  pull-requests: write
-  issues: read
-  id-token: write
-  actions: read
-
 jobs:
   review:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Review pull request
-        uses: anthropics/claude-code-action@v1.0.88
-        env:
-          GH_TOKEN: ${{ github.token }}
-        with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          prompt: |
-            Task: Review the pull request #${{ github.event.pull_request.number || inputs.pr_number }}
-            Goal: Catch real bugs, security issues, and risky changes through static reasoning (no builds, no tests).
-
-            Read .github/REVIEW_PROMPT.md for the full review instructions, severity definitions, and output format. Follow them exactly.
-
-            Context access:
-            - Use git to obtain the PR diff against the base branch (e.g. `git diff origin/${{ github.base_ref }}...HEAD`). If unavailable, determine the correct base via git.
-            - Base your review primarily on this diff.
-            - You may open files and search the codebase to understand context and verify assumptions about changed lines.
-            - Do not explore unrelated parts of the repository.
-
-            Output: Post the review as a PR comment using `gh pr comment ${{ github.event.pull_request.number || inputs.pr_number }} --body "..."`. Respond with ONLY the markdown review (no preamble, no code fences).
-          claude_args: |
-            --allowedTools Read,Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr comment:*),Bash(git diff:*),Bash(git log:*),Bash(grep:*),Bash(find:*)
+    uses: layered-ai-public/claude-review-action/.github/workflows/claude-review.yml@main
+    with:
+      pr_number: ${{ inputs.pr_number }}
+    secrets:
+      anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
