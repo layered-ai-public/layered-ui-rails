@@ -36,8 +36,8 @@ else
   TREE="$TMP/tree.json"
   curl -fsSL "$API" -o "$TREE"
 
-  # Extract skill file paths from the tree (matching our skill directory)
-  grep "\"path\": \"$SKILL_PATH/" "$TREE" > "$TMP/files.txt" || true
+  # Extract skill file paths from the tree (files only, skip directories)
+  grep "\"path\": \"$SKILL_PATH/" "$TREE" | grep '\.[a-zA-Z]' > "$TMP/files.txt" || true
 
   # Download each file into the temp directory.
   # Uses file redirection (not a pipe) so the loop runs in the current shell,
