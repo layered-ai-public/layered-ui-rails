@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
 
   # Files
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
-    Dir["{app,config,lib}/**/*", "NOTICE", "LICENSE", "TRADEMARK.md", "CLA.md", "CHANGELOG.md", "README.md", "AGENTS.md", "Rakefile"]
+    Dir["{app,config,lib,.claude/skills}/**/*", "NOTICE", "LICENSE", "TRADEMARK.md", "CLA.md", "CHANGELOG.md", "README.md", "AGENTS.md", "Rakefile"]
       .reject { |f| File.basename(f) == ".DS_Store" }
   end
   spec.require_paths = ["lib"]
