@@ -120,6 +120,85 @@ Returns a `<th>` element with sort link and ARIA sort attributes.
 </table>
 ```
 
+## Table
+
+```ruby
+l_ui_table(records, columns:, caption: nil, actions: nil,
+           actions_label: "Actions", query: nil, url: nil, turbo_frame: nil)
+```
+
+- `records` (ActiveRecord::Relation or Array) - the collection to render
+- `columns` (Array<Hash>) - column definitions (see below)
+- `caption` (String, optional) - visually hidden table caption for accessibility
+- `actions` (Proc, optional) - receives (record), returns action cell content
+- `actions_label` (String) - header text for the actions column, default "Actions"
+- `query` (Ransack::Search, optional) - enables sortable column headers
+- `url` (String, optional) - sort link URL (passed to `l_ui_sort_link`)
+- `turbo_frame` (String, optional) - turbo frame target for sort links
+
+Column options:
+- `attribute` (Symbol) - model attribute for data and label generation
+- `label` (String, optional) - custom header text; defaults to humanised attribute
+- `primary` (Boolean, optional) - renders as `<th scope="row">`; defaults to first column
+- `sortable` (Boolean, optional) - show sort link when `query:` is provided; defaults to true
+- `render` (Proc, optional) - receives (record), returns cell content
+
+When no `render:` proc is given, the cell value is extracted via `record[attribute]` for hashes or `record.public_send(attribute)` for objects, with automatic date formatting.
+
+```erb
+<%= l_ui_table(@users,
+  columns: [
+    { attribute: :name, primary: true, render: ->(r) { link_to r.name, user_path(r) } },
+    { attribute: :email },
+    { attribute: :created_at, label: "Joined" },
+  ],
+  actions: ->(r) { link_to "Edit", edit_user_path(r) },
+  caption: "Users",
+  query: @q,
+  turbo_frame: "users") %>
+```
+
+## Form
+
+```ruby
+l_ui_form(record, fields:, url:, method: nil)
+```
+
+- `record` (ActiveRecord) - the model instance
+- `fields` (Array<Hash>) - field definitions (see below)
+- `url` (String) - form action URL
+- `method` (Symbol, optional) - HTTP method override
+
+Renders a complete form with all fields, error summary, and submit button via the `layered/ui/managed_resource/form` partial.
+
+Field options:
+- `attribute` (Symbol) - model attribute
+- `as` (Symbol, optional) - field type; auto-detected from column type. Supported: `:string`, `:text`, `:email`, `:number`, `:date`, `:datetime`, `:select`, `:checkbox`, `:hidden`
+- `label` (String, optional) - custom label text; defaults to humanised attribute
+- `required` (Boolean, optional) - marks field as required; default false
+- `hint` (String, optional) - help text below the field
+- `collection` (Array, optional) - required for `:select` type; e.g. `[['Label', value], ...]`
+- `placeholder` (String, optional) - input placeholder text
+
+```erb
+<%= l_ui_form(@post,
+  fields: [
+    { attribute: :title, required: true },
+    { attribute: :body, as: :text },
+    { attribute: :category, as: :select, collection: Category.pluck(:name, :id) },
+    { attribute: :published, as: :checkbox },
+  ],
+  url: posts_path) %>
+```
+
+### Form utility helpers
+
+```ruby
+l_ui_normalise_field(record, config)  # Normalise a raw field config into canonical form
+l_ui_field_error_id(record, attribute)  # Error element ID for aria-describedby
+l_ui_field_hint_id(record, attribute)   # Hint element ID for aria-describedby
+```
+
 ## Authentication
 
 ```ruby

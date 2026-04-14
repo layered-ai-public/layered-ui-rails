@@ -102,6 +102,9 @@ Quick reference:
 | `l_ui_pagy(pagy)` | Styled pagination (requires pagy gem) |
 | `l_ui_search_form(query, url:, fields:, ...)` | Search form (requires ransack gem) |
 | `l_ui_sort_link(query, attribute, label = nil, ...)` | Sortable table header (requires ransack gem) |
+| `l_ui_table(records, columns:, caption:, ...)` | Styled accessible data table with optional sort and actions |
+| `l_ui_form(record, fields:, url:, method:)` | Complete form with fields, error summary, and submit |
+| `l_ui_normalise_field(record, config)` | Normalise a raw field config hash into canonical form |
 | `l_ui_user_signed_in?` | Check if user is authenticated |
 | `l_ui_current_user` | Current user object |
 

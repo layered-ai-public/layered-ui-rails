@@ -36,14 +36,20 @@ else
   TREE="$TMP/tree.json"
   curl -fsSL "$API" -o "$TREE"
 
-  # Extract skill file paths from the tree (files only, skip directories)
-  grep "\"path\": \"$SKILL_PATH/" "$TREE" | grep '\.[a-zA-Z]' > "$TMP/files.txt" || true
+  # Extract skill file paths from the tree (files only, skip directories).
+  # Filter requires a dot in the filename after the skill prefix to exclude
+  # bare directory names like "references" (the dot in ".claude" earlier in
+  # the path was previously causing false positives).
+  grep "\"path\": \"$SKILL_PATH/" "$TREE" \
+    | sed "s|.*\"path\": \"$SKILL_PATH/||" \
+    | sed 's/".*//' \
+    | grep '\.' \
+    > "$TMP/files.txt" || true
 
   # Download each file into the temp directory.
   # Uses file redirection (not a pipe) so the loop runs in the current shell,
   # ensuring set -e and exit 1 work correctly on download failure.
-  while read -r line; do
-    file=$(echo "$line" | sed "s|.*\"path\": \"$SKILL_PATH/||" | sed 's/".*//')
+  while read -r file; do
     mkdir -p "$TMP/$(dirname "$file")"
     curl -fsSL "$RAW/$SKILL_PATH/$file" -o "$TMP/$file" || { echo "Error: failed to download $file" >&2; exit 1; }
   done < "$TMP/files.txt"
