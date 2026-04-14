@@ -153,6 +153,24 @@ For per-request icons, set instance variables - the engine renders `<link>` and 
 
 > **Security:** Rails HTML-escapes URL values, so XSS via attribute injection is mitigated. However, if values are tenant-controlled, validate that they are legitimate URLs - reject `javascript:` schemes and ensure values point to expected origins.
 
+## Agent skill
+
+An [agent skill](https://agentskills.io) is included so AI coding agents like Claude Code can work with layered-ui-rails in your project.
+
+**Project install** - scoped to a single repo, available to all contributors:
+
+```bash
+bin/rails generate layered:ui:install_agent_skill
+```
+
+**Global install** - available across all your projects:
+
+```bash
+./install-skill.sh
+# or install remotely without cloning the repo:
+curl -fsSL https://raw.githubusercontent.com/layered-ai-public/layered-ui-rails/main/install-skill.sh | sh
+```
+
 ## Documentation
 
 An online version of the documentation is available at **[layered-ui-rails.layered.ai](https://layered-ui-rails.layered.ai)**.
