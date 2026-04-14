@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Added
 
+- Agent skill for AI coding agents
+- `layered:ui:install_agent_skill` generator for project-scoped skill install
+- Global install script (`install-skill.sh`) for cross-project skill availability
 - Breadcrumbs helper (`l_ui_breadcrumbs`, `l_ui_breadcrumb_item`) for hierarchical navigation
 - Inline dark mode script in layout `<head>` to prevent white flash on page reload
 - Breadcrumbs added to all dummy app documentation pages with "Home" as the new root item
