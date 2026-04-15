@@ -23,17 +23,17 @@ class TableHelperTest < ActionView::TestCase
   end
 
   test "renders header cells with scope col" do
-    result = build_table([mock_record("Alice")], columns: [{ attribute: :name }])
+    result = build_table([mock_record("Alice")])
     assert_includes result, '<th class="l-ui-table__header-cell" scope="col">Name</th>'
   end
 
   test "auto-generates label from attribute name" do
-    result = build_table([mock_record("Alice")], columns: [{ attribute: :created_at }])
+    result = build_table([mock_record("Alice")], columns: [{ attribute: :created_at, render: ->(r) { r.created_at } }])
     assert_includes result, "Created at"
   end
 
   test "uses custom label when provided" do
-    result = build_table([mock_record("Alice")], columns: [{ attribute: :created_at, label: "Joined" }])
+    result = build_table([mock_record("Alice")], columns: [{ attribute: :created_at, label: "Joined", render: ->(r) { r.created_at } }])
     assert_includes result, "Joined"
     assert_not_includes result, "Created at"
   end
@@ -41,14 +41,23 @@ class TableHelperTest < ActionView::TestCase
   # -- primary column --
 
   test "first column is primary by default" do
-    result = build_table([mock_record("Alice")], columns: [{ attribute: :name }, { attribute: :email }])
+    result = build_table(
+      [mock_record("Alice")],
+      columns: [
+        { attribute: :name, render: ->(r) { r.name } },
+        { attribute: :email, render: ->(r) { r.email } },
+      ]
+    )
     assert_includes result, '<th class="l-ui-table__cell--primary" scope="row">Alice</th>'
   end
 
   test "explicit primary overrides default" do
     result = build_table(
       [mock_record("Alice", email: "alice@example.com")],
-      columns: [{ attribute: :name }, { attribute: :email, primary: true }]
+      columns: [
+        { attribute: :name, render: ->(r) { r.name } },
+        { attribute: :email, primary: true, render: ->(r) { r.email } },
+      ]
     )
     # name should be a regular cell, email should be primary
     assert_includes result, '<td class="l-ui-table__cell">Alice</td>'
@@ -70,13 +79,13 @@ class TableHelperTest < ActionView::TestCase
   # -- empty state --
 
   test "renders empty state message" do
-    result = build_table([], columns: [{ attribute: :name }])
+    result = build_table([], columns: [{ attribute: :name, render: ->(r) { r.name } }])
     assert_includes result, "No records found."
     assert_includes result, 'colspan="1"'
   end
 
   test "empty state colspan accounts for actions column" do
-    result = build_table([], columns: [{ attribute: :name }], actions: ->(r) { "Edit" })
+    result = build_table([], columns: [{ attribute: :name, render: ->(r) { r.name } }], actions: ->(r) { "Edit" })
     assert_includes result, 'colspan="2"'
   end
 
@@ -91,30 +100,29 @@ class TableHelperTest < ActionView::TestCase
     assert_not_includes result, ">Alice<"
   end
 
-  test "falls back to public_send when no render proc" do
-    result = build_table([mock_record("Alice")])
-    assert_includes result, "Alice"
+  test "raises ArgumentError when render proc is missing" do
+    assert_raises(ArgumentError) do
+      build_table(
+        [mock_record("Alice")],
+        columns: [{ attribute: :name }]
+      )
+    end
   end
 
-  test "formats date values when no render proc" do
-    date = Time.new(2025, 3, 15, 10, 30, 0)
-    record = mock_record("Alice", created_at: date)
-    result = build_table(
-      [record],
-      columns: [{ attribute: :name }, { attribute: :created_at }]
-    )
-    assert_includes result, "15 Mar 2025 10:30"
+  test "raises ArgumentError when render proc is missing even with empty collection" do
+    assert_raises(ArgumentError) do
+      build_table([], columns: [{ attribute: :name }])
+    end
   end
 
-  test "does not format dates when render proc is provided" do
-    date = Time.new(2025, 3, 15, 10, 30, 0)
-    record = mock_record("Alice", created_at: date)
-    result = build_table(
-      [record],
-      columns: [{ attribute: :name }, { attribute: :created_at, render: ->(r) { "custom" } }]
-    )
-    assert_includes result, "custom"
-    assert_not_includes result, "15 Mar 2025"
+  # -- l_ui_format_datetime --
+
+  test "formats a datetime value" do
+    assert_equal "15 Mar 2025, 10:30", l_ui_format_datetime(Time.new(2025, 3, 15, 10, 30, 0))
+  end
+
+  test "returns nil for nil datetime" do
+    assert_nil l_ui_format_datetime(nil)
   end
 
   # -- actions column --
@@ -138,7 +146,7 @@ class TableHelperTest < ActionView::TestCase
 
   test "uses custom actions label" do
     result = l_ui_table([mock_record("Alice")],
-      columns: [{ attribute: :name }],
+      columns: [{ attribute: :name, render: ->(r) { r.name } }],
       actions: ->(r) { "Edit" },
       actions_label: "Options"
     )
@@ -167,7 +175,7 @@ class TableHelperTest < ActionView::TestCase
   test "renders sort links when query is provided" do
     q = User.ransack({})
     result = l_ui_table([mock_record("Alice")],
-      columns: [{ attribute: :name }],
+      columns: [{ attribute: :name, render: ->(r) { r.name } }],
       query: q
     )
     assert_includes result, "l-ui-table__sort-link"
@@ -183,7 +191,7 @@ class TableHelperTest < ActionView::TestCase
   test "non-sortable columns render plain headers even with query" do
     q = User.ransack({})
     result = l_ui_table([mock_record("Alice")],
-      columns: [{ attribute: :name, sortable: false }],
+      columns: [{ attribute: :name, sortable: false, render: ->(r) { r.name } }],
       query: q
     )
     assert_not_includes result, "l-ui-table__sort-link"
@@ -192,29 +200,22 @@ class TableHelperTest < ActionView::TestCase
 
   # -- hash records --
 
-  test "renders hash records without render procs" do
+  test "renders hash records with render procs" do
     records = [
       { name: "Alice", role: "Admin" },
       { name: "Bob", role: "Editor" },
     ]
-    result = l_ui_table(records, columns: [{ attribute: :name }, { attribute: :role }], caption: "People")
+    result = l_ui_table(records,
+      columns: [
+        { attribute: :name, render: ->(r) { r[:name] } },
+        { attribute: :role, render: ->(r) { r[:role] } },
+      ],
+      caption: "People"
+    )
     assert_includes result, '<th class="l-ui-table__cell--primary" scope="row">Alice</th>'
     assert_includes result, '<td class="l-ui-table__cell">Admin</td>'
     assert_includes result, '<th class="l-ui-table__cell--primary" scope="row">Bob</th>'
     assert_includes result, '<td class="l-ui-table__cell">Editor</td>'
-  end
-
-  test "hash records work with render procs" do
-    records = [{ key: "Ctrl+S", action: "Save" }]
-    result = l_ui_table(records,
-      columns: [
-        { attribute: :key, render: ->(r) { tag.kbd(r[:key]) } },
-        { attribute: :action },
-      ],
-      caption: "Shortcuts"
-    )
-    assert_includes result, "<kbd>Ctrl+S</kbd>"
-    assert_includes result, '<td class="l-ui-table__cell">Save</td>'
   end
 
   # -- nil values --
@@ -223,14 +224,17 @@ class TableHelperTest < ActionView::TestCase
     record = mock_record("Alice", email: nil)
     result = build_table(
       [record],
-      columns: [{ attribute: :name }, { attribute: :email }]
+      columns: [
+        { attribute: :name, render: ->(r) { r.name } },
+        { attribute: :email, render: ->(r) { r.email } },
+      ]
     )
     assert_includes result, '<td class="l-ui-table__cell"></td>'
   end
 
   private
 
-  def build_table(records, columns: [{ attribute: :name }], caption: nil, actions: nil)
+  def build_table(records, columns: [{ attribute: :name, render: ->(r) { r.name } }], caption: nil, actions: nil)
     l_ui_table(records, columns: columns, caption: caption, actions: actions)
   end
 

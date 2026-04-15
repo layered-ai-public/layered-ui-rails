@@ -7,8 +7,8 @@
 <p class="l-ui-utility--mt-md">Pass a collection and an array of column hashes. The first column is automatically treated as the primary (<code>&lt;th scope="row"&gt;</code>) column.</p>
 
 <%= l_ui_table(@users, columns: [
-      { attribute: :name },
-      { attribute: :email },
+      { attribute: :name, render: ->(r) { r.name } },
+      { attribute: :email, render: ->(r) { r.email } },
     ],
     caption: "Users") %>
 
@@ -23,8 +23,8 @@
     </div>
     <div class="l-ui-modal__body">
       <pre class="l-ui-surface"><code>&lt;%= l_ui_table(@users, columns: [
-      { attribute: :name },
-      { attribute: :email },
+      { attribute: :name, render: -&gt;(r) { r.name } },
+      { attribute: :email, render: -&gt;(r) { r.email } },
     ],
     caption: "Users") %&gt;</code></pre>
     </div>
@@ -33,12 +33,12 @@
 
 <h2 class="l-ui-utility--mt-2xl">Custom cell rendering</h2>
 
-<p class="l-ui-utility--mt-md">Use <code>render:</code> procs to customise how each cell is displayed. You can also set <code>label:</code> to override the column header text.</p>
+<p class="l-ui-utility--mt-md">Use <code>render:</code> procs to customise how each cell is displayed. You can also set <code>label:</code> to override the column header text. For date/time columns, the <code>l_ui_format_datetime</code> helper formats values as "15 Apr 2026, 10:30".</p>
 
 <%= l_ui_table(@posts, columns: [
       { attribute: :title, render: ->(r) { link_to r.title, "#" } },
       { attribute: :body, label: "Summary", render: ->(r) { truncate(r.body, length: 60) } },
-      { attribute: :created_at, label: "Created" },
+      { attribute: :created_at, label: "Created", render: ->(r) { l_ui_format_datetime(r.created_at) } },
     ],
     caption: "Posts") %>
 
@@ -57,7 +57,8 @@
         render: -&gt;(r) { link_to r.title, post_path(r) } },
       { attribute: :body, label: "Summary",
         render: -&gt;(r) { truncate(r.body, length: 60) } },
-      { attribute: :created_at, label: "Created" },
+      { attribute: :created_at, label: "Created",
+        render: -&gt;(r) { l_ui_format_datetime(r.created_at) } },
     ],
     caption: "Posts") %&gt;</code></pre>
     </div>
@@ -70,7 +71,7 @@
 
 <%= l_ui_table(@posts, columns: [
       { attribute: :title, render: ->(r) { render("posts/title_cell", post: r) } },
-      { attribute: :created_at, label: "Created" },
+      { attribute: :created_at, label: "Created", render: ->(r) { l_ui_format_datetime(r.created_at) } },
     ],
     caption: "Posts with partial rendering") %>
 
@@ -87,7 +88,8 @@
       <pre class="l-ui-surface"><code>&lt;%= l_ui_table(@posts, columns: [
       { attribute: :title,
         render: -&gt;(r) { render("posts/title_cell", post: r) } },
-      { attribute: :created_at, label: "Created" },
+      { attribute: :created_at, label: "Created",
+        render: -&gt;(r) { l_ui_format_datetime(r.created_at) } },
     ],
     caption: "Posts with partial rendering") %&gt;</code></pre>
 
@@ -104,8 +106,8 @@
 <p class="l-ui-utility--mt-md">Pass an <code>actions:</code> proc to add a right-aligned actions column. The <code>actions_label:</code> option sets the header text (defaults to "Actions").</p>
 
 <%= l_ui_table(@users.first(5), columns: [
-      { attribute: :name },
-      { attribute: :email },
+      { attribute: :name, render: ->(r) { r.name } },
+      { attribute: :email, render: ->(r) { r.email } },
     ],
     actions: ->(r) { link_to("Edit", "#") },
     caption: "Users with actions") %>
@@ -121,8 +123,8 @@
     </div>
     <div class="l-ui-modal__body">
       <pre class="l-ui-surface"><code>&lt;%= l_ui_table(@users, columns: [
-      { attribute: :name },
-      { attribute: :email },
+      { attribute: :name, render: -&gt;(r) { r.name } },
+      { attribute: :email, render: -&gt;(r) { r.email } },
     ],
     actions: -&gt;(r) { link_to("Edit", edit_user_path(r)) },
     caption: "Users with actions") %&gt;</code></pre>
@@ -132,7 +134,7 @@
 
 <h2 class="l-ui-utility--mt-2xl">Hash data</h2>
 
-<p class="l-ui-utility--mt-md">Collections don't have to be ActiveRecord - arrays of hashes work too. The helper reads values via <code>hash[:attribute]</code> instead of <code>record.public_send(:attribute)</code>, so you only need <code>render:</code> procs when you're actually transforming the output.</p>
+<p class="l-ui-utility--mt-md">Collections don't have to be ActiveRecord - arrays of hashes work too. Use <code>render:</code> procs to read hash keys (e.g. <code>r[:key]</code>) just as you would for object attributes.</p>
 
 <% keyboard_shortcuts = [
   { key: "Ctrl+S", action: "Save" },
@@ -142,7 +144,7 @@
 
 <%= l_ui_table(keyboard_shortcuts, columns: [
       { attribute: :key, label: "Shortcut", render: ->(r) { tag.kbd(r[:key]) } },
-      { attribute: :action },
+      { attribute: :action, render: ->(r) { r[:action] } },
     ],
     caption: "Keyboard shortcuts") %>
 
@@ -164,7 +166,8 @@
 &lt;%= l_ui_table(shortcuts, columns: [
       { attribute: :key, label: "Shortcut",
         render: -&gt;(r) { tag.kbd(r[:key]) } },
-      { attribute: :action },
+      { attribute: :action,
+        render: -&gt;(r) { r[:action] } },
     ],
     caption: "Keyboard shortcuts") %&gt;</code></pre>
     </div>
@@ -176,8 +179,8 @@
 <p class="l-ui-utility--mt-md">When the collection is empty, the table renders a single "No records found." row spanning all columns.</p>
 
 <%= l_ui_table([], columns: [
-      { attribute: :name },
-      { attribute: :email },
+      { attribute: :name, render: ->(r) { r.name } },
+      { attribute: :email, render: ->(r) { r.email } },
     ],
     caption: "Empty table") %>
 
@@ -192,8 +195,8 @@
     </div>
     <div class="l-ui-modal__body">
       <pre class="l-ui-surface"><code>&lt;%= l_ui_table([], columns: [
-      { attribute: :name },
-      { attribute: :email },
+      { attribute: :name, render: -&gt;(r) { r.name } },
+      { attribute: :email, render: -&gt;(r) { r.email } },
     ],
     caption: "Empty table") %&gt;</code></pre>
     </div>
@@ -268,7 +271,7 @@
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><code>attribute:</code></th>
         <td class="l-ui-table__cell">Symbol</td>
-        <td class="l-ui-table__cell">Model attribute for data and label generation</td>
+        <td class="l-ui-table__cell">Used for label generation and sort links</td>
       </tr>
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><code>label:</code></th>
@@ -288,7 +291,7 @@
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><code>render:</code></th>
         <td class="l-ui-table__cell">Proc</td>
-        <td class="l-ui-table__cell">Receives the record, returns cell content</td>
+        <td class="l-ui-table__cell">Required. Receives the record, returns cell content</td>
       </tr>
     </tbody>
   </table>
