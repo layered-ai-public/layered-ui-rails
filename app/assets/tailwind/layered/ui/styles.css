@@ -902,7 +902,7 @@ pre.l-ui-surface {
 /* Form */
 
 .l-ui-form {
-  @apply w-full mt-4;
+  @apply w-full;
 }
 
 .l-ui-form__errors-list {

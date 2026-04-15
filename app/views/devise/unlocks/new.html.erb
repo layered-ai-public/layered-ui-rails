@@ -2,7 +2,7 @@
   <div class="l-ui-page--width-constrained">
     <h1>Resend unlock instructions</h1>
 
-    <%= form_with(model: resource, as: resource_name, url: unlock_path(resource_name), method: :post, class: 'l-ui-form') do |f| %>
+    <%= form_with(model: resource, as: resource_name, url: unlock_path(resource_name), method: :post, class: 'l-ui-form l-ui-utility--mt-md') do |f| %>
       <%= render 'layered_ui/shared/form_errors', item: resource %>
 
       <div class="l-ui-form__group">
