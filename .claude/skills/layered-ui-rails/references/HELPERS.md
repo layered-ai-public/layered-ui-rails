@@ -143,12 +143,16 @@ Column options:
 - `sortable` (Boolean, optional) - show sort link when `query:` is provided; defaults to true
 - `render` (Proc, required) - receives (record), returns cell content
 
+### `l_ui_format_datetime(value)`
+
+Formats a date/time value as `"%-d %b %Y %H:%M"` (e.g. "15 Apr 2026 10:30"). Returns `nil` for `nil` input. Useful inside `render:` procs for date columns.
+
 ```erb
 <%= l_ui_table(@users,
   columns: [
     { attribute: :name, primary: true, render: ->(r) { link_to r.name, user_path(r) } },
     { attribute: :email, render: ->(r) { r.email } },
-    { attribute: :created_at, label: "Joined", render: ->(r) { r.created_at&.strftime("%-d %b %Y %H:%M") } },
+    { attribute: :created_at, label: "Joined", render: ->(r) { l_ui_format_datetime(r.created_at) } },
   ],
   actions: ->(r) { link_to "Edit", edit_user_path(r) },
   caption: "Users",

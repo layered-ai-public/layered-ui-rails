@@ -38,7 +38,7 @@
 <%= l_ui_table(@posts, columns: [
       { attribute: :title, render: ->(r) { link_to r.title, "#" } },
       { attribute: :body, label: "Summary", render: ->(r) { truncate(r.body, length: 60) } },
-      { attribute: :created_at, label: "Created", render: ->(r) { r.created_at&.strftime("%-d %b %Y %H:%M") } },
+      { attribute: :created_at, label: "Created", render: ->(r) { l_ui_format_datetime(r.created_at) } },
     ],
     caption: "Posts") %>
 
@@ -58,7 +58,7 @@
       { attribute: :body, label: "Summary",
         render: -&gt;(r) { truncate(r.body, length: 60) } },
       { attribute: :created_at, label: "Created",
-        render: -&gt;(r) { r.created_at&amp;.strftime("%-d %b %Y %H:%M") } },
+        render: -&gt;(r) { l_ui_format_datetime(r.created_at) } },
     ],
     caption: "Posts") %&gt;</code></pre>
     </div>
@@ -71,7 +71,7 @@
 
 <%= l_ui_table(@posts, columns: [
       { attribute: :title, render: ->(r) { render("posts/title_cell", post: r) } },
-      { attribute: :created_at, label: "Created", render: ->(r) { r.created_at&.strftime("%-d %b %Y %H:%M") } },
+      { attribute: :created_at, label: "Created", render: ->(r) { l_ui_format_datetime(r.created_at) } },
     ],
     caption: "Posts with partial rendering") %>
 
@@ -89,7 +89,7 @@
       { attribute: :title,
         render: -&gt;(r) { render("posts/title_cell", post: r) } },
       { attribute: :created_at, label: "Created",
-        render: -&gt;(r) { r.created_at&amp;.strftime("%-d %b %Y %H:%M") } },
+        render: -&gt;(r) { l_ui_format_datetime(r.created_at) } },
     ],
     caption: "Posts with partial rendering") %&gt;</code></pre>
 

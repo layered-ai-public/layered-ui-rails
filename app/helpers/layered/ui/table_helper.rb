@@ -26,6 +26,14 @@ module Layered
       #
       # Pass +query:+ (a Ransack search object) and +turbo_frame:+ to enable
       # sortable column headers via +l_ui_sort_link+.
+
+      # Formats a date/time value for display in a table cell.
+      #
+      #   l_ui_format_datetime(record.created_at) # => "15 Apr 2026 10:30"
+      def l_ui_format_datetime(value)
+        value&.strftime("%-d %b %Y, %H:%M")
+      end
+
       def l_ui_table(records, columns:, caption: nil, actions: nil, actions_label: "Actions", query: nil, url: nil, turbo_frame: nil)
         columns = normalise_table_columns(columns)
         col_count = columns.size + (actions ? 1 : 0)
