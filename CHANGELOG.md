@@ -7,10 +7,10 @@ All notable changes to this project will be documented in this file. This projec
 ### Added
 
 - `l-ui-form__actions` CSS class for right-aligned form action buttons that stack full-width on mobile
-- `l-ui-button--danger` CSS class for solid red destructive action buttons
 
 ### Changed
 
+- `l-ui-button--danger` is now a standalone variant (no longer requires a base button class)
 - `l_ui_table` now requires a `render:` proc on every column - the helper no longer auto-extracts values via `public_send`/hash access or auto-formats dates
 - `l_ui_table` no longer renders with an implicit top margin - wrap in a utility class if spacing is needed
 - `l_ui_form` submit button now uses `l-ui-form__actions` wrapper for right-aligned, mobile-responsive layout
