@@ -750,6 +750,12 @@
          text-foreground;
 }
 
+.l-ui-button--danger {
+  @apply button
+         bg-danger
+         text-white;
+}
+
 .l-ui-button--outline-danger {
   @apply button
          border border-danger
@@ -780,7 +786,8 @@
          transition-colors;
 }
 
-.l-ui-button--disabled {
+[class*="l-ui-button--"]:disabled,
+.l-ui-button:disabled {
   @apply opacity-50
          cursor-not-allowed;
 }

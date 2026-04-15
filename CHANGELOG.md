@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file. This projec
 ### Added
 
 - `l-ui-form__actions` CSS class for right-aligned form action buttons that stack full-width on mobile
+- `l-ui-button--danger` CSS class for solid red destructive action buttons
 
 ### Changed
 
@@ -14,6 +15,7 @@ All notable changes to this project will be documented in this file. This projec
 - `l_ui_table` no longer renders with an implicit top margin - wrap in a utility class if spacing is needed
 - `l_ui_form` submit button now uses `l-ui-form__actions` wrapper for right-aligned, mobile-responsive layout
 - `l-ui-form` no longer renders with an implicit top margin - wrap in a utility class if spacing is needed
+- `l-ui-button--disabled` removed - disabled styling is now automatic via the `disabled` HTML attribute on any button variant
 
 ## [0.4.0] - 2026-04-14
 
