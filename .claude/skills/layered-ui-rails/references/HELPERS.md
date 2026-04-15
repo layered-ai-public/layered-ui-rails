@@ -137,20 +137,18 @@ l_ui_table(records, columns:, caption: nil, actions: nil,
 - `turbo_frame` (String, optional) - turbo frame target for sort links
 
 Column options:
-- `attribute` (Symbol) - model attribute for data and label generation
+- `attribute` (Symbol) - used for label generation and sort links
 - `label` (String, optional) - custom header text; defaults to humanised attribute
 - `primary` (Boolean, optional) - renders as `<th scope="row">`; defaults to first column
 - `sortable` (Boolean, optional) - show sort link when `query:` is provided; defaults to true
-- `render` (Proc, optional) - receives (record), returns cell content
-
-When no `render:` proc is given, the cell value is extracted via `record[attribute]` for hashes or `record.public_send(attribute)` for objects, with automatic date formatting.
+- `render` (Proc, required) - receives (record), returns cell content
 
 ```erb
 <%= l_ui_table(@users,
   columns: [
     { attribute: :name, primary: true, render: ->(r) { link_to r.name, user_path(r) } },
-    { attribute: :email },
-    { attribute: :created_at, label: "Joined" },
+    { attribute: :email, render: ->(r) { r.email } },
+    { attribute: :created_at, label: "Joined", render: ->(r) { r.created_at&.strftime("%-d %b %Y %H:%M") } },
   ],
   actions: ->(r) { link_to "Edit", edit_user_path(r) },
   caption: "Users",
