@@ -47,6 +47,7 @@ All classes use the `l-ui-` prefix with BEM naming. Use these in host app views.
 .l-ui-form__field            Input/textarea styling
 .l-ui-form__errors           Error summary box
 .l-ui-form__errors-list      Bulleted error list
+.l-ui-form__actions          Right-aligned action button container (full-width buttons on mobile)
 .l-ui-form__field-error      Individual field error message
 .l-ui-form__hint             Field hint text
 .l-ui-form__required         Required indicator (*)

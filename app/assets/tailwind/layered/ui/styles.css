@@ -916,6 +916,19 @@ pre.l-ui-surface {
   @apply mt-4;
 }
 
+.l-ui-form__actions {
+  @apply flex justify-end
+         mt-8;
+
+  & > * {
+    @apply w-full;
+
+    @media (min-width: 768px) {
+      @apply w-auto;
+    }
+  }
+}
+
 .l-ui-form__group--large-gap {
   @apply mt-8;
 }

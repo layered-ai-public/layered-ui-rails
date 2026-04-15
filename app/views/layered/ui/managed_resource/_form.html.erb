@@ -9,7 +9,7 @@
     <%= render "layered/ui/managed_resource/field", form: f, record: record, config: config %>
   <% end %>
 
-  <div class="l-ui-form__group">
+  <div class="l-ui-form__actions">
     <%= f.submit(record.new_record? ? "Create" : "Save changes",
                  class: "l-ui-button l-ui-button--primary") %>
   </div>
