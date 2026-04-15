@@ -109,6 +109,12 @@ class TableHelperTest < ActionView::TestCase
     end
   end
 
+  test "raises ArgumentError when render proc is missing even with empty collection" do
+    assert_raises(ArgumentError) do
+      build_table([], columns: [{ attribute: :name }])
+    end
+  end
+
   # -- actions column --
 
   test "renders actions header when actions proc is present" do

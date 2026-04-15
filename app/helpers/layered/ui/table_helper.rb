@@ -72,6 +72,12 @@ module Layered
       def normalise_table_columns(columns)
         has_primary = columns.any? { |c| c[:primary] }
         columns.each_with_index.map do |col, i|
+          unless col[:render]
+            raise ArgumentError,
+                  "Column #{col[:attribute].inspect} is missing a :render proc. " \
+                  "Every column must supply render: ->(record) { ... }"
+          end
+
           {
             attribute: col[:attribute],
             label: col[:label] || col[:attribute].to_s.humanize,
@@ -83,12 +89,6 @@ module Layered
       end
 
       def table_cell(record, col)
-        unless col[:render]
-          raise ArgumentError,
-                "Column #{col[:attribute].inspect} is missing a :render proc. " \
-                "Every column must supply render: ->(record) { ... }"
-        end
-
         value = col[:render].call(record)
 
         if col[:primary]
