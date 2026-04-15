@@ -33,7 +33,7 @@
 
 <h2 class="l-ui-utility--mt-2xl">Custom cell rendering</h2>
 
-<p class="l-ui-utility--mt-md">Use <code>render:</code> procs to customise how each cell is displayed. You can also set <code>label:</code> to override the column header text.</p>
+<p class="l-ui-utility--mt-md">Use <code>render:</code> procs to customise how each cell is displayed. You can also set <code>label:</code> to override the column header text. For date/time columns, the <code>l_ui_format_datetime</code> helper formats values as "15 Apr 2026, 10:30".</p>
 
 <%= l_ui_table(@posts, columns: [
       { attribute: :title, render: ->(r) { link_to r.title, "#" } },

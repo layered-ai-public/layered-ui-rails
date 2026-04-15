@@ -29,7 +29,7 @@ module Layered
 
       # Formats a date/time value for display in a table cell.
       #
-      #   l_ui_format_datetime(record.created_at) # => "15 Apr 2026 10:30"
+      #   l_ui_format_datetime(record.created_at) # => "15 Apr 2026, 10:30"
       def l_ui_format_datetime(value)
         value&.strftime("%-d %b %Y, %H:%M")
       end

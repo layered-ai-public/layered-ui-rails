@@ -145,7 +145,7 @@ Column options:
 
 ### `l_ui_format_datetime(value)`
 
-Formats a date/time value as `"%-d %b %Y %H:%M"` (e.g. "15 Apr 2026 10:30"). Returns `nil` for `nil` input. Useful inside `render:` procs for date columns.
+Formats a date/time value as `"%-d %b %Y, %H:%M"` (e.g. "15 Apr 2026, 10:30"). Returns `nil` for `nil` input. Useful inside `render:` procs for date columns.
 
 ```erb
 <%= l_ui_table(@users,

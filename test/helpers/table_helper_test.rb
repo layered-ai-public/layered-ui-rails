@@ -115,6 +115,16 @@ class TableHelperTest < ActionView::TestCase
     end
   end
 
+  # -- l_ui_format_datetime --
+
+  test "formats a datetime value" do
+    assert_equal "15 Mar 2025, 10:30", l_ui_format_datetime(Time.new(2025, 3, 15, 10, 30, 0))
+  end
+
+  test "returns nil for nil datetime" do
+    assert_nil l_ui_format_datetime(nil)
+  end
+
   # -- actions column --
 
   test "renders actions header when actions proc is present" do
