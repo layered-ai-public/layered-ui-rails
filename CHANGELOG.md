@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file. This projec
 ### Changed
 
 - `l_ui_table` now requires a `render:` proc on every column - the helper no longer auto-extracts values via `public_send`/hash access or auto-formats dates
+- `l_ui_table` no longer renders with an implicit top margin - wrap in a utility class if spacing is needed
 
 ## [0.4.0] - 2026-04-14
 
