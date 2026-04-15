@@ -4,10 +4,15 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+### Added
+
+- `l-ui-form__actions` CSS class for right-aligned form action buttons that stack full-width on mobile
+
 ### Changed
 
 - `l_ui_table` now requires a `render:` proc on every column - the helper no longer auto-extracts values via `public_send`/hash access or auto-formats dates
 - `l_ui_table` no longer renders with an implicit top margin - wrap in a utility class if spacing is needed
+- `l_ui_form` submit button now uses `l-ui-form__actions` wrapper for right-aligned, mobile-responsive layout
 
 ## [0.4.0] - 2026-04-14
 
