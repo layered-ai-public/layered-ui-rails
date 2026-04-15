@@ -15,7 +15,11 @@ All notable changes to this project will be documented in this file. This projec
 - `l_ui_table` no longer renders with an implicit top margin - wrap in a utility class if spacing is needed
 - `l_ui_form` submit button now uses `l-ui-form__actions` wrapper for right-aligned, mobile-responsive layout
 - `l-ui-form` no longer renders with an implicit top margin - wrap in a utility class if spacing is needed
-- `l-ui-button--disabled` removed - disabled styling is now automatic via the `disabled` HTML attribute on any button variant
+- Disabled button styling is now automatic via the `disabled` HTML attribute on any button variant - no extra class needed
+
+### Removed
+
+- `l-ui-button--disabled` modifier class - use the `disabled` HTML attribute instead
 
 ## [0.4.0] - 2026-04-14
 
