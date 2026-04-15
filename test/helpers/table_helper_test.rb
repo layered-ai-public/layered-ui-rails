@@ -16,7 +16,7 @@ class TableHelperTest < ActionView::TestCase
   test "renders table with correct CSS classes" do
     result = build_table([mock_record("Alice")])
     assert_includes result, "l-ui-container--table"
-    assert_includes result, "l-ui-utility--mt-lg"
+    assert_not_includes result, "l-ui-utility--mt-lg"
     assert_includes result, 'class="l-ui-table"'
     assert_includes result, 'class="l-ui-table__header"'
     assert_includes result, 'class="l-ui-table__body"'
