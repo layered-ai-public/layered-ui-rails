@@ -917,15 +917,11 @@ pre.l-ui-surface {
 }
 
 .l-ui-form__actions {
-  @apply flex justify-end
+  @apply flex flex-col gap-2 justify-end
          mt-8;
 
-  & > * {
-    @apply w-full;
-
-    @media (min-width: 768px) {
-      @apply w-auto;
-    }
+  @media (min-width: 768px) {
+    @apply flex-row;
   }
 }
 
