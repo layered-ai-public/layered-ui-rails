@@ -48,6 +48,24 @@ Then update your application layout to render the engine layout:
 <%= render template: "layouts/layered_ui/application" %>
 ```
 
+## Agent skill
+
+An [agent skill](https://agentskills.io) is included so AI coding agents can work with `layered-ui-rails` in your project. Once installed, the agent can handle the full setup - just ask it to add `layered-ui-rails` to your app and it will install the gem, run the generator, and configure your layout.
+
+**Project install** - scoped to a single repo, available to all contributors:
+
+```bash
+bin/rails generate layered:ui:install_agent_skill
+```
+
+**Global install** - available across all your projects:
+
+```bash
+./install-skill.sh
+# or install remotely without cloning the repo:
+curl -fsSL https://raw.githubusercontent.com/layered-ai-public/layered-ui-rails/main/install-skill.sh | sh
+```
+
 ## Requirements
 
 - Ruby on Rails >= 8.0
@@ -153,24 +171,6 @@ For per-request icons, set instance variables - the engine renders `<link>` and 
 
 > **Security:** Rails HTML-escapes URL values, so XSS via attribute injection is mitigated. However, if values are tenant-controlled, validate that they are legitimate URLs - reject `javascript:` schemes and ensure values point to expected origins.
 
-## Agent skill
-
-An [agent skill](https://agentskills.io) is included so AI coding agents like Claude Code can work with layered-ui-rails in your project.
-
-**Project install** - scoped to a single repo, available to all contributors:
-
-```bash
-bin/rails generate layered:ui:install_agent_skill
-```
-
-**Global install** - available across all your projects:
-
-```bash
-./install-skill.sh
-# or install remotely without cloning the repo:
-curl -fsSL https://raw.githubusercontent.com/layered-ai-public/layered-ui-rails/main/install-skill.sh | sh
-```
-
 ## Documentation
 
 An online version of the documentation is available at **[layered-ui-rails.layered.ai](https://layered-ui-rails.layered.ai)**.
@@ -215,4 +215,3 @@ Copyright 2026 LAYERED AI LIMITED (UK company number: 17056830). See [NOTICE](NO
 ## Trademarks
 
 The source code is fully open, but the layered.ai name, logo, and brand assets are trademarks of LAYERED AI LIMITED. The Apache 2.0 license does not grant rights to use the layered.ai branding. Forks and redistributions must use a distinct name. See [TRADEMARK.md](TRADEMARK.md) for the full policy.
-
