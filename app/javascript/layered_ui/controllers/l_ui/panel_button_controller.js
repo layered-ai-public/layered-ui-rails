@@ -5,7 +5,6 @@ import { getHeaderHeight, getPadding, getLeftEdge } from "layered_ui/utilities/l
 const BUTTON_SIZE = 56
 const DRAG_THRESHOLD = 5
 const SNAP_TIMEOUT = 400
-const TOGGLE_DELAY = 160
 const TOP_LEFT = "top-left"
 const TOP_RIGHT = "top-right"
 const BOTTOM_LEFT = "bottom-left"
@@ -25,7 +24,6 @@ export default class extends Controller {
       })
     }
     this.boundKeyboardShortcuts = this.handleKeyboardShortcuts.bind(this)
-    this.toggleTimeout = null
 
     this.restorePosition()
     window.addEventListener('resize', this.boundWindowResize)
@@ -33,7 +31,6 @@ export default class extends Controller {
   }
 
   disconnect() {
-    clearTimeout(this.toggleTimeout)
     cancelAnimationFrame(this._resizeFrame)
     window.removeEventListener('resize', this.boundWindowResize)
     document.removeEventListener('keydown', this.boundKeyboardShortcuts)
@@ -68,25 +65,8 @@ export default class extends Controller {
     }
   }
 
-  // Delay toggle slightly so double-click can trigger corner cycling instead
-  queueToggle(event) {
-    if (event.detail > 1) return
-
-    clearTimeout(this.toggleTimeout)
-    this.toggleTimeout = setTimeout(() => {
-      this.dispatch("toggle", { bubbles: true })
-    }, TOGGLE_DELAY)
-  }
-
-  // Double-click cycles the floating button around screen corners
-  cycleCorner(event) {
-    event.preventDefault()
-    event.stopPropagation()
-    clearTimeout(this.toggleTimeout)
-
-    const current = this.currentCorner()
-    const next = this.nextCorner(current)
-    this.moveToCorner(next)
+  toggle() {
+    this.dispatch("toggle", { bubbles: true })
   }
 
   currentCorner() {
@@ -104,20 +84,6 @@ export default class extends Controller {
     if (!isTop && isRight) return BOTTOM_RIGHT
     if (isTop) return TOP_LEFT
     return BOTTOM_LEFT
-  }
-
-  nextCorner(corner) {
-    switch (corner) {
-      case TOP_LEFT:
-        return TOP_RIGHT
-      case TOP_RIGHT:
-        return BOTTOM_RIGHT
-      case BOTTOM_RIGHT:
-        return BOTTOM_LEFT
-      case BOTTOM_LEFT:
-      default:
-        return TOP_LEFT
-    }
   }
 
   // Move the button directly to a corner via keyboard shortcut
