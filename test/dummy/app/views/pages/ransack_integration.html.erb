@@ -60,57 +60,46 @@ end</code></pre>
 <h3 class="l-ui-utility--mt-xl">Users</h3>
 
 <%= turbo_frame_tag "users_collection", data: { turbo_action: "advance" } do %>
-  <%= l_ui_search_form(@users_q, url: ransack_path, fields: [:name, :email],
-                       clear: true, turbo_frame: "users_collection") %>
-
-  <div class="l-ui-container--table l-ui-utility--mt-lg">
-    <table class="l-ui-table">
-      <caption class="l-ui-sr-only">Users</caption>
-      <thead class="l-ui-table__header">
-        <tr>
-          <%= l_ui_sort_link(@users_q, :name, turbo_frame: "users_collection") %>
-          <%= l_ui_sort_link(@users_q, :email, turbo_frame: "users_collection") %>
-          <%= l_ui_sort_link(@users_q, :created_at, "Joined", default_order: :desc, turbo_frame: "users_collection") %>
-        </tr>
-      </thead>
-      <tbody class="l-ui-table__body">
-        <% @users.each do |user| %>
-          <tr>
-            <th class="l-ui-table__cell--primary" scope="row"><%= user.name %></th>
-            <td class="l-ui-table__cell"><%= user.email %></td>
-            <td class="l-ui-table__cell"><%= time_ago_in_words(user.created_at) %> ago</td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+  <div class="l-ui-utility--mt-lg">
+    <%= l_ui_search_form(@users_q, url: ransack_path, fields: [:name, :email],
+                         clear: true, turbo_frame: "users_collection") %>
   </div>
+
+  <div class="l-ui-utility--mt-lg">
+    <%= l_ui_table(@users,
+        columns: [
+          { attribute: :name, primary: true, render: ->(u) { u.name } },
+          { attribute: :email, render: ->(u) { u.email } },
+          { attribute: :created_at, label: "Joined", render: ->(u) { "#{time_ago_in_words(u.created_at)} ago" } }
+        ],
+        caption: "Users",
+        query: @users_q,
+        url: ransack_path,
+        turbo_frame: "users_collection") %>
+  </div>
+  <%= l_ui_pagy(@users_pagy) %>
 <% end %>
 
 <h3 class="l-ui-utility--mt-xl">Posts</h3>
 
 <%= turbo_frame_tag "posts_collection", data: { turbo_action: "advance" } do %>
-  <%= l_ui_search_form(@posts_q, url: ransack_path, fields: [:title],
-                       clear: true, turbo_frame: "posts_collection") %>
-
-  <div class="l-ui-container--table l-ui-utility--mt-lg">
-    <table class="l-ui-table">
-      <caption class="l-ui-sr-only">Posts</caption>
-      <thead class="l-ui-table__header">
-        <tr>
-          <%= l_ui_sort_link(@posts_q, :title, turbo_frame: "posts_collection") %>
-          <%= l_ui_sort_link(@posts_q, :created_at, "Created", default_order: :desc, turbo_frame: "posts_collection") %>
-        </tr>
-      </thead>
-      <tbody class="l-ui-table__body">
-        <% @posts.each do |post| %>
-          <tr>
-            <th class="l-ui-table__cell--primary" scope="row"><%= post.title %></th>
-            <td class="l-ui-table__cell"><%= time_ago_in_words(post.created_at) %> ago</td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+  <div class="l-ui-utility--mt-lg">
+    <%= l_ui_search_form(@posts_q, url: ransack_path, fields: [:title],
+                         clear: true, turbo_frame: "posts_collection") %>
   </div>
+
+  <div class="l-ui-utility--mt-lg">
+    <%= l_ui_table(@posts,
+        columns: [
+          { attribute: :title, primary: true, render: ->(p) { p.title } },
+          { attribute: :created_at, label: "Created", render: ->(p) { "#{time_ago_in_words(p.created_at)} ago" } }
+        ],
+        caption: "Posts",
+        query: @posts_q,
+        url: ransack_path,
+        turbo_frame: "posts_collection") %>
+  </div>
+  <%= l_ui_pagy(@posts_pagy) %>
 <% end %>
 
 <h2 class="l-ui-utility--mt-2xl">Usage</h2>
