@@ -58,7 +58,6 @@
     --warning-text: 48 96% 15%;
     --error-bg: 0 84% 75%;
     --error-text: 0 93% 12%;
-    --backdrop: 0 0% 0%;
     --header-height: 63px;
   }
 
@@ -85,7 +84,6 @@
     --warning-text: 48 96% 80%;
     --error-bg: 0 93% 12%;
     --error-text: 0 84% 75%;
-    --backdrop: 0 0% 0%;
   }
 
   /* Typography */
@@ -155,7 +153,6 @@
   --color-warning-text: hsl(var(--warning-text));
   --color-error-bg: hsl(var(--error-bg));
   --color-error-text: hsl(var(--error-text));
-  --color-backdrop: hsl(var(--backdrop));
   --color-ring: hsl(var(--ring));
 }
 
@@ -593,7 +590,7 @@
 .l-ui-backdrop--navigation {
   @apply fixed top-[var(--header-height)] left-0 right-0 bottom-0
          z-[45]
-         bg-backdrop/50 backdrop-blur-xs
+         backdrop-blur-sm
          opacity-0 pointer-events-none
          transition-opacity duration-200;
 }
@@ -1704,7 +1701,7 @@ pre.l-ui-surface {
 }
 
 .l-ui-modal::backdrop {
-  @apply bg-backdrop/50 backdrop-blur-sm;
+  @apply backdrop-blur-sm;
 }
 
 .l-ui-modal__header {
