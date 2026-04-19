@@ -32,12 +32,25 @@
 
 @variant dark (&:where(.dark, .dark *));
 
-/* Colors */
+/*
+ * Color tokens (HSL channels, e.g. "220 80% 55%")
+ *
+ * Tier 1 - Accent: --accent, --accent-foreground
+ * Tier 2 - Full palette: background, foreground, border, surface, etc.
+ *          Also includes --button-primary-bg and --button-primary-text which
+ *          default to the accent pair but can be overridden independently
+ *          (e.g. a pink accent that needs white button text in dark mode).
+ *
+ * See the generator (bin/rails generate layered:ui:create_overrides) for a
+ * ready-made overrides file with all tokens commented out.
+ */
 
 @layer base {
   :root {
+    /* Tier 1 - Accent */
     --accent: 0 0% 9%;
     --accent-foreground: 0 0% 100%;
+    /* Tier 2 - Full palette */
     --background: 0 0% 100%;
     --foreground: 0 0% 13%;
     --foreground-muted: 0 0% 29%;
@@ -62,8 +75,10 @@
   }
 
   .dark {
+    /* Tier 1 - Accent */
     --accent: 0 0% 100%;
     --accent-foreground: 0 0% 9%;
+    /* Tier 2 - Full palette */
     --background: 0 0% 0%;
     --foreground: 0 0% 89%;
     --foreground-muted: 0 0% 71%;
@@ -644,7 +659,7 @@
 .l-ui-navigation__secondary {
   @apply flex flex-col
          pl-4
-         border-l-4 border-surface;
+         border-l-4 border-border;
 
   .l-ui-navigation__item--active {
     @apply bg-transparent
@@ -1360,9 +1375,9 @@ pre.l-ui-surface {
          w-14 h-14
          z-40
          cursor-pointer
-         bg-button-primary-bg/60
+         bg-button-primary-bg
          text-button-primary-text
-         rounded-full shadow-lg backdrop-blur-xs
+         rounded-full
          focus-ring
          transition-all;
   touch-action: none;
@@ -1629,10 +1644,10 @@ pre.l-ui-surface {
 .l-ui-scroll-to-bottom {
   @apply
     sticky bottom-2 flex items-center justify-center
-    mx-auto -mt-9 h-9 w-9
+    ml-auto mr-0 -mt-9 h-9 w-9
     rounded-full
     cursor-pointer
-    bg-button-primary-bg/60 text-button-primary-text shadow-lg backdrop-blur-xs
+    bg-button-primary-bg text-button-primary-text
     focus-ring
     opacity-0 pointer-events-none
     transition-opacity duration-200;

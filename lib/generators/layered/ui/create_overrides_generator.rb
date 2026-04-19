@@ -35,6 +35,10 @@ module Layered
              *
              * Set a single brand color. Primary buttons, active tabs, and
              * active navigation items all inherit from these two variables.
+             *
+             * If your accent color needs a different text/icon color on
+             * buttons (e.g. a pink accent with white button text in dark
+             * mode), override --button-primary-text in Tier 2 below.
              * ---------------------------------------------------------------- */
 
             :root {

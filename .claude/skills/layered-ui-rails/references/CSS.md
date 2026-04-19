@@ -282,22 +282,29 @@ WCAG 2.2 AA table pattern:
 
 ## Theming tokens
 
-All colour values are space-separated HSL channels (e.g. `220 80% 55%`). Override after importing the engine CSS.
+All color values are space-separated HSL channels (e.g. `220 80% 55%`). Override after importing the engine CSS.
 
+Tier 1 - Accent (quick branding):
 ```
---accent                Primary action colour
+--accent                Primary action color
 --accent-foreground     Text on accent backgrounds
+```
+
+Tier 2 - Full palette (override individually as needed):
+```
 --background            Page background
---foreground            Primary text colour
+--foreground            Primary text color
 --foreground-muted      Secondary/muted text
---border                Default border colour
+--border                Default border color
 --border-control        Form control border
---ring                  Focus ring colour
+--ring                  Focus ring color
 --surface               Card/surface background
 --surface-highlight     Highlighted surface
---danger                Danger/error colour
+--button-primary-bg     Primary button background (defaults to --accent)
+--button-primary-text   Primary button and floating icon text (defaults to --accent-foreground)
+--danger                Danger/error color
 --danger-light          Light danger background
---danger-text           Danger text colour
+--danger-text           Danger text color
 --success-bg            Success background
 --success-text          Success text
 --switch-track-checked  Checked switch track
@@ -307,3 +314,5 @@ All colour values are space-separated HSL channels (e.g. `220 80% 55%`). Overrid
 --error-text            Error text
 --header-height         Header height (default 63px)
 ```
+
+Override --button-primary-text when your accent color needs a different text/icon color on buttons (e.g. a pink accent with white button text in dark mode).
