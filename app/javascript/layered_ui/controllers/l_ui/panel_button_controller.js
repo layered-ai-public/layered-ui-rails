@@ -131,16 +131,11 @@ export default class extends Controller {
     this.savePosition(corner)
   }
 
-  savePosition(corner) {
-    storageSet("panelButtonPosition", JSON.stringify(corner ? { corner } : { edge: this.currentEdge(), top: this.currentTopPercent() }))
-  }
-
-  currentEdge() {
-    return (this.element.style.right && this.element.style.right !== "auto") ? "right" : "left"
-  }
-
-  currentTopPercent() {
-    return parseFloat(this.element.style.top) / window.innerHeight * 100
+  savePosition(corner, edge) {
+    const data = corner
+      ? { corner }
+      : { edge: edge || ((this.element.style.right && this.element.style.right !== "auto") ? "right" : "left"), top: parseFloat(this.element.style.top) / window.innerHeight * 100 }
+    storageSet("panelButtonPosition", JSON.stringify(data))
   }
 
   applyDefault() {
@@ -228,7 +223,7 @@ export default class extends Controller {
       this.element.style.right = "auto"
 
       this.corner = null
-      this.savePosition(null)
+      this.savePosition(null, edge)
 
       const onTransitionEnd = () => {
         this.element.classList.remove("l-ui-panel__button--snapping")
