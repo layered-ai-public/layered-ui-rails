@@ -1,7 +1,7 @@
 require "test_helper"
 
-class PaginationHelperTest < ActionView::TestCase
-  include Layered::Ui::PaginationHelper
+class PagyHelperTest < ActionView::TestCase
+  include Layered::Ui::PagyHelper
 
   test "returns nil for single-page results" do
     pagy = Pagy::Offset.new(count: 5, limit: 10, page: 1)

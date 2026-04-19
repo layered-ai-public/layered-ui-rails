@@ -5,7 +5,7 @@ Guidance for AI agents working in this repository.
 ## Architecture
 
 - **Entry:** `require "layered-ui-rails"` → `lib/layered/ui.rb` → `lib/layered/ui/engine.rb`
-- **Engine:** importmap, assets, Pagy helpers when present; helpers: `AuthenticationHelper`, `NavigationHelper`, `PaginationHelper`
+- **Engine:** importmap, assets, Pagy helpers when present; helpers: `AuthenticationHelper`, `NavigationHelper`, `PagyHelper`
 - **CSS** `app/assets/tailwind/layered/ui/styles.css`: HSL tokens, `.dark` on `<html>`, `@theme` utilities (`bg-background`, etc.), BEM components (`.l-ui-button--primary`, etc.). Layout: 63px header, 240px sidebar, 320px panel. WCAG 2.2 AA.
 - **CSS `@apply`:** Multi-line with grouping (layout → spacing → typography → colors → effects). Single utilities may stay on one line.
 - **Generators:** `bin/rails generate layered:ui:install` (copy CSS, import CSS, import JS)
