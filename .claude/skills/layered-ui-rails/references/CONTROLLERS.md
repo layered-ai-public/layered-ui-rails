@@ -139,7 +139,7 @@ Drag handle for resizing the panel width on desktop.
 Manages multi-scope search forms with parameter preservation and Turbo frame support.
 
 **Values:** `scope` (String, default `"q"`)
-**Actions:** `preserve`, `clear`
+**Actions:** `preserve`, `clear`, `rewriteLink`
 
 ```html
 <form data-controller="l-ui--search-form"
@@ -153,4 +153,17 @@ Manages multi-scope search forms with parameter preservation and Turbo frame sup
 </form>
 ```
 
-When multiple search forms exist on one page (each with a different `scope` value), submitting one form automatically preserves the other forms' query parameters.
+When multiple search forms exist on one page (each with a different `scope` value), submitting one form automatically preserves the other forms' query parameters. The `page` param and any scoped page param matching the scope (e.g. `users_page` for scope `users_q`) are reset on submit so pagination returns to page 1.
+
+**`rewriteLink`** - merges current URL params into a clicked link's href. Useful for pagination links inside Turbo Frames where the server-rendered href may be missing params from other scopes. Attach to a parent element (e.g. the Turbo Frame):
+
+```html
+&lt;%= turbo_frame_tag "users_collection", data: { turbo_action: "advance",
+      controller: "l-ui--search-form", l_ui__search_form_scope_value: "users_q",
+      action: "click->l-ui--search-form#rewriteLink" } do %&gt;
+  &lt;%= l_ui_search_form(@users_q, url: users_path, fields: [:name, :email],
+                       clear: true, turbo_frame: "users_collection") %&gt;
+  &lt;%= l_ui_table(@users, ..., query: @users_q, turbo_frame: "users_collection") %&gt;
+  &lt;%= l_ui_pagy(@users_pagy) %&gt;
+&lt;% end %&gt;
+```

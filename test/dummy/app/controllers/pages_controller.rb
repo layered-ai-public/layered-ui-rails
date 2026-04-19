@@ -86,12 +86,14 @@ class PagesController < ApplicationController
 
   def ransack_integration
     @users_q = User.ransack(params[:users_q], search_key: :users_q)
-    @users = @users_q.result(distinct: true)
-    @users = @users.order(:name) if @users_q.sorts.empty?
+    users = @users_q.result(distinct: true)
+    users = users.order(:name) if @users_q.sorts.empty?
+    @users_pagy, @users = pagy(users, limit: 5, page_key: "users_page")
 
     @posts_q = Post.ransack(params[:posts_q], search_key: :posts_q)
-    @posts = @posts_q.result(distinct: true)
-    @posts = @posts.order(:title) if @posts_q.sorts.empty?
+    posts = @posts_q.result(distinct: true)
+    posts = posts.order(:title) if @posts_q.sorts.empty?
+    @posts_pagy, @posts = pagy(posts, limit: 5, page_key: "posts_page")
   end
 
   def search
