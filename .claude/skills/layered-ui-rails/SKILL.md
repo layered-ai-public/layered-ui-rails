@@ -22,9 +22,16 @@ bin/rails generate layered:ui:install
 
 The generator copies `layered_ui.css` into `app/assets/tailwind/`, adds the CSS import to `application.css`, and adds the JS import to `application.js`.
 
-Then render the engine layout from your application layout:
+Then render the engine layout from your application layout. Place all `content_for` blocks **above** the render call - the engine layout reads them when it renders, so they must be defined first:
 
 ```erb
+<% content_for :l_ui_body_class, "l-ui-body--always-show-navigation" %>
+
+<% content_for :l_ui_navigation_items do %>
+  <%= l_ui_navigation_item("Dashboard", dashboard_path) %>
+  <%= l_ui_navigation_item("Users", users_path) %>
+<% end %>
+
 <%= render template: "layouts/layered_ui/application" %>
 ```
 
@@ -34,7 +41,7 @@ The engine layout provides a fixed header (63px), optional sidebar navigation (2
 
 ### Content blocks
 
-Populate layout regions with `content_for`:
+Populate layout regions with `content_for` (always above the render call):
 
 ```erb
 <%# Navigation sidebar items %>

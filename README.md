@@ -42,9 +42,15 @@ The install generator will:
 - Add `@import "./layered_ui";` to your `application.css`
 - Add `import "layered_ui"` to your `application.js`
 
-Then update your application layout to render the engine layout:
+Then update your application layout to render the engine layout. Place any `content_for` blocks **above** the render call - the engine layout reads them when it renders, so they must be defined first:
 
 ```erb
+<% content_for :l_ui_body_class, "l-ui-body--always-show-navigation" %>
+
+<% content_for :l_ui_navigation_items do %>
+  <%= l_ui_navigation_item "Home", root_path %>
+<% end %>
+
 <%= render template: "layouts/layered_ui/application" %>
 ```
 
