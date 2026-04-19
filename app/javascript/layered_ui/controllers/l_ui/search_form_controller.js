@@ -1,13 +1,8 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Preserves query params from other search scopes when a scoped form submits
-// or its clear link is clicked.
-//
-// When multiple Ransack collections share one page, each form only knows about
-// its own fields. This controller reads the current URL at submit time and
-// injects hidden inputs for params that belong to other scopes, so the
-// resulting URL reflects the full state of all collections. The clear action
-// rewrites the clear link's href to include the same preserved params.
+// When multiple scoped Ransack collections share one page, preserves other
+// scopes' params across form submits (preserve), clear links (clear), and
+// pagination clicks (rewriteLink).
 export default class extends Controller {
   static values = { scope: String }
 
