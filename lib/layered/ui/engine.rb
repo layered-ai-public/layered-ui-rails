@@ -29,7 +29,7 @@ module Layered
           helper Layered::Ui::AuthenticationHelper
           helper Layered::Ui::BreadcrumbsHelper
           helper Layered::Ui::NavigationHelper
-          helper Layered::Ui::PaginationHelper
+          helper Layered::Ui::PagyHelper
           helper Layered::Ui::TableHelper
           helper Layered::Ui::FormHelper
           helper Layered::Ui::RansackHelper

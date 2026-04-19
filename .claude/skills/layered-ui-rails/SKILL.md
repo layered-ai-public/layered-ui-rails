@@ -22,9 +22,16 @@ bin/rails generate layered:ui:install
 
 The generator copies `layered_ui.css` into `app/assets/tailwind/`, adds the CSS import to `application.css`, and adds the JS import to `application.js`.
 
-Then render the engine layout from your application layout:
+Then render the engine layout from your application layout. Place all `content_for` blocks **above** the render call - the engine layout reads them when it renders, so they must be defined first:
 
 ```erb
+<% content_for :l_ui_body_class, "l-ui-body--always-show-navigation" %>
+
+<% content_for :l_ui_navigation_items do %>
+  <%= l_ui_navigation_item("Dashboard", dashboard_path) %>
+  <%= l_ui_navigation_item("Users", users_path) %>
+<% end %>
+
 <%= render template: "layouts/layered_ui/application" %>
 ```
 
@@ -34,7 +41,7 @@ The engine layout provides a fixed header (63px), optional sidebar navigation (2
 
 ### Content blocks
 
-Populate layout regions with `content_for`:
+Populate layout regions with `content_for` (always above the render call):
 
 ```erb
 <%# Navigation sidebar items %>
@@ -139,7 +146,7 @@ All controllers use the `l-ui--` namespace and are auto-registered via importmap
 | Panel resize | `l-ui--panel-resize` | Panel width drag handle |
 | Modal | `l-ui--modal` | Native `<dialog>` with focus trap |
 | Tabs | `l-ui--tabs` | Accessible tabbed interface |
-| Search form | `l-ui--search-form` | Multi-scope search with Turbo support |
+| Search form | `l-ui--search-form` | Multi-scope search with Turbo support and pagination param preservation |
 
 ## Theming
 
@@ -157,7 +164,7 @@ Override CSS custom properties after the engine import. Values are space-separat
 }
 ```
 
-Key tokens: `--accent`, `--accent-foreground`, `--background`, `--foreground`, `--foreground-muted`, `--border`, `--border-control`, `--surface`, `--surface-active`, `--danger`, `--header-height`.
+Key tokens: `--accent`, `--accent-foreground`, `--background`, `--foreground`, `--foreground-muted`, `--border`, `--border-control`, `--surface`, `--surface-highlighted`, `--danger`, `--header-height`.
 
 ## Asset overrides
 
@@ -167,7 +174,7 @@ Place files in `app/assets/images/layered_ui/` to replace engine defaults:
 
 ## Optional integrations
 
-- **Devise** - auto-detected. Provides styled auth views, header login/register buttons, sidebar user info and logout.
+- **Devise** - auto-detected. Provides styled auth views, header login/register buttons, sidebar user info and logout. Setup: `bundle add devise`, run `devise:install` and `devise User` generators, add `devise_for :users` to routes. Configure `Layered::Ui.current_user_method` if not using `:current_user`. Helpers: `l_ui_devise_installed?`, `l_ui_user_signed_in?`.
 - **Pagy** - auto-detected. Use `l_ui_pagy(@pagy)` for styled pagination.
 - **Ransack** - auto-detected. Use `l_ui_search_form` and `l_ui_sort_link` for styled search and sortable tables.
 

@@ -32,12 +32,25 @@
 
 @variant dark (&:where(.dark, .dark *));
 
-/* Colors */
+/*
+ * Color tokens (HSL channels, e.g. "220 80% 55%")
+ *
+ * Tier 1 - Accent: --accent, --accent-foreground
+ * Tier 2 - Full palette: background, foreground, border, surface, etc.
+ *          Also includes --button-primary-bg and --button-primary-text which
+ *          default to the accent pair but can be overridden independently
+ *          (e.g. a pink accent that needs white button text in dark mode).
+ *
+ * See the generator (bin/rails generate layered:ui:create_overrides) for a
+ * ready-made overrides file with all tokens commented out.
+ */
 
 @layer base {
   :root {
+    /* Tier 1 - Accent */
     --accent: 0 0% 9%;
     --accent-foreground: 0 0% 100%;
+    /* Tier 2 - Full palette */
     --background: 0 0% 100%;
     --foreground: 0 0% 13%;
     --foreground-muted: 0 0% 29%;
@@ -45,7 +58,7 @@
     --border-control: 0 0% 55%;
     --ring: 0 0% 13%;
     --surface: 0 0% 96%;
-    --surface-active: 0 0% 91%;
+    --surface-highlighted: 0 0% 91%;
     --button-primary-bg: var(--accent);
     --button-primary-text: var(--accent-foreground);
     --danger: 0 72% 38%;
@@ -58,13 +71,14 @@
     --warning-text: 48 96% 15%;
     --error-bg: 0 84% 75%;
     --error-text: 0 93% 12%;
-    --backdrop: 0 0% 0%;
     --header-height: 63px;
   }
 
   .dark {
+    /* Tier 1 - Accent */
     --accent: 0 0% 100%;
     --accent-foreground: 0 0% 9%;
+    /* Tier 2 - Full palette */
     --background: 0 0% 0%;
     --foreground: 0 0% 89%;
     --foreground-muted: 0 0% 71%;
@@ -72,7 +86,7 @@
     --border-control: 0 0% 40%;
     --ring: 0 0% 89%;
     --surface: 0 0% 8%;
-    --surface-active: 0 0% 16%;
+    --surface-highlighted: 0 0% 16%;
     --button-primary-bg: var(--accent);
     --button-primary-text: var(--accent-foreground);
     --danger: 0 85% 60%;
@@ -85,7 +99,6 @@
     --warning-text: 48 96% 80%;
     --error-bg: 0 93% 12%;
     --error-text: 0 84% 75%;
-    --backdrop: 0 0% 0%;
   }
 
   /* Typography */
@@ -127,6 +140,14 @@
     @apply whitespace-pre overflow-x-auto
            text-foreground-muted;
   }
+
+  /* Scrollbars */
+
+  .l-ui-body,
+  .l-ui-body * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--foreground-muted) / 0.3) transparent;
+  }
 }
 
 /* Theme */
@@ -142,7 +163,7 @@
   --color-border: hsl(var(--border));
   --color-border-control: hsl(var(--border-control));
   --color-surface: hsl(var(--surface));
-  --color-surface-active: hsl(var(--surface-active));
+  --color-surface-highlighted: hsl(var(--surface-highlighted));
   --color-button-primary-bg: hsl(var(--button-primary-bg));
   --color-button-primary-text: hsl(var(--button-primary-text));
   --color-danger: hsl(var(--danger));
@@ -155,7 +176,6 @@
   --color-warning-text: hsl(var(--warning-text));
   --color-error-bg: hsl(var(--error-bg));
   --color-error-text: hsl(var(--error-text));
-  --color-backdrop: hsl(var(--backdrop));
   --color-ring: hsl(var(--ring));
 }
 
@@ -346,7 +366,7 @@
 .l-ui-markdown code {
   @apply px-1.5 py-0.5
          text-xs
-         bg-surface-active
+         bg-surface-highlighted
          rounded;
 }
 
@@ -593,7 +613,7 @@
 .l-ui-backdrop--navigation {
   @apply fixed top-[var(--header-height)] left-0 right-0 bottom-0
          z-[45]
-         bg-backdrop/50 backdrop-blur-xs
+         backdrop-blur-sm
          opacity-0 pointer-events-none
          transition-opacity duration-200;
 }
@@ -647,7 +667,7 @@
 .l-ui-navigation__secondary {
   @apply flex flex-col
          pl-4
-         border-l-4 border-surface;
+         border-l-4 border-border;
 
   .l-ui-navigation__item--active {
     @apply bg-transparent
@@ -854,9 +874,9 @@ pre.l-ui-surface {
   }
 }
 
-.l-ui-surface--active {
+.l-ui-surface--highlighted {
   @apply surface
-         bg-surface-active;
+         bg-surface-highlighted;
 }
 
 .l-ui-surface--collapsible {
@@ -865,14 +885,14 @@ pre.l-ui-surface {
          bg-surface;
 }
 
-.l-ui-surface--collapsible-active {
+.l-ui-surface--collapsible-highlighted {
   @apply surface
          p-0
-         bg-surface-active;
+         bg-surface-highlighted;
 }
 
 .l-ui-surface--collapsible,
-.l-ui-surface--collapsible-active {
+.l-ui-surface--collapsible-highlighted {
   &[open] > .l-ui-surface__summary .l-ui-surface__chevron {
     @apply rotate-90;
   }
@@ -1252,7 +1272,7 @@ pre.l-ui-surface {
 
 @utility pagination__item--active {
   @apply font-bold
-         bg-surface-active
+         bg-surface-highlighted
          text-foreground
          pointer-events-none;
 }
@@ -1334,7 +1354,7 @@ pre.l-ui-surface {
 
 .l-ui-badge--default {
   @apply badge
-         bg-surface-active
+         bg-surface-highlighted
          text-foreground-muted;
 }
 
@@ -1363,9 +1383,9 @@ pre.l-ui-surface {
          w-14 h-14
          z-40
          cursor-pointer
-         bg-button-primary-bg/60
+         bg-button-primary-bg
          text-button-primary-text
-         rounded-full shadow-lg backdrop-blur-xs
+         rounded-full
          focus-ring
          transition-all;
   touch-action: none;
@@ -1632,10 +1652,10 @@ pre.l-ui-surface {
 .l-ui-scroll-to-bottom {
   @apply
     sticky bottom-2 flex items-center justify-center
-    mx-auto -mt-9 h-9 w-9
+    ml-auto mr-0 -mt-9 h-9 w-9
     rounded-full
     cursor-pointer
-    bg-button-primary-bg/60 text-button-primary-text shadow-lg backdrop-blur-xs
+    bg-button-primary-bg text-button-primary-text
     focus-ring
     opacity-0 pointer-events-none
     transition-opacity duration-200;
@@ -1704,7 +1724,7 @@ pre.l-ui-surface {
 }
 
 .l-ui-modal::backdrop {
-  @apply bg-backdrop/50 backdrop-blur-sm;
+  @apply backdrop-blur-sm;
 }
 
 .l-ui-modal__header {

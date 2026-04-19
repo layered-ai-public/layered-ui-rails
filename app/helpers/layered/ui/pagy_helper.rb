@@ -1,6 +1,6 @@
 module Layered
   module Ui
-    module PaginationHelper
+    module PagyHelper
       def l_ui_pagy(pagy)
         unless defined?(Pagy)
           return tag.p("Pagination requires the pagy gem. Add `gem \"pagy\"` to your Gemfile.", class: "l-ui-notice--warning") if Rails.env.development?

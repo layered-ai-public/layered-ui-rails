@@ -35,6 +35,10 @@ module Layered
              *
              * Set a single brand color. Primary buttons, active tabs, and
              * active navigation items all inherit from these two variables.
+             *
+             * If your accent color needs a different text/icon color on
+             * buttons (e.g. a pink accent with white button text in dark
+             * mode), override --button-primary-text in Tier 2 below.
              * ---------------------------------------------------------------- */
 
             :root {
@@ -62,7 +66,7 @@ module Layered
               --border-control: 0 0% 55%;
               --ring: 0 0% 13%;
               --surface: 0 0% 96%;
-              --surface-active: 0 0% 91%;
+              --surface-highlighted: 0 0% 91%;
               --button-primary-bg: var(--accent);
               --button-primary-text: var(--accent-foreground);
               --danger: 0 72% 38%;
@@ -74,7 +78,6 @@ module Layered
               --warning-text: 48 96% 15%;
               --error-bg: 0 84% 75%;
               --error-text: 0 93% 12%;
-              --backdrop: 0 0% 0%;
             }
 
             .dark {
@@ -85,7 +88,7 @@ module Layered
               --border-control: 0 0% 40%;
               --ring: 0 0% 89%;
               --surface: 0 0% 8%;
-              --surface-active: 0 0% 16%;
+              --surface-highlighted: 0 0% 16%;
               --button-primary-bg: var(--accent);
               --button-primary-text: var(--accent-foreground);
               --danger: 0 85% 60%;
@@ -97,7 +100,6 @@ module Layered
               --warning-text: 48 96% 80%;
               --error-bg: 0 93% 12%;
               --error-text: 0 84% 75%;
-              --backdrop: 0 0% 0%;
             }
             */
 

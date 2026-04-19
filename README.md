@@ -1,11 +1,14 @@
 # layered-ui-rails
 
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![CI](https://github.com/layered-ai-public/layered-ui-rails/actions/workflows/ci.yml/badge.svg)](https://github.com/layered-ai-public/layered-ui-rails/actions/workflows/ci.yml)
 [![WCAG 2.2 AA](https://img.shields.io/badge/WCAG_2.2-AA-green)](https://www.w3.org/WAI/WCAG22/quickref/)
-[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Website](https://img.shields.io/badge/Website-layered.ai-purple)](https://www.layered.ai/)
 [![GitHub](https://img.shields.io/badge/GitHub-layered--ui--rails-black)](https://github.com/layered-ai-public/layered-ui-rails)
 [![Discord](https://img.shields.io/badge/Discord-join-5865F2)](https://discord.gg/aCGqz9Bx)
+[![YouTube](https://img.shields.io/badge/YouTube-subscribe-FF0000)](https://www.youtube.com/@UseLayeredAi)
+[![X](https://img.shields.io/badge/X-follow-000000)](https://x.com/UseLayeredAi)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-follow-0A66C2)](https://www.linkedin.com/company/uselayeredai/)
 
 An open source, Rails 8+ engine that provides WCAG 2.2 AA compliant design tokens, Tailwind CSS utilities, and Stimulus controllers for theme switching, mobile navigation, slide-out panels, modals, and tabs. See the [live demo](https://layered-ui-rails.layered.ai).
 
@@ -42,10 +45,34 @@ The install generator will:
 - Add `@import "./layered_ui";` to your `application.css`
 - Add `import "layered_ui"` to your `application.js`
 
-Then update your application layout to render the engine layout:
+Then update your application layout to render the engine layout. Place any `content_for` blocks **above** the render call - the engine layout reads them when it renders, so they must be defined first:
 
 ```erb
+<% content_for :l_ui_body_class, "l-ui-body--always-show-navigation" %>
+
+<% content_for :l_ui_navigation_items do %>
+  <%= l_ui_navigation_item "Home", root_path %>
+<% end %>
+
 <%= render template: "layouts/layered_ui/application" %>
+```
+
+## Agent skill
+
+An [agent skill](https://agentskills.io) is included so AI coding agents can work with `layered-ui-rails` in your project. Once installed, the agent can handle the full setup - just ask it to add `layered-ui-rails` to your app and it will install the gem, run the generator, and configure your layout.
+
+**Project install** - scoped to a single repo, available to all contributors:
+
+```bash
+bin/rails generate layered:ui:install_agent_skill
+```
+
+**Global install** - available across all your projects:
+
+```bash
+./install-skill.sh
+# or install remotely without cloning the repo:
+curl -fsSL https://raw.githubusercontent.com/layered-ai-public/layered-ui-rails/main/install-skill.sh | sh
 ```
 
 ## Requirements
@@ -67,7 +94,10 @@ Then update your application layout to render the engine layout:
 
 ## Customising theme tokens
 
-All colors are CSS custom properties on `:root`. Override any token in your stylesheet (after importing the engine CSS):
+All colors are CSS custom properties on `:root` using a two-tier system:
+
+- **Tier 1 - Accent:** Set `--accent` and `--accent-foreground` for quick branding.
+- **Tier 2 - Full palette:** Override any individual token. Includes `--button-primary-bg` and `--button-primary-text` which default to the accent pair but can be overridden independently (e.g. a pink accent that needs white button text in dark mode).
 
 ```css
 /* app/assets/tailwind/application.css */
@@ -81,6 +111,7 @@ All colors are CSS custom properties on `:root`. Override any token in your styl
 .dark {
   --accent: 220 80% 65%;
   --accent-foreground: 0 0% 9%;
+  --button-primary-text: 0 0% 100%; /* white icons/text on colored buttons */
 }
 ```
 
@@ -153,24 +184,6 @@ For per-request icons, set instance variables - the engine renders `<link>` and 
 
 > **Security:** Rails HTML-escapes URL values, so XSS via attribute injection is mitigated. However, if values are tenant-controlled, validate that they are legitimate URLs - reject `javascript:` schemes and ensure values point to expected origins.
 
-## Agent skill
-
-An [agent skill](https://agentskills.io) is included so AI coding agents like Claude Code can work with layered-ui-rails in your project.
-
-**Project install** - scoped to a single repo, available to all contributors:
-
-```bash
-bin/rails generate layered:ui:install_agent_skill
-```
-
-**Global install** - available across all your projects:
-
-```bash
-./install-skill.sh
-# or install remotely without cloning the repo:
-curl -fsSL https://raw.githubusercontent.com/layered-ai-public/layered-ui-rails/main/install-skill.sh | sh
-```
-
 ## Documentation
 
 An online version of the documentation is available at **[layered-ui-rails.layered.ai](https://layered-ui-rails.layered.ai)**.
@@ -215,4 +228,3 @@ Copyright 2026 LAYERED AI LIMITED (UK company number: 17056830). See [NOTICE](NO
 ## Trademarks
 
 The source code is fully open, but the layered.ai name, logo, and brand assets are trademarks of LAYERED AI LIMITED. The Apache 2.0 license does not grant rights to use the layered.ai branding. Forks and redistributions must use a distinct name. See [TRADEMARK.md](TRADEMARK.md) for the full policy.
-

@@ -32,26 +32,26 @@
   </dialog>
 </div>
 
-<h2 class="l-ui-utility--mt-2xl">Active surface</h2>
+<h2 class="l-ui-utility--mt-2xl">Highlighted surface</h2>
 
-<div class="l-ui-surface--active l-ui-utility--mt-lg">
-  <h3>Surface active</h3>
+<div class="l-ui-surface--highlighted l-ui-utility--mt-lg">
+  <h3>Surface highlighted</h3>
   <p class="l-ui-utility--mt-sm">
-    An active variant for highlighted or interactive content sections.
+    A highlighted variant for emphasised content sections.
   </p>
 </div>
 
 <div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
   <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
-  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-surfaces-active-heading">
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-surfaces-highlighted-heading">
     <div class="l-ui-modal__header">
-      <h3 id="modal-surfaces-active-heading">Active surface</h3>
+      <h3 id="modal-surfaces-highlighted-heading">Highlighted surface</h3>
       <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
         <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
-      <pre class="l-ui-surface"><code>&lt;div class="l-ui-surface--active"&gt;
+      <pre class="l-ui-surface"><code>&lt;div class="l-ui-surface--highlighted"&gt;
   &lt;h3&gt;Title&lt;/h3&gt;
   &lt;p&gt;Content goes here&lt;/p&gt;
 &lt;/div&gt;</code></pre>
@@ -97,31 +97,31 @@
   </dialog>
 </div>
 
-<h2 class="l-ui-utility--mt-2xl">Collapsible active surface</h2>
+<h2 class="l-ui-utility--mt-2xl">Collapsible highlighted surface</h2>
 
-<details class="l-ui-surface--collapsible-active l-ui-utility--mt-lg">
+<details class="l-ui-surface--collapsible-highlighted l-ui-utility--mt-lg">
   <summary class="l-ui-surface__summary">
-    <span>Collapsible active heading</span>
+    <span>Collapsible highlighted heading</span>
     <%= image_tag "layered_ui/icon_chevron_right.svg", alt: "", class: "l-ui-icon--sm l-ui-surface__chevron", aria: { hidden: true } %>
   </summary>
   <div class="l-ui-surface__content">
     <p>
-      Active variant of the collapsible surface for highlighted or interactive sections.
+      Highlighted variant of the collapsible surface for emphasised sections.
     </p>
   </div>
 </details>
 
 <div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
   <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
-  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-surfaces-collapsible-active-heading">
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-surfaces-collapsible-highlighted-heading">
     <div class="l-ui-modal__header">
-      <h3 id="modal-surfaces-collapsible-active-heading">Collapsible active surface</h3>
+      <h3 id="modal-surfaces-collapsible-highlighted-heading">Collapsible highlighted surface</h3>
       <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
         <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
-      <pre class="l-ui-surface"><code>&lt;details class="l-ui-surface--collapsible-active"&gt;
+      <pre class="l-ui-surface"><code>&lt;details class="l-ui-surface--collapsible-highlighted"&gt;
   &lt;summary class="l-ui-surface__summary"&gt;
     &lt;span&gt;Heading text&lt;/span&gt;
     &lt;img src="layered_ui/icon_chevron_right.svg" alt="" class="l-ui-icon--sm l-ui-surface__chevron" aria-hidden="true"&gt;
@@ -171,31 +171,31 @@
   </dialog>
 </div>
 
-<h2 class="l-ui-utility--mt-2xl">Small active surface</h2>
+<h2 class="l-ui-utility--mt-2xl">Small highlighted surface</h2>
 
-<details class="l-ui-surface--collapsible-active l-ui-surface--sm l-ui-utility--mt-lg">
+<details class="l-ui-surface--collapsible-highlighted l-ui-surface--sm l-ui-utility--mt-lg">
   <summary class="l-ui-surface__summary">
-    <span>Small active collapsible heading</span>
+    <span>Small highlighted collapsible heading</span>
     <%= image_tag "layered_ui/icon_chevron_right.svg", alt: "", class: "l-ui-icon--sm l-ui-surface__chevron", aria: { hidden: true } %>
   </summary>
   <div class="l-ui-surface__content">
     <p>
-      Combines the active colour variant with compact sizing.
+      Combines the highlighted color variant with compact sizing.
     </p>
   </div>
 </details>
 
 <div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
   <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
-  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-surfaces-sm-active-heading">
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-surfaces-sm-highlighted-heading">
     <div class="l-ui-modal__header">
-      <h3 id="modal-surfaces-sm-active-heading">Small active surface</h3>
+      <h3 id="modal-surfaces-sm-highlighted-heading">Small highlighted surface</h3>
       <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
         <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
-      <pre class="l-ui-surface"><code>&lt;details class="l-ui-surface--collapsible-active l-ui-surface--sm"&gt;
+      <pre class="l-ui-surface"><code>&lt;details class="l-ui-surface--collapsible-highlighted l-ui-surface--sm"&gt;
   &lt;summary class="l-ui-surface__summary"&gt;
     &lt;span&gt;Heading text&lt;/span&gt;
     &lt;img src="layered_ui/icon_chevron_right.svg" alt="" class="l-ui-icon--sm l-ui-surface__chevron" aria-hidden="true"&gt;
@@ -248,16 +248,16 @@ end&lt;/code&gt;&lt;/pre&gt;</code></pre>
         <td class="l-ui-table__cell">Default surface with background</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-surface--active</code></th>
-        <td class="l-ui-table__cell">Active/selected state</td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-surface--highlighted</code></th>
+        <td class="l-ui-table__cell">Highlighted state</td>
       </tr>
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-surface--collapsible</code></th>
         <td class="l-ui-table__cell">Collapsible surface with disclosure toggle (use on <code>&lt;details&gt;</code>)</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-surface--collapsible-active</code></th>
-        <td class="l-ui-table__cell">Visual colour variant of collapsible surface (uses <code>bg-surface-active</code>), not an open-state modifier</td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-surface--collapsible-highlighted</code></th>
+        <td class="l-ui-table__cell">Visual color variant of collapsible surface (uses <code>bg-surface-highlighted</code>), not an open-state modifier</td>
       </tr>
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-surface__summary</code></th>
