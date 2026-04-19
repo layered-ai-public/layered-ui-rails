@@ -33,9 +33,8 @@ export default class extends Controller {
 
     const url = new URL(link.href, window.location.origin)
     const linkKeys = new Set(url.searchParams.keys())
-    const current = new URLSearchParams(window.location.search)
 
-    for (const [key, value] of current) {
+    for (const [key, value] of this.#otherParams()) {
       if (!linkKeys.has(key)) url.searchParams.append(key, value)
     }
 
