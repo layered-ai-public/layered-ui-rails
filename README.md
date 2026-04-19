@@ -6,6 +6,9 @@
 [![Website](https://img.shields.io/badge/Website-layered.ai-purple)](https://www.layered.ai/)
 [![GitHub](https://img.shields.io/badge/GitHub-layered--ui--rails-black)](https://github.com/layered-ai-public/layered-ui-rails)
 [![Discord](https://img.shields.io/badge/Discord-join-5865F2)](https://discord.gg/aCGqz9Bx)
+[![YouTube](https://img.shields.io/badge/YouTube-subscribe-FF0000)](https://www.youtube.com/@UseLayeredAi)
+[![X](https://img.shields.io/badge/X-follow-000000)](https://x.com/UseLayeredAi)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-follow-0A66C2)](https://www.linkedin.com/company/uselayeredai/)
 
 An open source, Rails 8+ engine that provides WCAG 2.2 AA compliant design tokens, Tailwind CSS utilities, and Stimulus controllers for theme switching, mobile navigation, slide-out panels, modals, and tabs. See the [live demo](https://layered-ui-rails.layered.ai).
 
