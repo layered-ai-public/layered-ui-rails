@@ -62,7 +62,7 @@ module Layered
               --border-control: 0 0% 55%;
               --ring: 0 0% 13%;
               --surface: 0 0% 96%;
-              --surface-active: 0 0% 91%;
+              --surface-highlight: 0 0% 91%;
               --button-primary-bg: var(--accent);
               --button-primary-text: var(--accent-foreground);
               --danger: 0 72% 38%;
@@ -85,7 +85,7 @@ module Layered
               --border-control: 0 0% 40%;
               --ring: 0 0% 89%;
               --surface: 0 0% 8%;
-              --surface-active: 0 0% 16%;
+              --surface-highlight: 0 0% 16%;
               --button-primary-bg: var(--accent);
               --button-primary-text: var(--accent-foreground);
               --danger: 0 85% 60%;

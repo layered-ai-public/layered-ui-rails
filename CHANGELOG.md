@@ -13,7 +13,7 @@ All notable changes to this project will be documented in this file. This projec
 
 - Collapsible surface padding moved from container to summary/content elements for better open/closed spacing
 - `.l-ui-surface__summary` now prevents text selection with `select-none`
-- Markdown `pre` background changed from `bg-surface-active` to `bg-surface`
+- Markdown `pre` background changed from `bg-surface-highlight` to `bg-surface`
 - `l-ui-button--danger` is now a standalone variant (no longer requires a base button class)
 - `l_ui_table` now requires a `render:` proc on every column - the helper no longer auto-extracts values via `public_send`/hash access or auto-formats dates
 - `l_ui_table` no longer renders with an implicit top margin - wrap in a utility class if spacing is needed
@@ -83,7 +83,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Added
 
-- Collapsible surface variants (`.l-ui-surface--collapsible`, `.l-ui-surface--collapsible-active`) using native `<details>`/`<summary>` for WCAG 2.2 AA accessible disclosure
+- Collapsible surface variants (`.l-ui-surface--collapsible`, `.l-ui-surface--collapsible-highlight`) using native `<details>`/`<summary>` for WCAG 2.2 AA accessible disclosure
 - `.l-ui-surface--sm` compact surface variant with smaller padding and summary text
 - `h4` base style (Manrope bold, `text-sm`)
 

@@ -40,10 +40,10 @@ For destructive actions use `l-ui-button--danger` (solid) or `l-ui-button--outli
 
 ```
 .l-ui-surface                Rounded, padded container
-.l-ui-surface--active        Darker background variant
+.l-ui-surface--highlight     Darker background variant
 .l-ui-surface--sm            Smaller padding
 .l-ui-surface--collapsible   Wraps a <details> element
-.l-ui-surface--collapsible-active  Open state
+.l-ui-surface--collapsible-highlight  Highlight variant
 .l-ui-surface__summary       Collapsible toggle (on <summary>)
 .l-ui-surface__chevron       Chevron indicator (rotates on open)
 .l-ui-surface__content       Collapsible content area
@@ -294,7 +294,7 @@ All colour values are space-separated HSL channels (e.g. `220 80% 55%`). Overrid
 --border-control        Form control border
 --ring                  Focus ring colour
 --surface               Card/surface background
---surface-active        Active/selected surface
+--surface-highlight     Highlighted surface
 --danger                Danger/error colour
 --danger-light          Light danger background
 --danger-text           Danger text colour
