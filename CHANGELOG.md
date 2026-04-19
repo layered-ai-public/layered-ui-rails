@@ -2,14 +2,18 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.5.0] - 2026-04-19
 
 ### Added
 
 - `l-ui-form__actions` CSS class for right-aligned form action buttons that stack full-width on mobile
+- `l_ui_format_datetime` helper for consistent date/time formatting in table cells
 
 ### Changed
 
+- Collapsible surface padding moved from container to summary/content elements for better open/closed spacing
+- `.l-ui-surface__summary` now prevents text selection with `select-none`
+- Markdown `pre` background changed from `bg-surface-active` to `bg-surface`
 - `l-ui-button--danger` is now a standalone variant (no longer requires a base button class)
 - `l_ui_table` now requires a `render:` proc on every column - the helper no longer auto-extracts values via `public_send`/hash access or auto-formats dates
 - `l_ui_table` no longer renders with an implicit top margin - wrap in a utility class if spacing is needed

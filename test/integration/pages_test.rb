@@ -104,7 +104,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     3.times do |i|
       User.create!(
         email: "user#{i}@test.com",
-        password: "password123",
+        password: "notasecret123",
         name: "Test User #{i}",
         confirmed_at: Time.current
       )
