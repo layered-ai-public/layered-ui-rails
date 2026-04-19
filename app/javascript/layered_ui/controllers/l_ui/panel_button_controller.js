@@ -5,7 +5,6 @@ import { getHeaderHeight, getPadding, getLeftEdge } from "layered_ui/utilities/l
 const BUTTON_SIZE = 56
 const DRAG_THRESHOLD = 5
 const SNAP_TIMEOUT = 400
-const TOGGLE_DELAY = 160
 const TOP_LEFT = "top-left"
 const TOP_RIGHT = "top-right"
 const BOTTOM_LEFT = "bottom-left"
@@ -25,7 +24,6 @@ export default class extends Controller {
       })
     }
     this.boundKeyboardShortcuts = this.handleKeyboardShortcuts.bind(this)
-    this.toggleTimeout = null
 
     this.restorePosition()
     window.addEventListener('resize', this.boundWindowResize)
@@ -33,7 +31,6 @@ export default class extends Controller {
   }
 
   disconnect() {
-    clearTimeout(this.toggleTimeout)
     cancelAnimationFrame(this._resizeFrame)
     window.removeEventListener('resize', this.boundWindowResize)
     document.removeEventListener('keydown', this.boundKeyboardShortcuts)
@@ -49,11 +46,13 @@ export default class extends Controller {
     }
   }
 
-  // Restore position from localStorage or apply default
   restorePosition() {
     const position = storageGetJSON("panelButtonPosition")
 
-    if (position && position.edge && typeof position.top === "number") {
+    if (position && position.corner) {
+      this.moveToCorner(position.corner)
+    } else if (position && position.edge && typeof position.top === "number") {
+      this.corner = null
       const topPx = this.clampTop(position.top / 100 * window.innerHeight)
       this.element.style.top = `${topPx}px`
       if (position.edge === "left") {
@@ -68,56 +67,8 @@ export default class extends Controller {
     }
   }
 
-  // Delay toggle slightly so double-click can trigger corner cycling instead
-  queueToggle(event) {
-    if (event.detail > 1) return
-
-    clearTimeout(this.toggleTimeout)
-    this.toggleTimeout = setTimeout(() => {
-      this.dispatch("toggle", { bubbles: true })
-    }, TOGGLE_DELAY)
-  }
-
-  // Double-click cycles the floating button around screen corners
-  cycleCorner(event) {
-    event.preventDefault()
-    event.stopPropagation()
-    clearTimeout(this.toggleTimeout)
-
-    const current = this.currentCorner()
-    const next = this.nextCorner(current)
-    this.moveToCorner(next)
-  }
-
-  currentCorner() {
-    const topPx = this.element.style.top
-      ? parseFloat(this.element.style.top)
-      : this.element.getBoundingClientRect().top
-
-    const topEdge = this.clampTop(getHeaderHeight() + getPadding())
-    const bottomEdge = this.clampTop(window.innerHeight - BUTTON_SIZE - getPadding())
-    const midY = (topEdge + bottomEdge) / 2
-    const isTop = topPx <= midY
-
-    const isRight = this.element.style.right && this.element.style.right !== "auto"
-    if (isTop && isRight) return TOP_RIGHT
-    if (!isTop && isRight) return BOTTOM_RIGHT
-    if (isTop) return TOP_LEFT
-    return BOTTOM_LEFT
-  }
-
-  nextCorner(corner) {
-    switch (corner) {
-      case TOP_LEFT:
-        return TOP_RIGHT
-      case TOP_RIGHT:
-        return BOTTOM_RIGHT
-      case BOTTOM_RIGHT:
-        return BOTTOM_LEFT
-      case BOTTOM_LEFT:
-      default:
-        return TOP_LEFT
-    }
+  toggle() {
+    this.dispatch("toggle", { bubbles: true })
   }
 
   // Move the button directly to a corner via keyboard shortcut
@@ -148,6 +99,7 @@ export default class extends Controller {
   }
 
   moveToCorner(corner) {
+    this.corner = corner
     const leftEdge = getLeftEdge()
     const rightEdge = getPadding()
     const topEdge = this.clampTop(getHeaderHeight() + getPadding())
@@ -158,40 +110,38 @@ export default class extends Controller {
         this.element.style.left = `${leftEdge}px`
         this.element.style.right = "auto"
         this.element.style.top = `${topEdge}px`
-        this.savePosition("left", topEdge)
         break
       case TOP_RIGHT:
         this.element.style.left = "auto"
         this.element.style.right = `${rightEdge}px`
         this.element.style.top = `${topEdge}px`
-        this.savePosition("right", topEdge)
         break
       case BOTTOM_LEFT:
         this.element.style.left = `${leftEdge}px`
         this.element.style.right = "auto"
         this.element.style.top = `${bottomEdge}px`
-        this.savePosition("left", bottomEdge)
         break
       case BOTTOM_RIGHT:
         this.element.style.left = "auto"
         this.element.style.right = `${rightEdge}px`
         this.element.style.top = `${bottomEdge}px`
-        this.savePosition("right", bottomEdge)
         break
     }
+
+    this.saveCornerPosition(corner)
   }
 
-  savePosition(edge, topPx) {
-    const topPercent = topPx / window.innerHeight * 100
-    storageSet("panelButtonPosition", JSON.stringify({ edge, top: topPercent }))
+  saveCornerPosition(corner) {
+    storageSet("panelButtonPosition", JSON.stringify({ corner }))
   }
 
-  // Apply the default bottom-right position
+  saveDragPosition(edge) {
+    const top = parseFloat(this.element.style.top) / window.innerHeight * 100
+    storageSet("panelButtonPosition", JSON.stringify({ edge, top }))
+  }
+
   applyDefault() {
-    const padding = getPadding()
-    this.element.style.right = `${padding}px`
-    this.element.style.left = "auto"
-    this.element.style.top = `${window.innerHeight - BUTTON_SIZE - padding}px`
+    this.moveToCorner(BOTTOM_RIGHT)
   }
 
   // Start tracking a potential drag
@@ -274,7 +224,8 @@ export default class extends Controller {
       this.element.style.left = `${targetLeft}px`
       this.element.style.right = "auto"
 
-      this.savePosition(edge, rect.top)
+      this.corner = null
+      this.saveDragPosition(edge)
 
       const onTransitionEnd = () => {
         this.element.classList.remove("l-ui-panel__button--snapping")
@@ -316,8 +267,12 @@ export default class extends Controller {
     }, 0)
   }
 
-  // Constrain position to viewport bounds after resize
   constrainPosition() {
+    if (this.corner) {
+      this.moveToCorner(this.corner)
+      return
+    }
+
     if (!this.element.style.top) return
 
     const topPx = this.clampTop(parseFloat(this.element.style.top))

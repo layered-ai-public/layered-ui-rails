@@ -60,9 +60,9 @@
     aria-controls="panel"
     aria-keyshortcuts="Control+I Meta+I Control+Alt+1 Meta+Alt+1 Control+Alt+2 Meta+Alt+2 Control+Alt+3 Meta+Alt+3 Control+Alt+4 Meta+Alt+4"
     tabindex="-1"
-    title="Toggle panel (Ctrl/⌘+i). Move to corners (Ctrl/⌘ + Alt/⌥ + 1/2/3/4), double-click, or drag."
+    title="Toggle panel (Ctrl/⌘+i). Move to corners (Ctrl/⌘ + Alt/⌥ + 1/2/3/4) or drag."
     data-controller="l-ui--panel-button"
-    data-action="click->l-ui--panel-button#queueToggle dblclick->l-ui--panel-button#cycleCorner mousedown->l-ui--panel-button#startDrag touchstart->l-ui--panel-button#startDrag"
+    data-action="click->l-ui--panel-button#toggle mousedown->l-ui--panel-button#startDrag touchstart->l-ui--panel-button#startDrag"
     data-l-ui--panel-target="actionButton"
   >
     <%= image_tag(@l_ui_panel_icon_light_url.presence || "layered_ui/panel_icon_light.svg", alt: "", class: "l-ui-icon--lg l-ui-panel__icon--light", aria: { hidden: true }) %>
