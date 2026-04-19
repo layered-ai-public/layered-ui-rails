@@ -46,11 +46,13 @@ export default class extends Controller {
     }
   }
 
-  // Restore position from localStorage or apply default
   restorePosition() {
     const position = storageGetJSON("panelButtonPosition")
 
-    if (position && position.edge && typeof position.top === "number") {
+    if (position && position.corner) {
+      this.moveToCorner(position.corner)
+    } else if (position && position.edge && typeof position.top === "number") {
+      this.corner = null
       const topPx = this.clampTop(position.top / 100 * window.innerHeight)
       this.element.style.top = `${topPx}px`
       if (position.edge === "left") {
@@ -67,23 +69,6 @@ export default class extends Controller {
 
   toggle() {
     this.dispatch("toggle", { bubbles: true })
-  }
-
-  currentCorner() {
-    const topPx = this.element.style.top
-      ? parseFloat(this.element.style.top)
-      : this.element.getBoundingClientRect().top
-
-    const topEdge = this.clampTop(getHeaderHeight() + getPadding())
-    const bottomEdge = this.clampTop(window.innerHeight - BUTTON_SIZE - getPadding())
-    const midY = (topEdge + bottomEdge) / 2
-    const isTop = topPx <= midY
-
-    const isRight = this.element.style.right && this.element.style.right !== "auto"
-    if (isTop && isRight) return TOP_RIGHT
-    if (!isTop && isRight) return BOTTOM_RIGHT
-    if (isTop) return TOP_LEFT
-    return BOTTOM_LEFT
   }
 
   // Move the button directly to a corner via keyboard shortcut
@@ -114,6 +99,7 @@ export default class extends Controller {
   }
 
   moveToCorner(corner) {
+    this.corner = corner
     const leftEdge = getLeftEdge()
     const rightEdge = getPadding()
     const topEdge = this.clampTop(getHeaderHeight() + getPadding())
@@ -124,40 +110,41 @@ export default class extends Controller {
         this.element.style.left = `${leftEdge}px`
         this.element.style.right = "auto"
         this.element.style.top = `${topEdge}px`
-        this.savePosition("left", topEdge)
         break
       case TOP_RIGHT:
         this.element.style.left = "auto"
         this.element.style.right = `${rightEdge}px`
         this.element.style.top = `${topEdge}px`
-        this.savePosition("right", topEdge)
         break
       case BOTTOM_LEFT:
         this.element.style.left = `${leftEdge}px`
         this.element.style.right = "auto"
         this.element.style.top = `${bottomEdge}px`
-        this.savePosition("left", bottomEdge)
         break
       case BOTTOM_RIGHT:
         this.element.style.left = "auto"
         this.element.style.right = `${rightEdge}px`
         this.element.style.top = `${bottomEdge}px`
-        this.savePosition("right", bottomEdge)
         break
     }
+
+    this.savePosition(corner)
   }
 
-  savePosition(edge, topPx) {
-    const topPercent = topPx / window.innerHeight * 100
-    storageSet("panelButtonPosition", JSON.stringify({ edge, top: topPercent }))
+  savePosition(corner) {
+    storageSet("panelButtonPosition", JSON.stringify(corner ? { corner } : { edge: this.currentEdge(), top: this.currentTopPercent() }))
   }
 
-  // Apply the default bottom-right position
+  currentEdge() {
+    return (this.element.style.right && this.element.style.right !== "auto") ? "right" : "left"
+  }
+
+  currentTopPercent() {
+    return parseFloat(this.element.style.top) / window.innerHeight * 100
+  }
+
   applyDefault() {
-    const padding = getPadding()
-    this.element.style.right = `${padding}px`
-    this.element.style.left = "auto"
-    this.element.style.top = `${window.innerHeight - BUTTON_SIZE - padding}px`
+    this.moveToCorner(BOTTOM_RIGHT)
   }
 
   // Start tracking a potential drag
@@ -240,7 +227,8 @@ export default class extends Controller {
       this.element.style.left = `${targetLeft}px`
       this.element.style.right = "auto"
 
-      this.savePosition(edge, rect.top)
+      this.corner = null
+      this.savePosition(null)
 
       const onTransitionEnd = () => {
         this.element.classList.remove("l-ui-panel__button--snapping")
@@ -282,8 +270,12 @@ export default class extends Controller {
     }, 0)
   }
 
-  // Constrain position to viewport bounds after resize
   constrainPosition() {
+    if (this.corner) {
+      this.moveToCorner(this.corner)
+      return
+    }
+
     if (!this.element.style.top) return
 
     const topPx = this.clampTop(parseFloat(this.element.style.top))
