@@ -91,7 +91,10 @@ curl -fsSL https://raw.githubusercontent.com/layered-ai-public/layered-ui-rails/
 
 ## Customising theme tokens
 
-All colors are CSS custom properties on `:root`. Override any token in your stylesheet (after importing the engine CSS):
+All colors are CSS custom properties on `:root` using a two-tier system:
+
+- **Tier 1 - Accent:** Set `--accent` and `--accent-foreground` for quick branding.
+- **Tier 2 - Full palette:** Override any individual token. Includes `--button-primary-bg` and `--button-primary-text` which default to the accent pair but can be overridden independently (e.g. a pink accent that needs white button text in dark mode).
 
 ```css
 /* app/assets/tailwind/application.css */
@@ -105,6 +108,7 @@ All colors are CSS custom properties on `:root`. Override any token in your styl
 .dark {
   --accent: 220 80% 65%;
   --accent-foreground: 0 0% 9%;
+  --button-primary-text: 0 0% 100%; /* white icons/text on colored buttons */
 }
 ```
 

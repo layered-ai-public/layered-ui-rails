@@ -41,12 +41,15 @@
   <li>Active navigation items (<code>l-ui-navigation__item--active</code>)</li>
   <li>Panel toggle button (<code>l-ui-panel__button</code>)</li>
   <li>Sent message bubbles (<code>l-ui-message--sent</code>)</li>
+  <li>Scroll-to-bottom button (<code>l-ui-scroll-to-bottom</code>)</li>
 </ul>
+
+<p class="l-ui-utility--mt-md">If your accent color needs a different text/icon color on buttons (e.g. a pink accent with white button text in dark mode), override <code>--button-primary-text</code> in Tier 2.</p>
 
 <h2 class="l-ui-utility--mt-2xl">Tier 2 - Full color overrides</h2>
 
 <p class="l-ui-utility--mt-md">Override any individual design token for complete control. Uncomment only the variables you need in your overrides file. Values use HSL channels in the format <code>hue saturation% lightness%</code>.</p>
-<p class="l-ui-utility--mt-md">When setting custom colours, check that text, controls, and states still meet WCAG 2.2 AA. See the <%= link_to "WCAG 2.2 quick reference", "https://www.w3.org/WAI/WCAG22/quickref/", target: "_blank", rel: "noopener noreferrer" %> for guidance.</p>
+<p class="l-ui-utility--mt-md">When setting custom colors, check that text, controls, and states still meet WCAG 2.2 AA. See the <%= link_to "WCAG 2.2 quick reference", "https://www.w3.org/WAI/WCAG22/quickref/", target: "_blank", rel: "noopener noreferrer" %> for guidance.</p>
 
 <pre class="l-ui-surface l-ui-utility--mt-lg"><code>/* layered_ui_overrides.css */
 
@@ -126,7 +129,7 @@
       </tr>
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><code>--button-primary-text</code></th>
-        <td class="l-ui-table__cell">Primary button text (defaults to <code>--accent-foreground</code>)</td>
+        <td class="l-ui-table__cell">Primary button and floating icon text (defaults to <code>--accent-foreground</code>). Override when your accent color needs a different text/icon color.</td>
       </tr>
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><code>--danger</code></th>
