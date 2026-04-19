@@ -7,7 +7,7 @@
 
 <h2 class="l-ui-utility--mt-2xl">Application layout</h2>
 
-<p class="l-ui-utility--mt-md">Your application layout should render the layered-ui-rails layout template after setting up any optional content blocks.</p>
+<p class="l-ui-utility--mt-md">Your application layout should render the layered-ui-rails layout template. Place all <code>content_for</code> blocks <strong>above</strong> the render call - the engine layout reads them when it renders, so they must be defined first.</p>
 
 <p class="l-ui-utility--mt-md">Edit your <code>app/views/layouts/application.html.erb</code> with the following content:</p>
 
