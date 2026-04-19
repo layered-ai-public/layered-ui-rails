@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.6.0] - 2026-04-19
+
+### Added
+
+- `rewriteLink` action on `l-ui--search-form` controller to preserve URL params in pagination links across Turbo Frames
+- Paginated Ransack demo in the dummy app with scoped `page_key` params
+- Thin scrollbars on all scrollable elements within `l-ui-body` (for Windows compatibility)
+- `--button-primary-bg` and `--button-primary-text` tokens documented as independently overridable (e.g. pink accent with white button text in dark mode)
+
+### Changed
+
+- Renamed `PaginationHelper` to `PagyHelper` to match the underlying gem
+- Renamed `--surface-active` to `--surface-highlighted` (and all related CSS classes: `l-ui-surface--active` to `l-ui-surface--highlighted`, `l-ui-surface--collapsible-active` to `l-ui-surface--collapsible-highlighted`)
+- Scoped page params (e.g. `users_page`) are now reset when a Ransack search or sort submits, returning to page 1
+- Floating icon buttons (`l-ui-panel__button`, `l-ui-scroll-to-bottom`) now use solid `bg-button-primary-bg` instead of semi-transparent with shadow
+- Navigation backdrop uses blur-only effect instead of a color overlay
+- Navigation secondary border changed from `border-surface` to `border-border`
+- Dummy app uses default Devise routes instead of custom path names
+- Agent skill section moved higher in README and dummy app home page
+- Documentation clarifies that `content_for` blocks must appear above the layout render call
+- Color token documentation reorganised into Tier 1 (accent) and Tier 2 (full palette)
+
+### Removed
+
+- `--backdrop` CSS custom property - backdrops now use blur-only styling
+
 ## [0.5.0] - 2026-04-19
 
 ### Added

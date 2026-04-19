@@ -16,14 +16,14 @@ All classes use the `l-ui-` prefix with BEM naming. Use these in host app views.
 Standalone variants (use one of these, not combined with each other):
 
 ```
-.l-ui-button                  Plain button with padding and focus ring
-.l-ui-button--primary         Accent-coloured solid button
-.l-ui-button--danger          Solid red button (for destructive actions)
-.l-ui-button--outline         Bordered button
-.l-ui-button--outline-danger  Red bordered button (for destructive actions)
-.l-ui-button--icon            Icon-only button (fixed size, no text)
+.l-ui-button                     Plain button with padding and focus ring
+.l-ui-button--primary            Accent-coloured solid button
+.l-ui-button--danger             Solid red button (for destructive actions)
+.l-ui-button--outline            Bordered button
+.l-ui-button--outline-danger     Red bordered button (for destructive actions)
+.l-ui-button--icon               Icon-only button (fixed size, no text)
 .l-ui-button--navigation-toggle  Mobile navigation toggle
-.l-ui-button--panel-close     Panel close button
+.l-ui-button--panel-close        Panel close button
 ```
 
 Modifiers (combine with a standalone variant above):
@@ -39,64 +39,64 @@ For destructive actions use `l-ui-button--danger` (solid) or `l-ui-button--outli
 ## Surfaces
 
 ```
-.l-ui-surface                Rounded, padded container
-.l-ui-surface--highlight     Darker background variant
-.l-ui-surface--sm            Smaller padding
-.l-ui-surface--collapsible   Wraps a <details> element
-.l-ui-surface--collapsible-highlight  Highlight variant
-.l-ui-surface__summary       Collapsible toggle (on <summary>)
-.l-ui-surface__chevron       Chevron indicator (rotates on open)
-.l-ui-surface__content       Collapsible content area
+.l-ui-surface                           Rounded, padded container
+.l-ui-surface--highlighted              Darker background variant
+.l-ui-surface--sm                       Smaller padding
+.l-ui-surface--collapsible              Wraps a <details> element
+.l-ui-surface--collapsible-highlighted  Highlighted variant
+.l-ui-surface__summary                  Collapsible toggle (on <summary>)
+.l-ui-surface__chevron                  Chevron indicator (rotates on open)
+.l-ui-surface__content                  Collapsible content area
 ```
 
 ## Forms
 
 ```
-.l-ui-form                   Form container
-.l-ui-form__group            Vertical field group with spacing
+.l-ui-form                     Form container
+.l-ui-form__group              Vertical field group with spacing
 .l-ui-form__group--large-gap   Larger spacing variant
-.l-ui-form__field            Input/textarea styling
-.l-ui-form__errors           Error summary box
-.l-ui-form__errors-list      Bulleted error list
-.l-ui-form__actions          Right-aligned action button container (full-width buttons on mobile)
-.l-ui-form__field-error      Individual field error message
-.l-ui-form__hint             Field hint text
-.l-ui-form__required         Required indicator (*)
+.l-ui-form__field              Input/textarea styling
+.l-ui-form__errors             Error summary box
+.l-ui-form__errors-list        Bulleted error list
+.l-ui-form__actions            Right-aligned action button container (full-width buttons on mobile)
+.l-ui-form__field-error        Individual field error message
+.l-ui-form__hint               Field hint text
+.l-ui-form__required           Required indicator (*)
 
-.l-ui-label                  Form label
-.l-ui-label--checkbox        Checkbox label variant
+.l-ui-label                    Form label
+.l-ui-label--checkbox          Checkbox label variant
 
-.l-ui-select                 Select dropdown
-.l-ui-select-wrapper         Select wrapper (custom arrow)
+.l-ui-select                   Select dropdown
+.l-ui-select-wrapper           Select wrapper (custom arrow)
 
-.l-ui-search__inline         Inline search form layout
+.l-ui-search__inline           Inline search form layout
 
-.l-ui-container--checkbox    Checkbox container
-.l-ui-radio__group           Radio button group
-.l-ui-radio__item            Radio item wrapper
-.l-ui-radio__input           Radio input element
-.l-ui-radio__label           Radio label
+.l-ui-container--checkbox      Checkbox container
+.l-ui-radio__group             Radio button group
+.l-ui-radio__item              Radio item wrapper
+.l-ui-radio__input             Radio input element
+.l-ui-radio__label             Radio label
 
-.l-ui-switch                 Toggle switch container
-.l-ui-switch__input          Hidden checkbox input
-.l-ui-switch__track          Visual track element
+.l-ui-switch                   Toggle switch container
+.l-ui-switch__input            Hidden checkbox input
+.l-ui-switch__track            Visual track element
 ```
 
 ## Tables
 
 ```
-.l-ui-table                    Table element
-.l-ui-table__header            <thead> row
-.l-ui-table__header-cell       <th> cell
-.l-ui-table__header-cell--action  Right-aligned action header
-.l-ui-table__sort-link         Sortable header link
-.l-ui-table__sort-indicator    Sort direction indicator (arrow)
-.l-ui-table__body              <tbody>
-.l-ui-table__cell              Regular <td> cell
-.l-ui-table__cell--primary     Bold cell (typically first column, use <th scope="row">)
-.l-ui-table__cell--action      Right-aligned action cell
-.l-ui-table__action--danger    Danger action link
-.l-ui-container--table         Overflow wrapper for responsive tables
+.l-ui-table                        Table element
+.l-ui-table__header                <thead> row
+.l-ui-table__header-cell           <th> cell
+.l-ui-table__header-cell--action   Right-aligned action header
+.l-ui-table__sort-link             Sortable header link
+.l-ui-table__sort-indicator        Sort direction indicator (arrow)
+.l-ui-table__body                  <tbody>
+.l-ui-table__cell                  Regular <td> cell
+.l-ui-table__cell--primary         Bold cell (typically first column, use <th scope="row">)
+.l-ui-table__cell--action          Right-aligned action cell
+.l-ui-table__action--danger        Danger action link
+.l-ui-container--table             Overflow wrapper for responsive tables
 ```
 
 WCAG 2.2 AA table pattern:
@@ -128,126 +128,126 @@ WCAG 2.2 AA table pattern:
 ## Notices
 
 ```
-.l-ui-notice--success    Green success message
-.l-ui-notice--warning    Yellow warning message
-.l-ui-notice--error      Red error message
+.l-ui-notice--success   Green success message
+.l-ui-notice--warning   Yellow warning message
+.l-ui-notice--error     Red error message
 ```
 
 ## Badges
 
 ```
-.l-ui-badge              Base badge
-.l-ui-badge--rounded     Pill shape
-.l-ui-badge--default     Grey
-.l-ui-badge--success     Green
-.l-ui-badge--warning     Yellow
-.l-ui-badge--danger      Red
+.l-ui-badge             Base badge
+.l-ui-badge--rounded    Pill shape
+.l-ui-badge--default    Grey
+.l-ui-badge--success    Green
+.l-ui-badge--warning    Yellow
+.l-ui-badge--danger     Red
 ```
 
 ## Tabs
 
 ```
-.l-ui-tabs__list         Tab list container (role="tablist")
-.l-ui-tabs__tab          Tab button
-.l-ui-tabs__tab--active  Active tab with accent border
-.l-ui-tabs__panel        Tab panel content
+.l-ui-tabs__list        Tab list container (role="tablist")
+.l-ui-tabs__tab         Tab button
+.l-ui-tabs__tab--active Active tab with accent border
+.l-ui-tabs__panel       Tab panel content
 ```
 
 ## Modal
 
 ```
-.l-ui-modal              <dialog> element
-.l-ui-modal__header      Modal header
-.l-ui-modal__body        Scrollable modal content
+.l-ui-modal          <dialog> element
+.l-ui-modal__header  Modal header
+.l-ui-modal__body    Scrollable modal content
 ```
 
 ## Breadcrumbs
 
 ```
-.l-ui-breadcrumbs        <nav> container
-.l-ui-breadcrumbs__list  <ol> list
-.l-ui-breadcrumbs__item  <li> item
-.l-ui-breadcrumbs__link  Breadcrumb link
+.l-ui-breadcrumbs       <nav> container
+.l-ui-breadcrumbs__list <ol> list
+.l-ui-breadcrumbs__item <li> item
+.l-ui-breadcrumbs__link Breadcrumb link
 ```
 
 ## Pagination
 
 ```
-.l-ui-pagination              Pagination container
-.l-ui-pagination__item        Page link or span
-.l-ui-pagination__item--active   Current page
-.l-ui-pagination__item--disabled   Disabled navigation
-.l-ui-pagination__gap         Gap indicator (...)
+.l-ui-pagination                  Pagination container
+.l-ui-pagination__item            Page link or span
+.l-ui-pagination__item--active    Current page
+.l-ui-pagination__item--disabled  Disabled navigation
+.l-ui-pagination__gap             Gap indicator (...)
 ```
 
 ## Navigation
 
 ```
-.l-ui-container--navigation        Sidebar container
-.l-ui-container--navigation.open   Visible sidebar
-.l-ui-backdrop--navigation         Overlay backdrop
-.l-ui-backdrop--navigation.open    Visible backdrop
-.l-ui-navigation                   Nav flexbox
-.l-ui-navigation__links            Nav links list
-.l-ui-navigation__item             Nav item
-.l-ui-navigation__item--active     Active nav item (with arrow)
-.l-ui-navigation__secondary        Nested nav list
-.l-ui-navigation__user             User info section
-.l-ui-navigation__user-name        User name text
-.l-ui-navigation__user-email       User email text
+.l-ui-container--navigation       Sidebar container
+.l-ui-container--navigation.open  Visible sidebar
+.l-ui-backdrop--navigation        Overlay backdrop
+.l-ui-backdrop--navigation.open   Visible backdrop
+.l-ui-navigation                  Nav flexbox
+.l-ui-navigation__links           Nav links list
+.l-ui-navigation__item            Nav item
+.l-ui-navigation__item--active    Active nav item (with arrow)
+.l-ui-navigation__secondary       Nested nav list
+.l-ui-navigation__user            User info section
+.l-ui-navigation__user-name       User name text
+.l-ui-navigation__user-email      User email text
 ```
 
 ## Header
 
 ```
-.l-ui-container--header            Fixed header container
-.l-ui-header                       Header flexbox
-.l-ui-header__icon                 Header icon (responsive)
-.l-ui-header__icon--light          Light theme icon
-.l-ui-header__icon--dark           Dark theme icon
-.l-ui-header__logo                 Header logo (responsive)
-.l-ui-header__logo--light          Light theme logo
-.l-ui-header__logo--dark           Dark theme logo
-.l-ui-theme-toggle                 Theme toggle button
-.l-ui-theme-toggle__icon--light    Sun icon (shown in dark mode)
-.l-ui-theme-toggle__icon--dark     Moon icon (shown in light mode)
+.l-ui-container--header          Fixed header container
+.l-ui-header                     Header flexbox
+.l-ui-header__icon               Header icon (responsive)
+.l-ui-header__icon--light        Light theme icon
+.l-ui-header__icon--dark         Dark theme icon
+.l-ui-header__logo               Header logo (responsive)
+.l-ui-header__logo--light        Light theme logo
+.l-ui-header__logo--dark         Dark theme logo
+.l-ui-theme-toggle               Theme toggle button
+.l-ui-theme-toggle__icon--light  Sun icon (shown in dark mode)
+.l-ui-theme-toggle__icon--dark   Moon icon (shown in light mode)
 ```
 
 ## Panel
 
 ```
-.l-ui-container--panel             Side panel container
-.l-ui-container--panel.open        Visible panel
-.l-ui-panel                        Panel flexbox
-.l-ui-panel__button                Floating action button
-.l-ui-panel__button--dragging      During drag
-.l-ui-panel__button--snapping      Snapping to edge
-.l-ui-panel__icon--light           Panel button icon (light)
-.l-ui-panel__icon--dark            Panel button icon (dark)
-.l-ui-panel__resize-handle         Desktop resize handle
-.l-ui-panel__header                Panel header
-.l-ui-panel__header-heading        Panel title
-.l-ui-panel__body                  Scrollable panel content
-.l-ui-panel__input                 Panel input area (footer)
+.l-ui-container--panel          Side panel container
+.l-ui-container--panel.open     Visible panel
+.l-ui-panel                     Panel flexbox
+.l-ui-panel__button             Floating action button
+.l-ui-panel__button--dragging   During drag
+.l-ui-panel__button--snapping   Snapping to edge
+.l-ui-panel__icon--light        Panel button icon (light)
+.l-ui-panel__icon--dark         Panel button icon (dark)
+.l-ui-panel__resize-handle      Desktop resize handle
+.l-ui-panel__header             Panel header
+.l-ui-panel__header-heading     Panel title
+.l-ui-panel__body               Scrollable panel content
+.l-ui-panel__input              Panel input area (footer)
 ```
 
 ## Conversation
 
 ```
-.l-ui-conversation                 Conversation wrapper
-.l-ui-conversation__messages       Scrollable messages area
-.l-ui-conversation__composer       Message input area
+.l-ui-conversation                   Conversation wrapper
+.l-ui-conversation__messages         Scrollable messages area
+.l-ui-conversation__composer         Message input area
 .l-ui-conversation__composer-input   Textarea
-.l-ui-conversation__separator      Date separator
+.l-ui-conversation__separator        Date separator
 
-.l-ui-message                      Message wrapper
-.l-ui-message--sent                Sent message (right-aligned)
-.l-ui-message__avatar              User avatar
-.l-ui-message__bubble              Message bubble
-.l-ui-message__author              Author name
-.l-ui-message__body                Message content
-.l-ui-message__footer              Metadata footer
-.l-ui-message__timestamp           Timestamp
+.l-ui-message                        Message wrapper
+.l-ui-message--sent                  Sent message (right-aligned)
+.l-ui-message__avatar                User avatar
+.l-ui-message__bubble                Message bubble
+.l-ui-message__author                Author name
+.l-ui-message__body                  Message content
+.l-ui-message__footer                Metadata footer
+.l-ui-message__timestamp             Timestamp
 ```
 
 ## Markdown
@@ -268,16 +268,16 @@ WCAG 2.2 AA table pattern:
 ## Utility classes
 
 ```
-.l-ui-utility--mt-0 through --mt-8   Margin top (fixed scale)
-.l-ui-utility--mt-sm/md/lg/xl/2xl    Responsive margin top
-.l-ui-utility--mb-0                   Margin bottom zero
-.l-ui-sr-only                         Visually hidden, screen reader only
-.l-ui-skip-link                       Accessibility skip link
-.l-ui-list                            Styled list
-.l-ui-container--grid                 1-col mobile, 2-col desktop grid
-.l-ui-container--spread               Flex row with space-between
-.l-ui-container--pagy                 Pagination wrapper
-.l-ui-scroll-lock                     Prevent body scroll (mobile panels/modals)
+.l-ui-utility--mt-0 through --mt-8  Margin top (fixed scale)
+.l-ui-utility--mt-sm/md/lg/xl/2xl  Responsive margin top
+.l-ui-utility--mb-0                 Margin bottom zero
+.l-ui-sr-only                       Visually hidden, screen reader only
+.l-ui-skip-link                     Accessibility skip link
+.l-ui-list                          Styled list
+.l-ui-container--grid               1-col mobile, 2-col desktop grid
+.l-ui-container--spread             Flex row with space-between
+.l-ui-container--pagy               Pagination wrapper
+.l-ui-scroll-lock                   Prevent body scroll (mobile panels/modals)
 ```
 
 ## Theming tokens
@@ -286,8 +286,8 @@ All color values are space-separated HSL channels (e.g. `220 80% 55%`). Override
 
 Tier 1 - Accent (quick branding):
 ```
---accent                Primary action color
---accent-foreground     Text on accent backgrounds
+--accent             Primary action color
+--accent-foreground  Text on accent backgrounds
 ```
 
 Tier 2 - Full palette (override individually as needed):
@@ -299,7 +299,7 @@ Tier 2 - Full palette (override individually as needed):
 --border-control        Form control border
 --ring                  Focus ring color
 --surface               Card/surface background
---surface-highlight     Highlighted surface
+--surface-highlighted   Highlighted surface
 --button-primary-bg     Primary button background (defaults to --accent)
 --button-primary-text   Primary button and floating icon text (defaults to --accent-foreground)
 --danger                Danger/error color

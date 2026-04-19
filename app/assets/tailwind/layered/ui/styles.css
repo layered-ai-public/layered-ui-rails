@@ -58,7 +58,7 @@
     --border-control: 0 0% 55%;
     --ring: 0 0% 13%;
     --surface: 0 0% 96%;
-    --surface-highlight: 0 0% 91%;
+    --surface-highlighted: 0 0% 91%;
     --button-primary-bg: var(--accent);
     --button-primary-text: var(--accent-foreground);
     --danger: 0 72% 38%;
@@ -86,7 +86,7 @@
     --border-control: 0 0% 40%;
     --ring: 0 0% 89%;
     --surface: 0 0% 8%;
-    --surface-highlight: 0 0% 16%;
+    --surface-highlighted: 0 0% 16%;
     --button-primary-bg: var(--accent);
     --button-primary-text: var(--accent-foreground);
     --danger: 0 85% 60%;
@@ -163,7 +163,7 @@
   --color-border: hsl(var(--border));
   --color-border-control: hsl(var(--border-control));
   --color-surface: hsl(var(--surface));
-  --color-surface-highlight: hsl(var(--surface-highlight));
+  --color-surface-highlighted: hsl(var(--surface-highlighted));
   --color-button-primary-bg: hsl(var(--button-primary-bg));
   --color-button-primary-text: hsl(var(--button-primary-text));
   --color-danger: hsl(var(--danger));
@@ -366,7 +366,7 @@
 .l-ui-markdown code {
   @apply px-1.5 py-0.5
          text-xs
-         bg-surface-highlight
+         bg-surface-highlighted
          rounded;
 }
 
@@ -874,9 +874,9 @@ pre.l-ui-surface {
   }
 }
 
-.l-ui-surface--highlight {
+.l-ui-surface--highlighted {
   @apply surface
-         bg-surface-highlight;
+         bg-surface-highlighted;
 }
 
 .l-ui-surface--collapsible {
@@ -885,14 +885,14 @@ pre.l-ui-surface {
          bg-surface;
 }
 
-.l-ui-surface--collapsible-highlight {
+.l-ui-surface--collapsible-highlighted {
   @apply surface
          p-0
-         bg-surface-highlight;
+         bg-surface-highlighted;
 }
 
 .l-ui-surface--collapsible,
-.l-ui-surface--collapsible-highlight {
+.l-ui-surface--collapsible-highlighted {
   &[open] > .l-ui-surface__summary .l-ui-surface__chevron {
     @apply rotate-90;
   }
@@ -1272,7 +1272,7 @@ pre.l-ui-surface {
 
 @utility pagination__item--active {
   @apply font-bold
-         bg-surface-highlight
+         bg-surface-highlighted
          text-foreground
          pointer-events-none;
 }
@@ -1354,7 +1354,7 @@ pre.l-ui-surface {
 
 .l-ui-badge--default {
   @apply badge
-         bg-surface-highlight
+         bg-surface-highlighted
          text-foreground-muted;
 }
 

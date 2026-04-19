@@ -164,7 +164,7 @@ Override CSS custom properties after the engine import. Values are space-separat
 }
 ```
 
-Key tokens: `--accent`, `--accent-foreground`, `--background`, `--foreground`, `--foreground-muted`, `--border`, `--border-control`, `--surface`, `--surface-highlight`, `--danger`, `--header-height`.
+Key tokens: `--accent`, `--accent-foreground`, `--background`, `--foreground`, `--foreground-muted`, `--border`, `--border-control`, `--surface`, `--surface-highlighted`, `--danger`, `--header-height`.
 
 ## Asset overrides
 
