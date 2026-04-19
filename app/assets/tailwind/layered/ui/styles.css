@@ -352,7 +352,7 @@
 
 .l-ui-markdown pre {
   @apply my-3 p-3
-         bg-surface-active
+         bg-surface
          rounded-md
          overflow-x-auto;
 }
@@ -861,11 +861,13 @@ pre.l-ui-surface {
 
 .l-ui-surface--collapsible {
   @apply surface
+         p-0
          bg-surface;
 }
 
 .l-ui-surface--collapsible-active {
   @apply surface
+         p-0
          bg-surface-active;
 }
 
@@ -874,24 +876,30 @@ pre.l-ui-surface {
   &[open] > .l-ui-surface__summary .l-ui-surface__chevron {
     @apply rotate-90;
   }
+
+  &.l-ui-surface--sm {
+    @apply p-0;
+  }
 }
 
 .l-ui-surface--sm {
   @apply p-3;
 
   .l-ui-surface__summary {
-    @apply text-sm font-semibold;
+    @apply p-3
+           text-sm font-semibold;
   }
 
   .l-ui-surface__content {
-    @apply pt-3;
+    @apply px-3 pb-3;
   }
 }
 
 .l-ui-surface__summary {
   @apply flex items-center justify-between
+         p-4
          font-bold
-         list-none cursor-pointer focus-ring;
+         list-none cursor-pointer select-none focus-ring;
 
   &::-webkit-details-marker {
     display: none;
@@ -903,7 +911,7 @@ pre.l-ui-surface {
 }
 
 .l-ui-surface__content {
-  @apply pt-4;
+  @apply px-4 pb-4;
 }
 
 /* Form */
