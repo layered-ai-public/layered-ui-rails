@@ -74,7 +74,6 @@ module Layered
               --warning-text: 48 96% 15%;
               --error-bg: 0 84% 75%;
               --error-text: 0 93% 12%;
-              --backdrop: 0 0% 0%;
             }
 
             .dark {
@@ -97,7 +96,6 @@ module Layered
               --warning-text: 48 96% 80%;
               --error-bg: 0 93% 12%;
               --error-text: 0 84% 75%;
-              --backdrop: 0 0% 0%;
             }
             */
 

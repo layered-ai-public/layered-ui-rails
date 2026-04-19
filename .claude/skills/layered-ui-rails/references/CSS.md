@@ -305,6 +305,5 @@ All colour values are space-separated HSL channels (e.g. `220 80% 55%`). Overrid
 --warning-text          Warning text
 --error-bg              Error background
 --error-text            Error text
---backdrop              Backdrop overlay colour
 --header-height         Header height (default 63px)
 ```
