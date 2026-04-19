@@ -125,6 +125,14 @@
     @apply whitespace-pre overflow-x-auto
            text-foreground-muted;
   }
+
+  /* Scrollbars */
+
+  .l-ui-body,
+  .l-ui-body * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--foreground-muted) / 0.3) transparent;
+  }
 }
 
 /* Theme */
