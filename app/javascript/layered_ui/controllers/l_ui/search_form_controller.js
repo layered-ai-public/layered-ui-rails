@@ -38,10 +38,15 @@ export default class extends Controller {
     const result = new URLSearchParams()
 
     for (const [key, value] of currentParams) {
-      if (key === scope || key.startsWith(scope + "[") || key === "commit" || key === "page" || key.endsWith("_page")) continue
+      if (key === scope || key.startsWith(scope + "[") || key === "commit" || key === "page" || key === this.#pageParam) continue
       result.append(key, value)
     }
 
     return result
+  }
+
+  get #pageParam() {
+    const scope = this.scopeValue
+    return scope.endsWith("_q") ? scope.slice(0, -2) + "_page" : null
   }
 }
