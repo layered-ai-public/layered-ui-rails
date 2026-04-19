@@ -13,17 +13,28 @@ All classes use the `l-ui-` prefix with BEM naming. Use these in host app views.
 
 ## Buttons
 
+Standalone variants (use one of these, not combined with each other):
+
 ```
-.l-ui-button                Base button with padding and focus ring
-.l-ui-button--primary       Accent-coloured button
-.l-ui-button--outline       Bordered button
-.l-ui-button--outline-danger  Red bordered button
-.l-ui-button--full          Full-width button
-.l-ui-button--icon          Icon-only button (fixed size, no text)
-.l-ui-button--disabled      Disabled appearance
+.l-ui-button                  Plain button with padding and focus ring
+.l-ui-button--primary         Accent-coloured solid button
+.l-ui-button--danger          Solid red button (for destructive actions)
+.l-ui-button--outline         Bordered button
+.l-ui-button--outline-danger  Red bordered button (for destructive actions)
+.l-ui-button--icon            Icon-only button (fixed size, no text)
 .l-ui-button--navigation-toggle  Mobile navigation toggle
-.l-ui-button--panel-close   Panel close button
+.l-ui-button--panel-close     Panel close button
 ```
+
+Modifiers (combine with a standalone variant above):
+
+```
+.l-ui-button--full            Full-width (e.g. l-ui-button--primary l-ui-button--full)
+```
+
+Any button variant is automatically styled as disabled when the `disabled` HTML attribute is present - no extra class needed.
+
+For destructive actions use `l-ui-button--danger` (solid) or `l-ui-button--outline-danger` (bordered).
 
 ## Surfaces
 
@@ -47,6 +58,7 @@ All classes use the `l-ui-` prefix with BEM naming. Use these in host app views.
 .l-ui-form__field            Input/textarea styling
 .l-ui-form__errors           Error summary box
 .l-ui-form__errors-list      Bulleted error list
+.l-ui-form__actions          Right-aligned action button container (full-width buttons on mobile)
 .l-ui-form__field-error      Individual field error message
 .l-ui-form__hint             Field hint text
 .l-ui-form__required         Required indicator (*)

@@ -1,11 +1,19 @@
 module Layered
   module Ui
     module TableHelper
+      # Formats a date/time value for display in a table cell.
+      #
+      #   l_ui_format_datetime(record.created_at) # => "15 Apr 2026, 10:30"
+      def l_ui_format_datetime(value)
+        value&.strftime("%-d %b %Y, %H:%M")
+      end
+
       # Renders a styled, accessible data table.
       #
       # Use this helper in any view to render a table with the engine's
-      # +l-ui-table+ styles. It supports custom cell rendering via procs,
-      # an optional actions column, and Ransack sort links.
+      # +l-ui-table+ styles. Every column must supply a +render:+ proc
+      # that receives a record and returns cell content - the helper does
+      # not extract or format data itself.
       #
       #   l_ui_table(@personas,
       #     columns: [
@@ -17,15 +25,11 @@ module Layered
       #   )
       #
       # Column options:
-      #   attribute: (Symbol)  Model attribute for data and label generation.
+      #   attribute: (Symbol)  Used for label generation and sort links.
       #   label:     (String)  Custom header text. Defaults to humanised attribute.
       #   primary:   (Boolean) Renders as <th scope="row">. Defaults to first column.
       #   sortable:  (Boolean) Show sort link when query: is provided. Defaults to true.
-      #   render:    (Proc)    Receives (record), returns cell content.
-      #
-      # When no +render:+ proc is given, the cell value is extracted via
-      # +record[attribute]+ for hashes or +record.public_send(attribute)+
-      # for objects, with automatic date formatting.
+      #   render:    (Proc)    Required. Receives (record), returns cell content.
       #
       # Pass +query:+ (a Ransack search object) and +turbo_frame:+ to enable
       # sortable column headers via +l_ui_sort_link+.
@@ -67,7 +71,7 @@ module Layered
 
         caption_tag = caption ? tag.caption(caption, class: "l-ui-sr-only") : nil
         table = tag.table(class: "l-ui-table") { safe_join([caption_tag, thead, tbody].compact) }
-        tag.div(table, class: "l-ui-container--table l-ui-utility--mt-lg")
+        tag.div(table, class: "l-ui-container--table")
       end
 
       private
@@ -75,6 +79,12 @@ module Layered
       def normalise_table_columns(columns)
         has_primary = columns.any? { |c| c[:primary] }
         columns.each_with_index.map do |col, i|
+          unless col[:render]
+            raise ArgumentError,
+                  "Column #{col[:attribute].inspect} is missing a :render proc. " \
+                  "Every column must supply render: ->(record) { ... }"
+          end
+
           {
             attribute: col[:attribute],
             label: col[:label] || col[:attribute].to_s.humanize,
@@ -86,12 +96,7 @@ module Layered
       end
 
       def table_cell(record, col)
-        if col[:render]
-          value = col[:render].call(record)
-        else
-          raw = record.is_a?(Hash) ? record[col[:attribute]] : record.public_send(col[:attribute])
-          value = raw.respond_to?(:strftime) ? raw.strftime("%-d %b %Y %H:%M") : raw
-        end
+        value = col[:render].call(record)
 
         if col[:primary]
           tag.th(value, class: "l-ui-table__cell--primary", scope: "row")

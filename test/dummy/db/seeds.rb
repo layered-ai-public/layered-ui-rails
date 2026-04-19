@@ -1,4 +1,5 @@
 users = [
+  { name: "Test User", email: "test.user@example.com" },
   { name: "Alice Johnson", email: "alice@example.com" },
   { name: "Bob Smith", email: "bob@example.com" },
   { name: "Carol Williams", email: "carol@example.com" },
@@ -29,7 +30,11 @@ users = [
 users.each do |attrs|
   User.find_or_create_by!(email: attrs[:email]) do |user|
     user.name = attrs[:name]
-    user.password = SecureRandom.hex(12)
+    if user[:email] == 'test.user@example.com'
+      user.password = 'notasecret123'
+    else
+      user.password = SecureRandom.hex(12)
+    end
     user.confirmed_at = Time.current
   end
 end

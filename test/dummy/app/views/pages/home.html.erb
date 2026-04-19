@@ -1,10 +1,10 @@
 <%= l_ui_breadcrumbs do %>
-  <%= l_ui_breadcrumb_item "#{Gem.loaded_specs['layered-ui-rails']&.name || 'layered-ui-rails'} (v#{Layered::Ui::VERSION})" %>
+  <%= l_ui_breadcrumb_item "#{gem_spec.name} (v#{gem_spec.version.to_s})" %>
 <% end %>
 <h1>Home</h1>
 
 <p class="l-ui-utility--mt-md">
-  <%= Gem.loaded_specs["layered-ui-rails"].description %>
+  <%= gem_spec.description %>
 </p>
 
 <div class="l-ui-container--grid l-ui-utility--mt-lg gap-8">

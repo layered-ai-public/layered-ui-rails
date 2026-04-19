@@ -1,0 +1,69 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Claude Code",
+      "type": "shell",
+      "command": "claude --enable-auto-mode",
+      "isBackground": true,
+      "options": {
+        "shell": {
+          "executable": "/bin/zsh",
+          "args": ["-l", "-c"]
+        }
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "panel": "shared",
+        "group": "top"
+      }
+    },
+    {
+      "label": "Shell",
+      "type": "shell",
+      "command": "/bin/zsh",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "panel": "shared",
+        "group": "top",
+        "reveal": "always",
+        "focus": true
+      }
+    },
+    {
+      "label": "Dev Server",
+      "type": "shell",
+      "command": "[ -d \"${workspaceFolder}/test/dummy\" ] && cd \"${workspaceFolder}/test/dummy\" || cd \"${workspaceFolder}\"; exec bin/dev -p 3001",
+      "isBackground": true,
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "shell": {
+          "executable": "/bin/zsh",
+          "args": ["-i", "-l", "-c"]
+        }
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "panel": "shared",
+        "group": "bottom",
+        "reveal": "silent"
+      }
+    },
+    {
+      "label": "Launch Workspace Tasks",
+      "dependsOn": ["Claude Code", "Shell", "Dev Server"],
+      "dependsOrder": "parallel",
+      "problemMatcher": []
+    },
+    {
+      "label": "Start Workspace",
+      "dependsOn": ["Launch Workspace Tasks"],
+      "dependsOrder": "sequence",
+      "runOptions": { "runOn": "folderOpen" },
+      "problemMatcher": []
+    }
+  ]
+}

@@ -352,7 +352,7 @@
 
 .l-ui-markdown pre {
   @apply my-3 p-3
-         bg-surface-active
+         bg-surface
          rounded-md
          overflow-x-auto;
 }
@@ -750,6 +750,12 @@
          text-foreground;
 }
 
+.l-ui-button--danger {
+  @apply button
+         bg-danger
+         text-white;
+}
+
 .l-ui-button--outline-danger {
   @apply button
          border border-danger
@@ -780,7 +786,8 @@
          transition-colors;
 }
 
-.l-ui-button--disabled {
+[class*="l-ui-button--"]:disabled,
+.l-ui-button:disabled {
   @apply opacity-50
          cursor-not-allowed;
 }
@@ -854,11 +861,13 @@ pre.l-ui-surface {
 
 .l-ui-surface--collapsible {
   @apply surface
+         p-0
          bg-surface;
 }
 
 .l-ui-surface--collapsible-active {
   @apply surface
+         p-0
          bg-surface-active;
 }
 
@@ -867,24 +876,30 @@ pre.l-ui-surface {
   &[open] > .l-ui-surface__summary .l-ui-surface__chevron {
     @apply rotate-90;
   }
+
+  &.l-ui-surface--sm {
+    @apply p-0;
+  }
 }
 
 .l-ui-surface--sm {
   @apply p-3;
 
   .l-ui-surface__summary {
-    @apply text-sm font-semibold;
+    @apply p-3
+           text-sm font-semibold;
   }
 
   .l-ui-surface__content {
-    @apply pt-3;
+    @apply px-3 pb-3;
   }
 }
 
 .l-ui-surface__summary {
   @apply flex items-center justify-between
+         p-4
          font-bold
-         list-none cursor-pointer focus-ring;
+         list-none cursor-pointer select-none focus-ring;
 
   &::-webkit-details-marker {
     display: none;
@@ -896,13 +911,13 @@ pre.l-ui-surface {
 }
 
 .l-ui-surface__content {
-  @apply pt-4;
+  @apply px-4 pb-4;
 }
 
 /* Form */
 
 .l-ui-form {
-  @apply w-full mt-4;
+  @apply w-full;
 }
 
 .l-ui-form__errors-list {
@@ -914,6 +929,15 @@ pre.l-ui-surface {
 
 .l-ui-form__group {
   @apply mt-4;
+}
+
+.l-ui-form__actions {
+  @apply flex flex-col gap-2 justify-end
+         mt-8;
+
+  @media (min-width: 768px) {
+    @apply flex-row;
+  }
 }
 
 .l-ui-form__group--large-gap {
