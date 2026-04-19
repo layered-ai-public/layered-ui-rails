@@ -9,7 +9,7 @@
       "options": {
         "shell": {
           "executable": "/bin/zsh",
-          "args": ["-l", "-c"]
+          "args": ["-i", "-l", "-c"]
         }
       },
       "problemMatcher": [],
