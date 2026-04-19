@@ -73,6 +73,17 @@
   </div>
 </div>
 
+<h2 class="l-ui-utility--mt-xl">Agent skill</h2>
+<p class="l-ui-utility--mt-md">
+  An <a href="https://agentskills.io" target="_blank" rel="noopener noreferrer">agent skill</a> is included so AI coding agents can work with <code>layered-ui-rails</code> in your project. Once installed, the agent can handle the full setup - just ask it to add <code>layered-ui-rails</code> to your app and it will install the gem, run the generator, and configure your layout.
+</p>
+<p class="l-ui-utility--mt-md"><strong>Project install</strong> - scoped to a single repo, available to all contributors:</p>
+<pre class="l-ui-surface l-ui-utility--mt-md"><code>bin/rails generate layered:ui:install_agent_skill</code></pre>
+<p class="l-ui-utility--mt-md"><strong>Global install</strong> - available across all your projects:</p>
+<pre class="l-ui-surface l-ui-utility--mt-md"><code>./install-skill.sh
+# or install remotely without cloning the repo:
+curl -fsSL https://raw.githubusercontent.com/layered-ai-public/layered-ui-rails/main/install-skill.sh | sh</code></pre>
+
 <h2 class="l-ui-utility--mt-xl">Requirements</h2>
 <ul class="l-ui-list l-ui-utility--mt-md">
   <li>Ruby on Rails >= 8.0</li>
@@ -100,17 +111,6 @@
 <p class="l-ui-utility--mt-lg">You can override the default logo by placing your own <code>logo_light.svg</code> and <code>logo_dark.svg</code> files in <code>app/assets/images/layered_ui/</code>. The panel toggle icon can also be overridden with <code>panel_icon_light.svg</code> and <code>panel_icon_dark.svg</code> in the same directory. The asset pipeline will serve your files instead of the defaults provided by the engine.</p>
 
 <p class="l-ui-utility--mt-lg">See the <%= link_to "integrations page", integrations_path %> for optional Devise, Pagy, and Ransack support.</p>
-
-<h2 class="l-ui-utility--mt-xl">Agent skill</h2>
-<p class="l-ui-utility--mt-md">
-  An <a href="https://agentskills.io">agent skill</a> is included so AI coding agents like Claude Code can work with layered-ui-rails in your project.
-</p>
-<p class="l-ui-utility--mt-md"><strong>Project install</strong> - scoped to a single repo, available to all contributors:</p>
-<pre class="l-ui-surface l-ui-utility--mt-md"><code>bin/rails generate layered:ui:install_agent_skill</code></pre>
-<p class="l-ui-utility--mt-md"><strong>Global install</strong> - available across all your projects:</p>
-<pre class="l-ui-surface l-ui-utility--mt-md"><code>./install-skill.sh
-# or install remotely without cloning the repo:
-curl -fsSL https://raw.githubusercontent.com/layered-ai-public/layered-ui-rails/main/install-skill.sh | sh</code></pre>
 
 <h2 class="l-ui-utility--mt-xl">License</h2>
 <p class="l-ui-utility--mt-md">
