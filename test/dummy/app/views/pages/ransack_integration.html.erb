@@ -59,7 +59,9 @@ end</code></pre>
 
 <h3 class="l-ui-utility--mt-xl">Users</h3>
 
-<%= turbo_frame_tag "users_collection", data: { turbo_action: "advance" } do %>
+<%= turbo_frame_tag "users_collection", data: { turbo_action: "advance",
+      controller: "l-ui--search-form", l_ui__search_form_scope_value: "users_q",
+      action: "click->l-ui--search-form#rewriteLink" } do %>
   <div class="l-ui-utility--mt-lg">
     <%= l_ui_search_form(@users_q, url: ransack_path, fields: [:name, :email],
                          clear: true, turbo_frame: "users_collection") %>
@@ -82,7 +84,9 @@ end</code></pre>
 
 <h3 class="l-ui-utility--mt-xl">Posts</h3>
 
-<%= turbo_frame_tag "posts_collection", data: { turbo_action: "advance" } do %>
+<%= turbo_frame_tag "posts_collection", data: { turbo_action: "advance",
+      controller: "l-ui--search-form", l_ui__search_form_scope_value: "posts_q",
+      action: "click->l-ui--search-form#rewriteLink" } do %>
   <div class="l-ui-utility--mt-lg">
     <%= l_ui_search_form(@posts_q, url: ransack_path, fields: [:title],
                          clear: true, turbo_frame: "posts_collection") %>
@@ -114,23 +118,26 @@ end</code></pre>
   @posts   = @posts_q.result(distinct: true)
 end</code></pre>
 
-<p class="l-ui-utility--mt-lg">In your view, wrap each collection in a <code>turbo_frame_tag</code> and pass <code>turbo_frame:</code> to the helpers:</p>
+<p class="l-ui-utility--mt-lg">In your view, wrap each collection in a <code>turbo_frame_tag</code> and pass <code>turbo_frame:</code> to the helpers. Add the <code>l-ui--search-form</code> controller with <code>rewriteLink</code> on the frame to preserve URL params in pagination links:</p>
 
-<pre class="l-ui-surface l-ui-utility--mt-md"><code>&lt;%= turbo_frame_tag "users_collection", data: { turbo_action: "advance" } do %&gt;
+<pre class="l-ui-surface l-ui-utility--mt-md"><code>&lt;%= turbo_frame_tag "users_collection", data: { turbo_action: "advance",
+      controller: "l-ui--search-form", l_ui__search_form_scope_value: "users_q",
+      action: "click-&gt;l-ui--search-form#rewriteLink" } do %&gt;
   &lt;%= l_ui_search_form(@users_q, url: users_path, fields: [:name, :email],
                        clear: true, turbo_frame: "users_collection") %&gt;
-  &lt;table&gt;
-    &lt;thead&gt;
-      &lt;tr&gt;
-        &lt;%= l_ui_sort_link(@users_q, :name, turbo_frame: "users_collection") %&gt;
-        &lt;%= l_ui_sort_link(@users_q, :email, turbo_frame: "users_collection") %&gt;
-      &lt;/tr&gt;
-    &lt;/thead&gt;
-    &lt;!-- table body --&gt;
-  &lt;/table&gt;
+  &lt;%= l_ui_table(@users,
+      columns: [
+        { attribute: :name, primary: true, render: -&gt;(u) { u.name } },
+        { attribute: :email, render: -&gt;(u) { u.email } }
+      ],
+      caption: "Users",
+      query: @users_q,
+      url: users_path,
+      turbo_frame: "users_collection") %&gt;
+  &lt;%= l_ui_pagy(@users_pagy) %&gt;
 &lt;% end %&gt;</code></pre>
 
-<p class="l-ui-utility--mt-lg">The <code>search_key</code> flows through automatically - <code>l_ui_search_form</code> reads it from the query object and passes it as <code>as:</code> to <code>search_form_for</code>. The clear button preserves other collections' params. <code>data-turbo-action="advance"</code> pushes state to the URL for back/forward navigation.</p>
+<p class="l-ui-utility--mt-lg">The <code>search_key</code> flows through automatically - <code>l_ui_search_form</code> reads it from the query object and passes it as <code>as:</code> to <code>search_form_for</code>. The clear button preserves other collections' params. <code>data-turbo-action="advance"</code> pushes state to the URL for back/forward navigation. The <code>rewriteLink</code> action merges current URL params into pagination links so other collections' page positions are preserved.</p>
 
 <h2 class="l-ui-utility--mt-2xl">Sort link options</h2>
 

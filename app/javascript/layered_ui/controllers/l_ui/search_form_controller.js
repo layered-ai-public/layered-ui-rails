@@ -32,6 +32,21 @@ export default class extends Controller {
     link.href = qs ? `${base}?${qs}` : base
   }
 
+  rewriteLink(event) {
+    const link = event.target.closest(".l-ui-container--pagy a[href]")
+    if (!link) return
+
+    const url = new URL(link.href, window.location.origin)
+    const linkKeys = new Set(url.searchParams.keys())
+    const current = new URLSearchParams(window.location.search)
+
+    for (const [key, value] of current) {
+      if (!linkKeys.has(key)) url.searchParams.append(key, value)
+    }
+
+    link.href = url.pathname + url.search
+  }
+
   #otherParams() {
     const currentParams = new URLSearchParams(window.location.search)
     const scope = this.scopeValue

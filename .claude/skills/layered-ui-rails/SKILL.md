@@ -146,7 +146,7 @@ All controllers use the `l-ui--` namespace and are auto-registered via importmap
 | Panel resize | `l-ui--panel-resize` | Panel width drag handle |
 | Modal | `l-ui--modal` | Native `<dialog>` with focus trap |
 | Tabs | `l-ui--tabs` | Accessible tabbed interface |
-| Search form | `l-ui--search-form` | Multi-scope search with Turbo support |
+| Search form | `l-ui--search-form` | Multi-scope search with Turbo support and pagination param preservation |
 
 ## Theming
 
