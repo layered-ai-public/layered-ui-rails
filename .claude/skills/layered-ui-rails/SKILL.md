@@ -174,7 +174,7 @@ Place files in `app/assets/images/layered_ui/` to replace engine defaults:
 
 ## Optional integrations
 
-- **Devise** - auto-detected. Provides styled auth views, header login/register buttons, sidebar user info and logout.
+- **Devise** - auto-detected. Provides styled auth views, header login/register buttons, sidebar user info and logout. Setup: `bundle add devise`, run `devise:install` and `devise User` generators, add `devise_for :users` to routes. Configure `Layered::Ui.current_user_method` if not using `:current_user`. Helpers: `l_ui_devise_installed?`, `l_ui_user_signed_in?`.
 - **Pagy** - auto-detected. Use `l_ui_pagy(@pagy)` for styled pagination.
 - **Ransack** - auto-detected. Use `l_ui_search_form` and `l_ui_sort_link` for styled search and sortable tables.
 
