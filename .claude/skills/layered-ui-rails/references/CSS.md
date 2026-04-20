@@ -222,8 +222,9 @@ WCAG 2.2 AA table pattern:
 .l-ui-panel__button             Floating action button
 .l-ui-panel__button--dragging   During drag
 .l-ui-panel__button--snapping   Snapping to edge
-.l-ui-panel__icon--light        Panel button icon (light)
-.l-ui-panel__icon--dark         Panel button icon (dark)
+.l-ui-panel__icon               Panel button inline SVG icon
+.l-ui-panel__icon--light        Panel button icon (light, for custom image override)
+.l-ui-panel__icon--dark         Panel button icon (dark, for custom image override)
 .l-ui-panel__resize-handle      Desktop resize handle
 .l-ui-panel__header             Panel header
 .l-ui-panel__header-heading     Panel title
@@ -301,7 +302,8 @@ Tier 2 - Full palette (override individually as needed):
 --surface               Card/surface background
 --surface-highlighted   Highlighted surface
 --button-primary-bg     Primary button background (defaults to --accent)
---button-primary-text   Primary button and floating icon text (defaults to --accent-foreground)
+--button-primary-text   Primary button text (defaults to --accent-foreground)
+--button-primary-icon   Icon color on filled icon buttons (defaults to --button-primary-text)
 --danger                Danger/error color
 --danger-light          Light danger background
 --danger-text           Danger text color
@@ -315,4 +317,4 @@ Tier 2 - Full palette (override individually as needed):
 --header-height         Header height (default 63px)
 ```
 
-Override --button-primary-text when your accent color needs a different text/icon color on buttons (e.g. a pink accent with white button text in dark mode).
+Override --button-primary-text when your accent color needs a different text/icon color on buttons (e.g. a pink accent with white button text in dark mode). Override --button-primary-icon instead when only the icon color should change.

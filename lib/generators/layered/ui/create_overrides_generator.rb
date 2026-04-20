@@ -38,7 +38,9 @@ module Layered
              *
              * If your accent color needs a different text/icon color on
              * buttons (e.g. a pink accent with white button text in dark
-             * mode), override --button-primary-text in Tier 2 below.
+             * mode), override --button-primary-text in Tier 2 below. To
+             * recolor only the icon (leaving button text unchanged),
+             * override --button-primary-icon instead.
              * ---------------------------------------------------------------- */
 
             :root {
@@ -69,6 +71,7 @@ module Layered
               --surface-highlighted: 0 0% 91%;
               --button-primary-bg: var(--accent);
               --button-primary-text: var(--accent-foreground);
+              --button-primary-icon: var(--button-primary-text);
               --danger: 0 72% 38%;
               --danger-light: 0 100% 97%;
               --danger-text: 0 72% 35%;
@@ -91,6 +94,7 @@ module Layered
               --surface-highlighted: 0 0% 16%;
               --button-primary-bg: var(--accent);
               --button-primary-text: var(--accent-foreground);
+              --button-primary-icon: var(--button-primary-text);
               --danger: 0 85% 60%;
               --danger-light: 0 93% 15%;
               --danger-text: 0 85% 64%;
