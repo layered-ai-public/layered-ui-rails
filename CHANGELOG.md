@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- `--button-primary-icon` Tier 2 token for filled icon buttons (e.g. `l-ui-panel__button`, `l-ui-scroll-to-bottom`). Defaults to `--button-primary-text`; override to recolor icons independently of button text.
+- Inline SVG default for the panel toggle button icon - inherits `currentColor` so it picks up `--button-primary-icon`. Per-request `@l_ui_panel_icon_light_url` / `@l_ui_panel_icon_dark_url` still replace the default image.
+
+### Changed
+
+- `l-ui-scroll-to-bottom` now bakes the chevron-down icon into CSS via `mask-image` and colours it with `--button-primary-icon`. Host markup is a plain empty `<button class="l-ui-scroll-to-bottom" aria-label="...">` - no inner `<svg>`/`<img>` required.
+
+### Removed
+
+- Static-file panel icon overrides (`panel_icon_light.svg`, `panel_icon_dark.svg` in `app/assets/images/layered_ui/`). Use `@l_ui_panel_icon_light_url` / `@l_ui_panel_icon_dark_url` instance variables to supply a custom image.
+
 ## [0.6.0] - 2026-04-19
 
 ### Added

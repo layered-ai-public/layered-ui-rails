@@ -44,7 +44,7 @@
   <li>Scroll-to-bottom button (<code>l-ui-scroll-to-bottom</code>)</li>
 </ul>
 
-<p class="l-ui-utility--mt-md">If your accent color needs a different text/icon color on buttons (e.g. a pink accent with white button text in dark mode), override <code>--button-primary-text</code> in Tier 2.</p>
+<p class="l-ui-utility--mt-md">If your accent color needs a different text/icon color on buttons (e.g. a pink accent with white button text in dark mode), override <code>--button-primary-text</code> in Tier 2. To recolor only the icon while leaving button text unchanged, override <code>--button-primary-icon</code> instead.</p>
 
 <h2 class="l-ui-utility--mt-2xl">Tier 2 - Full color overrides</h2>
 
@@ -129,7 +129,11 @@
       </tr>
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><code>--button-primary-text</code></th>
-        <td class="l-ui-table__cell">Primary button and floating icon text (defaults to <code>--accent-foreground</code>). Override when your accent color needs a different text/icon color.</td>
+        <td class="l-ui-table__cell">Primary button text (defaults to <code>--accent-foreground</code>). Override when your accent color needs a different text color.</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>--button-primary-icon</code></th>
+        <td class="l-ui-table__cell">Icon color on filled icon buttons (panel toggle, scroll-to-bottom) (defaults to <code>--button-primary-text</code>). Override to recolor icons independently of button text.</td>
       </tr>
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><code>--danger</code></th>

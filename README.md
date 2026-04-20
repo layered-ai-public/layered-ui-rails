@@ -150,8 +150,6 @@ Replace the defaults by placing files with the same names in `app/assets/images/
 | `icon_light.svg` | Favicon and header icon (light theme) |
 | `icon_dark.svg` | Favicon and header icon (dark theme) |
 | `apple_touch_icon.png` | Apple touch icon |
-| `panel_icon_light.svg` | Panel toggle button (light theme) |
-| `panel_icon_dark.svg` | Panel toggle button (dark theme) |
 
 layered-ui-rails uses two patterns for per-request overrides:
 

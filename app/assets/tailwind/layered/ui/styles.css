@@ -61,6 +61,7 @@
     --surface-highlighted: 0 0% 91%;
     --button-primary-bg: var(--accent);
     --button-primary-text: var(--accent-foreground);
+    --button-primary-icon: var(--button-primary-text);
     --danger: 0 72% 38%;
     --danger-light: 0 100% 97%;
     --danger-text: 0 72% 35%;
@@ -89,6 +90,7 @@
     --surface-highlighted: 0 0% 16%;
     --button-primary-bg: var(--accent);
     --button-primary-text: var(--accent-foreground);
+    --button-primary-icon: var(--button-primary-text);
     --danger: 0 85% 60%;
     --danger-light: 0 93% 15%;
     --danger-text: 0 85% 64%;
@@ -166,6 +168,7 @@
   --color-surface-highlighted: hsl(var(--surface-highlighted));
   --color-button-primary-bg: hsl(var(--button-primary-bg));
   --color-button-primary-text: hsl(var(--button-primary-text));
+  --color-button-primary-icon: hsl(var(--button-primary-icon));
   --color-danger: hsl(var(--danger));
   --color-danger-light: hsl(var(--danger-light));
   --color-danger-text: hsl(var(--danger-text));
@@ -1384,7 +1387,7 @@ pre.l-ui-surface {
          z-40
          cursor-pointer
          bg-button-primary-bg
-         text-button-primary-text
+         text-button-primary-icon
          rounded-full
          focus-ring
          transition-all;
@@ -1409,6 +1412,10 @@ pre.l-ui-surface {
 .l-ui-panel__button.hidden {
   @apply invisible
          opacity-0 pointer-events-none;
+}
+
+.l-ui-panel__icon {
+  @apply w-7 h-7;
 }
 
 .l-ui-panel__icon--light {
@@ -1655,10 +1662,19 @@ pre.l-ui-surface {
     ml-auto mr-0 -mt-9 h-9 w-9
     rounded-full
     cursor-pointer
-    bg-button-primary-bg text-button-primary-text
+    bg-button-primary-bg text-button-primary-icon
     focus-ring
     opacity-0 pointer-events-none
     transition-opacity duration-200;
+}
+
+.l-ui-scroll-to-bottom::before {
+  content: "";
+  @apply block w-4 h-4 bg-button-primary-icon;
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M4 6l4 4 4-4'/></svg>");
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
 }
 
 .l-ui-scroll-to-bottom[data-visible] {

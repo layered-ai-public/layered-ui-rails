@@ -170,7 +170,9 @@ Key tokens: `--accent`, `--accent-foreground`, `--background`, `--foreground`, `
 
 Place files in `app/assets/images/layered_ui/` to replace engine defaults:
 
-`logo_light.svg`, `logo_dark.svg`, `icon_light.svg`, `icon_dark.svg`, `apple_touch_icon.png`, `panel_icon_light.svg`, `panel_icon_dark.svg`.
+`logo_light.svg`, `logo_dark.svg`, `icon_light.svg`, `icon_dark.svg`, `apple_touch_icon.png`.
+
+The panel toggle button uses an inline SVG that inherits `currentColor`. Recolor it by overriding the `--button-primary-icon` Tier 2 token, or replace the image by setting both `@l_ui_panel_icon_light_url` and `@l_ui_panel_icon_dark_url` (per-request).
 
 ## Optional integrations
 
