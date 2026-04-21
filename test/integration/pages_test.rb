@@ -73,6 +73,30 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_select "img[src='https://example.com/custom_panel_icon_dark.svg']"
   end
 
+  test "panel renders inline SVG fallback for both themes when neither URL is set" do
+    get "/"
+    assert_response :success
+    assert_select "button.l-ui-panel__button svg.l-ui-panel__icon--light", count: 1
+    assert_select "button.l-ui-panel__button svg.l-ui-panel__icon--dark", count: 1
+    assert_select "button.l-ui-panel__button img", count: 0
+  end
+
+  test "panel falls back to inline SVG for the dark theme when only light URL is set" do
+    get "/test_panel_icon_light_only"
+    assert_response :success
+    assert_select "button.l-ui-panel__button img.l-ui-panel__icon--light[src='https://example.com/custom_panel_icon_light.svg']"
+    assert_select "button.l-ui-panel__button svg.l-ui-panel__icon--dark"
+    assert_select "button.l-ui-panel__button img.l-ui-panel__icon--dark", count: 0
+  end
+
+  test "panel falls back to inline SVG for the light theme when only dark URL is set" do
+    get "/test_panel_icon_dark_only"
+    assert_response :success
+    assert_select "button.l-ui-panel__button img.l-ui-panel__icon--dark[src='https://example.com/custom_panel_icon_dark.svg']"
+    assert_select "button.l-ui-panel__button svg.l-ui-panel__icon--light"
+    assert_select "button.l-ui-panel__button img.l-ui-panel__icon--light", count: 0
+  end
+
   test "logo content_for yields are rendered in the header when set" do
     get "/test_logo_override"
     assert_response :success

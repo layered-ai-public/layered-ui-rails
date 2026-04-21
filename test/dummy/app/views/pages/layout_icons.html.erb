@@ -52,4 +52,4 @@
 
 <p class="l-ui-utility--mt-md">The panel button icon uses an inline SVG that inherits its color from <code>color</code> via <code>currentColor</code>. To recolor it, override the <code>--button-primary-icon</code> Tier 2 token (see the <%= link_to "colors page", layout_colors_path %>).</p>
 
-<p class="l-ui-utility--mt-md">To replace the icon image entirely, set both <code>@l_ui_panel_icon_light_url</code> (shown in light mode) and <code>@l_ui_panel_icon_dark_url</code> (shown in dark mode). Provide both: if only one is set, the other theme will render no icon (the inline SVG fallback is only used when neither variable is set).</p>
+<p class="l-ui-utility--mt-md">To replace the icon image entirely, set <code>@l_ui_panel_icon_light_url</code> (shown in light mode) and/or <code>@l_ui_panel_icon_dark_url</code> (shown in dark mode). Each theme independently falls back to the inline SVG when its variable is unset.</p>

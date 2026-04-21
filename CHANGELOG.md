@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file. This projec
 ### Added
 
 - `--button-primary-icon` Tier 2 token for filled icon buttons (e.g. `l-ui-panel__button`, `l-ui-scroll-to-bottom`). Defaults to `--button-primary-text`; override to recolor icons independently of button text.
-- Inline SVG default for the panel toggle button icon - inherits `currentColor` so it picks up `--button-primary-icon`. Per-request `@l_ui_panel_icon_light_url` / `@l_ui_panel_icon_dark_url` still replace the default image.
+- Inline SVG default for the panel toggle button icon - inherits `currentColor` so it picks up `--button-primary-icon`. Per-request `@l_ui_panel_icon_light_url` / `@l_ui_panel_icon_dark_url` still replace the default image, and each theme falls back to the inline SVG independently when its variable is unset.
 
 ### Changed
 
