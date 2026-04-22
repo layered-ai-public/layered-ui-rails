@@ -150,7 +150,7 @@ All controllers use the `l-ui--` namespace and are auto-registered via importmap
 
 ## Theming
 
-Override CSS custom properties after the engine import. Values are space-separated HSL channels (no `hsl()` wrapper).
+Override CSS custom properties after the engine import. Values are space-separated HSL channels (no `hsl()` wrapper, no color keywords or hex - tokens are wrapped in `hsl()` when consumed, so `white` becomes the invalid `hsl(white)`. Use `0 0% 100%` for white). To convert hex/rgb to HSL channels, try https://colorpicker.dev/.
 
 ```css
 @import "./layered_ui";

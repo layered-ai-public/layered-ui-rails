@@ -28,6 +28,12 @@ module Layered
              *
              * Values are HSL channels: <hue> <saturation>% <lightness>%
              * Example:  --accent: 220 80% 55%;
+             *
+             * Do NOT use color keywords or hex/rgb values - tokens are
+             * wrapped in hsl() when consumed, so `white` becomes the
+             * invalid `hsl(white)`. Use `0 0% 100%` for white, `0 0% 0%`
+             * for black, etc. To convert hex/rgb to HSL channels, try
+             * https://colorpicker.dev/.
              */
 
             /* ----------------------------------------------------------------
