@@ -26,14 +26,10 @@ module Layered
              * This file is NOT overwritten by the install generator, so your
              * changes are preserved when you upgrade layered-ui-rails.
              *
-             * Values are HSL channels: <hue> <saturation>% <lightness>%
-             * Example:  --accent: 220 80% 55%;
-             *
-             * Do NOT use color keywords or hex/rgb values - tokens are
-             * wrapped in hsl() when consumed, so `white` becomes the
-             * invalid `hsl(white)`. Use `0 0% 100%` for white, `0 0% 0%`
-             * for black, etc. A converter such as https://colorpicker.dev/
-             * can help translate hex/rgb values.
+             * Values are space-separated HSL channels (e.g. `220 80% 55%`,
+             * or `0 0% 100%` for white). Keywords and hex/rgb won't work -
+             * tokens are wrapped in `hsl()` when consumed. A converter such
+             * as https://colorpicker.dev/ can help translate hex/rgb values.
              */
 
             /* ----------------------------------------------------------------
