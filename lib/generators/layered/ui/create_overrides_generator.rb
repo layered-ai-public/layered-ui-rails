@@ -32,8 +32,8 @@ module Layered
              * Do NOT use color keywords or hex/rgb values - tokens are
              * wrapped in hsl() when consumed, so `white` becomes the
              * invalid `hsl(white)`. Use `0 0% 100%` for white, `0 0% 0%`
-             * for black, etc. To convert hex/rgb to HSL channels, try
-             * https://colorpicker.dev/.
+             * for black, etc. A converter such as https://colorpicker.dev/
+             * can help translate hex/rgb values.
              */
 
             /* ----------------------------------------------------------------
