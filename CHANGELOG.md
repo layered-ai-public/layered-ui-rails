@@ -2,16 +2,17 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.7.0] - 2026-04-23
 
 ### Added
 
 - `--button-primary-icon` Tier 2 token for filled icon buttons (e.g. `l-ui-panel__button`, `l-ui-scroll-to-bottom`). Defaults to `--button-primary-text`; override to recolor icons independently of button text.
 - Inline SVG default for the panel toggle button icon - inherits `currentColor` so it picks up `--button-primary-icon`. Per-request `@l_ui_panel_icon_light_url` / `@l_ui_panel_icon_dark_url` still replace the default image, and each theme falls back to the inline SVG independently when its variable is unset.
+- Documentation of the HSL-channel format for theme tokens (space-separated channels such as `220 80% 55%`) in `SKILL.md`, `references/CSS.md`, and the overrides generator, with a pointer to a hex/rgb converter.
 
 ### Changed
 
-- `l-ui-scroll-to-bottom` now bakes the chevron-down icon into CSS via `mask-image` and colours it with `--button-primary-icon`. Host markup is a plain empty `<button class="l-ui-scroll-to-bottom" aria-label="...">` - no inner `<svg>`/`<img>` required.
+- `l-ui-scroll-to-bottom` now bakes the chevron-down icon into CSS via `mask-image` (with `-webkit-mask` prefixes and a URL-encoded SVG for Safari compatibility) and colours it with `--button-primary-icon`. Host markup is a plain empty `<button class="l-ui-scroll-to-bottom" aria-label="...">` - no inner `<svg>`/`<img>` required.
 
 ### Removed
 
