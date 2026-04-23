@@ -37,6 +37,8 @@ Rails.application.routes.draw do
   get "ransack", to: "pages#ransack_integration", as: :ransack
   get "search", to: "pages#search", as: :search
   get "test_icon_url_override", to: "pages#test_icon_url_override"
+  get "test_panel_icon_light_only", to: "pages#test_panel_icon_light_only"
+  get "test_panel_icon_dark_only", to: "pages#test_panel_icon_dark_only"
   get "test_logo_override", to: "pages#test_logo_override"
   get "test_head_injection", to: "pages#test_head_injection"
 end

@@ -150,7 +150,7 @@ All controllers use the `l-ui--` namespace and are auto-registered via importmap
 
 ## Theming
 
-Override CSS custom properties after the engine import. Values are space-separated HSL channels (no `hsl()` wrapper).
+Override CSS custom properties after the engine import. Values are space-separated HSL channels (e.g. `220 80% 55%`, or `0 0% 100%` for white). Keywords and hex/rgb won't work - tokens are wrapped in `hsl()` when consumed. A converter such as https://colorpicker.dev/ can help translate hex/rgb values.
 
 ```css
 @import "./layered_ui";
@@ -170,7 +170,9 @@ Key tokens: `--accent`, `--accent-foreground`, `--background`, `--foreground`, `
 
 Place files in `app/assets/images/layered_ui/` to replace engine defaults:
 
-`logo_light.svg`, `logo_dark.svg`, `icon_light.svg`, `icon_dark.svg`, `apple_touch_icon.png`, `panel_icon_light.svg`, `panel_icon_dark.svg`.
+`logo_light.svg`, `logo_dark.svg`, `icon_light.svg`, `icon_dark.svg`, `apple_touch_icon.png`.
+
+The panel toggle button uses an inline SVG that inherits `currentColor`. Recolor it by overriding the `--button-primary-icon` Tier 2 token, or replace the image by setting both `@l_ui_panel_icon_light_url` and `@l_ui_panel_icon_dark_url` (per-request).
 
 ## Optional integrations
 

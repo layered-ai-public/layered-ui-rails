@@ -113,6 +113,16 @@ class PagesController < ApplicationController
     @l_ui_panel_icon_dark_url = "https://example.com/custom_panel_icon_dark.svg"
   end
 
+  def test_panel_icon_light_only
+    @l_ui_panel_icon_light_url = "https://example.com/custom_panel_icon_light.svg"
+    render :home
+  end
+
+  def test_panel_icon_dark_only
+    @l_ui_panel_icon_dark_url = "https://example.com/custom_panel_icon_dark.svg"
+    render :home
+  end
+
   def test_logo_override
   end
 

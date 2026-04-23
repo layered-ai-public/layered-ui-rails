@@ -65,7 +65,15 @@
     data-action="click->l-ui--panel-button#toggle mousedown->l-ui--panel-button#startDrag touchstart->l-ui--panel-button#startDrag"
     data-l-ui--panel-target="actionButton"
   >
-    <%= image_tag(@l_ui_panel_icon_light_url.presence || "layered_ui/panel_icon_light.svg", alt: "", class: "l-ui-icon--lg l-ui-panel__icon--light", aria: { hidden: true }) %>
-    <%= image_tag(@l_ui_panel_icon_dark_url.presence || "layered_ui/panel_icon_dark.svg", alt: "", class: "l-ui-icon--lg l-ui-panel__icon--dark", aria: { hidden: true }) %>
+    <% if @l_ui_panel_icon_light_url.present? %>
+      <%= image_tag(@l_ui_panel_icon_light_url, alt: "", class: "l-ui-icon--lg l-ui-panel__icon--light", aria: { hidden: true }) %>
+    <% else %>
+      <svg class="l-ui-panel__icon l-ui-panel__icon--light" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+    <% end %>
+    <% if @l_ui_panel_icon_dark_url.present? %>
+      <%= image_tag(@l_ui_panel_icon_dark_url, alt: "", class: "l-ui-icon--lg l-ui-panel__icon--dark", aria: { hidden: true }) %>
+    <% else %>
+      <svg class="l-ui-panel__icon l-ui-panel__icon--dark" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+    <% end %>
   </button>
 </div>
