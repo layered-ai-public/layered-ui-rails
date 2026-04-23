@@ -283,7 +283,7 @@ WCAG 2.2 AA table pattern:
 
 ## Theming tokens
 
-All color values are space-separated HSL channels (e.g. `220 80% 55%`). Override after importing the engine CSS. Do not use color keywords or hex/rgb - tokens are wrapped in `hsl()` when consumed, so `white` becomes the invalid `hsl(white)`. Use `0 0% 100%` for white, `0 0% 0%` for black. To convert hex/rgb to HSL channels, try https://colorpicker.dev/.
+All color values are space-separated HSL channels (e.g. `220 80% 55%`, or `0 0% 100%` for white). Override after importing the engine CSS. Keywords and hex/rgb won't work - tokens are wrapped in `hsl()` when consumed. A converter such as https://colorpicker.dev/ can help translate hex/rgb values.
 
 Tier 1 - Accent (quick branding):
 ```
