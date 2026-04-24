@@ -283,7 +283,7 @@ WCAG 2.2 AA table pattern:
 
 ## Theming tokens
 
-All color values are space-separated HSL channels (e.g. `220 80% 55%`, or `0 0% 100%` for white). Override after importing the engine CSS. Keywords and hex/rgb won't work - tokens are wrapped in `hsl()` when consumed. A converter such as https://colorpicker.dev/ can help translate hex/rgb values.
+All color values are full CSS colors - `oklch()` is recommended for perceptually uniform mixing and consistent contrast (e.g. `oklch(0.58 0.19 255)`), but `#hex`, `rgb()`, and keywords also work. Override after importing the engine CSS. A converter such as https://oklch.com/ can help translate from hex/rgb.
 
 Tier 1 - Accent (quick branding):
 ```
