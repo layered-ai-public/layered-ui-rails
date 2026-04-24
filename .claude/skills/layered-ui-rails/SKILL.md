@@ -61,7 +61,7 @@ Populate layout regions with `content_for` (always above the render call):
 <%# Inject into <head> (e.g. per-tenant theming) %>
 <% content_for :l_ui_head do %>
   <style nonce="<%= content_security_policy_nonce %>">
-    :root { --accent: 220 80% 55%; }
+    :root { --accent: oklch(0.58 0.19 255); }
   </style>
 <% end %>
 
@@ -150,17 +150,17 @@ All controllers use the `l-ui--` namespace and are auto-registered via importmap
 
 ## Theming
 
-Override CSS custom properties after the engine import. Values are space-separated HSL channels (e.g. `220 80% 55%`, or `0 0% 100%` for white). Keywords and hex/rgb won't work - tokens are wrapped in `hsl()` when consumed. A converter such as https://colorpicker.dev/ can help translate hex/rgb values.
+Override CSS custom properties after the engine import. Values are full CSS colors - `oklch()` is recommended for perceptually uniform mixing and consistent contrast, but `#hex`, `rgb()`, and keywords also work. A converter such as https://oklch.com/ can help translate from hex/rgb.
 
 ```css
 @import "./layered_ui";
 
 :root {
-  --accent: 220 80% 55%;
-  --accent-foreground: 0 0% 100%;
+  --accent: oklch(0.58 0.19 255);
+  --accent-foreground: oklch(1 0 0);
 }
 .dark {
-  --accent: 220 80% 65%;
+  --accent: oklch(0.72 0.14 255);
 }
 ```
 

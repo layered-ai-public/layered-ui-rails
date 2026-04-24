@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+
+- **Breaking:** Theme tokens migrated from HSL channels (`220 80% 55%`) to full `oklch()` values for perceptually uniform mixing. `@theme` now references the vars directly instead of wrapping them in `hsl()`. Existing overrides files need to be updated: replace `hue sat% lightness%` with the equivalent `oklch(L C H)` value (or any valid CSS color - `#hex`, `rgb()`, and keywords all work now).
+
 ## [0.7.0] - 2026-04-23
 
 ### Added

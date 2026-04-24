@@ -104,14 +104,14 @@ All colors are CSS custom properties on `:root` using a two-tier system:
 @import "./layered_ui";
 
 :root {
-  --accent: 220 80% 55%;
-  --accent-foreground: 0 0% 100%;
+  --accent: oklch(0.58 0.19 255);
+  --accent-foreground: oklch(1 0 0);
 }
 
 .dark {
-  --accent: 220 80% 65%;
-  --accent-foreground: 0 0% 9%;
-  --button-primary-text: 0 0% 100%; /* white icons/text on colored buttons */
+  --accent: oklch(0.72 0.14 255);
+  --accent-foreground: oklch(0.2044 0 0);
+  --button-primary-text: oklch(1 0 0); /* white icons/text on colored buttons */
 }
 ```
 
@@ -120,7 +120,7 @@ For dynamic theming (e.g. per-tenant branding), use `content_for :l_ui_head` to 
 ```erb
 <% content_for :l_ui_head do %>
   <style>
-    :root { --accent: <%= @tenant.accent_hsl %>; --accent-foreground: 0 0% 100%; }
+    :root { --accent: <%= @tenant.accent_color %>; --accent-foreground: oklch(1 0 0); }
   </style>
 <% end %>
 ```
@@ -132,7 +132,7 @@ For dynamic theming (e.g. per-tenant branding), use `content_for :l_ui_head` to 
 > ```erb
 > <% content_for :l_ui_head do %>
 >   <style nonce="<%= content_security_policy_nonce %>">
->     :root { --accent: <%= @tenant.accent_hsl %>; --accent-foreground: 0 0% 100%; }
+>     :root { --accent: <%= @tenant.accent_color %>; --accent-foreground: oklch(1 0 0); }
 >   </style>
 > <% end %>
 > ```
