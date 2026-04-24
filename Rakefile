@@ -4,6 +4,7 @@ APP_RAKEFILE = File.expand_path("test/dummy/Rakefile", __dir__)
 load "rails/tasks/engine.rake"
 
 require "bundler/gem_tasks"
+import File.expand_path("tasks/layered_ui_css.rake", __dir__)
 
 require "rake/testtask"
 

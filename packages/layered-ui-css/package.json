@@ -1,0 +1,46 @@
+{
+  "name": "@layered-ui/css",
+  "version": "0.7.0",
+  "description": "Framework-agnostic CSS source for layered-ui component classes and design tokens.",
+  "license": "Apache-2.0",
+  "homepage": "https://www.layered.ai",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/layered-ai-public/layered-ui-rails.git",
+    "directory": "packages/layered-ui-css"
+  },
+  "scripts": {
+    "build": "tailwindcss -i scripts/build.css -o dist/layered-ui.css --cwd ."
+  },
+  "files": [
+    "dist",
+    "src",
+    "fonts",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": "./dist/layered-ui.css",
+    "./compiled.css": "./dist/layered-ui.css",
+    "./source.css": "./src/layered-ui.css",
+    "./fonts/inter.woff2": "./fonts/inter.woff2",
+    "./fonts/manrope.woff2": "./fonts/manrope.woff2"
+  },
+  "style": "./dist/layered-ui.css",
+  "sideEffects": [
+    "*.css"
+  ],
+  "keywords": [
+    "layered-ui",
+    "css",
+    "tailwindcss",
+    "design-system"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.1.18",
+    "tailwindcss": "4.1.18"
+  }
+}

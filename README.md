@@ -82,6 +82,18 @@ curl -fsSL https://raw.githubusercontent.com/layered-ai-public/layered-ui-rails/
 - Importmap Rails >= 2.0
 - Stimulus Rails >= 1.0
 
+## Shared CSS package
+
+The framework-agnostic CSS source lives in `packages/layered-ui-css` for publication as `@layered-ui/css`. The Rails gem vendors a release snapshot of that package, plus Rails-only integration styles, into `app/assets/tailwind/layered/ui/styles.css`, so Rails applications can keep using the generator without installing Node packages.
+
+Maintainers can sync the package source back into the gem assets with:
+
+```bash
+bundle exec rake layered_ui:sync_css
+```
+
+The sync task also copies the package fonts into the Rails asset path and rewrites package-relative font URLs to Rails asset-pipeline URLs.
+
 ## Features
 
 - **Dark/light theme** - system preference detection with localStorage persistence and manual toggle

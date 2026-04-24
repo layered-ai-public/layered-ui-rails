@@ -1,0 +1,22 @@
+/* Pagination (pagy) */
+
+.l-ui-container--pagy .pagy.series-nav {
+  @apply pagination;
+}
+
+.l-ui-container--pagy .pagy.series-nav a,
+.l-ui-container--pagy .pagy.series-nav span {
+  @apply pagination__item no-underline;
+}
+
+.l-ui-container--pagy .pagy.series-nav a[aria-current="page"] {
+  @apply pagination__item--active;
+}
+
+.l-ui-container--pagy .pagy.series-nav .disabled {
+  @apply pagination__item--disabled;
+}
+
+.l-ui-container--pagy .pagy.series-nav .gap {
+  @apply pagination__gap;
+}

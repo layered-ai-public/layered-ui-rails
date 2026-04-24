@@ -28,6 +28,7 @@ test/dummy!/tmp/storage/
 test/dummy!/tmp/storage/.keep
 
 # Ignore build artefacts.
+node_modules
 test/dummy/app/assets/builds
 
 # Ignore public assets.
