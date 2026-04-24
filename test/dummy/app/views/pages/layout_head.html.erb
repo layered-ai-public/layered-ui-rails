@@ -12,7 +12,7 @@
 
 <pre class="l-ui-surface l-ui-utility--mt-lg"><code>&lt;% content_for :l_ui_head do %&gt;
   &lt;style&gt;
-    :root { --accent: &lt;%= @tenant.accent_hsl %&gt;; --accent-foreground: 0 0% 100%; }
+    :root { --accent: &lt;%= @tenant.accent_color %&gt;; --accent-foreground: oklch(1 0 0); }
   &lt;/style&gt;
 &lt;% end %&gt;</code></pre>
 
@@ -26,7 +26,7 @@
 
 <pre class="l-ui-surface l-ui-utility--mt-lg"><code>&lt;% content_for :l_ui_head do %&gt;
   &lt;style nonce="&lt;%= content_security_policy_nonce %&gt;"&gt;
-    :root { --accent: &lt;%= @tenant.accent_hsl %&gt;; --accent-foreground: 0 0% 100%; }
+    :root { --accent: &lt;%= @tenant.accent_color %&gt;; --accent-foreground: oklch(1 0 0); }
   &lt;/style&gt;
 &lt;% end %&gt;</code></pre>
 
