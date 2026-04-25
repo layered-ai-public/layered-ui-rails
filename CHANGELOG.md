@@ -4,9 +4,12 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-04-24
+
 ### Changed
 
 - **Breaking:** Theme tokens migrated from HSL channels (`220 80% 55%`) to full `oklch()` values for perceptually uniform mixing. `@theme` now references the vars directly instead of wrapping them in `hsl()`. Existing overrides files need to be updated: replace `hue sat% lightness%` with the equivalent `oklch(L C H)` value (or any valid CSS color - `#hex`, `rgb()`, and keywords all work now).
+- `layered:ui:create_overrides` generator and token documentation (`SKILL.md`, `references/CSS.md`, `README.md`, dummy app colour/head pages) updated to reflect the new `oklch()` format.
 
 ## [0.7.0] - 2026-04-23
 
