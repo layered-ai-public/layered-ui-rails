@@ -3,6 +3,7 @@ pin "layered_ui", to: "layered_ui/index.js"
 # Utilities
 pin "layered_ui/utilities/announce", to: "layered_ui/utilities/announce.js"
 pin "layered_ui/utilities/layout", to: "layered_ui/utilities/layout.js"
+pin "layered_ui/utilities/scroll_lock", to: "layered_ui/utilities/scroll_lock.js"
 pin "layered_ui/utilities/storage", to: "layered_ui/utilities/storage.js"
 
 # Controllers

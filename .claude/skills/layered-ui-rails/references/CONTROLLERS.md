@@ -28,6 +28,7 @@ Responsive sidebar navigation with backdrop overlay on mobile.
 **Targets:** `navigation`, `backdrop`, `toggleButton`, `openIcon`, `closeIcon`
 **Actions:** `toggle`, `close`
 **Keyboard:** Escape to close
+**Behaviour:** Locks body scroll while the mobile overlay is open
 
 The layout wires this up automatically. Navigation items are populated via `content_for :l_ui_navigation_items`.
 
