@@ -2,7 +2,20 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.9.0] - 2026-04-26
+
+### Added
+
+- `l_ui_title_bar` helper for page title bars with optional actions
+- `l-ui-hr` class for styled horizontal rules
+- `color-scheme` CSS property set to match the active theme so native form controls (date pickers, scrollbars, etc.) render with matching light/dark styling
+
+### Changed
+
+- Navigation and panel controllers share an extracted `scroll_lock` utility module
+- Checkbox and radio inputs use a pointer cursor
+- Scroll-to-bottom button is centred and has a faint shadow
+- Form submit label shortened from "Save changes" to "Save"
 
 ## [0.8.0] - 2026-04-24
 
