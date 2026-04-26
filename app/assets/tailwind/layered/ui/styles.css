@@ -1019,7 +1019,8 @@ pre.l-ui-surface {
   @apply w-6 h-6
          accent-foreground
          focus-ring
-         rounded-sm;
+         rounded-sm
+         cursor-pointer;
 }
 
 /* Search */
@@ -1126,11 +1127,12 @@ pre.l-ui-surface {
   @apply w-6 h-6
          mr-2
          accent-foreground
-         focus-ring;
+         focus-ring
+         cursor-pointer;
 }
 
 .l-ui-radio__label {
-  @apply text-sm;
+  @apply text-sm cursor-pointer;
 }
 
 /* Tabs */
