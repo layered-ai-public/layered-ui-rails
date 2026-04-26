@@ -170,6 +170,15 @@ WCAG 2.2 AA table pattern:
 .l-ui-breadcrumbs__link Breadcrumb link
 ```
 
+## Title bar
+
+```
+.l-ui-title-bar          Title bar wrapper used with .l-ui-container--spread
+.l-ui-title-bar__content Breadcrumbs and title column
+.l-ui-title-bar__title   Page title
+.l-ui-title-bar__actions Action area
+```
+
 ## Pagination
 
 ```

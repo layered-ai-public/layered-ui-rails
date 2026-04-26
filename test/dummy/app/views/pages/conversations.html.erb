@@ -6,10 +6,12 @@
   }
 </style>
 
-<%= l_ui_breadcrumbs do %>
-  <%= l_ui_breadcrumb_item "Home", root_path %>
-<% end %>
-<h1>Conversations</h1>
+<%= l_ui_title_bar(
+  title: "Conversations",
+  breadcrumbs: [
+    ["Home", root_path]
+  ]
+) %>
 
 <p class="l-ui-utility--mt-md">A message list component for displaying conversations and messages. The container uses <code>flex-1 min-h-0</code> to fill available space within a flex parent. When placed inside an <code>l-ui-page</code>, the page is automatically constrained to viewport height so messages scroll within the available space while the composer stays pinned at the bottom. If you have a title bar or other content above the messages, include it inside the container so the remaining height is calculated correctly.</p>
 

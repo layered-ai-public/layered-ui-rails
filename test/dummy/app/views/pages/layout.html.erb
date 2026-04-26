@@ -1,7 +1,9 @@
-<%= l_ui_breadcrumbs do %>
-  <%= l_ui_breadcrumb_item "Home", root_path %>
-<% end %>
-<h1>Layout</h1>
+<%= l_ui_title_bar(
+  title: "Layout",
+  breadcrumbs: [
+    ["Home", root_path]
+  ]
+) %>
 
 <p class="l-ui-utility--mt-md">layered-ui-rails provides a layout system with a header, sidebar navigation, and slide-out panel. Use <code>content_for</code> blocks to inject content, instance variables to set metadata, and file overrides to change logos and icons.</p>
 

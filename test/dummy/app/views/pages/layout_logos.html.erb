@@ -1,8 +1,10 @@
-<%= l_ui_breadcrumbs do %>
-  <%= l_ui_breadcrumb_item "Home", root_path %>
-  <%= l_ui_breadcrumb_item "Layout", layout_path %>
-<% end %>
-<h1>Logos</h1>
+<%= l_ui_title_bar(
+  title: "Logos",
+  breadcrumbs: [
+    ["Home", root_path],
+    ["Layout", layout_path]
+  ]
+) %>
 
 <p class="l-ui-utility--mt-md">The header displays a logo on wider screens and an icon on mobile. Both have light and dark variants that switch automatically with the theme.</p>
 

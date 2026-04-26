@@ -31,6 +31,7 @@ module Layered
           helper Layered::Ui::NavigationHelper
           helper Layered::Ui::PagyHelper
           helper Layered::Ui::TableHelper
+          helper Layered::Ui::TitleBarHelper
           helper Layered::Ui::FormHelper
           helper Layered::Ui::RansackHelper
         end

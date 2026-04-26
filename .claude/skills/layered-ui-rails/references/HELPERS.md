@@ -41,6 +41,29 @@ l_ui_breadcrumb_item(label, path = nil)
 <% end %>
 ```
 
+## Title bar
+
+```ruby
+l_ui_title_bar(title:, breadcrumbs: [], actions: nil, &block)
+```
+
+- `title` (String) - page title rendered as the `<h1>`
+- `breadcrumbs` (Array, optional) - breadcrumb items as `[label, path]` arrays or `{ label:, path: }` hashes
+- `actions` (String|Array, optional) - HTML-safe action content; omit when using a block
+- `&block` - optional action markup, usually buttons or links
+
+```erb
+<%= l_ui_title_bar(
+  title: "Users",
+  breadcrumbs: [
+    ["Home", root_path],
+    ["Admin", admin_path]
+  ]
+) do %>
+  <%= link_to "New user", new_user_path, class: "l-ui-button--primary" %>
+<% end %>
+```
+
 ## Pagination (requires pagy gem)
 
 ```ruby

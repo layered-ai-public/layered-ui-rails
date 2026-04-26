@@ -1,7 +1,9 @@
-<%= l_ui_breadcrumbs do %>
-  <%= l_ui_breadcrumb_item "#{gem_spec.name} (v#{gem_spec.version.to_s})" %>
-<% end %>
-<h1>Home</h1>
+<%= l_ui_title_bar(
+  title: "Home",
+  breadcrumbs: [
+    ["#{gem_spec.name} (v#{gem_spec.version.to_s})"]
+  ]
+) %>
 
 <p class="l-ui-utility--mt-md">
   <%= gem_spec.description %>
