@@ -1661,10 +1661,11 @@ pre.l-ui-surface {
 .l-ui-scroll-to-bottom {
   @apply
     sticky bottom-2 flex items-center justify-center
-    ml-auto mr-0 -mt-9 h-9 w-9
+    mx-auto -mt-9 h-9 w-9
     rounded-full
     cursor-pointer
     bg-button-primary-bg text-button-primary-icon
+    shadow-sm
     focus-ring
     opacity-0 pointer-events-none
     transition-opacity duration-200;
