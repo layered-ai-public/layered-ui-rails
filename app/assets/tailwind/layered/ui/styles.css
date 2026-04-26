@@ -296,6 +296,13 @@
          space-y-1;
 }
 
+/* Horizontal rule */
+
+.l-ui-hr {
+  @apply my-4
+         border-0 border-t border-border;
+}
+
 /* Markdown */
 
 .l-ui-markdown > *:first-child {
