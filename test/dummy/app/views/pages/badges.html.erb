@@ -1,7 +1,9 @@
-<%= l_ui_breadcrumbs do %>
-  <%= l_ui_breadcrumb_item "Home", root_path %>
-<% end %>
-<h1>Badges</h1>
+<%= l_ui_title_bar(
+  title: "Badges",
+  breadcrumbs: [
+    ["Home", root_path]
+  ]
+) %>
 
 <p class="l-ui-utility--mt-md">Status indicators and labels for categorisation.</p>
 

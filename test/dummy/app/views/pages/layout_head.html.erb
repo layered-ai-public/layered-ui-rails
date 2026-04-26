@@ -1,8 +1,10 @@
-<%= l_ui_breadcrumbs do %>
-  <%= l_ui_breadcrumb_item "Home", root_path %>
-  <%= l_ui_breadcrumb_item "Layout", layout_path %>
-<% end %>
-<h1>Head</h1>
+<%= l_ui_title_bar(
+  title: "Head",
+  breadcrumbs: [
+    ["Home", root_path],
+    ["Layout", layout_path]
+  ]
+) %>
 
 <p class="l-ui-utility--mt-md">Use <code>content_for :l_ui_head</code> to inject content into the layout <code>&lt;head&gt;</code>, after the stylesheet. This is the right place for dynamic <code>&lt;style&gt;</code> blocks, preload hints, or other per-request head content.</p>
 

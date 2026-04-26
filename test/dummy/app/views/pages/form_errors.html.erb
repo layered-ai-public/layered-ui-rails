@@ -1,8 +1,10 @@
-<%= l_ui_breadcrumbs do %>
-  <%= l_ui_breadcrumb_item "Home", root_path %>
-  <%= l_ui_breadcrumb_item "Forms", forms_path %>
-<% end %>
-<h1>Form errors</h1>
+<%= l_ui_title_bar(
+  title: "Form errors",
+  breadcrumbs: [
+    ["Home", root_path],
+    ["Forms", forms_path]
+  ]
+) %>
 
 <p class="l-ui-utility--mt-md">Error display patterns for form validation with accessible markup.</p>
 

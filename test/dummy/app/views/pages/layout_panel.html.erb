@@ -1,8 +1,10 @@
-<%= l_ui_breadcrumbs do %>
-  <%= l_ui_breadcrumb_item "Home", root_path %>
-  <%= l_ui_breadcrumb_item "Layout", layout_path %>
-<% end %>
-<h1>Panel</h1>
+<%= l_ui_title_bar(
+  title: "Panel",
+  breadcrumbs: [
+    ["Home", root_path],
+    ["Layout", layout_path]
+  ]
+) %>
 
 <p class="l-ui-utility--mt-md">The slide-out panel is only rendered when the <code>:l_ui_panel_body</code> content block is present. Click the panel button in the bottom-right corner to see it in action, or use <kbd>⌘i</kbd> / <kbd>Ctrl+i</kbd> to toggle it.</p>
 

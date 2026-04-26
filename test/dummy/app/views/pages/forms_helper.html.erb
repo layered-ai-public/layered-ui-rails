@@ -1,4 +1,10 @@
-<h1>Form helper</h1>
+<%= l_ui_title_bar(
+  title: "Form helper",
+  breadcrumbs: [
+    ["Home", root_path],
+    ["Forms", forms_path]
+  ]
+) %>
 
 <p class="l-ui-utility--mt-md">The <code>l_ui_form</code> helper renders a complete form from a record and a field configuration array. It handles labels, inputs, hints, validation errors, and the submit button.</p>
 

@@ -749,6 +749,26 @@
          focus-ring rounded-sm;
 }
 
+/* Title bar */
+
+.l-ui-title-bar {
+  @apply w-full;
+}
+
+.l-ui-title-bar__content {
+  @apply min-w-0;
+}
+
+.l-ui-title-bar__title {
+  @apply mt-0;
+}
+
+.l-ui-title-bar__actions {
+  @apply flex flex-wrap items-center justify-end
+         gap-2
+         shrink-0;
+}
+
 /* Buttons */
 
 @utility button {

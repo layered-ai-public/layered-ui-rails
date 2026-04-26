@@ -1,8 +1,10 @@
-<%= l_ui_breadcrumbs do %>
-  <%= l_ui_breadcrumb_item "Home", root_path %>
-  <%= l_ui_breadcrumb_item "Layout", layout_path %>
-<% end %>
-<h1>Metadata</h1>
+<%= l_ui_title_bar(
+  title: "Metadata",
+  breadcrumbs: [
+    ["Home", root_path],
+    ["Layout", layout_path]
+  ]
+) %>
 
 <p class="l-ui-utility--mt-md">Set instance variables in your controller or view to populate the page's <code>&lt;title&gt;</code> and <code>&lt;meta&gt;</code> tags.</p>
 

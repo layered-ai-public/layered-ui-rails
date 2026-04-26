@@ -1,8 +1,10 @@
-<%= l_ui_breadcrumbs do %>
-  <%= l_ui_breadcrumb_item "Home", root_path %>
-  <%= l_ui_breadcrumb_item "Layout", layout_path %>
-<% end %>
-<h1>Colors</h1>
+<%= l_ui_title_bar(
+  title: "Colors",
+  breadcrumbs: [
+    ["Home", root_path],
+    ["Layout", layout_path]
+  ]
+) %>
 
 <p class="l-ui-utility--mt-md">layered-ui-rails supports a two-tier color customisation system.</p>
 <p class="l-ui-utility--mt-md">Set a single accent color for quick branding, or override any of the individual color tokens for full control.</p>
