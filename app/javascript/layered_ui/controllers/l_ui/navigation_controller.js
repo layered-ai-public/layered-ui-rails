@@ -1,6 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 import { announce, clearAnnounceTimeout } from "layered_ui/utilities/announce"
 import { isMobile } from "layered_ui/utilities/layout"
+import { lockBodyScroll, unlockBodyScroll } from "layered_ui/utilities/scroll_lock"
 
 export default class extends Controller {
   static targets = ["navigation", "backdrop", "toggleButton", "openIcon", "closeIcon"]
@@ -8,6 +9,7 @@ export default class extends Controller {
   connect() {
     this.previousActiveElement = null
     this.isOpen = false
+    this.isScrollLocked = false
     this._resizeFrame = null
     this.boundHandleResize = () => {
       if (this._resizeFrame) return
@@ -54,6 +56,7 @@ export default class extends Controller {
     this.navigationTarget.classList.add("open")
     this.backdropTarget.classList.add("open")
     this.setNavigationInteractivity(true)
+    this.updateScrollLock()
 
     // Update ARIA attributes and swap icons
     if (this.hasToggleButtonTarget) {
@@ -89,6 +92,7 @@ export default class extends Controller {
     this.navigationTarget.classList.remove("open")
     this.backdropTarget.classList.remove("open")
     this.setNavigationInteractivity(false)
+    this.unlockScroll()
 
     // Update ARIA attributes and swap icons
     if (this.hasToggleButtonTarget) {
@@ -116,6 +120,7 @@ export default class extends Controller {
     clearAnnounceTimeout(this)
     cancelAnimationFrame(this._resizeFrame)
     window.removeEventListener("resize", this.boundHandleResize)
+    this.unlockScroll()
     this.previousActiveElement = null
   }
 
@@ -125,6 +130,7 @@ export default class extends Controller {
     // In overlay mode (default), always respect isOpen state regardless of viewport
     if (isMobile() || !this.alwaysShow) {
       this.setNavigationInteractivity(this.isOpen)
+      this.updateScrollLock()
       return
     }
 
@@ -133,6 +139,7 @@ export default class extends Controller {
     this.navigationTarget.classList.remove("open")
     this.backdropTarget.classList.remove("open")
     this.setNavigationInteractivity(true)
+    this.unlockScroll()
 
     if (this.hasToggleButtonTarget) {
       this.toggleButtonTarget.setAttribute("aria-expanded", "false")
@@ -155,6 +162,28 @@ export default class extends Controller {
 
     this.navigationTarget.removeAttribute("inert")
     this.navigationTarget.removeAttribute("aria-hidden")
+  }
+
+  updateScrollLock() {
+    if (this.isOpen && isMobile()) {
+      this.lockScroll()
+    } else {
+      this.unlockScroll()
+    }
+  }
+
+  lockScroll() {
+    if (this.isScrollLocked) return
+
+    lockBodyScroll()
+    this.isScrollLocked = true
+  }
+
+  unlockScroll() {
+    if (!this.isScrollLocked) return
+
+    unlockBodyScroll()
+    this.isScrollLocked = false
   }
 
   get alwaysShow() {

@@ -1,8 +1,10 @@
-<%= l_ui_breadcrumbs do %>
-  <%= l_ui_breadcrumb_item "Home", root_path %>
-  <%= l_ui_breadcrumb_item "Integrations", integrations_path %>
-<% end %>
-<h1>Ransack</h1>
+<%= l_ui_title_bar(
+  title: "Ransack",
+  breadcrumbs: [
+    ["Home", root_path],
+    ["Integrations", integrations_path]
+  ]
+) %>
 
 <p class="l-ui-utility--mt-md">Ransack is fully supported but entirely optional. The engine works without any search system.</p>
 

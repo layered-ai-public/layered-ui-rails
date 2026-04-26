@@ -170,6 +170,15 @@ WCAG 2.2 AA table pattern:
 .l-ui-breadcrumbs__link Breadcrumb link
 ```
 
+## Title bar
+
+```
+.l-ui-title-bar          Title bar wrapper used with .l-ui-container--spread
+.l-ui-title-bar__content Breadcrumbs and title column
+.l-ui-title-bar__title   Page title
+.l-ui-title-bar__actions Action area
+```
+
 ## Pagination
 
 ```
@@ -275,6 +284,7 @@ WCAG 2.2 AA table pattern:
 .l-ui-sr-only                       Visually hidden, screen reader only
 .l-ui-skip-link                     Accessibility skip link
 .l-ui-list                          Styled list
+.l-ui-hr                            Horizontal rule with theme border and vertical spacing
 .l-ui-container--grid               1-col mobile, 2-col desktop grid
 .l-ui-container--spread             Flex row with space-between
 .l-ui-container--pagy               Pagination wrapper

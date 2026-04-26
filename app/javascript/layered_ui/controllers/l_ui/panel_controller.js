@@ -2,6 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 import { announce, clearAnnounceTimeout } from "layered_ui/utilities/announce"
 import { storageGet, storageSet } from "layered_ui/utilities/storage"
 import { isMobile } from "layered_ui/utilities/layout"
+import { lockBodyScroll, unlockBodyScroll } from "layered_ui/utilities/scroll_lock"
 
 export default class extends Controller {
   static targets = ["container", "hideButton", "actionButton"]
@@ -9,6 +10,7 @@ export default class extends Controller {
   connect() {
     this.previousActiveElement = null
     this.isOpen = false
+    this.isScrollLocked = false
     this.boundKeyboardShortcut = this.handleKeyboardShortcut.bind(this)
     this.boundCloseOnNavigate = this.closeOnMobileNavigate.bind(this)
     const page = document.querySelector(".l-ui-page")
@@ -34,6 +36,7 @@ export default class extends Controller {
     clearAnnounceTimeout(this)
     document.removeEventListener('keydown', this.boundKeyboardShortcut)
     document.removeEventListener('turbo:visit', this.boundCloseOnNavigate)
+    this.unlockScroll()
     this.previousActiveElement = null
   }
 
@@ -90,9 +93,7 @@ export default class extends Controller {
     if (isMobile()) {
       const main = document.querySelector("main")
       if (main) main.setAttribute("inert", "")
-      this.savedScrollY = window.scrollY
-      document.body.style.top = `-${this.savedScrollY}px`
-      document.body.classList.add("l-ui-scroll-lock")
+      this.lockScroll()
     }
 
     storageSet("panelOpen", "true")
@@ -124,11 +125,7 @@ export default class extends Controller {
 
     const main = document.querySelector("main")
     if (main) main.removeAttribute("inert")
-    document.body.classList.remove("l-ui-scroll-lock")
-    document.body.style.top = ""
-    if (this.savedScrollY !== undefined) {
-      window.scrollTo(0, this.savedScrollY)
-    }
+    this.unlockScroll()
 
     storageSet("panelOpen", "false")
     this.updatePageMargin()
@@ -160,5 +157,19 @@ export default class extends Controller {
     } else {
       page.style.marginRight = ""
     }
+  }
+
+  lockScroll() {
+    if (this.isScrollLocked) return
+
+    lockBodyScroll()
+    this.isScrollLocked = true
+  }
+
+  unlockScroll() {
+    if (!this.isScrollLocked) return
+
+    unlockBodyScroll()
+    this.isScrollLocked = false
   }
 }

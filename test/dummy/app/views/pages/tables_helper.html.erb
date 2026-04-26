@@ -1,4 +1,10 @@
-<h1>Table helper</h1>
+<%= l_ui_title_bar(
+  title: "Table helper",
+  breadcrumbs: [
+    ["Home", root_path],
+    ["Tables", tables_path]
+  ]
+) %>
 
 <p class="l-ui-utility--mt-md">The <code>l_ui_table</code> helper renders a fully styled, accessible data table from a collection and column configuration. It handles header cells, row scoping, custom rendering, actions, and empty states.</p>
 

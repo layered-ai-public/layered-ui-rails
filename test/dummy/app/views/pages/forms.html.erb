@@ -1,7 +1,9 @@
-<%= l_ui_breadcrumbs do %>
-  <%= l_ui_breadcrumb_item "Home", root_path %>
-<% end %>
-<h1>Forms</h1>
+<%= l_ui_title_bar(
+  title: "Forms",
+  breadcrumbs: [
+    ["Home", root_path]
+  ]
+) %>
 
 <p class="l-ui-utility--mt-md">Form styles with accessible labels, inputs, and validation states.</p>
 
@@ -225,6 +227,68 @@
   </dialog>
 </div>
 
+<h2 class="l-ui-utility--mt-2xl">Specialised input types</h2>
+
+<p class="l-ui-utility--mt-md">All native HTML5 input types use the same <code>l-ui-form__field</code> class. Date and datetime inputs use the browser's calendar picker, which follows the current light or dark theme.</p>
+
+<form class="l-ui-form l-ui-utility--mt-lg" action="#" method="post">
+  <div class="l-ui-form__group">
+    <label class="l-ui-label" for="specialised-email">Email address</label>
+    <input type="email" id="specialised-email" name="email" class="l-ui-form__field" placeholder="you@example.com" autocomplete="email">
+  </div>
+
+  <div class="l-ui-form__group">
+    <label class="l-ui-label" for="specialised-number">Quantity</label>
+    <input type="number" id="specialised-number" name="quantity" class="l-ui-form__field" min="0" step="1" placeholder="0">
+  </div>
+
+  <div class="l-ui-form__group">
+    <label class="l-ui-label" for="specialised-password">Password</label>
+    <input type="password" id="specialised-password" name="password" class="l-ui-form__field" autocomplete="new-password">
+  </div>
+
+  <div class="l-ui-form__group">
+    <label class="l-ui-label" for="specialised-url">Website</label>
+    <input type="url" id="specialised-url" name="url" class="l-ui-form__field" placeholder="https://example.com">
+  </div>
+
+  <div class="l-ui-form__group">
+    <label class="l-ui-label" for="specialised-tel">Phone</label>
+    <input type="tel" id="specialised-tel" name="phone" class="l-ui-form__field" placeholder="+44 00 0000 0000" autocomplete="tel">
+  </div>
+
+  <div class="l-ui-form__group">
+    <label class="l-ui-label" for="specialised-date">Publish on</label>
+    <input type="date" id="specialised-date" name="published_on" class="l-ui-form__field">
+  </div>
+
+  <div class="l-ui-form__group">
+    <label class="l-ui-label" for="specialised-datetime">Publish at</label>
+    <input type="datetime-local" id="specialised-datetime" name="published_at" class="l-ui-form__field">
+  </div>
+</form>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-forms-specialised-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-forms-specialised-heading">Specialised input types</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;input type="email" class="l-ui-form__field"&gt;
+&lt;input type="number" class="l-ui-form__field" min="0" step="1"&gt;
+&lt;input type="password" class="l-ui-form__field"&gt;
+&lt;input type="url" class="l-ui-form__field"&gt;
+&lt;input type="tel" class="l-ui-form__field"&gt;
+&lt;input type="date" class="l-ui-form__field"&gt;
+&lt;input type="datetime-local" class="l-ui-form__field"&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
 <h2 class="l-ui-utility--mt-2xl">Action buttons</h2>
 
 <p class="l-ui-utility--mt-md">Use <code>l-ui-form__actions</code> to wrap submit and other action buttons. Buttons are right-aligned on desktop and full-width on mobile.</p>
@@ -237,7 +301,7 @@
 
   <div class="l-ui-form__actions">
     <button type="submit" class="l-ui-button--primary">
-      Save changes
+      Save
     </button>
   </div>
 </form>
@@ -254,7 +318,7 @@
     <div class="l-ui-modal__body">
       <pre class="l-ui-surface"><code>&lt;div class="l-ui-form__actions"&gt;
   &lt;button type="submit" class="l-ui-button--primary"&gt;
-    Save changes
+    Save
   &lt;/button&gt;
 &lt;/div&gt;</code></pre>
     </div>

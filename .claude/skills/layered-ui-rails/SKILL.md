@@ -106,6 +106,7 @@ Quick reference:
 | `l_ui_navigation_item(label, path, active: nil, &block)` | Sidebar nav link with optional nesting |
 | `l_ui_breadcrumbs(&block)` | Breadcrumb nav wrapper |
 | `l_ui_breadcrumb_item(label, path = nil)` | Individual breadcrumb |
+| `l_ui_title_bar(title:, breadcrumbs: [], actions: nil, &block)` | Responsive page title bar with breadcrumbs and actions |
 | `l_ui_pagy(pagy)` | Styled pagination (requires pagy gem) |
 | `l_ui_search_form(query, url:, fields:, ...)` | Search form (requires ransack gem) |
 | `l_ui_sort_link(query, attribute, label = nil, ...)` | Sortable table header (requires ransack gem) |
