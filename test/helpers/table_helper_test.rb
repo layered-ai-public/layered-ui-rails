@@ -198,6 +198,54 @@ class TableHelperTest < ActionView::TestCase
     assert_includes result, '<th class="l-ui-table__header-cell" scope="col">Name</th>'
   end
 
+  # -- row id --
+
+  test "renders <tr> without id for records that don't respond to to_key" do
+    result = l_ui_table(
+      [mock_record("Alice")],
+      columns: [{ attribute: :name, render: ->(r) { r.name } }]
+    )
+
+    assert_match %r{<tbody[^>]*>\s*<tr>}, result
+  end
+
+  test "row_id: proc sets the <tr> id" do
+    result = l_ui_table(
+      [mock_record("Alice"), mock_record("Bob")],
+      columns: [{ attribute: :name, render: ->(r) { r.name } }],
+      row_id: ->(r) { "row-#{r.name}" }
+    )
+
+    assert_includes result, '<tr id="row-Alice">'
+    assert_includes result, '<tr id="row-Bob">'
+  end
+
+  test "row_id: returning nil omits the id attribute" do
+    result = l_ui_table(
+      [mock_record("Alice")],
+      columns: [{ attribute: :name, render: ->(r) { r.name } }],
+      row_id: ->(_) { nil }
+    )
+
+    assert_match %r{<tbody[^>]*>\s*<tr>}, result
+  end
+
+  test "defaults <tr> id to dom_id(record) for ActiveRecord records" do
+    user = User.create!(
+      email: "row-id-#{SecureRandom.hex(4)}@test.com",
+      password: "notasecret123",
+      name: "Row Id User",
+      confirmed_at: Time.current
+    )
+
+    result = l_ui_table(
+      [user],
+      columns: [{ attribute: :name, render: ->(r) { r.name } }]
+    )
+
+    assert_includes result, %(<tr id="user_#{user.id}">)
+  end
+
   # -- hash records --
 
   test "renders hash records with render procs" do
