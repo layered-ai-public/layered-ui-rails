@@ -147,7 +147,8 @@ Returns a `<th>` element with sort link and ARIA sort attributes.
 
 ```ruby
 l_ui_table(records, columns:, caption: nil, actions: nil,
-           actions_label: "Actions", query: nil, url: nil, turbo_frame: nil)
+           actions_label: "Actions", query: nil, url: nil,
+           turbo_frame: nil, row_id: nil)
 ```
 
 - `records` (ActiveRecord::Relation or Array) - the collection to render
@@ -158,6 +159,7 @@ l_ui_table(records, columns:, caption: nil, actions: nil,
 - `query` (Ransack::Search, optional) - enables sortable column headers
 - `url` (String, optional) - sort link URL (passed to `l_ui_sort_link`)
 - `turbo_frame` (String, optional) - turbo frame target for sort links
+- `row_id` (Proc, optional) - receives (record), returns the `<tr>` id. Defaults to `dom_id(record)` for records that respond to `to_key` (ActiveRecord). Return `nil` to omit the id.
 
 Column options:
 - `attribute` (Symbol) - used for label generation and sort links

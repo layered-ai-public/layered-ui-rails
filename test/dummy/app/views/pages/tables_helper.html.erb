@@ -209,6 +209,43 @@
   </dialog>
 </div>
 
+<h2 class="l-ui-utility--mt-2xl">Turbo-targetable rows</h2>
+
+<p class="l-ui-utility--mt-md">Each <code>&lt;tr&gt;</code> is automatically given <code>id="<%= "#{dom_id(@users.first)}" if @users.any? %>"</code>-style ids (via <code>dom_id(record)</code>) when records respond to <code>to_key</code>, so individual rows can be replaced from anywhere in the app with <code>turbo_stream.replace dom_id(@user), ...</code>. Pass <code>row_id:</code> as a proc to override, or return <code>nil</code> to omit the id.</p>
+
+<%= l_ui_table(@users.first(3), columns: [
+      { attribute: :name, render: ->(r) { r.name } },
+      { attribute: :email, render: ->(r) { r.email } },
+    ],
+    caption: "Users with turbo-targetable rows") %>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-table-row-id-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-table-row-id-heading">Turbo-targetable rows</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;%# Each &lt;tr&gt; gets id="user_42" automatically. %&gt;
+&lt;%= l_ui_table(@users, columns: [
+      { attribute: :name, render: -&gt;(r) { r.name } },
+      { attribute: :email, render: -&gt;(r) { r.email } },
+    ]) %&gt;
+
+&lt;%# Replace one row from a controller: %&gt;
+turbo_stream.replace dom_id(@user),
+  partial: "shared/user_row", locals: { user: @user }
+
+&lt;%# Custom row id: %&gt;
+&lt;%= l_ui_table(@users, columns: [...],
+    row_id: -&gt;(r) { "user-row-#{r.id}" }) %&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
 <h2 class="l-ui-utility--mt-2xl">Options</h2>
 
 <div class="l-ui-container--table l-ui-utility--mt-lg">
@@ -256,6 +293,11 @@
         <th class="l-ui-table__cell--primary" scope="row"><code>turbo_frame:</code></th>
         <td class="l-ui-table__cell">String</td>
         <td class="l-ui-table__cell">Turbo Frame ID for sort links</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>row_id:</code></th>
+        <td class="l-ui-table__cell">Proc</td>
+        <td class="l-ui-table__cell">Receives each record, returns the <code>&lt;tr&gt;</code> id. Defaults to <code>dom_id(record)</code> for ActiveRecord-like records</td>
       </tr>
     </tbody>
   </table>

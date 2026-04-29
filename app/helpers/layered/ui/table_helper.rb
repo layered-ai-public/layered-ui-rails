@@ -33,7 +33,12 @@ module Layered
       #
       # Pass +query:+ (a Ransack search object) and +turbo_frame:+ to enable
       # sortable column headers via +l_ui_sort_link+.
-      def l_ui_table(records, columns:, caption: nil, actions: nil, actions_label: "Actions", query: nil, url: nil, turbo_frame: nil)
+      #
+      # Each <tr> is given +id: dom_id(record)+ when the record responds to
+      # +to_key+ (i.e. ActiveRecord), so individual rows can be targeted by
+      # Turbo Streams. Pass +row_id:+ as a proc to override (return +nil+ to
+      # omit the id).
+      def l_ui_table(records, columns:, caption: nil, actions: nil, actions_label: "Actions", query: nil, url: nil, turbo_frame: nil, row_id: nil)
         columns = normalise_table_columns(columns)
         col_count = columns.size + (actions ? 1 : 0)
 
@@ -58,7 +63,7 @@ module Layered
             end
           else
             safe_join(records.map do |record|
-              tag.tr do
+              tag.tr(id: table_row_id(record, row_id)) do
                 cells = columns.map do |col|
                   table_cell(record, col)
                 end
@@ -93,6 +98,11 @@ module Layered
             render: col[:render]
           }
         end
+      end
+
+      def table_row_id(record, row_id)
+        return row_id.call(record) if row_id
+        ActionView::RecordIdentifier.dom_id(record) if record.respond_to?(:to_key) && record.to_key
       end
 
       def table_cell(record, col)
