@@ -21,8 +21,11 @@ module Layered
         stack = (Thread.current[:l_ui_navigation_section_stack] ||= [])
         frame = { active: false }
         stack.push(frame)
-        children = block_given? ? capture(&block) : "".html_safe
-        stack.pop
+        begin
+          children = block_given? ? capture(&block) : "".html_safe
+        ensure
+          stack.pop
+        end
 
         has_active_descendant = frame[:active]
 
@@ -102,7 +105,7 @@ module Layered
         parts = []
 
         if icon_html.present?
-          parts << content_tag(:span, icon_html.html_safe, class: "l-ui-navigation__item-icon-slot", aria: { hidden: true })
+          parts << content_tag(:span, icon_html, class: "l-ui-navigation__item-icon-slot", aria: { hidden: true })
         else
           resolved_icon_path =
             if icon_path.present?

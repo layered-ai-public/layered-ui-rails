@@ -16,7 +16,7 @@ l_ui_navigation_section(heading = nil, icon: nil, icon_path: nil, icon_html: nil
 - `match` (Symbol) - `:exact` (default) uses `current_page?`; `:starts_with` activates when the request path begins with `path` (use for parents whose sub-routes should keep the parent highlighted)
 - `icon` (String, optional) - icon name; `"home"` ships with the gem. For others, supply the SVG in the host app at `app/assets/images/layered_ui/icon_NAME.svg`
 - `icon_path` (String, optional) - explicit asset path; takes precedence over `icon:`
-- `icon_html` (String, optional) - pre-rendered icon markup for icon-font libraries (e.g. `tag.i(class: "fa-solid fa-house")`); takes precedence over `icon:` and `icon_path:`
+- `icon_html` (ActiveSupport::SafeBuffer, optional) - pre-rendered icon markup for icon-font libraries (e.g. `tag.i(class: "fa-solid fa-house")`); takes precedence over `icon:` and `icon_path:`. Must be already html-safe - plain strings will be escaped. Never pass user-controlled input
 
 `l_ui_navigation_section`:
 - `heading` (String, optional) - non-clickable section heading; omit for an unlabelled group. To expose the parent route of a section, add an "Overview" item inside the block
