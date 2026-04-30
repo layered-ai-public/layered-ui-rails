@@ -199,8 +199,18 @@ WCAG 2.2 AA table pattern:
 .l-ui-navigation                  Nav flexbox
 .l-ui-navigation__links           Nav links list
 .l-ui-navigation__item            Nav item
-.l-ui-navigation__item--active    Active nav item (with arrow)
-.l-ui-navigation__secondary       Nested nav list
+.l-ui-navigation__item--active    Active nav item (highlighted bg)
+.l-ui-navigation__item-icon       Icon image inside a nav item
+.l-ui-navigation__item-icon-slot  Wrapper for caller-supplied icon HTML (e.g. icon fonts)
+.l-ui-navigation__item-label      Label span inside a nav item
+.l-ui-navigation__section         Section group (li)
+.l-ui-navigation__section--has-heading  Section that has a visible heading
+.l-ui-navigation__section--separated    Section with top border separator
+.l-ui-navigation__section--collapsible  Section with toggle button heading
+.l-ui-navigation__section-heading       Plain section label (small, uppercase, muted)
+.l-ui-navigation__section-toggle        Collapsible section heading (item-row sized button)
+.l-ui-navigation__section-chevron       Toggle chevron (rotates when closed)
+.l-ui-navigation__section-items         Section body (ul, hidden when closed)
 .l-ui-navigation__user            User info section
 .l-ui-navigation__user-name       User name text
 .l-ui-navigation__user-email      User email text

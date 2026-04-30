@@ -103,7 +103,8 @@ Quick reference:
 
 | Helper | Purpose |
 |---|---|
-| `l_ui_navigation_item(label, path, active: nil, &block)` | Sidebar nav link with optional nesting |
+| `l_ui_navigation_item(label, path, ...)` | Sidebar nav link (supports `icon:`, `match: :starts_with`, `expandable:`) |
+| `l_ui_navigation_section(heading = nil, ...)` | Group nav items; supports `collapsible:`, `storage_key:`, `separated:` |
 | `l_ui_breadcrumbs(&block)` | Breadcrumb nav wrapper |
 | `l_ui_breadcrumb_item(label, path = nil)` | Individual breadcrumb |
 | `l_ui_title_bar(title:, breadcrumbs: [], actions: nil, &block)` | Responsive page title bar with breadcrumbs and actions |
@@ -142,6 +143,7 @@ All controllers use the `l-ui--` namespace and are auto-registered via importmap
 |---|---|---|
 | Theme | `l-ui--theme` | Dark/light mode toggle with localStorage |
 | Navigation | `l-ui--navigation` | Responsive sidebar with backdrop |
+| Navigation section | `l-ui--navigation-section` | Collapsible nav section with localStorage persistence |
 | Panel | `l-ui--panel` | Resizable side panel (Cmd/Ctrl+I toggle) |
 | Panel button | `l-ui--panel-button` | Draggable floating action button |
 | Panel resize | `l-ui--panel-resize` | Panel width drag handle |
