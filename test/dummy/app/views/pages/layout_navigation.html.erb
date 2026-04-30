@@ -6,19 +6,31 @@
   ]
 ) %>
 
-<p class="l-ui-utility--mt-md">Populate the navigation using the <code>:l_ui_navigation_items</code> yield and the <code>l_ui_navigation_item</code> helper.</p>
+<p class="l-ui-utility--mt-md">Populate the navigation using the <code>:l_ui_navigation_items</code> yield with <code>l_ui_navigation_item</code> for clickable items and <code>l_ui_navigation_section</code> for grouping.</p>
 
-<p class="l-ui-utility--mt-md">The navigation is off-canvas by default and toggled via the header button on all screen sizes. Add <code>l-ui-body--always-show-navigation</code> to the body to pin it as a persistent sidebar on desktop (suitable for admin layouts). The header is shown by default - use <code>l-ui-body--hide-header</code> to hide it and collapse its reserved space.</p>
+<p class="l-ui-utility--mt-md">The navigation is off-canvas by default and toggled via the header button on all screen sizes. Add <code>l-ui-body--always-show-navigation</code> to the body to pin it as a persistent sidebar on desktop. The header is shown by default - use <code>l-ui-body--hide-header</code> to hide it and collapse its reserved space.</p>
 
-<p class="l-ui-utility--mt-md">For full control, override the partial by creating <code>app/views/layouts/layered_ui/_navigation.html.erb</code> in your application.</p>
+<h2 class="l-ui-utility--mt-xl">Example</h2>
+
+<p class="l-ui-utility--mt-md">Use <code>l_ui_navigation_item</code> for links and <code>l_ui_navigation_section</code> to group them. A section that contains the active item opens automatically; <code>storage_key:</code> persists the user's open/closed preference. To expose the parent route of a section, add an "Overview" item.</p>
+
+<p class="l-ui-utility--mt-md">The gem ships <code>icon: "home"</code> out of the box. For other names, supply the SVG in your host app at <code>app/assets/images/layered_ui/icon_NAME.svg</code> - <code>icon: "products"</code> resolves to <code>icon_products.svg</code>. For a path outside that convention use <code>icon_path:</code>. For icon-font libraries (Font Awesome, Heroicons, etc.) pass pre-rendered markup with <code>icon_html:</code>, e.g. <code>icon_html: tag.i(class: "fa-solid fa-house")</code>.</p>
 
 <pre class="l-ui-surface l-ui-utility--mt-lg"><code>&lt;% content_for :l_ui_navigation_items do %&gt;
-  &lt;%= l_ui_navigation_item "Dashboard", dashboard_path %&gt;
-  &lt;%= l_ui_navigation_item "Settings", settings_path %&gt;
-  &lt;%= l_ui_navigation_item "Users", users_path %&gt;
-&lt;% end %&gt;
+  &lt;%= l_ui_navigation_section do %&gt;
+    &lt;%= l_ui_navigation_item "Home", root_path, icon: "home" %&gt;
+  &lt;% end %&gt;
 
-&lt;%= render template: "layouts/layered_ui/application" %&gt;</code></pre>
+  &lt;%= l_ui_navigation_section "Layout", collapsible: true, storage_key: "layout" do %&gt;
+    &lt;%= l_ui_navigation_item "Overview", layout_path %&gt;
+    &lt;%= l_ui_navigation_item "Colors", layout_colors_path %&gt;
+    &lt;%= l_ui_navigation_item "Panel", layout_panel_path %&gt;
+  &lt;% end %&gt;
+
+  &lt;%= l_ui_navigation_section "Account", separated: true do %&gt;
+    &lt;%= l_ui_navigation_item "Settings", settings_path, match: :starts_with %&gt;
+  &lt;% end %&gt;
+&lt;% end %&gt;</code></pre>
 
 <h2 class="l-ui-utility--mt-xl">Always-show navigation</h2>
 
@@ -27,3 +39,7 @@
 <pre class="l-ui-surface l-ui-utility--mt-lg"><code>&lt;% content_for :l_ui_body_class, "l-ui-body--always-show-navigation" %&gt;
 
 &lt;%= render template: "layouts/layered_ui/application" %&gt;</code></pre>
+
+<h2 class="l-ui-utility--mt-xl">Override</h2>
+
+<p class="l-ui-utility--mt-md">For full control, override the partial by creating <code>app/views/layouts/layered_ui/_navigation.html.erb</code> in your application.</p>

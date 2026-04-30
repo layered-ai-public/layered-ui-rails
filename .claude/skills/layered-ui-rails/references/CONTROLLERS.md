@@ -32,6 +32,15 @@ Responsive sidebar navigation with backdrop overlay on mobile.
 
 The layout wires this up automatically. Navigation items are populated via `content_for :l_ui_navigation_items`.
 
+## Navigation section (`l-ui--navigation-section`)
+
+Collapsible navigation section with optional localStorage persistence. Wired up automatically by `l_ui_navigation_section` when `collapsible: true`.
+
+**Targets:** `toggle`, `panel`
+**Values:** `storageKey` (String, localStorage key), `forceOpen` (Boolean)
+**Actions:** `toggle`
+**Behaviour:** The server renders the section's default open/closed state (and forces it open when it contains the active item). On `connect`, if `forceOpen` is set the stored preference is ignored; otherwise the controller restores the user's stored preference. Clicking the toggle always works (so a force-opened section can still be collapsed) and writes the new state to localStorage.
+
 ## Modal (`l-ui--modal`)
 
 Native `<dialog>` wrapper with focus trap, scroll lock, and focus restoration.
