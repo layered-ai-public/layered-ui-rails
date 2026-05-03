@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.summary     = "Open source, minimalist Tailwind-based UI system for Rails with responsive, accessible components and light/dark themes."
   spec.license     = "Apache-2.0"
 
-  spec.required_ruby_version = ">= 3.2.0"
+  spec.required_ruby_version = ">= 3.3.0"
 
   # Metadata
   spec.metadata["homepage_uri"] = spec.homepage
