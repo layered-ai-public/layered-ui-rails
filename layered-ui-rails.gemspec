@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.metadata["source_code_uri"] = "https://github.com/layered-ai-public/layered-ui-rails"
   spec.metadata["bug_tracker_uri"] = "https://github.com/layered-ai-public/layered-ui-rails/issues"
   spec.metadata["changelog_uri"] = "https://github.com/layered-ai-public/layered-ui-rails/blob/main/CHANGELOG.md"
-  spec.metadata["documentation_uri"] = "https://www.layered.ai"
+  spec.metadata["documentation_uri"] = "https://layered-ui-rails.layered.ai/"
   spec.metadata["discord_uri"] = "https://discord.gg/aCGqz9Bx"
   spec.metadata["rubygems_mfa_required"] = "true"
 
