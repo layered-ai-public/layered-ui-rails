@@ -5,19 +5,39 @@ All helpers are prefixed `l_ui_` and are available in all views automatically.
 ## Navigation
 
 ```ruby
-l_ui_navigation_item(label, path, active: nil, &block)
+l_ui_navigation_item(label, path, active: nil, match: :exact, icon: nil, icon_path: nil, icon_html: nil)
+l_ui_navigation_section(heading = nil, icon: nil, icon_path: nil, icon_html: nil, collapsible: false, expanded: true, storage_key: nil, separated: false, &block)
 ```
 
+`l_ui_navigation_item`:
 - `label` (String) - link text
 - `path` (String) - URL
-- `active` (Boolean, optional) - force active state; defaults to `current_page?` check
-- `&block` - optional nested navigation items
+- `active` (Boolean, optional) - force the active style; defaults to a match against the current request path. Does not affect `aria-current`, which is set only when `current_page?(path)` is true
+- `match` (Symbol) - `:exact` (default) uses `current_page?`; `:starts_with` activates when the request path begins with `path` (use for parents whose sub-routes should keep the parent highlighted)
+- `icon` (String, optional) - icon name; `"home"` ships with the gem. For others, supply the SVG in the host app at `app/assets/images/layered_ui/icon_NAME.svg`
+- `icon_path` (String, optional) - explicit asset path; takes precedence over `icon:`
+- `icon_html` (ActiveSupport::SafeBuffer, optional) - pre-rendered icon markup for icon-font libraries (e.g. `tag.i(class: "fa-solid fa-house")`); takes precedence over `icon:` and `icon_path:`. Must be already html-safe - plain strings will be escaped. Never pass user-controlled input
+
+`l_ui_navigation_section`:
+- `heading` (String, optional) - non-clickable section heading; omit for an unlabelled group. To expose the parent route of a section, add an "Overview" item inside the block
+- `icon` (String, optional) - host-app icon name next to the heading; resolves the same way as `l_ui_navigation_item`'s `icon:`
+- `icon_path` (String, optional) - explicit asset path next to the heading; takes precedence over `icon:`
+- `icon_html` (String, optional) - pre-rendered icon markup; takes precedence over `icon:` and `icon_path:`
+- `collapsible` (Boolean) - when `true` and a heading is given, renders a toggle button with a chevron and wires `aria-controls` to the panel
+- `expanded` (Boolean) - default open state for collapsible sections; a section that contains an active descendant always opens
+- `storage_key` (String, optional) - localStorage key to persist the open/closed preference
+- `separated` (Boolean) - draw a horizontal rule above the section, useful for footer-style groups
+- `&block` - section body, typically `l_ui_navigation_item`s
 
 ```erb
 <% content_for :l_ui_navigation_items do %>
-  <%= l_ui_navigation_item("Home", root_path) %>
-  <%= l_ui_navigation_item("Products", products_path, active: true) do %>
-    <%= l_ui_navigation_item("Electronics", electronics_path) %>
+  <%= l_ui_navigation_section do %>
+    <%= l_ui_navigation_item("Home", root_path, icon: "home") %>
+  <% end %>
+
+  <%= l_ui_navigation_section("Products", collapsible: true, storage_key: "products") do %>
+    <%= l_ui_navigation_item("Overview", products_path) %>
+    <%= l_ui_navigation_item("Electronics", electronics_path, match: :starts_with) %>
     <%= l_ui_navigation_item("Clothing", clothing_path) %>
   <% end %>
 <% end %>
@@ -147,7 +167,8 @@ Returns a `<th>` element with sort link and ARIA sort attributes.
 
 ```ruby
 l_ui_table(records, columns:, caption: nil, actions: nil,
-           actions_label: "Actions", query: nil, url: nil, turbo_frame: nil)
+           actions_label: "Actions", query: nil, url: nil,
+           turbo_frame: nil, row_id: nil)
 ```
 
 - `records` (ActiveRecord::Relation or Array) - the collection to render
@@ -158,6 +179,7 @@ l_ui_table(records, columns:, caption: nil, actions: nil,
 - `query` (Ransack::Search, optional) - enables sortable column headers
 - `url` (String, optional) - sort link URL (passed to `l_ui_sort_link`)
 - `turbo_frame` (String, optional) - turbo frame target for sort links
+- `row_id` (Proc, optional) - receives (record), returns the `<tr>` id. Defaults to `dom_id(record)` for records that respond to `to_key` (ActiveRecord). Return `nil` to omit the id.
 
 Column options:
 - `attribute` (Symbol) - used for label generation and sort links

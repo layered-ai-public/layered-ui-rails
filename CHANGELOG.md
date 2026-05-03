@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.10.0] - 2026-05-03
+
+### Added
+
+- Nested navigation: `l_ui_navigation_section` helper for collapsible sidebar sections, backed by an `l-ui--navigation-section` Stimulus controller and `l-ui-navigation__section`/`__toggle`/`__items` styles
+- Optional `icon:` / `icon_path:` / `icon_html:` arguments on `l_ui_navigation_item` and `l_ui_navigation_section` to render an icon alongside the label; ships with a default `icon_home.svg` as an example
+- `row_id:` option on `l_ui_table` to set a stable DOM id on each row (useful for Turbo Stream targeting)
+
+### Changed
+
+- **Breaking:** Minimum Ruby version raised to 3.3.0 (Ruby 3.2 is EOL). CI matrix now tests against Ruby 3.3, 3.4, and 4.0
+
 ## [0.9.0] - 2026-04-26
 
 ### Added
