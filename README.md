@@ -31,7 +31,42 @@ An open source, Rails 8+ engine that provides WCAG 2.2 AA compliant design token
   </tr>
 </table>
 
-## Getting started
+## Features
+
+- **Dark/light theme** - system preference detection with localStorage persistence and manual toggle
+- **Responsive layout** - header, sidebar navigation, main content area, and optional resizable panel
+- **WCAG 2.2 AA compliant** - skip links, focus indicators, ARIA attributes, and 4.5:1 contrast ratios
+- **Components** - buttons, forms, surfaces, tables, tabs, notices, badges, conversations, modals, and pagination
+- **Optional integrations** - Devise authentication and Pagy pagination with styled views
+- **Customisable branding** - Override the default logos and icons and colors
+- **Google Lighthouse** - `layered-ui-rails` scores a [perfect 100](https://github.com/layered-ai-public/layered-ui-rails/raw/refs/heads/main/test/dummy/app/assets/images/lighthouse.webp) across all four Google Lighthouse categories - performance, accessibility, best practices, and SEO
+
+## Requirements
+
+- Ruby on Rails >= 8.0
+- Tailwind CSS Rails >= 4.0
+- Importmap Rails >= 2.0
+- Stimulus Rails >= 1.0
+
+## Agent skill
+
+An [agent skill](https://agentskills.io) is included so AI coding agents can work with `layered-ui-rails` in your project. Once installed, the agent can handle the full setup - just ask it to add `layered-ui-rails` to your app and it will install the gem, run the generator, and configure your layout.
+
+**Project install** - scoped to a single repo, available to all contributors:
+
+```bash
+bin/rails generate layered:ui:install_agent_skill
+```
+
+**Global install** - available across all your projects:
+
+```bash
+./install-skill.sh
+# or install remotely without cloning the repo:
+curl -fsSL https://raw.githubusercontent.com/layered-ai-public/layered-ui-rails/main/install-skill.sh | sh
+```
+
+## Installation
 
 Add to your Gemfile and install:
 
@@ -56,41 +91,6 @@ Then update your application layout to render the engine layout. Place any `cont
 
 <%= render template: "layouts/layered_ui/application" %>
 ```
-
-## Agent skill
-
-An [agent skill](https://agentskills.io) is included so AI coding agents can work with `layered-ui-rails` in your project. Once installed, the agent can handle the full setup - just ask it to add `layered-ui-rails` to your app and it will install the gem, run the generator, and configure your layout.
-
-**Project install** - scoped to a single repo, available to all contributors:
-
-```bash
-bin/rails generate layered:ui:install_agent_skill
-```
-
-**Global install** - available across all your projects:
-
-```bash
-./install-skill.sh
-# or install remotely without cloning the repo:
-curl -fsSL https://raw.githubusercontent.com/layered-ai-public/layered-ui-rails/main/install-skill.sh | sh
-```
-
-## Requirements
-
-- Ruby on Rails >= 8.0
-- Tailwind CSS Rails >= 4.0
-- Importmap Rails >= 2.0
-- Stimulus Rails >= 1.0
-
-## Features
-
-- **Dark/light theme** - system preference detection with localStorage persistence and manual toggle
-- **Responsive layout** - header, sidebar navigation, main content area, and optional resizable panel
-- **WCAG 2.2 AA compliant** - skip links, focus indicators, ARIA attributes, and 4.5:1 contrast ratios
-- **Components** - buttons, forms, surfaces, tables, tabs, notices, badges, conversations, modals, and pagination
-- **Optional integrations** - Devise authentication and Pagy pagination with styled views
-- **Customisable branding** - Override the default logos and icons and colors
-- **Google Lighthouse** - `layered-ui-rails` scores a [perfect 100](https://github.com/layered-ai-public/layered-ui-rails/raw/refs/heads/main/test/dummy/app/assets/images/lighthouse.webp) across all four Google Lighthouse categories - performance, accessibility, best practices, and SEO
 
 ## Customising theme tokens
 
