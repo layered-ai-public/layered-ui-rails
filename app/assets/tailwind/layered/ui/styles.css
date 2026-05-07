@@ -1061,7 +1061,7 @@ pre.l-ui-surface {
          w-full px-3 py-2.5 min-h-[44px]
          /* text-base at mobile; text-sm at md+ */
          text-base font-inter
-         text-foreground
+         bg-background text-foreground
          border border-border-control rounded-sm
          focus-ring;
 
