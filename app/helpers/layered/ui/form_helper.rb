@@ -1,7 +1,7 @@
 module Layered
   module Ui
     module FormHelper
-      FIELD_TYPES = %i[string text email number date datetime select checkbox hidden].freeze
+      FIELD_TYPES = %i[string text email password number date datetime select checkbox hidden].freeze
 
       # Renders a complete form with all fields, error summary,
       # and submit button.
