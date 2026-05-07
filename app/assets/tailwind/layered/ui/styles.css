@@ -934,8 +934,7 @@
 /* Surface */
 
 @utility surface {
-  @apply block
-         p-4
+  @apply p-4
          rounded-sm overflow-x-auto;
 }
 
@@ -1061,7 +1060,7 @@ pre.l-ui-surface {
          w-full px-3 py-2.5 min-h-[44px]
          /* text-base at mobile; text-sm at md+ */
          text-base font-inter
-         text-foreground
+         bg-background text-foreground
          border border-border-control rounded-sm
          focus-ring;
 
@@ -1792,19 +1791,26 @@ pre.l-ui-surface {
   animation-delay: 0.3s;
 }
 
-/* Token fade-in */
+/* Stream fade-in */
 
-@keyframes l-ui-token-fade-in {
+@keyframes l-ui-stream-fade-in {
   from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.l-ui-token-fade {
-  animation: l-ui-token-fade-in 1s ease-out both;
+.l-ui-stream-fade {
+  animation: l-ui-stream-fade-in 0.5s ease-out both;
+}
+
+.l-ui-stream-fade-word {
+  display: inline-block;
+  animation: l-ui-stream-fade-in 0.5s ease-out both;
+  animation-delay: min(calc(var(--i, 0) * 25ms), 1s);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .l-ui-token-fade {
+  .l-ui-stream-fade,
+  .l-ui-stream-fade-word {
     animation: none;
   }
 }

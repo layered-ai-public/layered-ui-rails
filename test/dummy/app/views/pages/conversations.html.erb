@@ -367,8 +367,12 @@ end</code></pre>
         <td class="l-ui-table__cell">Individual dot inside the typing indicator</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-token-fade</code></th>
-        <td class="l-ui-table__cell">Fade-in animation for streaming tokens (0.3s ease-in)</td>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-stream-fade</code></th>
+        <td class="l-ui-table__cell">Fade-in animation for streamed chunks as they arrive (0.5s ease-out)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-stream-fade-word</code></th>
+        <td class="l-ui-table__cell">Staggered word-by-word fade-in (0.5s ease-out, 25ms per word via <code>--i</code>, capped at 1s)</td>
       </tr>
     </tbody>
   </table>
@@ -406,29 +410,56 @@ end</code></pre>
   </dialog>
 </div>
 
-<h2 class="l-ui-utility--mt-2xl">Token fade-in</h2>
+<h2 class="l-ui-utility--mt-2xl">Stream fade-in</h2>
 
-<p class="l-ui-utility--mt-md">Apply <code>l-ui-token-fade</code> to each token as it arrives during streaming. The animation fades each token in over 0.3s with ease-in timing, giving a smooth appearance as text is generated.</p>
+<p class="l-ui-utility--mt-md">Apply <code>l-ui-stream-fade</code> to each chunk as it arrives during streaming. The animation fades each chunk in over 0.5s with ease-out timing, giving a smooth appearance as text is generated.</p>
 
 <div class="l-ui-surface l-ui-utility--mt-lg">
-  <p><span class="l-ui-token-fade">Hello, </span><span class="l-ui-token-fade" style="animation-delay: 0.1s">I'd </span><span class="l-ui-token-fade" style="animation-delay: 0.2s">be </span><span class="l-ui-token-fade" style="animation-delay: 0.3s">happy </span><span class="l-ui-token-fade" style="animation-delay: 0.4s">to </span><span class="l-ui-token-fade" style="animation-delay: 0.5s">help </span><span class="l-ui-token-fade" style="animation-delay: 0.6s">with </span><span class="l-ui-token-fade" style="animation-delay: 0.7s">that.</span></p>
+  <p><span class="l-ui-stream-fade">Hello, </span><span class="l-ui-stream-fade" style="animation-delay: 0.1s">I'd </span><span class="l-ui-stream-fade" style="animation-delay: 0.2s">be </span><span class="l-ui-stream-fade" style="animation-delay: 0.3s">happy </span><span class="l-ui-stream-fade" style="animation-delay: 0.4s">to </span><span class="l-ui-stream-fade" style="animation-delay: 0.5s">help </span><span class="l-ui-stream-fade" style="animation-delay: 0.6s">with </span><span class="l-ui-stream-fade" style="animation-delay: 0.7s">that.</span></p>
 </div>
 
 <div class="l-ui-utility--mt-lg" data-controller="l-ui--modal">
   <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
-  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-conversations-token-fade-heading">
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-conversations-stream-fade-heading">
     <div class="l-ui-modal__header">
-      <h3 id="modal-conversations-token-fade-heading">Token fade-in</h3>
+      <h3 id="modal-conversations-stream-fade-heading">Stream fade-in</h3>
       <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
         <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
-      <pre class="l-ui-surface"><code>&lt;!-- Apply to each token span as it streams in --&gt;
-&lt;span class="l-ui-token-fade"&gt;Hello, &lt;/span&gt;
-&lt;span class="l-ui-token-fade"&gt;I'd &lt;/span&gt;
-&lt;span class="l-ui-token-fade"&gt;be &lt;/span&gt;
-&lt;span class="l-ui-token-fade"&gt;happy &lt;/span&gt;
+      <pre class="l-ui-surface"><code>&lt;!-- Apply to each chunk span as it streams in --&gt;
+&lt;span class="l-ui-stream-fade"&gt;Hello, &lt;/span&gt;
+&lt;span class="l-ui-stream-fade"&gt;I'd &lt;/span&gt;
+&lt;span class="l-ui-stream-fade"&gt;be &lt;/span&gt;
+&lt;span class="l-ui-stream-fade"&gt;happy &lt;/span&gt;
+...</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="l-ui-utility--mt-2xl">Stream fade-in (by word)</h2>
+
+<p class="l-ui-utility--mt-md">Use <code>l-ui-stream-fade-word</code> for a staggered word-by-word reveal once the full response is available. Set the <code>--i</code> custom property on each word to its index; the per-word delay is 25ms, capped at 1s.</p>
+
+<div class="l-ui-surface l-ui-utility--mt-lg">
+  <p><span class="l-ui-stream-fade-word" style="--i: 0">Hello,</span> <span class="l-ui-stream-fade-word" style="--i: 1">I'd</span> <span class="l-ui-stream-fade-word" style="--i: 2">be</span> <span class="l-ui-stream-fade-word" style="--i: 3">happy</span> <span class="l-ui-stream-fade-word" style="--i: 4">to</span> <span class="l-ui-stream-fade-word" style="--i: 5">help</span> <span class="l-ui-stream-fade-word" style="--i: 6">with</span> <span class="l-ui-stream-fade-word" style="--i: 7">that.</span></p>
+</div>
+
+<div class="l-ui-utility--mt-lg" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-conversations-stream-fade-word-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-conversations-stream-fade-word-heading">Stream fade-in (by word)</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;!-- Wrap each word and pass its index via --i --&gt;
+&lt;span class="l-ui-stream-fade-word" style="--i: 0"&gt;Hello,&lt;/span&gt;
+&lt;span class="l-ui-stream-fade-word" style="--i: 1"&gt;I'd&lt;/span&gt;
+&lt;span class="l-ui-stream-fade-word" style="--i: 2"&gt;be&lt;/span&gt;
 ...</code></pre>
     </div>
   </dialog>
