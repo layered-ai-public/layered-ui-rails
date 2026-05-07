@@ -934,8 +934,7 @@
 /* Surface */
 
 @utility surface {
-  @apply block
-         p-4
+  @apply p-4
          rounded-sm overflow-x-auto;
 }
 

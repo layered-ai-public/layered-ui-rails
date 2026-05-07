@@ -6,16 +6,18 @@
       <%= l_ui_navigation_item "Home", root_path, icon: "home" %>
     <% end %>
 
-    <%= l_ui_navigation_section "Layout", icon: "layout", collapsible: true, expanded: false, storage_key: "layout" do %>
-      <%= l_ui_navigation_item "Overview", layout_path %>
-      <%= l_ui_navigation_item "Logos", layout_logos_path %>
-      <%= l_ui_navigation_item "Icons", layout_icons_path %>
-      <%= l_ui_navigation_item "Colors", layout_colors_path %>
-      <%= l_ui_navigation_item "Head", layout_head_path %>
-      <%= l_ui_navigation_item "Metadata", layout_metadata_path %>
-      <%= l_ui_navigation_item "Navigation", layout_navigation_path %>
-      <%= l_ui_navigation_item "Breadcrumbs", layout_breadcrumbs_path %>
-      <%= l_ui_navigation_item "Panel", layout_panel_path %>
+    <%= l_ui_navigation_section "Integrations", icon: "integrations", collapsible: true, expanded: false, storage_key: "integrations" do %>
+      <%= l_ui_navigation_item "Overview", integrations_path %>
+      <%= l_ui_navigation_item "Devise", devise_path %>
+      <%= l_ui_navigation_item "Pagy", pagy_path %>
+      <%= l_ui_navigation_item "Ransack", ransack_path %>
+    <% end %>
+
+    <%= l_ui_navigation_section "Foundations", icon: "foundations", collapsible: true, expanded: false, storage_key: "foundations" do %>
+      <%= l_ui_navigation_item "Utilities", utilities_path %>
+      <%= l_ui_navigation_item "Typography", typography_path %>
+      <%= l_ui_navigation_item "Containers", containers_path %>
+      <%= l_ui_navigation_item "Surfaces", surfaces_path %>
     <% end %>
 
     <%= l_ui_navigation_section "Components", icon: "components", collapsible: true, expanded: false, storage_key: "components" do %>
@@ -29,11 +31,16 @@
       <%= l_ui_navigation_item "Pagination", pagination_path %>
     <% end %>
 
-    <%= l_ui_navigation_section "Forms", icon: "forms", collapsible: true, expanded: false, storage_key: "forms" do %>
-      <%= l_ui_navigation_item "Overview", forms_path %>
-      <%= l_ui_navigation_item "Helper", forms_helper_path %>
-      <%= l_ui_navigation_item "Errors", form_errors_path %>
-      <%= l_ui_navigation_item "Search", search_path %>
+    <%= l_ui_navigation_section "Layout", icon: "layout", collapsible: true, expanded: false, storage_key: "layout" do %>
+      <%= l_ui_navigation_item "Overview", layout_path %>
+      <%= l_ui_navigation_item "Logos", layout_logos_path %>
+      <%= l_ui_navigation_item "Icons", layout_icons_path %>
+      <%= l_ui_navigation_item "Colors", layout_colors_path %>
+      <%= l_ui_navigation_item "Head", layout_head_path %>
+      <%= l_ui_navigation_item "Metadata", layout_metadata_path %>
+      <%= l_ui_navigation_item "Navigation", layout_navigation_path %>
+      <%= l_ui_navigation_item "Breadcrumbs", layout_breadcrumbs_path %>
+      <%= l_ui_navigation_item "Panel", layout_panel_path %>
     <% end %>
 
     <%= l_ui_navigation_section "Tables", icon: "tables", collapsible: true, expanded: false, storage_key: "tables" do %>
@@ -41,18 +48,11 @@
       <%= l_ui_navigation_item "Helper", tables_helper_path %>
     <% end %>
 
-    <%= l_ui_navigation_section "Foundations", icon: "foundations", collapsible: true, expanded: false, storage_key: "foundations" do %>
-      <%= l_ui_navigation_item "Utilities", utilities_path %>
-      <%= l_ui_navigation_item "Typography", typography_path %>
-      <%= l_ui_navigation_item "Containers", containers_path %>
-      <%= l_ui_navigation_item "Surfaces", surfaces_path %>
-    <% end %>
-
-    <%= l_ui_navigation_section "Integrations", icon: "integrations", collapsible: true, expanded: false, storage_key: "integrations", separated: true do %>
-      <%= l_ui_navigation_item "Overview", integrations_path %>
-      <%= l_ui_navigation_item "Devise", devise_path %>
-      <%= l_ui_navigation_item "Pagy", pagy_path %>
-      <%= l_ui_navigation_item "Ransack", ransack_path %>
+    <%= l_ui_navigation_section "Forms", icon: "forms", collapsible: true, expanded: false, storage_key: "forms" do %>
+      <%= l_ui_navigation_item "Overview", forms_path %>
+      <%= l_ui_navigation_item "Helper", forms_helper_path %>
+      <%= l_ui_navigation_item "Errors", form_errors_path %>
+      <%= l_ui_navigation_item "Search", search_path %>
     <% end %>
   <% end %>
 <% end %>

@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.11.0] - 2026-05-07
+
+### Added
+
+- `l-ui-stream-fade` animation classes for fading in streamed chat output token-by-token
+- `:password` form field type support in `l_ui_form` for `password_field` inputs via `as: :password`
+
+### Changed
+
+- Form fields now have an explicit background colour
+
 ## [0.10.0] - 2026-05-03
 
 ### Added

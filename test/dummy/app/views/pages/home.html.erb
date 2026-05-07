@@ -9,69 +9,51 @@
   <%= gem_spec.description %>
 </p>
 
-<div class="l-ui-container--grid l-ui-utility--mt-lg gap-8">
-  <div>
-    <div class="flex gap-2 items-start">
-      <%= link_to image_tag("light_desktop.webp", alt: "Light theme (desktop)", width: 1436, height: 832, fetchpriority: "high", class: "rounded-sm w-full"), image_path("light_desktop.webp"), target: "_blank", class: "flex-1 min-w-0" %>
-      <%= link_to image_tag("light_mobile.webp", alt: "Light theme (mobile)", width: 289, height: 625, fetchpriority: "high", class: "rounded-sm w-full"), image_path("light_mobile.webp"), target: "_blank", class: "w-[21%]" %>
-    </div>
-    <p class="l-ui-utility--mt-sm"><em>Light theme (desktop and mobile)</em></p>
-  </div>
-
-  <div>
-    <div class="flex gap-2 items-start">
-      <%= link_to image_tag("dark_desktop.webp", alt: "Dark theme (desktop)", width: 1436, height: 836, class: "rounded-sm w-full"), image_path("dark_desktop.webp"), target: "_blank", class: "flex-1 min-w-0" %>
-      <%= link_to image_tag("dark_mobile.webp", alt: "Dark theme (mobile)", width: 289, height: 625, class: "rounded-sm w-full"), image_path("dark_mobile.webp"), target: "_blank", class: "w-[21%]" %>
-    </div>
-    <p class="l-ui-utility--mt-sm"><em>Dark theme (desktop and mobile)</em></p>
-  </div>
-</div>
-
 <%= render "socials" %>
 
 <h2 class="l-ui-utility--mt-xl">Features</h2>
 <div class="l-ui-container--grid l-ui-utility--mt-lg">
-  <div class="l-ui-surface">
-    <div class="flex items-center gap-2">
-      <%= image_tag "icon_sun.svg", class: "l-ui-icon--md", alt: "Sun icon representing dark and light theme support" %>
+  <div class="l-ui-surface flex items-start gap-4">
+    <%= image_tag "icon_moon.svg", class: "shrink-0 w-8 h-auto dark:invert mt-1", alt: "Crescent moon icon representing dark and light theme support" %>
+    <div>
       <h3>Dark/light theme</h3>
+      <p>System preference detection with localStorage persistence and manual toggle.</p>
     </div>
-    <p class="l-ui-utility--mt-sm">System preference detection with localStorage persistence and manual toggle.</p>
   </div>
-  <div class="l-ui-surface">
-    <div class="flex items-center gap-2">
-      <%= image_tag "icon_device.svg", class: "l-ui-icon--md", alt: "Device icon representing responsive layout" %>
+  <div class="l-ui-surface flex items-start gap-4">
+    <%= image_tag "icon_device.svg", class: "shrink-0 w-8 h-auto dark:invert mt-1", alt: "Device icon representing responsive layout" %>
+    <div>
       <h3>Responsive layout</h3>
+      <p>Header, sidebar navigation, main content area, and optional resizable panel.</p>
     </div>
-    <p class="l-ui-utility--mt-sm">Header, sidebar navigation, main content area, and optional resizable panel.</p>
   </div>
-  <div class="l-ui-surface">
-    <div class="flex items-center gap-2">
-      <%= image_tag "icon_eye.svg", class: "l-ui-icon--md", alt: "Eye icon representing accessibility compliance" %>
+  <div class="l-ui-surface flex items-start gap-4">
+    <%= image_tag "icon_eye.svg", class: "shrink-0 w-8 h-auto dark:invert mt-1", alt: "Eye icon representing accessibility compliance" %>
+    <div>
       <h3>WCAG 2.2 AA compliant</h3>
+      <p>Skip links, focus indicators, ARIA attributes, and 4.5:1 contrast ratios. Read the <%= link_to "latest accessibility audit", "https://github.com/layered-ai-public/layered-ui-rails/blob/main/audits/accessibility/codex-5_3.md", target: "_blank", rel: "noopener noreferrer" %>.</p>
     </div>
-    <p class="l-ui-utility--mt-sm">Skip links, focus indicators, ARIA attributes, and 4.5:1 contrast ratios. Read the <%= link_to "latest accessibility audit", "https://github.com/layered-ai-public/layered-ui-rails/blob/main/audits/accessibility/codex-5_3.md", target: "_blank", rel: "noopener noreferrer" %>.</p>
   </div>
-  <div class="l-ui-surface">
-    <div class="flex items-center gap-2">
-      <%= image_tag "icon_puzzle.svg", class: "l-ui-icon--md", alt: "Puzzle piece icon representing optional integrations" %>
+  <div class="l-ui-surface flex items-start gap-4">
+    <%= image_tag "icon_puzzle.svg", class: "shrink-0 w-8 h-auto dark:invert mt-1", alt: "Puzzle piece icon representing optional integrations" %>
+    <div>
       <h3>Optional integrations</h3>
+      <p><%= link_to "Devise", devise_path %> authentication, <%= link_to "Pagy", pagy_path %> pagination, and <%= link_to "Ransack", ransack_path %> search and sort with styled controls.</p>
     </div>
-    <p class="l-ui-utility--mt-sm"><%= link_to "Devise", devise_path %> authentication, <%= link_to "Pagy", pagy_path %> pagination, and <%= link_to "Ransack", ransack_path %> search and sort with styled controls.</p>
   </div>
-  <div class="l-ui-surface">
-    <div class="flex items-center gap-2">
-      <%= image_tag "icon_paint.svg", class: "l-ui-icon--md", alt: "Paint bucket icon representing customisable branding" %>
+  <div class="l-ui-surface flex items-start gap-4">
+    <%= image_tag "icon_paint.svg", class: "shrink-0 w-8 h-auto dark:invert mt-1", alt: "Paint bucket icon representing customisable branding" %>
+    <div>
       <h3>Customisable branding</h3>
+      <p>Override the default logos, icons and colors.</p>
     </div>
-    <p class="l-ui-utility--mt-sm">Override the default logos, icons and colors.</p>
   </div>
-  <div class="l-ui-surface">
-    <div class="flex items-center gap-2">
-      <%= image_tag "icon_lighthouse.svg", class: "l-ui-icon--md", alt: "Lighthouse icon representing Google Lighthouse performance" %>
+  <div class="l-ui-surface flex items-start gap-4">
+    <%= image_tag "icon_lighthouse.svg", class: "shrink-0 w-8 h-auto dark:invert mt-1", alt: "Lighthouse icon representing Google Lighthouse performance" %>
+    <div>
       <h3>Google Lighthouse</h3>
+      <p><code>layered-ui-rails</code> scores a <%= link_to "perfect 100", image_path("lighthouse.webp"), target: "_blank" %> across all four Google Lighthouse categories - performance, accessibility, best practices, and SEO.</p>
     </div>
-    <p class="l-ui-utility--mt-sm"><code>layered-ui-rails</code> scores a <%= link_to "perfect 100", image_path("lighthouse.webp"), target: "_blank" %> across all four Google Lighthouse categories - performance, accessibility, best practices, and SEO.</p>
   </div>
 </div>
 
