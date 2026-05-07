@@ -268,6 +268,11 @@ WCAG 2.2 AA table pattern:
 .l-ui-message__body                  Message content
 .l-ui-message__footer                Metadata footer
 .l-ui-message__timestamp             Timestamp
+
+.l-ui-stream-fade                    Fade-in for streamed chunks as they arrive (0.5s ease-out)
+.l-ui-stream-fade-word               Per-word staggered fade-in for completed responses
+                                     (0.5s ease-out; set --i to the word index for a 25ms
+                                     stagger, capped at 1s)
 ```
 
 ## Markdown
