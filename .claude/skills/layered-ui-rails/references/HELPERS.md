@@ -220,7 +220,7 @@ Renders a complete form with all fields, error summary, and submit button via th
 
 Field options:
 - `attribute` (Symbol) - model attribute
-- `as` (Symbol, optional) - field type; auto-detected from column type. Supported: `:string`, `:text`, `:email`, `:number`, `:date`, `:datetime`, `:select`, `:checkbox`, `:hidden`
+- `as` (Symbol, optional) - field type; auto-detected from column type. Supported: `:string`, `:text`, `:email`, `:password`, `:number`, `:date`, `:datetime`, `:select`, `:checkbox`, `:hidden`
 - `label` (String, optional) - custom label text; defaults to humanised attribute
 - `required` (Boolean, optional) - marks field as required; default false
 - `hint` (String, optional) - help text below the field
