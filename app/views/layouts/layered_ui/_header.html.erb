@@ -23,11 +23,11 @@
 
       <% unless l_ui_user_signed_in? %>
         <% if respond_to?(:new_user_registration_path) %>
-          <%= link_to "Register", main_app.new_user_registration_path, class: "l-ui-button" %>
+          <%= link_to "Register", main_app.new_user_registration_path, class: "l-ui-button--outline l-ui-button--small" %>
         <% end %>
 
         <% if respond_to?(:new_user_session_path) %>
-          <%= link_to "Login", main_app.new_user_session_path, class: "l-ui-button" %>
+          <%= link_to "Login", main_app.new_user_session_path, class: "l-ui-button--primary l-ui-button--small" %>
         <% end %>
       <% end %>
 

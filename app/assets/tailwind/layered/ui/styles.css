@@ -514,7 +514,7 @@
 
 .l-ui-header__navigation {
   @apply flex items-center
-         gap-1 -mr-3;
+         gap-4;
 }
 
 .l-ui-header__icon {
@@ -560,7 +560,7 @@
 /* Theme */
 
 .l-ui-theme-toggle {
-  @apply -mr-0;
+  @apply -mr-3;
 }
 
 .l-ui-theme-toggle__icon--light {
@@ -580,6 +580,11 @@
 }
 
 /* Icon */
+
+.l-ui-icon--xs {
+  @apply w-4 h-4
+         dark:invert;
+}
 
 .l-ui-icon--sm {
   @apply w-5 h-5
@@ -882,6 +887,12 @@
          rounded-sm
          focus-ring
          transition-colors;
+}
+
+.l-ui-button--small {
+  @apply gap-1
+         px-3 min-h-[32px]
+         text-xs;
 }
 
 [class*="l-ui-button--"]:disabled,

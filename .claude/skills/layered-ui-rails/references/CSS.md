@@ -30,6 +30,7 @@ Modifiers (combine with a standalone variant above):
 
 ```
 .l-ui-button--full            Full-width (e.g. l-ui-button--primary l-ui-button--full)
+.l-ui-button--small           Compact 32px-tall variant (e.g. l-ui-button--primary l-ui-button--small)
 ```
 
 Any button variant is automatically styled as disabled when the `disabled` HTML attribute is present - no extra class needed.
@@ -284,6 +285,7 @@ WCAG 2.2 AA table pattern:
 ## Icon sizes
 
 ```
+.l-ui-icon--xs    16px (4x4)
 .l-ui-icon--sm    20px (5x5)
 .l-ui-icon--md    24px (6x6)
 .l-ui-icon--lg    28px (7x7)
