@@ -30,7 +30,7 @@
     <div id="l-ui-live-region" class="l-ui-sr-only" aria-live="polite" aria-atomic="true"></div>
     <%= render "layouts/layered_ui/header" %>
     <%= render "layouts/layered_ui/navigation" %>
-    <div class="l-ui-backdrop--navigation" data-l-ui--navigation-target="backdrop" data-action="click->l-ui--navigation#close"></div>
+    <div class="l-ui-backdrop l-ui-backdrop--navigation" data-l-ui--navigation-target="backdrop" data-action="click->l-ui--navigation#close"></div>
     <% if yield(:l_ui_panel_body).present? %>
       <%= render "layouts/layered_ui/panel" %>
     <% end %>

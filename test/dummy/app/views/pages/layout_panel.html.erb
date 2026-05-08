@@ -6,19 +6,19 @@
   ]
 ) %>
 
-<p class="l-ui-utility--mt-md">The slide-out panel is only rendered when the <code>:l_ui_panel_body</code> content block is present. Click the panel button in the bottom-right corner to see it in action, or use <kbd>⌘i</kbd> / <kbd>Ctrl+i</kbd> to toggle it.</p>
+<p class="l-ui-mt-md">The slide-out panel is only rendered when the <code>:l_ui_panel_body</code> content block is present. Click the panel button in the bottom-right corner to see it in action, or use <kbd>⌘i</kbd> / <kbd>Ctrl+i</kbd> to toggle it.</p>
 
-<h2 class="l-ui-utility--mt-lg">Draggable button</h2>
+<h2 class="l-ui-mt-lg">Draggable button</h2>
 
-<p class="l-ui-utility--mt-md">The panel toggle button can be repositioned by dragging it with a mouse or touch. The position is saved to <code>localStorage</code> and restored across sessions.</p>
+<p class="l-ui-mt-md">The panel toggle button can be repositioned by dragging it with a mouse or touch. The position is saved to <code>localStorage</code> and restored across sessions.</p>
 
-<p class="l-ui-utility--mt-md">You can also snap the button to corners with keyboard shortcuts: <kbd>Ctrl/⌘ + Alt + 1</kbd> (top-left), <kbd>Ctrl/⌘ + Alt + 2</kbd> (top-right), <kbd>Ctrl/⌘ + Alt + 3</kbd> (bottom-left), <kbd>Ctrl/⌘ + Alt + 4</kbd> (bottom-right).</p>
+<p class="l-ui-mt-md">You can also snap the button to corners with keyboard shortcuts: <kbd>Ctrl/⌘ + Alt + 1</kbd> (top-left), <kbd>Ctrl/⌘ + Alt + 2</kbd> (top-right), <kbd>Ctrl/⌘ + Alt + 3</kbd> (bottom-left), <kbd>Ctrl/⌘ + Alt + 4</kbd> (bottom-right).</p>
 
-<p class="l-ui-utility--mt-md">A short tap (under 5px of movement) toggles the panel as normal. The panel itself can always be toggled with <kbd>⌘i</kbd> / <kbd>Ctrl+i</kbd>.</p>
+<p class="l-ui-mt-md">A short tap (under 5px of movement) toggles the panel as normal. The panel itself can always be toggled with <kbd>⌘i</kbd> / <kbd>Ctrl+i</kbd>.</p>
 
-<p class="l-ui-utility--mt-md">For full control, override the partial by creating <code>app/views/layouts/layered_ui/_panel.html.erb</code> in your application.</p>
+<p class="l-ui-mt-md">For full control, override the partial by creating <code>app/views/layouts/layered_ui/_panel.html.erb</code> in your application.</p>
 
-<pre class="l-ui-surface l-ui-utility--mt-lg"><code>&lt;% content_for :l_ui_panel_heading do %&gt;
+<pre class="l-ui-surface l-ui-mt-lg"><code>&lt;% content_for :l_ui_panel_heading do %&gt;
   &lt;h2&gt;Side Bar&lt;/h2&gt;
 &lt;% end %&gt;
 

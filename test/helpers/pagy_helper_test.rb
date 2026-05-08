@@ -13,7 +13,7 @@ class PagyHelperTest < ActionView::TestCase
     # Stub series_nav to avoid needing a full request context
     pagy.define_singleton_method(:series_nav) { "<nav>pages</nav>" }
     result = l_ui_pagy(pagy)
-    assert_includes result, "l-ui-container--pagy"
-    assert_includes result, "l-ui-utility--mt-lg"
+    assert_includes result, "l-ui-pagy-container"
+    assert_includes result, "l-ui-mt-lg"
   end
 end

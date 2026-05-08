@@ -107,7 +107,7 @@ class FormHelperTest < ActionView::TestCase
 
   test "renders checkbox field" do
     result = render_field({ attribute: :user_id, as: :checkbox })
-    assert_includes result, "l-ui-container--checkbox"
+    assert_includes result, "l-ui-checkbox-container"
     assert_includes result, 'type="checkbox"'
     assert_includes result, "l-ui-label--checkbox"
   end

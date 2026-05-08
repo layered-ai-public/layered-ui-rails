@@ -2,7 +2,7 @@
   <div class="l-ui-page--width-constrained">
     <h1>Register</h1>
 
-    <%= form_with(model: resource, as: resource_name, url: registration_path(resource_name), class: 'l-ui-form l-ui-utility--mt-md') do |f| %>
+    <%= form_with(model: resource, as: resource_name, url: registration_path(resource_name), class: 'l-ui-form l-ui-mt-md') do |f| %>
       <%= render 'layered_ui/shared/form_errors', item: resource %>
 
       <% if resource.class.column_names.include?('name') %>

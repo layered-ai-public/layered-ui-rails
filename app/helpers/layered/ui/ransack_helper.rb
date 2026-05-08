@@ -12,7 +12,7 @@ module Layered
       #     f.submit "Go", class: "l-ui-button--primary"
       #   end
       def l_ui_search_form(query, url: nil, fields: [], predicate: :cont, combinator: :or, label: "Search", placeholder: nil, button: "Search", clear: nil, turbo_frame: nil, html: {}, &block)
-        result = require_ransack("l_ui_search_form") { |msg| tag.p(msg, class: "l-ui-notice--warning") }
+        result = require_ransack("l_ui_search_form") { |msg| tag.p(msg, class: "l-ui-notice l-ui-notice--warning") }
         return result unless result == true
 
         scope = query.context&.search_key || :q
@@ -44,7 +44,7 @@ module Layered
 
           search_form_for(query, url: url, html: html, as: scope) do |f|
             f.label(combined_field, label, class: "l-ui-sr-only") +
-              tag.div(class: "l-ui-search__inline") do
+              tag.div(class: "l-ui-search-inline") do
                 content = f.text_field(combined_field, class: "l-ui-form__field", placeholder: placeholder) +
                   f.submit(button, class: "l-ui-button--primary")
                 if clear

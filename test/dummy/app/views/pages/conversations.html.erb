@@ -13,9 +13,9 @@
   ]
 ) %>
 
-<p class="l-ui-utility--mt-md">A message list component for displaying conversations and messages. The container uses <code>flex-1 min-h-0</code> to fill available space within a flex parent. When placed inside an <code>l-ui-page</code>, the page is automatically constrained to viewport height so messages scroll within the available space while the composer stays pinned at the bottom. If you have a title bar or other content above the messages, include it inside the container so the remaining height is calculated correctly.</p>
+<p class="l-ui-mt-md">A message list component for displaying conversations and messages. The container uses <code>flex-1 min-h-0</code> to fill available space within a flex parent. When placed inside an <code>l-ui-page</code>, the page is automatically constrained to viewport height so messages scroll within the available space while the composer stays pinned at the bottom. If you have a title bar or other content above the messages, include it inside the container so the remaining height is calculated correctly.</p>
 
-<div class="l-ui-conversation__container l-ui-utility--mt-xl">
+<div class="l-ui-conversation__container l-ui-mt-xl">
   <div class="l-ui-conversation__messages">
     <div class="l-ui-conversation">
       <div class="l-ui-message">
@@ -67,7 +67,7 @@
           <details class="l-ui-surface--collapsible-highlighted l-ui-surface--sm">
             <summary class="l-ui-surface__summary">
               <span>Reasoning</span>
-              <%= image_tag "layered_ui/icon_chevron_right.svg", alt: "", class: "l-ui-icon--sm l-ui-surface__chevron", aria: { hidden: true } %>
+              <%= image_tag "layered_ui/icon_chevron_right.svg", alt: "", class: "l-ui-icon l-ui-icon--sm l-ui-surface__chevron", aria: { hidden: true } %>
             </summary>
             <div class="l-ui-surface__content">
               <p>The user is asking about a pull request review. I should look at the <code>validate_input</code> method carefully - it seems like there are edge cases around nil and empty string handling that could cause issues in production. I'll also check the error messages for clarity.</p>
@@ -98,7 +98,7 @@ end</code></pre>
           <details class="l-ui-surface--collapsible-highlighted l-ui-surface--sm">
             <summary class="l-ui-surface__summary">
               <span><strong>Tool:</strong> greet</span>
-              <%= image_tag "layered_ui/icon_chevron_right.svg", alt: "", class: "l-ui-icon--sm l-ui-surface__chevron", aria: { hidden: true } %>
+              <%= image_tag "layered_ui/icon_chevron_right.svg", alt: "", class: "l-ui-icon l-ui-icon--sm l-ui-surface__chevron", aria: { hidden: true } %>
             </summary>
             <div class="l-ui-surface__content l-ui-markdown">
               <p>Input:</p>
@@ -191,13 +191,13 @@ end</code></pre>
   </div>
 </div>
 
-<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+<div class="l-ui-mt-xl" data-controller="l-ui--modal">
   <button class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-conversations-container-heading">
     <div class="l-ui-modal__header">
       <h3 id="modal-conversations-container-heading">Conversation container</h3>
       <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
-        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
@@ -225,7 +225,7 @@ end</code></pre>
           &lt;details class="l-ui-surface--collapsible-highlighted l-ui-surface--sm"&gt;
             &lt;summary class="l-ui-surface__summary"&gt;
               &lt;span&gt;Reasoning&lt;/span&gt;
-              &lt;img src="layered_ui/icon_chevron_right.svg" alt="" class="l-ui-icon--sm l-ui-surface__chevron" aria-hidden="true"&gt;
+              &lt;img src="layered_ui/icon_chevron_right.svg" alt="" class="l-ui-icon l-ui-icon--sm l-ui-surface__chevron" aria-hidden="true"&gt;
             &lt;/summary&gt;
             &lt;div class="l-ui-surface__content"&gt;
               &lt;p&gt;Reasoning text...&lt;/p&gt;
@@ -242,7 +242,7 @@ end</code></pre>
           &lt;details class="l-ui-surface--collapsible-highlighted l-ui-surface--sm"&gt;
             &lt;summary class="l-ui-surface__summary"&gt;
               &lt;span&gt;&lt;strong&gt;Tool:&lt;/strong&gt; greet&lt;/span&gt;
-              &lt;img ... class="l-ui-icon--sm l-ui-surface__chevron"&gt;
+              &lt;img ... class="l-ui-icon l-ui-icon--sm l-ui-surface__chevron"&gt;
             &lt;/summary&gt;
             &lt;div class="l-ui-surface__content l-ui-markdown"&gt;
               &lt;p&gt;Input:&lt;/p&gt;
@@ -278,9 +278,9 @@ end</code></pre>
   </dialog>
 </div>
 
-<h2 class="l-ui-utility--mt-2xl">CSS classes</h2>
+<h2 class="l-ui-mt-2xl">CSS classes</h2>
 
-<div class="l-ui-container--table l-ui-utility--mt-lg">
+<div class="l-ui-table-container l-ui-mt-lg">
   <table class="l-ui-table">
     <caption class="l-ui-sr-only">Conversation CSS classes</caption>
     <thead class="l-ui-table__header">
@@ -378,24 +378,24 @@ end</code></pre>
   </table>
 </div>
 
-<h2 class="l-ui-utility--mt-2xl">Scroll to bottom</h2>
+<h2 class="l-ui-mt-2xl">Scroll to bottom</h2>
 
-<p class="l-ui-utility--mt-md">A sticky button that appears when the user scrolls up in the message list. Hidden by default; add the <code>data-visible</code> attribute to reveal it.</p>
+<p class="l-ui-mt-md">A sticky button that appears when the user scrolls up in the message list. Hidden by default; add the <code>data-visible</code> attribute to reveal it.</p>
 
-<p class="l-ui-utility--mt-md">The chevron icon is built into the class, so the button itself is empty. Recolour it by overriding <code>--button-primary-icon</code>.</p>
+<p class="l-ui-mt-md">The chevron icon is built into the class, so the button itself is empty. Recolour it by overriding <code>--button-primary-icon</code>.</p>
 
-<div class="l-ui-surface l-ui-utility--mt-lg">
+<div class="l-ui-surface l-ui-mt-lg">
   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi scelerisque dui at dapibus tincidunt. In eleifend ante sit amet rhoncus cursus. Nullam erat lacus, ultrices vel molestie eu, luctus id enim.</p>
   <button class="l-ui-scroll-to-bottom" data-visible type="button" aria-label="Scroll to bottom"></button>
 </div>
 
-<div class="l-ui-utility--mt-lg" data-controller="l-ui--modal">
+<div class="l-ui-mt-lg" data-controller="l-ui--modal">
   <button class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-conversations-scroll-to-bottom-heading">
     <div class="l-ui-modal__header">
       <h3 id="modal-conversations-scroll-to-bottom-heading">Scroll to bottom</h3>
       <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
-        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
@@ -410,21 +410,21 @@ end</code></pre>
   </dialog>
 </div>
 
-<h2 class="l-ui-utility--mt-2xl">Stream fade-in</h2>
+<h2 class="l-ui-mt-2xl">Stream fade-in</h2>
 
-<p class="l-ui-utility--mt-md">Apply <code>l-ui-stream-fade</code> to each chunk as it arrives during streaming. The animation fades each chunk in over 0.5s with ease-out timing, giving a smooth appearance as text is generated.</p>
+<p class="l-ui-mt-md">Apply <code>l-ui-stream-fade</code> to each chunk as it arrives during streaming. The animation fades each chunk in over 0.5s with ease-out timing, giving a smooth appearance as text is generated.</p>
 
-<div class="l-ui-surface l-ui-utility--mt-lg">
+<div class="l-ui-surface l-ui-mt-lg">
   <p><span class="l-ui-stream-fade">Hello, </span><span class="l-ui-stream-fade" style="animation-delay: 0.1s">I'd </span><span class="l-ui-stream-fade" style="animation-delay: 0.2s">be </span><span class="l-ui-stream-fade" style="animation-delay: 0.3s">happy </span><span class="l-ui-stream-fade" style="animation-delay: 0.4s">to </span><span class="l-ui-stream-fade" style="animation-delay: 0.5s">help </span><span class="l-ui-stream-fade" style="animation-delay: 0.6s">with </span><span class="l-ui-stream-fade" style="animation-delay: 0.7s">that.</span></p>
 </div>
 
-<div class="l-ui-utility--mt-lg" data-controller="l-ui--modal">
+<div class="l-ui-mt-lg" data-controller="l-ui--modal">
   <button class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-conversations-stream-fade-heading">
     <div class="l-ui-modal__header">
       <h3 id="modal-conversations-stream-fade-heading">Stream fade-in</h3>
       <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
-        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
@@ -438,21 +438,21 @@ end</code></pre>
   </dialog>
 </div>
 
-<h2 class="l-ui-utility--mt-2xl">Stream fade-in (by word)</h2>
+<h2 class="l-ui-mt-2xl">Stream fade-in (by word)</h2>
 
-<p class="l-ui-utility--mt-md">Use <code>l-ui-stream-fade-word</code> for a staggered word-by-word reveal once the full response is available. Set the <code>--i</code> custom property on each word to its index; the per-word delay is 25ms, capped at 1s.</p>
+<p class="l-ui-mt-md">Use <code>l-ui-stream-fade-word</code> for a staggered word-by-word reveal once the full response is available. Set the <code>--i</code> custom property on each word to its index; the per-word delay is 25ms, capped at 1s.</p>
 
-<div class="l-ui-surface l-ui-utility--mt-lg">
+<div class="l-ui-surface l-ui-mt-lg">
   <p><span class="l-ui-stream-fade-word" style="--i: 0">Hello,</span> <span class="l-ui-stream-fade-word" style="--i: 1">I'd</span> <span class="l-ui-stream-fade-word" style="--i: 2">be</span> <span class="l-ui-stream-fade-word" style="--i: 3">happy</span> <span class="l-ui-stream-fade-word" style="--i: 4">to</span> <span class="l-ui-stream-fade-word" style="--i: 5">help</span> <span class="l-ui-stream-fade-word" style="--i: 6">with</span> <span class="l-ui-stream-fade-word" style="--i: 7">that.</span></p>
 </div>
 
-<div class="l-ui-utility--mt-lg" data-controller="l-ui--modal">
+<div class="l-ui-mt-lg" data-controller="l-ui--modal">
   <button class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-conversations-stream-fade-word-heading">
     <div class="l-ui-modal__header">
       <h3 id="modal-conversations-stream-fade-word-heading">Stream fade-in (by word)</h3>
       <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
-        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">

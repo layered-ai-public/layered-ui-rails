@@ -70,10 +70,10 @@ For destructive actions use `l-ui-button--danger` (solid) or `l-ui-button--outli
 .l-ui-select                   Select dropdown
 .l-ui-select-wrapper           Select wrapper (custom arrow)
 
-.l-ui-search__inline           Inline search form layout
+.l-ui-search-inline            Inline search form layout
 
-.l-ui-container--checkbox      Checkbox container
-.l-ui-radio__group             Radio button group
+.l-ui-checkbox-container       Checkbox container
+.l-ui-radio                    Radio button group
 .l-ui-radio__item              Radio item wrapper
 .l-ui-radio__input             Radio input element
 .l-ui-radio__label             Radio label
@@ -97,13 +97,13 @@ For destructive actions use `l-ui-button--danger` (solid) or `l-ui-button--outli
 .l-ui-table__cell--primary         Bold cell (typically first column, use <th scope="row">)
 .l-ui-table__cell--action          Right-aligned action cell
 .l-ui-table__action--danger        Danger action link
-.l-ui-container--table             Overflow wrapper for responsive tables
+.l-ui-table-container              Overflow wrapper for responsive tables
 ```
 
 WCAG 2.2 AA table pattern:
 
 ```html
-<div class="l-ui-container--table">
+<div class="l-ui-table-container">
   <table class="l-ui-table">
     <caption>Users</caption>
     <thead class="l-ui-table__header">
@@ -128,7 +128,10 @@ WCAG 2.2 AA table pattern:
 
 ## Notices
 
+Always combine the base block with one variant modifier (e.g. `class="l-ui-notice l-ui-notice--success"`).
+
 ```
+.l-ui-notice            Base notice (always required alongside a variant)
 .l-ui-notice--success   Green success message
 .l-ui-notice--warning   Yellow warning message
 .l-ui-notice--error     Red error message
@@ -174,7 +177,7 @@ WCAG 2.2 AA table pattern:
 ## Title bar
 
 ```
-.l-ui-title-bar          Title bar wrapper used with .l-ui-container--spread
+.l-ui-title-bar          Title bar wrapper used with .l-ui-spread
 .l-ui-title-bar__content Breadcrumbs and title column
 .l-ui-title-bar__title   Page title
 .l-ui-title-bar__actions Action area
@@ -193,10 +196,11 @@ WCAG 2.2 AA table pattern:
 ## Navigation
 
 ```
-.l-ui-container--navigation       Sidebar container
-.l-ui-container--navigation.open  Visible sidebar
-.l-ui-backdrop--navigation        Overlay backdrop
-.l-ui-backdrop--navigation.open   Visible backdrop
+.l-ui-navigation-container        Sidebar container
+.l-ui-navigation-container.open   Visible sidebar
+.l-ui-backdrop                    Base backdrop (always pair with a variant)
+.l-ui-backdrop--navigation        Navigation overlay (use with .l-ui-backdrop)
+.l-ui-backdrop.open               Visible backdrop
 .l-ui-navigation                  Nav flexbox
 .l-ui-navigation__links           Nav links list
 .l-ui-navigation__item            Nav item
@@ -220,7 +224,7 @@ WCAG 2.2 AA table pattern:
 ## Header
 
 ```
-.l-ui-container--header          Fixed header container
+.l-ui-header-container           Fixed header container
 .l-ui-header                     Header flexbox
 .l-ui-header__icon               Header icon (responsive)
 .l-ui-header__icon--light        Light theme icon
@@ -229,6 +233,7 @@ WCAG 2.2 AA table pattern:
 .l-ui-header__logo--light        Light theme logo
 .l-ui-header__logo--dark         Dark theme logo
 .l-ui-theme-toggle               Theme toggle button
+.l-ui-theme-toggle__icon         Base toggle icon (always pair with a variant)
 .l-ui-theme-toggle__icon--light  Sun icon (shown in dark mode)
 .l-ui-theme-toggle__icon--dark   Moon icon (shown in light mode)
 ```
@@ -236,8 +241,8 @@ WCAG 2.2 AA table pattern:
 ## Panel
 
 ```
-.l-ui-container--panel          Side panel container
-.l-ui-container--panel.open     Visible panel
+.l-ui-panel-container           Side panel container
+.l-ui-panel-container.open      Visible panel
 .l-ui-panel                     Panel flexbox
 .l-ui-panel__button             Floating action button
 .l-ui-panel__button--dragging   During drag
@@ -284,7 +289,10 @@ WCAG 2.2 AA table pattern:
 
 ## Icon sizes
 
+Always combine the base block with one size modifier (e.g. `class="l-ui-icon l-ui-icon--sm"`).
+
 ```
+.l-ui-icon        Base icon (always required alongside a size modifier)
 .l-ui-icon--xs    16px (4x4)
 .l-ui-icon--sm    20px (5x5)
 .l-ui-icon--md    24px (6x6)
@@ -295,17 +303,18 @@ WCAG 2.2 AA table pattern:
 ## Utility classes
 
 ```
-.l-ui-utility--mt-0 through --mt-8  Margin top (fixed scale)
-.l-ui-utility--mt-sm/md/lg/xl/2xl  Responsive margin top
-.l-ui-utility--mb-0                 Margin bottom zero
-.l-ui-sr-only                       Visually hidden, screen reader only
-.l-ui-skip-link                     Accessibility skip link
-.l-ui-list                          Styled list
-.l-ui-hr                            Horizontal rule with theme border and vertical spacing
-.l-ui-container--grid               1-col mobile, 2-col desktop grid
-.l-ui-container--spread             Flex row with space-between
-.l-ui-container--pagy               Pagination wrapper
-.l-ui-scroll-lock                   Prevent body scroll (mobile panels/modals)
+.l-ui-mt-0 through .l-ui-mt-8   Margin top (fixed scale)
+.l-ui-mt-sm/md/lg/xl/2xl        Responsive margin top
+.l-ui-mb-0                      Margin bottom zero
+.l-ui--mr-2                     Negative margin right (offset for flush right alignment)
+.l-ui-sr-only                   Visually hidden, screen reader only
+.l-ui-skip-link                 Accessibility skip link
+.l-ui-list                      Styled list
+.l-ui-hr                        Horizontal rule with theme border and vertical spacing
+.l-ui-grid                      1-col mobile, 2-col desktop grid
+.l-ui-spread                    Flex row with space-between
+.l-ui-pagy-container            Pagination wrapper (Pagy integration)
+.l-ui-scroll-lock               Prevent body scroll (mobile panels/modals)
 ```
 
 ## Theming tokens

@@ -76,7 +76,7 @@ module Layered
 
         caption_tag = caption ? tag.caption(caption, class: "l-ui-sr-only") : nil
         table = tag.table(class: "l-ui-table") { safe_join([caption_tag, thead, tbody].compact) }
-        tag.div(table, class: "l-ui-container--table")
+        tag.div(table, class: "l-ui-table-container")
       end
 
       private

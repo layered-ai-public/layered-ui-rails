@@ -2,7 +2,7 @@
   <div class="l-ui-page--width-constrained">
     <h1>Login</h1>
 
-    <%= form_with(model: resource, as: resource_name, url: session_path(resource_name), class: 'l-ui-form l-ui-utility--mt-md') do |f| %>
+    <%= form_with(model: resource, as: resource_name, url: session_path(resource_name), class: 'l-ui-form l-ui-mt-md') do |f| %>
       <%= render 'layered_ui/shared/form_errors', item: resource %>
 
       <div class="l-ui-form__group">
@@ -18,7 +18,7 @@
       </div>
 
       <% if devise_mapping.rememberable? %>
-        <div class="l-ui-form__group l-ui-container--checkbox l-ui-utility--mt-8">
+        <div class="l-ui-form__group l-ui-checkbox-container l-ui-mt-8">
           <%= f.check_box :remember_me %>
           <%= f.label :remember_me, class: "l-ui-label--checkbox" %>
         </div>

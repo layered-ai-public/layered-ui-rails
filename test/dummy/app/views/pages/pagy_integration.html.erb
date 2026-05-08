@@ -6,31 +6,31 @@
   ]
 ) %>
 
-<p class="l-ui-utility--mt-md">Pagy is fully supported but entirely optional. The engine works without any pagination system.</p>
+<p class="l-ui-mt-md">Pagy is fully supported but entirely optional. The engine works without any pagination system.</p>
 
-<h2 class="l-ui-utility--mt-2xl">When Pagy is installed</h2>
+<h2 class="l-ui-mt-2xl">When Pagy is installed</h2>
 
-<p class="l-ui-utility--mt-md">The engine automatically detects Pagy and provides:</p>
+<p class="l-ui-mt-md">The engine automatically detects Pagy and provides:</p>
 
-<ul class="l-ui-list l-ui-utility--mt-lg">
+<ul class="l-ui-list l-ui-mt-lg">
   <li><code>Pagy::Method</code> included in controllers automatically</li>
   <li>A <code>PagyHelper</code> for rendering styled page navigation</li>
   <li>Styled pagination controls that match the theme</li>
 </ul>
 
-<h2 class="l-ui-utility--mt-2xl">Installation</h2>
+<h2 class="l-ui-mt-2xl">Installation</h2>
 
-<p class="l-ui-utility--mt-md">Add Pagy to your application:</p>
-<pre class="l-ui-surface l-ui-utility--mt-md"><code>bundle add pagy</code></pre>
+<p class="l-ui-mt-md">Add Pagy to your application:</p>
+<pre class="l-ui-surface l-ui-mt-md"><code>bundle add pagy</code></pre>
 
-<p class="l-ui-utility--mt-lg">If you want to modify the number of items per page (default is 20), create an initializer at <code>config/initializers/pagy.rb</code>:</p>
-<pre class="l-ui-surface l-ui-utility--mt-md"><code>Pagy::DEFAULT[:limit] = 20</code></pre>
+<p class="l-ui-mt-lg">If you want to modify the number of items per page (default is 20), create an initializer at <code>config/initializers/pagy.rb</code>:</p>
+<pre class="l-ui-surface l-ui-mt-md"><code>Pagy::DEFAULT[:limit] = 20</code></pre>
 
-<h2 class="l-ui-utility--mt-2xl">Helper methods</h2>
+<h2 class="l-ui-mt-2xl">Helper methods</h2>
 
-<p class="l-ui-utility--mt-md">The pagination helper provides:</p>
+<p class="l-ui-mt-md">The pagination helper provides:</p>
 
-<div class="l-ui-container--table l-ui-utility--mt-lg">
+<div class="l-ui-table-container l-ui-mt-lg">
   <table class="l-ui-table">
     <caption class="l-ui-sr-only">Pagy helpers</caption>
     <thead class="l-ui-table__header">
@@ -48,6 +48,6 @@
   </table>
 </div>
 
-<h2 class="l-ui-utility--mt-2xl">Example</h2>
+<h2 class="l-ui-mt-2xl">Example</h2>
 
-<p class="l-ui-utility--mt-md">See the <%= link_to "pagination page", pagination_path %> for a live example with Pagy in action.</p>
+<p class="l-ui-mt-md">See the <%= link_to "pagination page", pagination_path %> for a live example with Pagy in action.</p>

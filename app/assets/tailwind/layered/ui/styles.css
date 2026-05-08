@@ -249,43 +249,43 @@
          transition-[margin] duration-300;
 }
 
-.l-ui-utility--mt-0 {
+.l-ui-mt-0 {
   @apply !mt-0 md:!mt-0;
 }
 
-.l-ui-utility--mt-4 {
+.l-ui-mt-4 {
   @apply !mt-4 md:!mt-4;
 }
 
-.l-ui-utility--mt-8 {
+.l-ui-mt-8 {
   @apply !mt-8 md:!mt-8;
 }
 
-.l-ui-utility---mr-2 {
+.l-ui--mr-2 {
   @apply !-mr-2 md:!-mr-2;
 }
 
-.l-ui-utility--mt-sm {
+.l-ui-mt-sm {
   @apply !mt-1 md:!mt-2;
 }
 
-.l-ui-utility--mt-md {
+.l-ui-mt-md {
   @apply !mt-2 md:!mt-3;
 }
 
-.l-ui-utility--mt-lg {
+.l-ui-mt-lg {
   @apply !mt-3 md:!mt-4;
 }
 
-.l-ui-utility--mt-xl {
+.l-ui-mt-xl {
   @apply !mt-4 md:!mt-6;
 }
 
-.l-ui-utility--mt-2xl {
+.l-ui-mt-2xl {
   @apply !mt-6 md:!mt-8;
 }
 
-.l-ui-utility--mb-0 {
+.l-ui-mb-0 {
   @apply !mb-0 md:!mb-0;
 }
 
@@ -496,14 +496,14 @@
 
 /* Header */
 
-.l-ui-container--header {
+.l-ui-header-container {
   @apply fixed top-0 left-0 right-0
          z-50
          border-b border-border
          bg-background;
 }
 
-.l-ui-body--hide-header .l-ui-container--header {
+.l-ui-body--hide-header .l-ui-header-container {
   @apply hidden;
 }
 
@@ -563,12 +563,13 @@
   @apply -mr-3;
 }
 
-.l-ui-theme-toggle__icon--light {
-  @apply block;
+/* Base element; visual state set by --light / --dark modifiers below. */
+.l-ui-theme-toggle__icon {
+  @apply hidden;
 }
 
-.l-ui-theme-toggle__icon--dark {
-  @apply hidden;
+.l-ui-theme-toggle__icon--light {
+  @apply block;
 }
 
 .dark .l-ui-theme-toggle__icon--light {
@@ -581,34 +582,33 @@
 
 /* Icon */
 
+.l-ui-icon {
+  @apply dark:invert;
+}
+
 .l-ui-icon--xs {
-  @apply w-4 h-4
-         dark:invert;
+  @apply w-4 h-4;
 }
 
 .l-ui-icon--sm {
-  @apply w-5 h-5
-         dark:invert;
+  @apply w-5 h-5;
 }
 
 .l-ui-icon--md {
-  @apply w-6 h-6
-         dark:invert;
+  @apply w-6 h-6;
 }
 
 .l-ui-icon--lg {
-  @apply w-7 h-7
-         dark:invert;
+  @apply w-7 h-7;
 }
 
 .l-ui-icon--xl {
-  @apply w-8 h-8
-         dark:invert;
+  @apply w-8 h-8;
 }
 
 /* Navigation */
 
-.l-ui-container--navigation {
+.l-ui-navigation-container {
   @apply fixed top-[var(--header-height)] left-0 bottom-0
          w-[240px]
          z-50
@@ -619,24 +619,27 @@
          transition-transform duration-200;
 }
 
-.l-ui-container--navigation.open {
+.l-ui-navigation-container.open {
   @apply visible translate-x-0;
 }
 
-.l-ui-body--always-show-navigation .l-ui-container--navigation {
+.l-ui-body--always-show-navigation .l-ui-navigation-container {
   @apply md:visible md:translate-x-0;
 }
 
-.l-ui-backdrop--navigation {
-  @apply fixed top-[var(--header-height)] left-0 right-0 bottom-0
-         z-[45]
+.l-ui-backdrop {
+  @apply z-[45]
          backdrop-blur-sm
          opacity-0 pointer-events-none
          transition-opacity duration-200;
 }
 
-.l-ui-backdrop--navigation.open {
+.l-ui-backdrop.open {
   @apply opacity-100 pointer-events-auto;
+}
+
+.l-ui-backdrop--navigation {
+  @apply fixed top-[var(--header-height)] left-0 right-0 bottom-0;
 }
 
 .l-ui-body--always-show-navigation .l-ui-backdrop--navigation {
@@ -909,27 +912,28 @@
          rounded;
 }
 
+.l-ui-notice {
+  @apply notice;
+}
+
 .l-ui-notice--success {
-  @apply notice
-         bg-success-bg
+  @apply bg-success-bg
          text-success-text;
 }
 
 .l-ui-notice--warning {
-  @apply notice
-         bg-warning-bg
+  @apply bg-warning-bg
          text-warning-text;
 }
 
 .l-ui-notice--error {
-  @apply notice
-         bg-error-bg
+  @apply bg-error-bg
          text-error-text;
 }
 
 /* Grid */
 
-.l-ui-container--grid {
+.l-ui-grid {
   @apply grid grid-cols-1
          gap-4
          md:grid-cols-2;
@@ -937,7 +941,7 @@
 
 /* Spread */
 
-.l-ui-container--spread {
+.l-ui-spread {
   @apply flex flex-row items-center justify-between
          gap-4;
 }
@@ -1093,12 +1097,12 @@ pre.l-ui-surface {
   @apply mt-1 text-xs;
 }
 
-.l-ui-container--checkbox {
+.l-ui-checkbox-container {
   @apply flex items-center
          mt-2 gap-3;
 }
 
-.l-ui-container--checkbox input[type="checkbox"] {
+.l-ui-checkbox-container input[type="checkbox"] {
   @apply w-6 h-6
          accent-foreground
          focus-ring
@@ -1108,7 +1112,7 @@ pre.l-ui-surface {
 
 /* Search */
 
-.l-ui-search__inline {
+.l-ui-search-inline {
   @apply flex items-center
          gap-2;
 
@@ -1197,7 +1201,7 @@ pre.l-ui-surface {
   appearance: none;
 }
 
-.l-ui-radio__group {
+.l-ui-radio {
   @apply flex flex-col
          mt-2 gap-2;
 }
@@ -1256,7 +1260,7 @@ pre.l-ui-surface {
   @apply px-2 py-2.5;
 }
 
-.l-ui-container--table {
+.l-ui-table-container {
   @apply overflow-x-auto;
 }
 
@@ -1404,24 +1408,24 @@ pre.l-ui-surface {
 
 /* Pagination (pagy) */
 
-.l-ui-container--pagy .pagy.series-nav {
+.l-ui-pagy-container .pagy.series-nav {
   @apply pagination;
 }
 
-.l-ui-container--pagy .pagy.series-nav a,
-.l-ui-container--pagy .pagy.series-nav span {
+.l-ui-pagy-container .pagy.series-nav a,
+.l-ui-pagy-container .pagy.series-nav span {
   @apply pagination__item no-underline;
 }
 
-.l-ui-container--pagy .pagy.series-nav a[aria-current="page"] {
+.l-ui-pagy-container .pagy.series-nav a[aria-current="page"] {
   @apply pagination__item--active;
 }
 
-.l-ui-container--pagy .pagy.series-nav .disabled {
+.l-ui-pagy-container .pagy.series-nav .disabled {
   @apply pagination__item--disabled;
 }
 
-.l-ui-container--pagy .pagy.series-nav .gap {
+.l-ui-pagy-container .pagy.series-nav .gap {
   @apply pagination__gap;
 }
 
@@ -1523,7 +1527,7 @@ pre.l-ui-surface {
   @apply block;
 }
 
-.l-ui-container--panel {
+.l-ui-panel-container {
   @apply fixed top-[var(--header-height)] right-0 bottom-0
          w-full md:w-[480px]
          z-40
@@ -1533,7 +1537,7 @@ pre.l-ui-surface {
          transition-transform duration-300;
 }
 
-.l-ui-container--panel.open {
+.l-ui-panel-container.open {
   @apply translate-x-0;
 }
 

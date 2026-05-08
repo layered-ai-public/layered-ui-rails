@@ -1,5 +1,5 @@
 <% if yield(:l_ui_navigation_items).present? || l_ui_user_signed_in? %>
-  <nav id="l-ui-navigation" class="l-ui-container--navigation" aria-label="Main navigation" data-l-ui--navigation-target="navigation">
+  <nav id="l-ui-navigation" class="l-ui-navigation-container" aria-label="Main navigation" data-l-ui--navigation-target="navigation">
     <div class="l-ui-navigation">
       <ul class="l-ui-navigation__links" role="list">
         <%= yield :l_ui_navigation_items %>
@@ -21,7 +21,7 @@
             <% end %>
           </div>
           <% if l_ui_user_signed_in? && respond_to?(:destroy_user_session_path) %>
-            <div class="l-ui-utility--mt-lg">
+            <div class="l-ui-mt-lg">
               <%= button_to "Logout", main_app.destroy_user_session_path, method: :delete, class: "l-ui-button--outline-danger l-ui-button--full" %>
             </div>
           <% end %>

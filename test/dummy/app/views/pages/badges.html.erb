@@ -5,24 +5,24 @@
   ]
 ) %>
 
-<p class="l-ui-utility--mt-md">Status indicators and labels for categorisation.</p>
+<p class="l-ui-mt-md">Status indicators and labels for categorisation.</p>
 
-<h2 class="l-ui-utility--mt-2xl">Badge variants</h2>
+<h2 class="l-ui-mt-2xl">Badge variants</h2>
 
-<div class="l-ui-container--spread l-ui-utility--mt-lg">
+<div class="l-ui-spread l-ui-mt-lg">
   <span class="l-ui-badge--default">Default</span>
   <span class="l-ui-badge--success">Success</span>
   <span class="l-ui-badge--warning">Warning</span>
   <span class="l-ui-badge--danger">Danger</span>
 </div>
 
-<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+<div class="l-ui-mt-xl" data-controller="l-ui--modal">
   <button class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-badges-variants-heading">
     <div class="l-ui-modal__header">
       <h3 id="modal-badges-variants-heading">Badge variants</h3>
       <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
-        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
@@ -34,22 +34,22 @@
   </dialog>
 </div>
 
-<h2 class="l-ui-utility--mt-2xl">Rounded badges</h2>
+<h2 class="l-ui-mt-2xl">Rounded badges</h2>
 
-<div class="l-ui-container--spread l-ui-utility--mt-lg">
+<div class="l-ui-spread l-ui-mt-lg">
   <span class="l-ui-badge--default l-ui-badge--rounded">Default</span>
   <span class="l-ui-badge--success l-ui-badge--rounded">Success</span>
   <span class="l-ui-badge--warning l-ui-badge--rounded">Warning</span>
   <span class="l-ui-badge--danger l-ui-badge--rounded">Danger</span>
 </div>
 
-<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+<div class="l-ui-mt-xl" data-controller="l-ui--modal">
   <button class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-badges-rounded-heading">
     <div class="l-ui-modal__header">
       <h3 id="modal-badges-rounded-heading">Rounded badges</h3>
       <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
-        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
@@ -58,9 +58,9 @@
   </dialog>
 </div>
 
-<h2 class="l-ui-utility--mt-2xl">CSS classes</h2>
+<h2 class="l-ui-mt-2xl">CSS classes</h2>
 
-<div class="l-ui-container--table l-ui-utility--mt-lg">
+<div class="l-ui-table-container l-ui-mt-lg">
   <table class="l-ui-table">
     <caption class="l-ui-sr-only">Badge CSS classes</caption>
     <thead class="l-ui-table__header">
