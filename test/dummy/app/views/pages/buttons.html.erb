@@ -23,7 +23,7 @@
 </div>
 
 <div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
-  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
+  <button class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-buttons-variants-heading">
     <div class="l-ui-modal__header">
       <h3 id="modal-buttons-variants-heading">Button variants</h3>
@@ -56,7 +56,7 @@
 </div>
 
 <div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
-  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
+  <button class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-buttons-disabled-heading">
     <div class="l-ui-modal__header">
       <h3 id="modal-buttons-disabled-heading">Disabled</h3>
@@ -72,6 +72,34 @@
   </dialog>
 </div>
 
+<h2 class="l-ui-utility--mt-2xl">Small</h2>
+
+<p class="l-ui-utility--mt-md">Compact button for dense areas like header bars. 32px hit area comfortably exceeds the WCAG 2.2 AA 24px target size minimum.</p>
+
+<div class="l-ui-container--spread l-ui-utility--mt-lg">
+  <button class="l-ui-button--primary l-ui-button--small">Primary small</button>
+  <button class="l-ui-button--outline l-ui-button--small">Outline small</button>
+  <button class="l-ui-button--danger l-ui-button--small">Danger small</button>
+  <button class="l-ui-button--outline-danger l-ui-button--small">Outline danger small</button>
+</div>
+
+<div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
+  <button class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-buttons-small-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-buttons-small-heading">Small</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;button class="l-ui-button--primary l-ui-button--small"&gt;
+  Primary small
+&lt;/button&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
 <h2 class="l-ui-utility--mt-2xl">Full width</h2>
 
 <div class="l-ui-utility--mt-lg">
@@ -79,7 +107,7 @@
 </div>
 
 <div class="l-ui-utility--mt-xl" data-controller="l-ui--modal">
-  <button class="l-ui-button--outline" data-action="l-ui--modal#open">View code</button>
+  <button class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-buttons-full-width-heading">
     <div class="l-ui-modal__header">
       <h3 id="modal-buttons-full-width-heading">Full width</h3>
@@ -130,6 +158,10 @@
       <tr>
         <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-button--full</code></th>
         <td class="l-ui-table__cell">Modifier - combine with a variant above for full-width</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-button--small</code></th>
+        <td class="l-ui-table__cell">Modifier - combine with a variant above for a compact 32px-tall button</td>
       </tr>
     </tbody>
   </table>
