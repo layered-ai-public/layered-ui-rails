@@ -6,15 +6,15 @@
   ]
 ) %>
 
-<p class="l-ui-utility--mt-md">Ransack is fully supported but entirely optional. The engine works without any search system.</p>
+<p class="l-ui-mt-md">Ransack is fully supported but entirely optional. The engine works without any search system.</p>
 
-<h2 class="l-ui-utility--mt-2xl">Installation</h2>
+<h2 class="l-ui-mt-2xl">Installation</h2>
 
-<p class="l-ui-utility--mt-md">Add Ransack to your application:</p>
-<pre class="l-ui-surface l-ui-utility--mt-md"><code>bundle add ransack</code></pre>
+<p class="l-ui-mt-md">Add Ransack to your application:</p>
+<pre class="l-ui-surface l-ui-mt-md"><code>bundle add ransack</code></pre>
 
-<p class="l-ui-utility--mt-lg">Ransack 4+ requires you to allowlist searchable attributes on your models:</p>
-<pre class="l-ui-surface l-ui-utility--mt-md"><code>class User &lt; ApplicationRecord
+<p class="l-ui-mt-lg">Ransack 4+ requires you to allowlist searchable attributes on your models:</p>
+<pre class="l-ui-surface l-ui-mt-md"><code>class User &lt; ApplicationRecord
   def self.ransackable_attributes(_auth_object = nil)
     %w[name email created_at]
   end
@@ -24,16 +24,16 @@
   end
 end</code></pre>
 
-<h2 class="l-ui-utility--mt-2xl">Search and sort helpers</h2>
+<h2 class="l-ui-mt-2xl">Search and sort helpers</h2>
 
-<p class="l-ui-utility--mt-md">The engine provides helpers that wrap Ransack with styled controls. If Ransack is not installed, both helpers degrade gracefully:</p>
+<p class="l-ui-mt-md">The engine provides helpers that wrap Ransack with styled controls. If Ransack is not installed, both helpers degrade gracefully:</p>
 
-<ul class="l-ui-list l-ui-utility--mt-lg">
+<ul class="l-ui-list l-ui-mt-lg">
   <li>In <strong>development</strong>, a visible warning replaces the form; sort links render as plain text with the warning in a tooltip</li>
   <li>In <strong>production</strong> and <strong>test</strong>, <code>l_ui_search_form</code> returns nothing and <code>l_ui_sort_link</code> renders a plain-text header cell; both log a warning</li>
 </ul>
 
-<div class="l-ui-container--table l-ui-utility--mt-lg">
+<div class="l-ui-table-container l-ui-mt-lg">
   <table class="l-ui-table">
     <caption class="l-ui-sr-only">Available helpers</caption>
     <thead class="l-ui-table__header">
@@ -55,21 +55,21 @@ end</code></pre>
   </table>
 </div>
 
-<h2 class="l-ui-utility--mt-2xl">Search and sort example</h2>
+<h2 class="l-ui-mt-2xl">Search and sort example</h2>
 
-<p class="l-ui-utility--mt-md">Two independent collections on one page, each in a Turbo Frame. Searching or sorting one does not affect the other. The URL updates for back/forward navigation.</p>
+<p class="l-ui-mt-md">Two independent collections on one page, each in a Turbo Frame. Searching or sorting one does not affect the other. The URL updates for back/forward navigation.</p>
 
-<h3 class="l-ui-utility--mt-xl">Users</h3>
+<h3 class="l-ui-mt-xl">Users</h3>
 
 <%= turbo_frame_tag "users_collection", data: { turbo_action: "advance",
       controller: "l-ui--search-form", l_ui__search_form_scope_value: "users_q",
       action: "click->l-ui--search-form#rewriteLink" } do %>
-  <div class="l-ui-utility--mt-lg">
+  <div class="l-ui-mt-lg">
     <%= l_ui_search_form(@users_q, url: ransack_path, fields: [:name, :email],
                          clear: true, turbo_frame: "users_collection") %>
   </div>
 
-  <div class="l-ui-utility--mt-lg">
+  <div class="l-ui-mt-lg">
     <%= l_ui_table(@users,
         columns: [
           { attribute: :name, primary: true, render: ->(u) { u.name } },
@@ -84,17 +84,17 @@ end</code></pre>
   <%= l_ui_pagy(@users_pagy) %>
 <% end %>
 
-<h3 class="l-ui-utility--mt-xl">Posts</h3>
+<h3 class="l-ui-mt-xl">Posts</h3>
 
 <%= turbo_frame_tag "posts_collection", data: { turbo_action: "advance",
       controller: "l-ui--search-form", l_ui__search_form_scope_value: "posts_q",
       action: "click->l-ui--search-form#rewriteLink" } do %>
-  <div class="l-ui-utility--mt-lg">
+  <div class="l-ui-mt-lg">
     <%= l_ui_search_form(@posts_q, url: ransack_path, fields: [:title],
                          clear: true, turbo_frame: "posts_collection") %>
   </div>
 
-  <div class="l-ui-utility--mt-lg">
+  <div class="l-ui-mt-lg">
     <%= l_ui_table(@posts,
         columns: [
           { attribute: :title, primary: true, render: ->(p) { p.title } },
@@ -108,11 +108,11 @@ end</code></pre>
   <%= l_ui_pagy(@posts_pagy) %>
 <% end %>
 
-<h2 class="l-ui-utility--mt-2xl">Usage</h2>
+<h2 class="l-ui-mt-2xl">Usage</h2>
 
-<p class="l-ui-utility--mt-md">In your controller, use Ransack's <code>search_key</code> to namespace each collection:</p>
+<p class="l-ui-mt-md">In your controller, use Ransack's <code>search_key</code> to namespace each collection:</p>
 
-<pre class="l-ui-surface l-ui-utility--mt-md"><code>def index
+<pre class="l-ui-surface l-ui-mt-md"><code>def index
   @users_q = User.ransack(params[:users_q], search_key: :users_q)
   @users   = @users_q.result(distinct: true)
 
@@ -120,9 +120,9 @@ end</code></pre>
   @posts   = @posts_q.result(distinct: true)
 end</code></pre>
 
-<p class="l-ui-utility--mt-lg">In your view, wrap each collection in a <code>turbo_frame_tag</code> and pass <code>turbo_frame:</code> to the helpers. Add the <code>l-ui--search-form</code> controller with <code>rewriteLink</code> on the frame to preserve URL params in pagination links:</p>
+<p class="l-ui-mt-lg">In your view, wrap each collection in a <code>turbo_frame_tag</code> and pass <code>turbo_frame:</code> to the helpers. Add the <code>l-ui--search-form</code> controller with <code>rewriteLink</code> on the frame to preserve URL params in pagination links:</p>
 
-<pre class="l-ui-surface l-ui-utility--mt-md"><code>&lt;%= turbo_frame_tag "users_collection", data: { turbo_action: "advance",
+<pre class="l-ui-surface l-ui-mt-md"><code>&lt;%= turbo_frame_tag "users_collection", data: { turbo_action: "advance",
       controller: "l-ui--search-form", l_ui__search_form_scope_value: "users_q",
       action: "click-&gt;l-ui--search-form#rewriteLink" } do %&gt;
   &lt;%= l_ui_search_form(@users_q, url: users_path, fields: [:name, :email],
@@ -139,11 +139,11 @@ end</code></pre>
   &lt;%= l_ui_pagy(@users_pagy) %&gt;
 &lt;% end %&gt;</code></pre>
 
-<p class="l-ui-utility--mt-lg">The <code>search_key</code> flows through automatically - <code>l_ui_search_form</code> reads it from the query object and passes it as <code>as:</code> to <code>search_form_for</code>. The clear button preserves other collections' params. <code>data-turbo-action="advance"</code> pushes state to the URL for back/forward navigation. The <code>rewriteLink</code> action merges current URL params into pagination links so other collections' page positions are preserved.</p>
+<p class="l-ui-mt-lg">The <code>search_key</code> flows through automatically - <code>l_ui_search_form</code> reads it from the query object and passes it as <code>as:</code> to <code>search_form_for</code>. The clear button preserves other collections' params. <code>data-turbo-action="advance"</code> pushes state to the URL for back/forward navigation. The <code>rewriteLink</code> action merges current URL params into pagination links so other collections' page positions are preserved.</p>
 
-<h2 class="l-ui-utility--mt-2xl">Sort link options</h2>
+<h2 class="l-ui-mt-2xl">Sort link options</h2>
 
-<pre class="l-ui-surface l-ui-utility--mt-md"><code>&lt;!-- Basic sort link --&gt;
+<pre class="l-ui-surface l-ui-mt-md"><code>&lt;!-- Basic sort link --&gt;
 &lt;%= l_ui_sort_link(@q, :name) %&gt;
 
 &lt;!-- Custom label --&gt;
@@ -158,4 +158,4 @@ end</code></pre>
 &lt;!-- With HTML options --&gt;
 &lt;%= l_ui_sort_link(@q, :name, html: { data: { turbo_action: "replace" } }) %&gt;</code></pre>
 
-<p class="l-ui-utility--mt-lg">See the <%= link_to "search page", search_path %> for the full search helper API, options, and partials reference.</p>
+<p class="l-ui-mt-lg">See the <%= link_to "search page", search_path %> for the full search helper API, options, and partials reference.</p>

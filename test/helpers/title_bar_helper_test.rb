@@ -6,7 +6,7 @@ class TitleBarHelperTest < ActionView::TestCase
   test "renders title bar with title" do
     result = l_ui_title_bar(title: "Users")
 
-    assert_includes result, '<header class="l-ui-title-bar l-ui-container--spread">'
+    assert_includes result, '<header class="l-ui-title-bar l-ui-spread">'
     assert_includes result, '<h1 class="l-ui-title-bar__title">Users</h1>'
   end
 

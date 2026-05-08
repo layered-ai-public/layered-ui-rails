@@ -1,4 +1,4 @@
-<header class="l-ui-container--header" role="banner">
+<header class="l-ui-header-container" role="banner">
   <div class="l-ui-header">
     <%= link_to "/", "aria-label": "Home" do %>
       <%= image_tag(@l_ui_icon_light_url.presence || "layered_ui/icon_light.svg", alt: "", class: "l-ui-header__icon l-ui-header__icon--light") %>
@@ -17,8 +17,8 @@
         aria-label="Toggle dark mode"
         aria-pressed="false"
       >
-        <%= image_tag "layered_ui/icon_moon.svg", alt: "", class: "l-ui-icon--sm l-ui-theme-toggle__icon--light", aria: { hidden: true } %>
-        <%= image_tag "layered_ui/icon_sun.svg", alt: "", class: "l-ui-icon--sm l-ui-theme-toggle__icon--dark", aria: { hidden: true } %>
+        <%= image_tag "layered_ui/icon_moon.svg", alt: "", class: "l-ui-icon l-ui-icon--sm l-ui-theme-toggle__icon l-ui-theme-toggle__icon--light", aria: { hidden: true } %>
+        <%= image_tag "layered_ui/icon_sun.svg", alt: "", class: "l-ui-icon l-ui-icon--sm l-ui-theme-toggle__icon l-ui-theme-toggle__icon--dark", aria: { hidden: true } %>
       </button>
 
       <% unless l_ui_user_signed_in? %>
@@ -41,8 +41,8 @@
           aria-expanded="false"
           aria-controls="l-ui-navigation"
         >
-          <%= image_tag "layered_ui/icon_hamburger.svg", alt: "", class: "l-ui-icon--md", data: { "l-ui--navigation-target": "openIcon" }, aria: { hidden: true } %>
-          <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon--md", style: "display: none;", data: { "l-ui--navigation-target": "closeIcon" }, aria: { hidden: true } %>
+          <%= image_tag "layered_ui/icon_hamburger.svg", alt: "", class: "l-ui-icon l-ui-icon--md", data: { "l-ui--navigation-target": "openIcon" }, aria: { hidden: true } %>
+          <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--md", style: "display: none;", data: { "l-ui--navigation-target": "closeIcon" }, aria: { hidden: true } %>
         </button>
       <% end %>
     </nav>

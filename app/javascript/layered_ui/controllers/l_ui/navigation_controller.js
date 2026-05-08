@@ -67,7 +67,7 @@ export default class extends Controller {
 
     // Prevent background content from being tabbable
     const main = document.querySelector("main")
-    const panel = document.querySelector(".l-ui-container--panel")
+    const panel = document.querySelector(".l-ui-panel-container")
     if (main) main.setAttribute("inert", "")
     if (panel) panel.setAttribute("inert", "")
 
@@ -103,7 +103,7 @@ export default class extends Controller {
 
     // Restore background content tabbability
     const main = document.querySelector("main")
-    const panel = document.querySelector(".l-ui-container--panel")
+    const panel = document.querySelector(".l-ui-panel-container")
     if (main) main.removeAttribute("inert")
     if (panel) panel.removeAttribute("inert")
 
@@ -148,7 +148,7 @@ export default class extends Controller {
     if (this.hasCloseIconTarget) this.closeIconTarget.style.display = "none"
 
     const main = document.querySelector("main")
-    const panel = document.querySelector(".l-ui-container--panel")
+    const panel = document.querySelector(".l-ui-panel-container")
     if (main) main.removeAttribute("inert")
     if (panel) panel.removeAttribute("inert")
   }

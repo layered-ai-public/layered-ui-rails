@@ -6,7 +6,7 @@ module Layered
       def l_ui_title_bar(title:, breadcrumbs: [], actions: nil, &block)
         action_content = block_given? ? capture(&block) : actions
 
-        content_tag(:header, class: "l-ui-title-bar l-ui-container--spread") do
+        content_tag(:header, class: "l-ui-title-bar l-ui-spread") do
           safe_join([
             content_tag(:div, class: "l-ui-title-bar__content") do
               safe_join([

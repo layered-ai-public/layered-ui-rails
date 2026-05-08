@@ -30,7 +30,7 @@
                     class: "l-ui-select", **base_opts, **extras) %>
   </div>
 <% elsif config[:as] == :checkbox %>
-  <div class="l-ui-container--checkbox">
+  <div class="l-ui-checkbox-container">
     <%= form.check_box(attribute, class: "l-ui-checkbox", **base_opts, **extras) %>
     <%= form.label(attribute, config[:label], class: "l-ui-label--checkbox") %>
   </div>

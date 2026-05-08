@@ -28,7 +28,7 @@ export default class extends Controller {
   }
 
   rewriteLink(event) {
-    const link = event.target.closest(".l-ui-container--pagy a[href]")
+    const link = event.target.closest(".l-ui-pagy-container a[href]")
     if (!link) return
 
     const url = new URL(link.href, window.location.origin)
