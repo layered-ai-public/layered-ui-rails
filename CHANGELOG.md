@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.12.0] - 2026-05-08
+
+### Added
+
+- `l-ui-button--small` modifier for a compact 32px-tall button variant (combine with any button colour variant)
+- `l-ui-icon--xs` icon size (16px) alongside existing `--sm`/`--md`/`--lg`
+
+### Changed
+
+- Header navigation spacing tightened: `.l-ui-header__navigation` now uses `gap-4`, and the theme toggle absorbs the trailing `-mr-3`
+- Default `Register`/`Login` header buttons use `l-ui-button--outline`/`--primary` with `l-ui-button--small`
+- `l-ui-stream-fade` animation is now opacity-only (no Y-axis translation)
+
 ## [0.11.0] - 2026-05-07
 
 ### Added
