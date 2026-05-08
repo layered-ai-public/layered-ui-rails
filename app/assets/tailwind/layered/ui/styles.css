@@ -125,17 +125,20 @@
 
   p {
     @apply mt-0
-           text-sm text-foreground-muted leading-relaxed;
+           text-sm leading-relaxed
+           text-foreground-muted;
   }
 
   ul, ol {
     @apply mt-0
-           text-sm text-foreground-muted;
+           text-sm
+           text-foreground-muted;
   }
 
   li {
     @apply mt-0
-           text-sm text-foreground-muted;
+           text-sm
+           text-foreground-muted;
   }
 
   code {
@@ -198,23 +201,19 @@
 }
 
 .l-ui-skip-link {
-  @apply absolute
+  @apply absolute z-[100]
          left-4 -top-12
          px-4 py-2
          text-sm font-medium
-         bg-background
-         text-foreground
-         border border-border rounded-sm
-         z-[100]
-         focus-ring
-         focus:top-4
+         bg-background text-foreground
+         border border-border
+         rounded-sm focus-ring focus:top-4
          transition-[top];
 }
 
 .l-ui-sr-only {
-  @apply absolute
+  @apply absolute overflow-hidden
          w-px h-px p-0 -m-px
-         overflow-hidden
          whitespace-nowrap
          border-0;
   clip: rect(0, 0, 0, 0);
@@ -242,10 +241,8 @@
 }
 
 @utility page {
-  @apply flex flex-1 flex-col
-         min-h-full
-         max-w-full px-4 pb-4 pt-[calc(var(--header-height)+1rem)]
-         overflow-x-clip
+  @apply flex flex-1 flex-col overflow-x-clip
+         min-h-full max-w-full px-4 pb-4 pt-[calc(var(--header-height)+1rem)]
          transition-[margin] duration-300;
 }
 
@@ -408,10 +405,10 @@
 }
 
 .l-ui-markdown table {
-  @apply my-3 w-full
+  @apply block overflow-x-auto
+         my-3 w-full
          text-sm
-         border-collapse
-         block overflow-x-auto;
+         border-collapse;
 }
 
 .l-ui-markdown caption {
@@ -453,11 +450,10 @@
 /* Body */
 
 .l-ui-body {
-  @apply min-h-dvh flex flex-col
-         antialiased
-         font-inter
-         bg-background
-         text-foreground;
+  @apply flex flex-col
+         min-h-dvh
+         font-inter antialiased
+         bg-background text-foreground;
 }
 
 .l-ui-body--hide-header {
@@ -471,9 +467,9 @@
 }
 
 .l-ui-page a:not([class*="l-ui-"]) {
-  @apply underline underline-offset-4 decoration-foreground-muted/60
-         text-foreground
-         focus-ring rounded-sm;
+  @apply underline underline-offset-4
+         text-foreground decoration-foreground-muted/60
+         rounded-sm focus-ring;
 }
 
 .l-ui-page--with-navigation {
@@ -489,8 +485,8 @@
 }
 
 .l-ui-page--width-constrained {
-  @apply flex flex-col w-full
-         my-auto
+  @apply flex flex-col
+         w-full my-auto
          md:max-w-sm;
 }
 
@@ -609,13 +605,11 @@
 /* Navigation */
 
 .l-ui-navigation-container {
-  @apply fixed top-[var(--header-height)] left-0 bottom-0
+  @apply fixed top-[var(--header-height)] left-0 bottom-0 z-50
          w-[240px]
-         z-50
          border-r border-t border-border
          bg-background
-         invisible
-         -translate-x-full
+         invisible -translate-x-full
          transition-transform duration-200;
 }
 
@@ -654,9 +648,9 @@
 @utility navigation__item {
   @apply flex items-center gap-3
          w-full min-h-[40px] px-3
-         text-sm text-foreground-muted font-medium
-         rounded-sm
-         focus-ring
+         text-sm font-medium
+         text-foreground-muted
+         rounded-sm focus-ring
          transition-colors;
 }
 
@@ -700,22 +694,22 @@
 .l-ui-navigation__section-heading {
   @apply flex items-center gap-2
          w-full px-3 pt-4 pb-1
-         text-xs text-foreground-muted font-medium uppercase tracking-wider;
+         text-xs font-medium uppercase tracking-wider
+         text-foreground-muted;
 }
 
 .l-ui-navigation__section-toggle {
   @apply flex items-center gap-3
          w-full min-h-[40px] px-3
-         text-sm text-foreground-muted font-medium
-         rounded-sm
-         focus-ring
-         cursor-pointer
+         text-sm font-medium
+         text-foreground-muted
+         rounded-sm cursor-pointer focus-ring
          transition-colors;
 }
 
 .l-ui-navigation__section-chevron {
-  @apply ml-auto inline-block
-         w-3 h-3
+  @apply inline-block
+         ml-auto w-3 h-3
          transition-transform duration-150;
 
   background-color: currentColor;
@@ -782,8 +776,8 @@
 .l-ui-breadcrumbs__list {
   @apply flex flex-wrap items-center
          gap-1
-         list-none
-         text-xs text-foreground-muted;
+         text-xs list-none
+         text-foreground-muted;
 }
 
 .l-ui-breadcrumbs__item {
@@ -798,9 +792,9 @@
 }
 
 .l-ui-breadcrumbs__link {
-  @apply underline underline-offset-2 decoration-foreground-muted/30
-         text-foreground-muted
-         focus-ring rounded-sm;
+  @apply underline underline-offset-2
+         text-foreground-muted decoration-foreground-muted/30
+         rounded-sm focus-ring;
 }
 
 /* Title bar */
@@ -871,10 +865,8 @@
 .l-ui-button--navigation-toggle {
   @apply flex items-center justify-center
          min-w-[44px] min-h-[44px] p-2
-         cursor-pointer
          text-foreground
-         rounded-sm
-         focus-ring
+         rounded-sm cursor-pointer focus-ring
          transition-colors;
 }
 
@@ -885,10 +877,8 @@
 .l-ui-button--icon {
   @apply flex items-center justify-center
          min-w-[44px] min-h-[44px] p-2
-         cursor-pointer
          text-foreground-muted
-         rounded-sm
-         focus-ring
+         rounded-sm cursor-pointer focus-ring
          transition-colors;
 }
 
@@ -949,8 +939,9 @@
 /* Surface */
 
 @utility surface {
-  @apply p-4
-         rounded-sm overflow-x-auto;
+  @apply overflow-x-auto
+         p-4
+         rounded-sm;
 }
 
 .l-ui-surface {
@@ -1035,8 +1026,7 @@ pre.l-ui-surface {
 .l-ui-form__errors-list {
   @apply flex flex-col
          gap-1 pl-3
-         text-sm font-inter
-         list-disc;
+         text-sm font-inter list-disc;
 }
 
 .l-ui-form__group {
@@ -1076,8 +1066,8 @@ pre.l-ui-surface {
          /* text-base at mobile; text-sm at md+ */
          text-base font-inter
          bg-background text-foreground
-         border border-border-control rounded-sm
-         focus-ring;
+         border border-border-control
+         rounded-sm focus-ring;
 
   @media (min-width: 768px) {
     @apply text-sm;
@@ -1137,8 +1127,8 @@ pre.l-ui-surface {
 .l-ui-switch__track {
   @apply relative shrink-0
          w-12 h-7
-         bg-border-control rounded-full
-         transition-colors;
+         bg-border-control
+         rounded-full transition-colors;
 }
 
 .l-ui-switch__input:focus-visible + .l-ui-switch__track {
@@ -1156,8 +1146,8 @@ pre.l-ui-surface {
 .l-ui-switch__track::after {
   @apply absolute top-[3px] left-[3px]
          w-[22px] h-[22px]
-         bg-background rounded-full
-         transition-transform;
+         bg-background
+         rounded-full transition-transform;
   content: '';
 }
 
@@ -1178,9 +1168,9 @@ pre.l-ui-surface {
 }
 
 .l-ui-select-wrapper::after {
-  @apply absolute right-3 top-1/2 -translate-y-1/2
+  @apply absolute right-3 top-1/2
          w-4 h-4
-         pointer-events-none;
+         -translate-y-1/2 pointer-events-none;
   content: '';
   background-color: var(--foreground);
   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z'/%3E%3C/svg%3E");
@@ -1193,11 +1183,9 @@ pre.l-ui-surface {
   @apply block
          w-full pl-3 pr-8 py-2.5 mt-2 min-h-[44px]
          text-sm font-inter
-         bg-background
-         text-foreground
-         border border-border-control rounded-sm
-         cursor-pointer
-         focus-ring;
+         bg-background text-foreground
+         border border-border-control
+         rounded-sm cursor-pointer focus-ring;
   appearance: none;
 }
 
@@ -1310,7 +1298,8 @@ pre.l-ui-surface {
 
 .l-ui-table__cell {
   @apply table-cell-padding
-         text-sm text-foreground-muted whitespace-nowrap;
+         text-sm whitespace-nowrap
+         text-foreground-muted;
 }
 
 .l-ui-table__cell--primary {
@@ -1319,19 +1308,21 @@ pre.l-ui-surface {
 }
 
 .l-ui-table__cell--action {
-  @apply table-cell-padding
-         flex items-center justify-end gap-4
+  @apply flex items-center justify-end gap-4
+         table-cell-padding
          text-sm font-medium whitespace-nowrap;
 
   & button, & a {
     @apply inline-flex items-center justify-center
            min-w-6 min-h-6 px-0.5
-           text-foreground-muted bg-transparent
-           border-0 cursor-pointer focus-ring rounded-sm;
+           bg-transparent text-foreground-muted
+           border-0
+           rounded-sm cursor-pointer focus-ring;
   }
 
   & .l-ui-table__action--danger {
-    @apply text-danger underline underline-offset-2 decoration-danger/60;
+    @apply underline underline-offset-2
+           text-danger decoration-danger/60;
   }
 }
 
@@ -1357,9 +1348,8 @@ pre.l-ui-surface {
   @apply flex items-center justify-center
          h-[44px] px-3 min-w-[44px]
          text-sm font-medium
-         rounded-sm
          text-foreground
-         focus-ring
+         rounded-sm focus-ring
          transition-colors
          hover:bg-surface;
 }
@@ -1372,9 +1362,8 @@ pre.l-ui-surface {
 }
 
 @utility pagination__item--disabled {
-  @apply opacity-50
-         text-foreground-muted
-         cursor-not-allowed
+  @apply text-foreground-muted
+         opacity-50 cursor-not-allowed
          hover:bg-transparent;
 }
 
@@ -1473,14 +1462,10 @@ pre.l-ui-surface {
 /* Panel */
 
 .l-ui-panel__button {
-  @apply fixed flex items-center justify-center
+  @apply fixed flex items-center justify-center z-40
          w-14 h-14
-         z-40
-         cursor-pointer
-         bg-button-primary-bg
-         text-button-primary-icon
-         rounded-full
-         focus-ring
+         bg-button-primary-bg text-button-primary-icon
+         rounded-full cursor-pointer focus-ring
          transition-all;
   touch-action: none;
 }
@@ -1528,9 +1513,8 @@ pre.l-ui-surface {
 }
 
 .l-ui-panel-container {
-  @apply fixed top-[var(--header-height)] right-0 bottom-0
+  @apply fixed top-[var(--header-height)] right-0 bottom-0 z-40
          w-full md:w-[480px]
-         z-40
          md:border-l md:border-border
          bg-background
          transform translate-x-full
@@ -1542,19 +1526,16 @@ pre.l-ui-surface {
 }
 
 .l-ui-panel__resize-handle {
-  @apply absolute -left-3 top-0 bottom-0
+  @apply absolute -left-3 top-0 bottom-0 z-50
+         hidden md:block
          w-6
-         z-50
-         cursor-col-resize
-         focus-ring
-         hidden md:block;
+         cursor-col-resize focus-ring;
 
   &::before {
     @apply absolute left-1/2 top-0 bottom-0
            w-px
-           -translate-x-1/2
            bg-transparent
-           transition-colors;
+           -translate-x-1/2 transition-colors;
     content: "";
   }
 
@@ -1602,10 +1583,8 @@ pre.l-ui-surface {
 }
 
 .l-ui-panel__body {
-  @apply flex-1
-         p-4 space-y-4
-         overflow-y-auto
-         overscroll-contain;
+  @apply flex-1 overflow-y-auto overscroll-contain
+         p-4 space-y-4;
 }
 
 .l-ui-panel__body:has(.l-ui-conversation__container) {
@@ -1631,14 +1610,14 @@ pre.l-ui-surface {
 }
 
 .l-ui-conversation__container {
-  @apply flex flex-col
-         gap-4
-         flex-1 min-h-0
+  @apply flex flex-col flex-1
+         gap-4 min-h-0
          bg-background;
 }
 
 .l-ui-page:has(.l-ui-conversation__container) {
-  @apply max-h-dvh overflow-hidden;
+  @apply overflow-hidden
+         max-h-dvh;
 }
 
 .l-ui-conversation__messages {
@@ -1693,11 +1672,9 @@ pre.l-ui-surface {
 }
 
 .l-ui-message__bubble {
-  @apply flex flex-col gap-4
-         p-4
-         w-full min-w-0
-         bg-surface
-         text-foreground
+  @apply flex flex-col
+         w-full min-w-0 p-4 gap-4
+         bg-surface text-foreground
          rounded-md;
 }
 
@@ -1748,21 +1725,19 @@ pre.l-ui-surface {
 /* Scroll-to-bottom button */
 
 .l-ui-scroll-to-bottom {
-  @apply
-    sticky bottom-2 flex items-center justify-center
-    mx-auto -mt-9 h-9 w-9
-    rounded-full
-    cursor-pointer
-    bg-button-primary-bg text-button-primary-icon
-    shadow-sm
-    focus-ring
-    opacity-0 pointer-events-none
-    transition-opacity duration-200;
+  @apply sticky bottom-2 flex items-center justify-center
+         mx-auto -mt-9 h-9 w-9
+         bg-button-primary-bg text-button-primary-icon
+         rounded-full cursor-pointer shadow-sm focus-ring
+         opacity-0 pointer-events-none
+         transition-opacity duration-200;
 }
 
 .l-ui-scroll-to-bottom::before {
   content: "";
-  @apply block w-4 h-4 bg-button-primary-icon;
+  @apply block
+         w-4 h-4
+         bg-button-primary-icon;
   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
   mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
   -webkit-mask-size: contain;
@@ -1774,8 +1749,7 @@ pre.l-ui-surface {
 }
 
 .l-ui-scroll-to-bottom[data-visible] {
-  @apply
-    opacity-100 pointer-events-auto;
+  @apply opacity-100 pointer-events-auto;
 }
 
 /* Typing indicator */
