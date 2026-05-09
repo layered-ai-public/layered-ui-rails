@@ -6,13 +6,13 @@
   ]
 ) %>
 
-<p class="l-ui-mt-md">Icons are used for the favicon, header icon, apple touch icon, and panel toggle button.</p>
+<p class="mt-3">Icons are used for the favicon, header icon, apple touch icon, and panel toggle button.</p>
 
-<h2 class="l-ui-mt-2xl">Static override</h2>
+<h2 class="mt-6 md:mt-8">Static override</h2>
 
-<p class="l-ui-mt-md">Replace the defaults by placing files with the same names in <code>app/assets/images/layered_ui/</code> in your host app.</p>
+<p class="mt-3">Replace the defaults by placing files with the same names in <code>app/assets/images/layered_ui/</code> in your host app.</p>
 
-<div class="l-ui-table-container l-ui-mt-lg">
+<div class="l-ui-table-container mt-4">
   <table class="l-ui-table">
     <caption class="l-ui-sr-only">Icon files</caption>
     <thead class="l-ui-table__header">
@@ -38,20 +38,20 @@
   </table>
 </div>
 
-<h2 class="l-ui-mt-2xl">Dynamic override</h2>
+<h2 class="mt-6 md:mt-8">Dynamic override</h2>
 
-<p class="l-ui-mt-md">Override icons per-request in your controller or view:</p>
+<p class="mt-3">Override icons per-request in your controller or view:</p>
 
-<pre class="l-ui-surface l-ui-mt-lg"><code>@l_ui_icon_light_url = @tenant.icon_light_url
+<pre class="l-ui-surface mt-4"><code>@l_ui_icon_light_url = @tenant.icon_light_url
 @l_ui_icon_dark_url = @tenant.icon_dark_url
 @l_ui_apple_touch_icon_url = @tenant.apple_touch_icon_url
 @l_ui_panel_icon_light_url = @tenant.panel_icon_light_url
 @l_ui_panel_icon_dark_url = @tenant.panel_icon_dark_url</code></pre>
 
-<h2 class="l-ui-mt-2xl">Styling overrides</h2>
+<h2 class="mt-6 md:mt-8">Styling overrides</h2>
 
-<p class="l-ui-mt-md">To adjust icon sizing (e.g. the header icon), override <code>.l-ui-header__icon</code> in <code>layered_ui_overrides.css</code>. See the Tier 3 section of that file for an example.</p>
+<p class="mt-3">To adjust icon sizing (e.g. the header icon), override <code>.l-ui-header__icon</code> in <code>layered_ui_overrides.css</code>. See the Tier 3 section of that file for an example.</p>
 
-<p class="l-ui-mt-md">The panel button icon uses an inline SVG that inherits its color from <code>color</code> via <code>currentColor</code>. To recolor it, override the <code>--button-primary-icon</code> Tier 2 token (see the <%= link_to "colors page", layout_colors_path %>).</p>
+<p class="mt-3">The panel button icon uses an inline SVG that inherits its color from <code>color</code> via <code>currentColor</code>. To recolor it, override the <code>--button-primary-icon</code> Tier 2 token (see the <%= link_to "colors page", layout_colors_path %>).</p>
 
-<p class="l-ui-mt-md">To replace the icon image entirely, set <code>@l_ui_panel_icon_light_url</code> (shown in light mode) and/or <code>@l_ui_panel_icon_dark_url</code> (shown in dark mode). Each theme independently falls back to the inline SVG when its variable is unset.</p>
+<p class="mt-3">To replace the icon image entirely, set <code>@l_ui_panel_icon_light_url</code> (shown in light mode) and/or <code>@l_ui_panel_icon_dark_url</code> (shown in dark mode). Each theme independently falls back to the inline SVG when its variable is unset.</p>

@@ -6,41 +6,41 @@
   ]
 ) %>
 
-<p class="l-ui-mt-md">Devise is fully supported but entirely optional. The engine works without any authentication system.</p>
+<p class="mt-3">Devise is fully supported but entirely optional. The engine works without any authentication system.</p>
 
-<h2 class="l-ui-mt-2xl">When Devise is installed</h2>
+<h2 class="mt-6 md:mt-8">When Devise is installed</h2>
 
-<p class="l-ui-mt-md">The engine automatically detects Devise and provides:</p>
+<p class="mt-3">The engine automatically detects Devise and provides:</p>
 
-<ul class="l-ui-list l-ui-mt-lg">
+<ul class="l-ui-list mt-4">
   <li>Styled sign in, registration, and password reset, confirmation, and unlock views</li>
   <li>Header links that adapt to authentication state</li>
   <li>User info display in sidebar when signed in</li>
 </ul>
 
-<h2 class="l-ui-mt-2xl">Installation</h2>
+<h2 class="mt-6 md:mt-8">Installation</h2>
 
-<p class="l-ui-mt-md">Add Devise to your application:</p>
-<pre class="l-ui-surface l-ui-mt-md"><code>bundle add devise</code></pre>
+<p class="mt-3">Add Devise to your application:</p>
+<pre class="l-ui-surface mt-3"><code>bundle add devise</code></pre>
 
-<p class="l-ui-mt-lg">Run the Devise installer and generate a User model:</p>
-<pre class="l-ui-surface l-ui-mt-md"><code>bin/rails generate devise:install</code></pre>
-<pre class="l-ui-surface l-ui-mt-md"><code>bin/rails generate devise User</code></pre>
-<pre class="l-ui-surface l-ui-mt-md"><code>bin/rails db:migrate</code></pre>
+<p class="mt-4">Run the Devise installer and generate a User model:</p>
+<pre class="l-ui-surface mt-3"><code>bin/rails generate devise:install</code></pre>
+<pre class="l-ui-surface mt-3"><code>bin/rails generate devise User</code></pre>
+<pre class="l-ui-surface mt-3"><code>bin/rails db:migrate</code></pre>
 
-<p class="l-ui-mt-lg">Add Devise routes to your <code>routes.rb</code>:</p>
-<pre class="l-ui-surface l-ui-mt-md"><code>devise_for :users</code></pre>
+<p class="mt-4">Add Devise routes to your <code>routes.rb</code>:</p>
+<pre class="l-ui-surface mt-3"><code>devise_for :users</code></pre>
 
-<h2 class="l-ui-mt-2xl">Configuration</h2>
+<h2 class="mt-6 md:mt-8">Configuration</h2>
 
-<p class="l-ui-mt-md">The engine uses <code>current_user</code> by default. If your app uses a different method, configure it in an initializer:</p>
-<pre class="l-ui-surface l-ui-mt-md"><code>Layered::Ui.current_user_method = :current_admin</code></pre>
+<p class="mt-3">The engine uses <code>current_user</code> by default. If your app uses a different method, configure it in an initializer:</p>
+<pre class="l-ui-surface mt-3"><code>Layered::Ui.current_user_method = :current_admin</code></pre>
 
-<p class="l-ui-mt-lg">The sidebar displays the signed-in user's email. If your user model has a <code>name</code> attribute, it will be displayed as well. To support this, add a name column to your users migration:</p>
-<pre class="l-ui-surface l-ui-mt-md"><code>add_column :users, :name, :string</code></pre>
+<p class="mt-4">The sidebar displays the signed-in user's email. If your user model has a <code>name</code> attribute, it will be displayed as well. To support this, add a name column to your users migration:</p>
+<pre class="l-ui-surface mt-3"><code>add_column :users, :name, :string</code></pre>
 
-<p class="l-ui-mt-lg">Then permit the name parameter in your <code>ApplicationController</code>:</p>
-<pre class="l-ui-surface l-ui-mt-md"><code>before_action :configure_permitted_parameters, if: :devise_controller?
+<p class="mt-4">Then permit the name parameter in your <code>ApplicationController</code>:</p>
+<pre class="l-ui-surface mt-3"><code>before_action :configure_permitted_parameters, if: :devise_controller?
 
 protected
 
@@ -48,11 +48,11 @@ def configure_permitted_parameters
   devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
 end</code></pre>
 
-<h2 class="l-ui-mt-2xl">Helper methods</h2>
+<h2 class="mt-6 md:mt-8">Helper methods</h2>
 
-<p class="l-ui-mt-md">These helpers allow your views to work with or without Devise:</p>
+<p class="mt-3">These helpers allow your views to work with or without Devise:</p>
 
-<div class="l-ui-table-container l-ui-mt-lg">
+<div class="l-ui-table-container mt-4">
   <table class="l-ui-table">
     <caption class="l-ui-sr-only">Devise helpers</caption>
     <thead class="l-ui-table__header">

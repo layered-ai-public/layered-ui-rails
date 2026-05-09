@@ -4,7 +4,7 @@
       <%= pluralize(item.errors.count, "error") %> found:
     </h2>
 
-    <ul class="l-ui-form__errors-list l-ui-mt-lg">
+    <ul class="l-ui-form__errors-list l-ui-mt-4">
       <% item.errors.each do |error| %>
         <li><%= error.full_message %></li>
       <% end %>

@@ -14,6 +14,6 @@ class PagyHelperTest < ActionView::TestCase
     pagy.define_singleton_method(:series_nav) { "<nav>pages</nav>" }
     result = l_ui_pagy(pagy)
     assert_includes result, "l-ui-pagy-container"
-    assert_includes result, "l-ui-mt-lg"
+    assert_includes result, "l-ui-mt-4"
   end
 end

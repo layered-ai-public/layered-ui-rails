@@ -303,8 +303,7 @@ Always combine the base block with one size modifier (e.g. `class="l-ui-icon l-u
 ## Utility classes
 
 ```
-.l-ui-mt-0 through .l-ui-mt-8   Margin top (fixed scale)
-.l-ui-mt-sm/md/lg/xl/2xl        Responsive margin top
+.l-ui-mt-0/2/3/4/6/8            Margin top (fixed scale)
 .l-ui-mb-0                      Margin bottom zero
 .l-ui--mr-2                     Negative margin right (offset for flush right alignment)
 .l-ui-sr-only                   Visually hidden, screen reader only

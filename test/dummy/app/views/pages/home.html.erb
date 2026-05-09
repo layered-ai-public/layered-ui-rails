@@ -1,11 +1,11 @@
 <%= l_ui_title_bar(
-  title: "Home",
+  title:gem_name_and_version,
   breadcrumbs: [
-    ["#{gem_spec.name} (v#{gem_spec.version.to_s})"]
+    ["Home"]
   ]
 ) %>
 
-<p class="l-ui-mt-md">
+<p class="mt-3">
   <%= gem_spec.description %>
 </p>
 
@@ -13,68 +13,68 @@
 
 <%= render "features" %>
 
-<h2 class="l-ui-mt-xl">Requirements</h2>
-<ul class="l-ui-list l-ui-mt-md">
+<h2 class="mt-6">Requirements</h2>
+<ul class="l-ui-list mt-3">
   <li>Ruby on Rails >= 8.0</li>
   <li>Tailwind CSS Rails >= 4.0</li>
 </ul>
 
-<h2 class="l-ui-mt-xl">Agent skill</h2>
-<p class="l-ui-mt-md">
+<h2 class="mt-6">Agent skill</h2>
+<p class="mt-3">
   An <a href="https://agentskills.io" target="_blank" rel="noopener noreferrer">agent skill</a> is included so AI coding agents can work with <code>layered-ui-rails</code> in your project. Once installed, the agent can handle the full setup - just ask it to add <code>layered-ui-rails</code> to your app and it will install the gem, run the generator, and configure your layout.
 </p>
-<p class="l-ui-mt-md"><strong>Project install</strong> - scoped to a single repo, available to all contributors:</p>
-<pre class="l-ui-surface l-ui-mt-md"><code>bin/rails generate layered:ui:install_agent_skill</code></pre>
-<p class="l-ui-mt-md"><strong>Global install</strong> - available across all your projects:</p>
-<pre class="l-ui-surface l-ui-mt-md"><code>./install-skill.sh
+<p class="mt-3"><strong>Project install</strong> - scoped to a single repo, available to all contributors:</p>
+<pre class="l-ui-surface mt-3"><code>bin/rails generate layered:ui:install_agent_skill</code></pre>
+<p class="mt-3"><strong>Global install</strong> - available across all your projects:</p>
+<pre class="l-ui-surface mt-3"><code>./install-skill.sh
 # or install remotely without cloning the repo:
 curl -fsSL https://raw.githubusercontent.com/layered-ai-public/layered-ui-rails/main/install-skill.sh | sh</code></pre>
 
-<h2 class="l-ui-mt-xl">Installation</h2>
-<p class="l-ui-mt-md">Add to your Gemfile:</p>
-<pre class="l-ui-surface l-ui-mt-md"><code>gem "layered-ui-rails"</code></pre>
-<p class="l-ui-mt-lg">Then run:</p>
-<pre class="l-ui-surface l-ui-mt-md"><code>bundle install</code></pre>
+<h2 class="mt-6">Installation</h2>
+<p class="mt-3">Add to your Gemfile:</p>
+<pre class="l-ui-surface mt-3"><code>gem "layered-ui-rails"</code></pre>
+<p class="mt-4">Then run:</p>
+<pre class="l-ui-surface mt-3"><code>bundle install</code></pre>
 
-<h2 class="l-ui-mt-xl">Setup</h2>
-<p class="l-ui-mt-md">Run the install generator to copy CSS and JS to your application:</p>
-<pre class="l-ui-surface l-ui-mt-md"><code>bin/rails generate layered:ui:install</code></pre>
-<p class="l-ui-mt-lg">This will:</p>
-<ul class="l-ui-list l-ui-mt-sm">
+<h2 class="mt-6">Setup</h2>
+<p class="mt-3">Run the install generator to copy CSS and JS to your application:</p>
+<pre class="l-ui-surface mt-3"><code>bin/rails generate layered:ui:install</code></pre>
+<p class="mt-4">This will:</p>
+<ul class="l-ui-list mt-2">
   <li>Copy <code>layered_ui.css</code> to <code>app/assets/tailwind/</code></li>
   <li>Add <code>@import "./layered_ui";</code> to your application.css</li>
   <li>Add <code>import "layered_ui"</code> to your application.js</li>
 </ul>
 
-<p class="l-ui-mt-lg">Next, update your <code>application.html.erb</code> layout to render the layered-ui-rails layout and set up content blocks for navigation, panels, and page titles. See the <%= link_to "layout guide", layout_path %> for full details.</p>
+<p class="mt-4">Next, update your <code>application.html.erb</code> layout to render the layered-ui-rails layout and set up content blocks for navigation, panels, and page titles. See the <%= link_to "layout guide", layout_path %> for full details.</p>
 
-<p class="l-ui-mt-lg">You can override the default logo by placing your own <code>logo_light.svg</code> and <code>logo_dark.svg</code> files in <code>app/assets/images/layered_ui/</code>. The asset pipeline will serve your files instead of the defaults provided by the engine. The panel button icon color can be changed by overriding the <code>--button-primary-icon</code> Tier 2 token, or replaced entirely by setting <code>@l_ui_panel_icon_light_url</code> and <code>@l_ui_panel_icon_dark_url</code> (rendered in light and dark mode respectively).</p>
+<p class="mt-4">You can override the default logo by placing your own <code>logo_light.svg</code> and <code>logo_dark.svg</code> files in <code>app/assets/images/layered_ui/</code>. The asset pipeline will serve your files instead of the defaults provided by the engine. The panel button icon color can be changed by overriding the <code>--button-primary-icon</code> Tier 2 token, or replaced entirely by setting <code>@l_ui_panel_icon_light_url</code> and <code>@l_ui_panel_icon_dark_url</code> (rendered in light and dark mode respectively).</p>
 
-<p class="l-ui-mt-lg">See the <%= link_to "integrations page", integrations_path %> for optional Devise, Pagy, and Ransack support.</p>
+<p class="mt-4">See the <%= link_to "integrations page", integrations_path %> for optional Devise, Pagy, and Ransack support.</p>
 
-<h2 class="l-ui-mt-xl">Accessibility</h2>
-<p class="l-ui-mt-md">
-  The latest accessibility audits are available at <%= link_to "audits/accessibility", "https://github.com/layered-ai-public/layered-ui-rails/blob/main/audits/accessibility" %>.
+<h2 class="mt-6">Accessibility audits</h2>
+<p class="mt-3">
+  The latest accessibility audits are available at <%= link_to "https://github.com/layered-ai-public/layered-ui-rails/blob/main/audits/accessibility", "https://github.com/layered-ai-public/layered-ui-rails/blob/main/audits/accessibility" %>.
 </p>
 
-<h2 class="l-ui-mt-xl">License</h2>
-<p class="l-ui-mt-md">
+<h2 class="mt-6">License</h2>
+<p class="mt-3">
   Released under the <a href="https://github.com/layered-ai-public/layered-ui-rails/blob/main/LICENSE">Apache 2.0 License</a>.
 </p>
-<p class="l-ui-mt-md">
+<p class="mt-3">
   Copyright 2026 LAYERED AI LIMITED (UK company number: 17056830).
   See <a href="https://github.com/layered-ai-public/layered-ui-rails/blob/main/NOTICE">NOTICE</a> for attribution details.
 </p>
 
-<h2 class="l-ui-mt-xl">Trademarks</h2>
-<p class="l-ui-mt-md">
+<h2 class="mt-6">Trademarks</h2>
+<p class="mt-3">
   The source code is fully open, but the layered.ai name, logo, and brand assets are trademarks of LAYERED AI LIMITED.
   The Apache 2.0 license does not grant rights to use the layered.ai branding.
   Forks and redistributions must use a distinct name.
   See <a href="https://github.com/layered-ai-public/layered-ui-rails/blob/main/TRADEMARK.md">TRADEMARK.md</a> for the full policy.
 </p>
 
-<h2 class="l-ui-mt-xl">Contributing</h2>
-<ul class="l-ui-list l-ui-mt-md">
+<h2 class="mt-6">Contributing</h2>
+<ul class="l-ui-list mt-3">
   <li><a href="https://github.com/layered-ai-public/layered-ui-rails/blob/main/CLA.md">CLA.md</a> - contributor licence agreement</li>
 </ul>

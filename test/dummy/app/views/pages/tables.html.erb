@@ -5,11 +5,11 @@
   ]
 ) %>
 
-<p class="l-ui-mt-md">Data table styles with responsive scrolling and consistent cell styling.</p>
+<p class="mt-3">Data table styles with responsive scrolling and consistent cell styling.</p>
 
-<h2 class="l-ui-mt-2xl">Example table</h2>
+<h2 class="mt-6 md:mt-8">Example table</h2>
 
-<div class="l-ui-table-container l-ui-mt-lg">
+<div class="l-ui-table-container mt-4">
   <table class="l-ui-table">
     <caption class="l-ui-sr-only">Users</caption>
     <thead class="l-ui-table__header">
@@ -43,11 +43,11 @@
   </table>
 </div>
 
-<div class="l-ui-mt-lg">
+<div class="mt-4">
   <%= l_ui_pagy(@pagy) %>
 </div>
 
-<div class="l-ui-mt-xl" data-controller="l-ui--modal">
+<div class="mt-6" data-controller="l-ui--modal">
   <button class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-tables-heading">
     <div class="l-ui-modal__header">
@@ -93,9 +93,9 @@
   </dialog>
 </div>
 
-<h2 class="l-ui-mt-2xl">CSS classes</h2>
+<h2 class="mt-6 md:mt-8">CSS classes</h2>
 
-<div class="l-ui-table-container l-ui-mt-lg">
+<div class="l-ui-table-container mt-4">
   <table class="l-ui-table">
     <caption class="l-ui-sr-only">Table CSS classes</caption>
     <thead class="l-ui-table__header">

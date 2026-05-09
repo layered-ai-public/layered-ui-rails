@@ -186,8 +186,6 @@ For per-request icons, set instance variables - the engine renders `<link>` and 
 
 An online version of the documentation is available at **[layered-ui-rails.layered.ai](https://layered-ui-rails.layered.ai)**.
 
-The latest accessibility audits are available at **[audits/accessibility](https://github.com/layered-ai-public/layered-ui-rails/blob/main/audits/accessibility)**.
-
 You can also run the included dummy app locally for development and testing:
 
 ```bash
@@ -210,6 +208,10 @@ export KAMAL_DEPLOY_DOMAIN=<domain>
 export KAMAL_SSH_KEY=<path-to-ssh-key>
 kamal deploy
 ```
+
+## Accessibility audits
+
+The latest accessibility audits are available at **[https://github.com/layered-ai-public/layered-ui-rails/blob/main/audits/accessibility](https://github.com/layered-ai-public/layered-ui-rails/blob/main/audits/accessibility)**.
 
 ## Contributing
 

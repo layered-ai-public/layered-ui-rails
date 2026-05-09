@@ -6,22 +6,22 @@
   ]
 ) %>
 
-<p class="l-ui-mt-md">layered-ui-rails supports a two-tier color customisation system.</p>
-<p class="l-ui-mt-md">Set a single accent color for quick branding, or override any of the individual color tokens for full control.</p>
+<p class="mt-3">layered-ui-rails supports a two-tier color customisation system.</p>
+<p class="mt-3">Set a single accent color for quick branding, or override any of the individual color tokens for full control.</p>
 
-<h2 class="l-ui-mt-2xl">Getting started</h2>
+<h2 class="mt-6 md:mt-8">Getting started</h2>
 
-<p class="l-ui-mt-md">Run the install generator to create the overrides file:</p>
+<p class="mt-3">Run the install generator to create the overrides file:</p>
 
-<pre class="l-ui-surface l-ui-mt-lg"><code>bin/rails generate layered:ui:install</code></pre>
+<pre class="l-ui-surface mt-4"><code>bin/rails generate layered:ui:install</code></pre>
 
-<p class="l-ui-mt-lg">This creates <code>app/assets/tailwind/layered_ui_overrides.css</code> with all variables commented out. The file is not overwritten on subsequent runs, so your changes are preserved.</p>
+<p class="mt-4">This creates <code>app/assets/tailwind/layered_ui_overrides.css</code> with all variables commented out. The file is not overwritten on subsequent runs, so your changes are preserved.</p>
 
-<h2 class="l-ui-mt-2xl">Tier 1 - Accent color</h2>
+<h2 class="mt-6 md:mt-8">Tier 1 - Accent color</h2>
 
-<p class="l-ui-mt-md">Set <code>--accent</code> and <code>--accent-foreground</code> in your overrides file. Primary buttons, active tabs, and active navigation items all inherit from these two variables.</p>
+<p class="mt-3">Set <code>--accent</code> and <code>--accent-foreground</code> in your overrides file. Primary buttons, active tabs, and active navigation items all inherit from these two variables.</p>
 
-<pre class="l-ui-surface l-ui-mt-lg"><code>/* layered_ui_overrides.css */
+<pre class="l-ui-surface mt-4"><code>/* layered_ui_overrides.css */
 
 :root {
   --accent: oklch(0.58 0.19 255);
@@ -33,11 +33,11 @@
   --accent-foreground: oklch(0.2 0 0);
 }</code></pre>
 
-<h3 class="l-ui-mt-xl">Affected elements</h3>
+<h3 class="mt-6">Affected elements</h3>
 
-<p class="l-ui-mt-md">The following elements respond to the accent color:</p>
+<p class="mt-3">The following elements respond to the accent color:</p>
 
-<ul class="l-ui-list l-ui-mt-md">
+<ul class="l-ui-list mt-3">
   <li>Primary buttons (<code>l-ui-button--primary</code>)</li>
   <li>Active tab indicators (<code>l-ui-tabs__tab--active</code>)</li>
   <li>Active navigation items (<code>l-ui-navigation__item--active</code>)</li>
@@ -46,14 +46,14 @@
   <li>Scroll-to-bottom button (<code>l-ui-scroll-to-bottom</code>)</li>
 </ul>
 
-<p class="l-ui-mt-md">If your accent color needs a different text/icon color on buttons (e.g. a pink accent with white button text in dark mode), override <code>--button-primary-text</code> in Tier 2. To recolor only the icon while leaving button text unchanged, override <code>--button-primary-icon</code> instead.</p>
+<p class="mt-3">If your accent color needs a different text/icon color on buttons (e.g. a pink accent with white button text in dark mode), override <code>--button-primary-text</code> in Tier 2. To recolor only the icon while leaving button text unchanged, override <code>--button-primary-icon</code> instead.</p>
 
-<h2 class="l-ui-mt-2xl">Tier 2 - Full color overrides</h2>
+<h2 class="mt-6 md:mt-8">Tier 2 - Full color overrides</h2>
 
-<p class="l-ui-mt-md">Override any individual design token for complete control. Uncomment only the variables you need in your overrides file. Values are full CSS colors - <code>oklch()</code> is recommended for perceptually uniform mixing and consistent contrast, but <code>#hex</code>, <code>rgb()</code>, and keywords also work.</p>
-<p class="l-ui-mt-md">When setting custom colors, check that text, controls, and states still meet WCAG 2.2 AA. See the <%= link_to "WCAG 2.2 quick reference", "https://www.w3.org/WAI/WCAG22/quickref/", target: "_blank", rel: "noopener noreferrer" %> for guidance.</p>
+<p class="mt-3">Override any individual design token for complete control. Uncomment only the variables you need in your overrides file. Values are full CSS colors - <code>oklch()</code> is recommended for perceptually uniform mixing and consistent contrast, but <code>#hex</code>, <code>rgb()</code>, and keywords also work.</p>
+<p class="mt-3">When setting custom colors, check that text, controls, and states still meet WCAG 2.2 AA. See the <%= link_to "WCAG 2.2 quick reference", "https://www.w3.org/WAI/WCAG22/quickref/", target: "_blank", rel: "noopener noreferrer" %> for guidance.</p>
 
-<pre class="l-ui-surface l-ui-mt-lg"><code>/* layered_ui_overrides.css */
+<pre class="l-ui-surface mt-4"><code>/* layered_ui_overrides.css */
 
 :root {
   --accent: oklch(0.58 0.19 255);
@@ -69,13 +69,13 @@
   --surface: oklch(0.12 0.015 255);
 }</code></pre>
 
-<h2 class="l-ui-mt-2xl">Dynamic theming</h2>
+<h2 class="mt-6 md:mt-8">Dynamic theming</h2>
 
-<p class="l-ui-mt-md">Override tokens per request (e.g. per-tenant branding) using <code>content_for :l_ui_head</code>. See the <%= link_to "head", layout_head_path %> page for usage and CSP compatibility notes.</p>
+<p class="mt-3">Override tokens per request (e.g. per-tenant branding) using <code>content_for :l_ui_head</code>. See the <%= link_to "head", layout_head_path %> page for usage and CSP compatibility notes.</p>
 
-<h2 class="l-ui-mt-2xl">Design tokens</h2>
+<h2 class="mt-6 md:mt-8">Design tokens</h2>
 
-<div class="l-ui-table-container l-ui-mt-lg">
+<div class="l-ui-table-container mt-4">
   <table class="l-ui-table">
     <caption class="l-ui-sr-only">Design tokens</caption>
     <thead class="l-ui-table__header">

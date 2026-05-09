@@ -6,17 +6,17 @@
   ]
 ) %>
 
-<p class="l-ui-mt-md">Populate the navigation using the <code>:l_ui_navigation_items</code> yield with <code>l_ui_navigation_item</code> for clickable items and <code>l_ui_navigation_section</code> for grouping.</p>
+<p class="mt-3">Populate the navigation using the <code>:l_ui_navigation_items</code> yield with <code>l_ui_navigation_item</code> for clickable items and <code>l_ui_navigation_section</code> for grouping.</p>
 
-<p class="l-ui-mt-md">The navigation is off-canvas by default and toggled via the header button on all screen sizes. Add <code>l-ui-body--always-show-navigation</code> to the body to pin it as a persistent sidebar on desktop. The header is shown by default - use <code>l-ui-body--hide-header</code> to hide it and collapse its reserved space.</p>
+<p class="mt-3">The navigation is off-canvas by default and toggled via the header button on all screen sizes. Add <code>l-ui-body--always-show-navigation</code> to the body to pin it as a persistent sidebar on desktop. The header is shown by default - use <code>l-ui-body--hide-header</code> to hide it and collapse its reserved space.</p>
 
-<h2 class="l-ui-mt-xl">Example</h2>
+<h2 class="mt-6">Example</h2>
 
-<p class="l-ui-mt-md">Use <code>l_ui_navigation_item</code> for links and <code>l_ui_navigation_section</code> to group them. A section that contains the active item opens automatically; <code>storage_key:</code> persists the user's open/closed preference. To expose the parent route of a section, add an "Overview" item.</p>
+<p class="mt-3">Use <code>l_ui_navigation_item</code> for links and <code>l_ui_navigation_section</code> to group them. A section that contains the active item opens automatically; <code>storage_key:</code> persists the user's open/closed preference. To expose the parent route of a section, add an "Overview" item.</p>
 
-<p class="l-ui-mt-md">The gem ships <code>icon: "home"</code> out of the box. For other names, supply the SVG in your host app at <code>app/assets/images/layered_ui/icon_NAME.svg</code> - <code>icon: "products"</code> resolves to <code>icon_products.svg</code>. For a path outside that convention use <code>icon_path:</code>. For icon-font libraries (Font Awesome, Heroicons, etc.) pass pre-rendered markup with <code>icon_html:</code>, e.g. <code>icon_html: tag.i(class: "fa-solid fa-house")</code>.</p>
+<p class="mt-3">The gem ships <code>icon: "home"</code> out of the box. For other names, supply the SVG in your host app at <code>app/assets/images/layered_ui/icon_NAME.svg</code> - <code>icon: "products"</code> resolves to <code>icon_products.svg</code>. For a path outside that convention use <code>icon_path:</code>. For icon-font libraries (Font Awesome, Heroicons, etc.) pass pre-rendered markup with <code>icon_html:</code>, e.g. <code>icon_html: tag.i(class: "fa-solid fa-house")</code>.</p>
 
-<pre class="l-ui-surface l-ui-mt-lg"><code>&lt;% content_for :l_ui_navigation_items do %&gt;
+<pre class="l-ui-surface mt-4"><code>&lt;% content_for :l_ui_navigation_items do %&gt;
   &lt;%= l_ui_navigation_section do %&gt;
     &lt;%= l_ui_navigation_item "Home", root_path, icon: "home" %&gt;
   &lt;% end %&gt;
@@ -32,14 +32,14 @@
   &lt;% end %&gt;
 &lt;% end %&gt;</code></pre>
 
-<h2 class="l-ui-mt-xl">Always-show navigation</h2>
+<h2 class="mt-6">Always-show navigation</h2>
 
-<p class="l-ui-mt-md">Pin the navigation open on desktop by passing the <code>l-ui-body--always-show-navigation</code> modifier via the <code>:l_ui_body_class</code> yield.</p>
+<p class="mt-3">Pin the navigation open on desktop by passing the <code>l-ui-body--always-show-navigation</code> modifier via the <code>:l_ui_body_class</code> yield.</p>
 
-<pre class="l-ui-surface l-ui-mt-lg"><code>&lt;% content_for :l_ui_body_class, "l-ui-body--always-show-navigation" %&gt;
+<pre class="l-ui-surface mt-4"><code>&lt;% content_for :l_ui_body_class, "l-ui-body--always-show-navigation" %&gt;
 
 &lt;%= render template: "layouts/layered_ui/application" %&gt;</code></pre>
 
-<h2 class="l-ui-mt-xl">Override</h2>
+<h2 class="mt-6">Override</h2>
 
-<p class="l-ui-mt-md">For full control, override the partial by creating <code>app/views/layouts/layered_ui/_navigation.html.erb</code> in your application.</p>
+<p class="mt-3">For full control, override the partial by creating <code>app/views/layouts/layered_ui/_navigation.html.erb</code> in your application.</p>
