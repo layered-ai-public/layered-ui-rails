@@ -6,12 +6,12 @@
   ]
 ) %>
 
-<p class="mt-3">layered-ui-rails supports a two-tier color customisation system.</p>
-<p class="mt-3">Set a single accent color for quick branding, or override any of the individual color tokens for full control.</p>
+<p class="mt-4">layered-ui-rails supports a two-tier color customisation system.</p>
+<p class="mt-4">Set a single accent color for quick branding, or override any of the individual color tokens for full control.</p>
 
 <h2 class="mt-8">Getting started</h2>
 
-<p class="mt-3">Run the install generator to create the overrides file:</p>
+<p class="mt-4">Run the install generator to create the overrides file:</p>
 
 <pre class="l-ui-surface mt-4"><code>bin/rails generate layered:ui:install</code></pre>
 
@@ -19,7 +19,7 @@
 
 <h2 class="mt-8">Tier 1 - Accent color</h2>
 
-<p class="mt-3">Set <code>--accent</code> and <code>--accent-foreground</code> in your overrides file. Primary buttons, active tabs, and active navigation items all inherit from these two variables.</p>
+<p class="mt-4">Set <code>--accent</code> and <code>--accent-foreground</code> in your overrides file. Primary buttons, active tabs, and active navigation items all inherit from these two variables.</p>
 
 <pre class="l-ui-surface mt-4"><code>/* layered_ui_overrides.css */
 
@@ -35,9 +35,9 @@
 
 <h3 class="mt-6">Affected elements</h3>
 
-<p class="mt-3">The following elements respond to the accent color:</p>
+<p class="mt-4">The following elements respond to the accent color:</p>
 
-<ul class="l-ui-list mt-3">
+<ul class="l-ui-list mt-4">
   <li>Primary buttons (<code>l-ui-button--primary</code>)</li>
   <li>Active tab indicators (<code>l-ui-tabs__tab--active</code>)</li>
   <li>Active navigation items (<code>l-ui-navigation__item--active</code>)</li>
@@ -46,12 +46,12 @@
   <li>Scroll-to-bottom button (<code>l-ui-scroll-to-bottom</code>)</li>
 </ul>
 
-<p class="mt-3">If your accent color needs a different text/icon color on buttons (e.g. a pink accent with white button text in dark mode), override <code>--button-primary-text</code> in Tier 2. To recolor only the icon while leaving button text unchanged, override <code>--button-primary-icon</code> instead.</p>
+<p class="mt-4">If your accent color needs a different text/icon color on buttons (e.g. a pink accent with white button text in dark mode), override <code>--button-primary-text</code> in Tier 2. To recolor only the icon while leaving button text unchanged, override <code>--button-primary-icon</code> instead.</p>
 
 <h2 class="mt-8">Tier 2 - Full color overrides</h2>
 
-<p class="mt-3">Override any individual design token for complete control. Uncomment only the variables you need in your overrides file. Values are full CSS colors - <code>oklch()</code> is recommended for perceptually uniform mixing and consistent contrast, but <code>#hex</code>, <code>rgb()</code>, and keywords also work.</p>
-<p class="mt-3">When setting custom colors, check that text, controls, and states still meet WCAG 2.2 AA. See the <%= link_to "WCAG 2.2 quick reference", "https://www.w3.org/WAI/WCAG22/quickref/", target: "_blank", rel: "noopener noreferrer" %> for guidance.</p>
+<p class="mt-4">Override any individual design token for complete control. Uncomment only the variables you need in your overrides file. Values are full CSS colors - <code>oklch()</code> is recommended for perceptually uniform mixing and consistent contrast, but <code>#hex</code>, <code>rgb()</code>, and keywords also work.</p>
+<p class="mt-4">When setting custom colors, check that text, controls, and states still meet WCAG 2.2 AA. See the <%= link_to "WCAG 2.2 quick reference", "https://www.w3.org/WAI/WCAG22/quickref/", target: "_blank", rel: "noopener noreferrer" %> for guidance.</p>
 
 <pre class="l-ui-surface mt-4"><code>/* layered_ui_overrides.css */
 
@@ -71,7 +71,7 @@
 
 <h2 class="mt-8">Dynamic theming</h2>
 
-<p class="mt-3">Override tokens per request (e.g. per-tenant branding) using <code>content_for :l_ui_head</code>. See the <%= link_to "head", layout_head_path %> page for usage and CSP compatibility notes.</p>
+<p class="mt-4">Override tokens per request (e.g. per-tenant branding) using <code>content_for :l_ui_head</code>. See the <%= link_to "head", layout_head_path %> page for usage and CSP compatibility notes.</p>
 
 <h2 class="mt-8">Design tokens</h2>
 

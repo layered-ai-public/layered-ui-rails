@@ -6,15 +6,15 @@
   ]
 ) %>
 
-<p class="mt-3">Ransack is fully supported but entirely optional. The engine works without any search system.</p>
+<p class="mt-4">Ransack is fully supported but entirely optional. The engine works without any search system.</p>
 
 <h2 class="mt-8">Installation</h2>
 
-<p class="mt-3">Add Ransack to your application:</p>
-<pre class="l-ui-surface mt-3"><code>bundle add ransack</code></pre>
+<p class="mt-4">Add Ransack to your application:</p>
+<pre class="l-ui-surface mt-4"><code>bundle add ransack</code></pre>
 
 <p class="mt-4">Ransack 4+ requires you to allowlist searchable attributes on your models:</p>
-<pre class="l-ui-surface mt-3"><code>class User &lt; ApplicationRecord
+<pre class="l-ui-surface mt-4"><code>class User &lt; ApplicationRecord
   def self.ransackable_attributes(_auth_object = nil)
     %w[name email created_at]
   end
@@ -26,7 +26,7 @@ end</code></pre>
 
 <h2 class="mt-8">Search and sort helpers</h2>
 
-<p class="mt-3">The engine provides helpers that wrap Ransack with styled controls. If Ransack is not installed, both helpers degrade gracefully:</p>
+<p class="mt-4">The engine provides helpers that wrap Ransack with styled controls. If Ransack is not installed, both helpers degrade gracefully:</p>
 
 <ul class="l-ui-list mt-4">
   <li>In <strong>development</strong>, a visible warning replaces the form; sort links render as plain text with the warning in a tooltip</li>
@@ -57,7 +57,7 @@ end</code></pre>
 
 <h2 class="mt-8">Search and sort example</h2>
 
-<p class="mt-3">Two independent collections on one page, each in a Turbo Frame. Searching or sorting one does not affect the other. The URL updates for back/forward navigation.</p>
+<p class="mt-4">Two independent collections on one page, each in a Turbo Frame. Searching or sorting one does not affect the other. The URL updates for back/forward navigation.</p>
 
 <h3 class="mt-6">Users</h3>
 
@@ -110,9 +110,9 @@ end</code></pre>
 
 <h2 class="mt-8">Usage</h2>
 
-<p class="mt-3">In your controller, use Ransack's <code>search_key</code> to namespace each collection:</p>
+<p class="mt-4">In your controller, use Ransack's <code>search_key</code> to namespace each collection:</p>
 
-<pre class="l-ui-surface mt-3"><code>def index
+<pre class="l-ui-surface mt-4"><code>def index
   @users_q = User.ransack(params[:users_q], search_key: :users_q)
   @users   = @users_q.result(distinct: true)
 
@@ -122,7 +122,7 @@ end</code></pre>
 
 <p class="mt-4">In your view, wrap each collection in a <code>turbo_frame_tag</code> and pass <code>turbo_frame:</code> to the helpers. Add the <code>l-ui--search-form</code> controller with <code>rewriteLink</code> on the frame to preserve URL params in pagination links:</p>
 
-<pre class="l-ui-surface mt-3"><code>&lt;%= turbo_frame_tag "users_collection", data: { turbo_action: "advance",
+<pre class="l-ui-surface mt-4"><code>&lt;%= turbo_frame_tag "users_collection", data: { turbo_action: "advance",
       controller: "l-ui--search-form", l_ui__search_form_scope_value: "users_q",
       action: "click-&gt;l-ui--search-form#rewriteLink" } do %&gt;
   &lt;%= l_ui_search_form(@users_q, url: users_path, fields: [:name, :email],
@@ -143,7 +143,7 @@ end</code></pre>
 
 <h2 class="mt-8">Sort link options</h2>
 
-<pre class="l-ui-surface mt-3"><code>&lt;!-- Basic sort link --&gt;
+<pre class="l-ui-surface mt-4"><code>&lt;!-- Basic sort link --&gt;
 &lt;%= l_ui_sort_link(@q, :name) %&gt;
 
 &lt;!-- Custom label --&gt;

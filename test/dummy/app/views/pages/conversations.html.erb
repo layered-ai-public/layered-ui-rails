@@ -13,7 +13,7 @@
   ]
 ) %>
 
-<p class="mt-3">A message list component for displaying conversations and messages. The container uses <code>flex-1 min-h-0</code> to fill available space within a flex parent. When placed inside an <code>l-ui-page</code>, the page is automatically constrained to viewport height so messages scroll within the available space while the composer stays pinned at the bottom. If you have a title bar or other content above the messages, include it inside the container so the remaining height is calculated correctly.</p>
+<p class="mt-4">A message list component for displaying conversations and messages. The container uses <code>flex-1 min-h-0</code> to fill available space within a flex parent. When placed inside an <code>l-ui-page</code>, the page is automatically constrained to viewport height so messages scroll within the available space while the composer stays pinned at the bottom. If you have a title bar or other content above the messages, include it inside the container so the remaining height is calculated correctly.</p>
 
 <div class="l-ui-conversation__container mt-6">
   <div class="l-ui-conversation__messages">
@@ -380,9 +380,9 @@ end</code></pre>
 
 <h2 class="mt-8">Scroll to bottom</h2>
 
-<p class="mt-3">A sticky button that appears when the user scrolls up in the message list. Hidden by default; add the <code>data-visible</code> attribute to reveal it.</p>
+<p class="mt-4">A sticky button that appears when the user scrolls up in the message list. Hidden by default; add the <code>data-visible</code> attribute to reveal it.</p>
 
-<p class="mt-3">The chevron icon is built into the class, so the button itself is empty. Recolour it by overriding <code>--button-primary-icon</code>.</p>
+<p class="mt-4">The chevron icon is built into the class, so the button itself is empty. Recolour it by overriding <code>--button-primary-icon</code>.</p>
 
 <div class="l-ui-surface mt-4">
   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi scelerisque dui at dapibus tincidunt. In eleifend ante sit amet rhoncus cursus. Nullam erat lacus, ultrices vel molestie eu, luctus id enim.</p>
@@ -412,7 +412,7 @@ end</code></pre>
 
 <h2 class="mt-8">Stream fade-in</h2>
 
-<p class="mt-3">Apply <code>l-ui-stream-fade</code> to each chunk as it arrives during streaming. The animation fades each chunk in over 0.5s with ease-out timing, giving a smooth appearance as text is generated.</p>
+<p class="mt-4">Apply <code>l-ui-stream-fade</code> to each chunk as it arrives during streaming. The animation fades each chunk in over 0.5s with ease-out timing, giving a smooth appearance as text is generated.</p>
 
 <div class="l-ui-surface mt-4">
   <p><span class="l-ui-stream-fade">Hello, </span><span class="l-ui-stream-fade" style="animation-delay: 0.1s">I'd </span><span class="l-ui-stream-fade" style="animation-delay: 0.2s">be </span><span class="l-ui-stream-fade" style="animation-delay: 0.3s">happy </span><span class="l-ui-stream-fade" style="animation-delay: 0.4s">to </span><span class="l-ui-stream-fade" style="animation-delay: 0.5s">help </span><span class="l-ui-stream-fade" style="animation-delay: 0.6s">with </span><span class="l-ui-stream-fade" style="animation-delay: 0.7s">that.</span></p>
@@ -440,7 +440,7 @@ end</code></pre>
 
 <h2 class="mt-8">Stream fade-in (by word)</h2>
 
-<p class="mt-3">Use <code>l-ui-stream-fade-word</code> for a staggered word-by-word reveal once the full response is available. Set the <code>--i</code> custom property on each word to its index; the per-word delay is 25ms, capped at 1s.</p>
+<p class="mt-4">Use <code>l-ui-stream-fade-word</code> for a staggered word-by-word reveal once the full response is available. Set the <code>--i</code> custom property on each word to its index; the per-word delay is 25ms, capped at 1s.</p>
 
 <div class="l-ui-surface mt-4">
   <p><span class="l-ui-stream-fade-word" style="--i: 0">Hello,</span> <span class="l-ui-stream-fade-word" style="--i: 1">I'd</span> <span class="l-ui-stream-fade-word" style="--i: 2">be</span> <span class="l-ui-stream-fade-word" style="--i: 3">happy</span> <span class="l-ui-stream-fade-word" style="--i: 4">to</span> <span class="l-ui-stream-fade-word" style="--i: 5">help</span> <span class="l-ui-stream-fade-word" style="--i: 6">with</span> <span class="l-ui-stream-fade-word" style="--i: 7">that.</span></p>

@@ -5,13 +5,13 @@
   ]
 ) %>
 
-<p class="mt-3">layered-ui-rails provides a layout system with a header, sidebar navigation, and slide-out panel. Use <code>content_for</code> blocks to inject content, instance variables to set metadata, and file overrides to change logos and icons.</p>
+<p class="mt-4">layered-ui-rails provides a layout system with a header, sidebar navigation, and slide-out panel. Use <code>content_for</code> blocks to inject content, instance variables to set metadata, and file overrides to change logos and icons.</p>
 
 <h2 class="mt-8">Application layout</h2>
 
-<p class="mt-3">Your application layout should render the layered-ui-rails layout template. Place all <code>content_for</code> blocks <strong>above</strong> the render call - the engine layout reads them when it renders, so they must be defined first.</p>
+<p class="mt-4">Your application layout should render the layered-ui-rails layout template. Place all <code>content_for</code> blocks <strong>above</strong> the render call - the engine layout reads them when it renders, so they must be defined first.</p>
 
-<p class="mt-3">Edit your <code>app/views/layouts/application.html.erb</code> with the following content:</p>
+<p class="mt-4">Edit your <code>app/views/layouts/application.html.erb</code> with the following content:</p>
 
 <pre class="l-ui-surface mt-4"><code>&lt;!-- Optional: body modifiers --&gt;
 &lt;% content_for :l_ui_body_class, "l-ui-body--always-show-navigation l-ui-body--hide-header" %&gt;
@@ -36,7 +36,7 @@
 
 <h2 class="mt-8">Features</h2>
 
-<p class="mt-3">The layout provides these configurable features.</p>
+<p class="mt-4">The layout provides these configurable features.</p>
 
 <div class="l-ui-table-container mt-4">
   <table class="l-ui-table">
