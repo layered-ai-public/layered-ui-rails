@@ -954,6 +954,12 @@
          bg-surface;
 }
 
+@layer base {
+  pre.l-ui-surface {
+    margin: 0;
+  }
+}
+
 pre.l-ui-surface {
   @apply overflow-auto;
 
