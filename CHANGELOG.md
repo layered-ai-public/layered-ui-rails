@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.13.0] - 2026-05-09
+
+### Added
+
+- Fixed-scale margin utilities `l-ui-mt-2`, `l-ui-mt-3`, and `l-ui-mt-6`
+- Default underline/focus link styling on `l-ui-panel__body a` (matches `l-ui-page a`)
+
+### Changed
+
+- **Breaking:** Responsive margin-top utilities `l-ui-mt-sm`/`md`/`lg`/`xl`/`2xl` removed in favour of the fixed scale. Migration: `sm` → `mt-2`, `md` → `mt-3`, `lg` → `mt-4`, `xl` → `mt-6`, `2xl` → `mt-8`. The BEM migration prompt has been updated with the mapping
+- `pre.l-ui-surface` margin reset moved into `@layer base` so call-site Tailwind spacing utilities (e.g. `mt-4`) reliably override the browser default
+
 ## [0.12.0] - 2026-05-08
 
 ### Added
