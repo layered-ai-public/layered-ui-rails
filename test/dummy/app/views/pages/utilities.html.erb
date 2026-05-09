@@ -5,39 +5,31 @@
   ]
 ) %>
 
-<p class="mt-3">Responsive utility classes for consistent spacing.</p>
+<p class="mt-3">These <code>l-ui-*</code> utilities are thin pass-throughs to the equivalent Tailwind classes. They exist because the gem's engine CSS is compiled separately from the host application, so plain Tailwind utilities referenced only inside engine views are not detected by the host's Tailwind build and would not be emitted. Host application code (including the dummy app's documentation pages) can use plain Tailwind utilities directly; the <code>l-ui-*</code> versions are only required inside the engine itself.</p>
 
-<h2 class="mt-6 md:mt-8">Top margin</h2>
-
-<p class="mt-3">Responsive margin utilities that adjust based on screen size:</p>
+<h2 class="mt-8">Top margin</h2>
 
 <div class="mt-4">
   <div class="l-ui-surface">
-    <p class="mt-0">mt-0 (mt-0 md:mt-0)</p>
+    <p class="l-ui-mt-0">l-ui-mt-0</p>
   </div>
-  <div class="l-ui-surface mt-2">
-    <p class="mt-4">mt-4 (mt-4 md:mt-4)</p>
+  <div class="l-ui-surface l-ui-mt-2">
+    <p class="l-ui-mt-2">l-ui-mt-2</p>
   </div>
-  <div class="l-ui-surface mt-2">
-    <p class="mt-8">mt-8 (mt-8 md:mt-8)</p>
+  <div class="l-ui-surface l-ui-mt-2">
+    <p class="l-ui-mt-3">l-ui-mt-3</p>
   </div>
-  <div class="l-ui-surface mt-2">
-    <p class="mt-2">mt-2 (mt-2)</p>
+  <div class="l-ui-surface l-ui-mt-2">
+    <p class="l-ui-mt-4">l-ui-mt-4</p>
   </div>
-  <div class="l-ui-surface mt-2">
-    <p class="mt-3">mt-3 (mt-3)</p>
+  <div class="l-ui-surface l-ui-mt-2">
+    <p class="l-ui-mt-6">l-ui-mt-6</p>
   </div>
-  <div class="l-ui-surface mt-2">
-    <p class="mt-4">mt-4 (mt-4)</p>
+  <div class="l-ui-surface l-ui-mt-2">
+    <p class="l-ui-mt-8">l-ui-mt-8</p>
   </div>
-  <div class="l-ui-surface mt-2">
-    <p class="mt-6">mt-6 (mt-6)</p>
-  </div>
-  <div class="l-ui-surface mt-2">
-    <p class="mt-6 md:mt-8">mt-6 md:mt-8 (mt-6 md:mt-8)</p>
-  </div>
-  <div class="l-ui-surface l-ui-mb-0">
-    <p class="l-ui-mb-0">l-ui-mb-0 (mb-0 md:mb-0)</p>
+  <div class="l-ui-surface l-ui-mt-2">
+    <p class="l-ui-mb-0">l-ui-mb-0</p>
   </div>
 </div>
 
@@ -51,75 +43,27 @@
       </button>
     </div>
     <div class="l-ui-modal__body">
-      <pre class="l-ui-surface"><code>&lt;div class="mt-0"&gt;No margin&lt;/div&gt;
-&lt;div class="mt-4"&gt;Fixed 1rem margin&lt;/div&gt;
-&lt;div class="mt-8"&gt;Fixed 2rem margin&lt;/div&gt;
-&lt;div class="mt-2"&gt;Small margin&lt;/div&gt;
-&lt;div class="mt-3"&gt;Medium margin&lt;/div&gt;
-&lt;div class="mt-4"&gt;Large margin&lt;/div&gt;
-&lt;div class="mt-6"&gt;Extra large margin&lt;/div&gt;
-&lt;div class="mt-6 md:mt-8"&gt;2X large margin&lt;/div&gt;</code></pre>
+      <pre class="l-ui-surface"><code>&lt;div class="l-ui-surface"&gt;
+  &lt;p class="l-ui-mt-0"&gt;l-ui-mt-0&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="l-ui-surface l-ui-mt-2"&gt;
+  &lt;p class="l-ui-mt-2"&gt;l-ui-mt-2&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="l-ui-surface l-ui-mt-2"&gt;
+  &lt;p class="l-ui-mt-3"&gt;l-ui-mt-3&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="l-ui-surface l-ui-mt-2"&gt;
+  &lt;p class="l-ui-mt-4"&gt;l-ui-mt-4&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="l-ui-surface l-ui-mt-2"&gt;
+  &lt;p class="l-ui-mt-6"&gt;l-ui-mt-6&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="l-ui-surface l-ui-mt-2"&gt;
+  &lt;p class="l-ui-mt-8"&gt;l-ui-mt-8&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="l-ui-surface l-ui-mt-2"&gt;
+  &lt;p class="l-ui-mb-0"&gt;l-ui-mb-0&lt;/p&gt;
+&lt;/div&gt;</code></pre>
     </div>
   </dialog>
-</div>
-
-<h2 class="mt-6 md:mt-8">CSS classes</h2>
-
-<div class="l-ui-table-container mt-4">
-  <table class="l-ui-table">
-    <caption class="l-ui-sr-only">Utility CSS classes</caption>
-    <thead class="l-ui-table__header">
-      <tr>
-        <th class="l-ui-table__header-cell" scope="col">Class</th>
-        <th class="l-ui-table__header-cell" scope="col">Mobile</th>
-        <th class="l-ui-table__header-cell" scope="col">Desktop (md+)</th>
-      </tr>
-    </thead>
-    <tbody class="l-ui-table__body">
-      <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>mt-0</code></th>
-        <td class="l-ui-table__cell">0 (mt-0)</td>
-        <td class="l-ui-table__cell">0 (mt-0)</td>
-      </tr>
-      <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>mt-4</code></th>
-        <td class="l-ui-table__cell">1rem (mt-4)</td>
-        <td class="l-ui-table__cell">1rem (mt-4)</td>
-      </tr>
-      <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>mt-8</code></th>
-        <td class="l-ui-table__cell">2rem (mt-8)</td>
-        <td class="l-ui-table__cell">2rem (mt-8)</td>
-      </tr>
-      <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>mt-2</code></th>
-        <td class="l-ui-table__cell">0.25rem (mt-1)</td>
-        <td class="l-ui-table__cell">0.5rem (mt-2)</td>
-      </tr>
-      <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>mt-3</code></th>
-        <td class="l-ui-table__cell">0.5rem (mt-2)</td>
-        <td class="l-ui-table__cell">0.75rem (mt-3)</td>
-      </tr>
-      <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>mt-4</code></th>
-        <td class="l-ui-table__cell">0.75rem (mt-3)</td>
-        <td class="l-ui-table__cell">1rem (mt-4)</td>
-      </tr>
-      <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>mt-6</code></th>
-        <td class="l-ui-table__cell">1rem (mt-4)</td>
-        <td class="l-ui-table__cell">1.5rem (mt-6)</td>
-      </tr>
-      <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>mt-6 md:mt-8</code></th>
-        <td class="l-ui-table__cell">1.5rem (mt-6)</td>
-        <td class="l-ui-table__cell">2rem (mt-8)</td>
-      </tr>
-      <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui--mr-2</code></th>
-        <td class="l-ui-table__cell" colspan="2">-0.5rem (-mr-2)</td>
-      </tr>
-    </tbody>
-  </table>
 </div>

@@ -8,32 +8,122 @@
 </script>
 <!-- End MailerLite Universal -->
 
-<div class="flex gap-4 mt-3">
-  <%= link_to "https://www.layered.ai/", target: "_blank", rel: "noopener noreferrer", "aria-label": "Website", class: "l-ui-button l-ui-button--outline l-ui-button--small" do %>
-    <%= image_tag "layered_ui/icon_globe.svg", class: "l-ui-icon l-ui-icon--xs", alt: "", aria: { hidden: true } %>
+<div class="hidden lg:flex flex-wrap gap-4 mt-3">
+  <%= link_to "https://www.layered.ai/", target: "_blank", rel: "noopener noreferrer", class: "l-ui-button l-ui-button--outline l-ui-button--small" do %>
+    <div class="flex items-center gap-2">
+      <%= image_tag "layered_ui/icon_globe.svg", class: "l-ui-icon l-ui-icon--xs", alt: "", aria: { hidden: true } %>
+      <span>Website</span>
+    </div>
   <% end %>
 
-  <%= link_to "https://github.com/layered-ai-public/layered-ui-rails", target: "_blank", rel: "noopener noreferrer", "aria-label": "GitHub", class: "l-ui-button l-ui-button--outline l-ui-button--small" do %>
-    <%= image_tag "layered_ui/icon_github.svg", class: "l-ui-icon l-ui-icon--xs", alt: "", aria: { hidden: true } %>
+  <%= link_to "https://github.com/layered-ai-public/layered-ui-rails", target: "_blank", rel: "noopener noreferrer", class: "l-ui-button l-ui-button--outline l-ui-button--small" do %>
+    <div class="flex items-center gap-2">
+      <%= image_tag "layered_ui/icon_github.svg", class: "l-ui-icon l-ui-icon--xs", alt: "", aria: { hidden: true } %>
+      <span>GitHub</span>
+    </div>
   <% end %>
 
-  <%= link_to "https://www.youtube.com/@UseLayeredAi", target: "_blank", rel: "noopener noreferrer", "aria-label": "YouTube", class: "l-ui-button l-ui-button--outline l-ui-button--small" do %>
-    <%= image_tag "layered_ui/icon_youtube.svg", class: "l-ui-icon l-ui-icon--xs", alt: "", aria: { hidden: true } %>
+  <%= link_to "https://www.youtube.com/@UseLayeredAi", target: "_blank", rel: "noopener noreferrer", class: "l-ui-button l-ui-button--outline l-ui-button--small" do %>
+    <div class="flex items-center gap-2">
+      <%= image_tag "layered_ui/icon_youtube.svg", class: "l-ui-icon l-ui-icon--xs", alt: "", aria: { hidden: true } %>
+      <span>YouTube</span>
+    </div>
   <% end %>
 
-  <%= link_to "https://discord.gg/aCGqz9Bx", target: "_blank", rel: "noopener noreferrer", "aria-label": "Discord", class: "l-ui-button l-ui-button--outline l-ui-button--small" do %>
-    <%= image_tag "layered_ui/icon_discord.svg", class: "l-ui-icon l-ui-icon--xs", alt: "", aria: { hidden: true } %>
+  <%= link_to "https://discord.gg/aCGqz9Bx", target: "_blank", rel: "noopener noreferrer", class: "l-ui-button l-ui-button--outline l-ui-button--small" do %>
+    <div class="flex items-center gap-2">
+      <%= image_tag "layered_ui/icon_discord.svg", class: "l-ui-icon l-ui-icon--xs", alt: "", aria: { hidden: true } %>
+      <span>Discord</span>
+    </div>
   <% end %>
 
-  <%= link_to "https://x.com/UseLayeredAi", target: "_blank", rel: "noopener noreferrer", "aria-label": "X", class: "l-ui-button l-ui-button--outline l-ui-button--small" do %>
-    <%= image_tag "layered_ui/icon_x.svg", class: "l-ui-icon l-ui-icon--xs", alt: "", aria: { hidden: true } %>
+  <%= link_to "https://x.com/UseLayeredAi", target: "_blank", rel: "noopener noreferrer", class: "l-ui-button l-ui-button--outline l-ui-button--small" do %>
+    <div class="flex items-center gap-2">
+      <%= image_tag "layered_ui/icon_x.svg", class: "l-ui-icon l-ui-icon--xs", alt: "", aria: { hidden: true } %>
+      <span>X</span>
+    </div>
   <% end %>
 
-  <%= link_to "https://www.linkedin.com/company/uselayeredai/", target: "_blank", rel: "noopener noreferrer", "aria-label": "LinkedIn", class: "l-ui-button l-ui-button--outline l-ui-button--small" do %>
-    <%= image_tag "layered_ui/icon_linkedin.svg", class: "l-ui-icon l-ui-icon--xs", alt: "", aria: { hidden: true } %>
+  <%= link_to "https://www.linkedin.com/company/uselayeredai/", target: "_blank", rel: "noopener noreferrer", class: "l-ui-button l-ui-button--outline l-ui-button--small" do %>
+    <div class="flex items-center gap-2">
+      <%= image_tag "layered_ui/icon_linkedin.svg", class: "l-ui-icon l-ui-icon--xs", alt: "", aria: { hidden: true } %>
+      <span>LinkedIn</span>
+    </div>
   <% end %>
 
-  <button type="button" class="ml-onclick-form l-ui-button l-ui-button--outline l-ui-button--small" aria-label="Newsletter" onclick="ml('show', 'CbhpAg', true)">
-    <%= image_tag "layered_ui/icon_mail.svg", class: "l-ui-icon l-ui-icon--xs", alt: "", aria: { hidden: true } %>
+  <button type="button" class="ml-onclick-form l-ui-button l-ui-button--outline l-ui-button--small" onclick="ml('show', 'CbhpAg', true)">
+    <div class="flex items-center gap-2">
+      <%= image_tag "layered_ui/icon_mail.svg", class: "l-ui-icon l-ui-icon--xs", alt: "", aria: { hidden: true } %>
+      <span>Newsletter</span>
+    </div>
   </button>
+</div>
+
+<div class="lg:hidden mt-3" data-controller="l-ui--modal">
+  <button type="button" class="l-ui-button l-ui-button--outline l-ui-button--small l-ui-button--full" data-action="l-ui--modal#open">
+    <div class="flex items-center justify-center gap-2">
+      <%= image_tag "layered_ui/icon_globe.svg", class: "l-ui-icon l-ui-icon--xs", alt: "", aria: { hidden: true } %>
+      <span>Socials</span>
+    </div>
+  </button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-socials-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-socials-heading">Socials</h3>
+      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <div class="flex flex-col gap-2">
+        <%= link_to "https://www.layered.ai/", target: "_blank", rel: "noopener noreferrer", class: "l-ui-button l-ui-button--outline" do %>
+          <div class="flex items-center gap-2">
+            <%= image_tag "layered_ui/icon_globe.svg", class: "l-ui-icon l-ui-icon--xs", alt: "", aria: { hidden: true } %>
+            <span>Website</span>
+          </div>
+        <% end %>
+
+        <%= link_to "https://github.com/layered-ai-public/layered-ui-rails", target: "_blank", rel: "noopener noreferrer", class: "l-ui-button l-ui-button--outline" do %>
+          <div class="flex items-center gap-2">
+            <%= image_tag "layered_ui/icon_github.svg", class: "l-ui-icon l-ui-icon--xs", alt: "", aria: { hidden: true } %>
+            <span>GitHub</span>
+          </div>
+        <% end %>
+
+        <%= link_to "https://www.youtube.com/@UseLayeredAi", target: "_blank", rel: "noopener noreferrer", class: "l-ui-button l-ui-button--outline" do %>
+          <div class="flex items-center gap-2">
+            <%= image_tag "layered_ui/icon_youtube.svg", class: "l-ui-icon l-ui-icon--xs", alt: "", aria: { hidden: true } %>
+            <span>YouTube</span>
+          </div>
+        <% end %>
+
+        <%= link_to "https://discord.gg/aCGqz9Bx", target: "_blank", rel: "noopener noreferrer", class: "l-ui-button l-ui-button--outline" do %>
+          <div class="flex items-center gap-2">
+            <%= image_tag "layered_ui/icon_discord.svg", class: "l-ui-icon l-ui-icon--xs", alt: "", aria: { hidden: true } %>
+            <span>Discord</span>
+          </div>
+        <% end %>
+
+        <%= link_to "https://x.com/UseLayeredAi", target: "_blank", rel: "noopener noreferrer", class: "l-ui-button l-ui-button--outline" do %>
+          <div class="flex items-center gap-2">
+            <%= image_tag "layered_ui/icon_x.svg", class: "l-ui-icon l-ui-icon--xs", alt: "", aria: { hidden: true } %>
+            <span>X</span>
+          </div>
+        <% end %>
+
+        <%= link_to "https://www.linkedin.com/company/uselayeredai/", target: "_blank", rel: "noopener noreferrer", class: "l-ui-button l-ui-button--outline" do %>
+          <div class="flex items-center gap-2">
+            <%= image_tag "layered_ui/icon_linkedin.svg", class: "l-ui-icon l-ui-icon--xs", alt: "", aria: { hidden: true } %>
+            <span>LinkedIn</span>
+          </div>
+        <% end %>
+
+        <button type="button" class="ml-onclick-form l-ui-button l-ui-button--outline" onclick="ml('show', 'CbhpAg', true)">
+          <div class="flex items-center gap-2">
+            <%= image_tag "layered_ui/icon_mail.svg", class: "l-ui-icon l-ui-icon--xs", alt: "", aria: { hidden: true } %>
+            <span>Newsletter</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </dialog>
 </div>
