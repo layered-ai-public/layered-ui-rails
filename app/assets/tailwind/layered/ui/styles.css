@@ -407,11 +407,14 @@
   @apply my-1;
 }
 
+.l-ui-markdown:has(table) {
+  @apply overflow-x-auto;
+}
+
 .l-ui-markdown table {
   @apply my-3 w-full
          text-sm
-         border-collapse
-         block overflow-x-auto;
+         border-collapse;
 }
 
 .l-ui-markdown caption {
@@ -1090,7 +1093,7 @@ pre.l-ui-surface {
 }
 
 .field_with_errors .l-ui-form__field {
-  @apply border-2 border-error-bg bg-error-bg/10;
+  @apply border-2 border-danger bg-error-bg/10;
 }
 
 .l-ui-form__field-error {

@@ -186,7 +186,7 @@ For per-request icons, set instance variables - the engine renders `<link>` and 
 
 An online version of the documentation is available at **[layered-ui-rails.layered.ai](https://layered-ui-rails.layered.ai)**.
 
-The latest accessibility audit is available at **[audits/accessibility/codex-5_3.md](https://github.com/layered-ai-public/layered-ui-rails/blob/main/audits/accessibility/codex-5_3.md)**.
+The latest accessibility audits are available at **[audits/accessibility](https://github.com/layered-ai-public/layered-ui-rails/blob/main/audits/accessibility)**.
 
 You can also run the included dummy app locally for development and testing:
 
