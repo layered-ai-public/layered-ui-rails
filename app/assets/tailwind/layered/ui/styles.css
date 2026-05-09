@@ -465,7 +465,8 @@
   @apply page;
 }
 
-.l-ui-page a:not([class*="l-ui-"]) {
+.l-ui-page a:not([class*="l-ui-"]),
+.l-ui-panel__body a:not([class*="l-ui-"]) {
   @apply underline underline-offset-4 decoration-foreground-muted/60
          text-foreground
          focus-ring rounded-sm;
