@@ -273,10 +273,6 @@
   @apply !mt-8;
 }
 
-.l-ui--mr-2 {
-  @apply !-mr-2;
-}
-
 .l-ui-mb-0 {
   @apply !mb-0;
 }
