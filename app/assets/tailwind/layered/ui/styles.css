@@ -1429,15 +1429,11 @@ pre.l-ui-surface {
 
 /* Badges */
 
-@utility badge {
+.l-ui-badge {
   @apply inline-flex items-center
          px-2 py-1
          text-xs font-medium
          rounded;
-}
-
-.l-ui-badge {
-  @apply badge;
 }
 
 .l-ui-badge--rounded {
@@ -1445,26 +1441,22 @@ pre.l-ui-surface {
 }
 
 .l-ui-badge--default {
-  @apply badge
-         bg-surface-highlighted
+  @apply bg-surface-highlighted
          text-foreground-muted;
 }
 
 .l-ui-badge--success {
-  @apply badge
-         bg-success-bg
+  @apply bg-success-bg
          text-success-text;
 }
 
 .l-ui-badge--warning {
-  @apply badge
-         bg-warning-bg
+  @apply bg-warning-bg
          text-warning-text;
 }
 
 .l-ui-badge--danger {
-  @apply badge
-         bg-error-bg
+  @apply bg-error-bg
          text-error-text;
 }
 

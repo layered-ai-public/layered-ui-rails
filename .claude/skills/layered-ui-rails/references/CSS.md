@@ -140,13 +140,15 @@ Always combine the base block with one variant modifier (e.g. `class="l-ui-notic
 ## Badges
 
 ```
-.l-ui-badge             Base badge
+.l-ui-badge             Base badge (required alongside a colour modifier)
 .l-ui-badge--rounded    Pill shape
 .l-ui-badge--default    Grey
 .l-ui-badge--success    Green
 .l-ui-badge--warning    Yellow
 .l-ui-badge--danger     Red
 ```
+
+Always combine the base block with a modifier, e.g. `<span class="l-ui-badge l-ui-badge--success">`.
 
 ## Tabs
 
