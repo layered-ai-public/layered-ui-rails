@@ -10,7 +10,7 @@ module Layered
 
         return unless pagy.pages > 1
 
-        tag.div(pagy.series_nav.html_safe, class: "l-ui-pagy-container l-ui-mt-lg")
+        tag.div(pagy.series_nav.html_safe, class: "l-ui-pagy-container l-ui-mt-4")
       end
     end
   end

@@ -35,7 +35,15 @@ The upgrade renamed CSS classes that were not following BEM properly (orphan mod
 >
 > l-ui-radio__group           → l-ui-radio          # __item / __input / __label keep their names
 > l-ui-search__inline         → l-ui-search-inline
+>
+> l-ui-mt-sm                  → l-ui-mt-2           # responsive scale removed; pick the desktop value
+> l-ui-mt-md                  → l-ui-mt-3
+> l-ui-mt-lg                  → l-ui-mt-4
+> l-ui-mt-xl                  → l-ui-mt-6
+> l-ui-mt-2xl                 → l-ui-mt-8
 > ```
+>
+> The fixed-scale classes (`l-ui-mt-0`, `l-ui-mt-4`, `l-ui-mt-8`, `l-ui--mr-2`, `l-ui-mb-0`) keep their names; only the responsive `sm`/`md`/`lg`/`xl`/`2xl` variants were removed in favour of the new `2`/`3`/`6` steps.
 >
 > **2. Add the base block alongside these modifier classes wherever they appear in markup. Strict BEM now requires both classes:**
 >

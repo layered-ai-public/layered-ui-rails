@@ -5,11 +5,11 @@
   ]
 ) %>
 
-<p class="l-ui-mt-md">Navigation controls for paginated content with accessible markup.</p>
+<p class="mt-4">Navigation controls for paginated content with accessible markup.</p>
 
-<h2 class="l-ui-mt-2xl">Basic pagination</h2>
+<h2 class="mt-8">Basic pagination</h2>
 
-<nav class="l-ui-pagination l-ui-mt-lg" aria-label="Pagination">
+<nav class="l-ui-pagination mt-4" aria-label="Pagination">
   <span class="l-ui-pagination__item l-ui-pagination__item--disabled" aria-disabled="true" aria-label="Previous">&lt;</span>
   <span class="l-ui-pagination__item l-ui-pagination__item--active" aria-current="page">1</span>
   <a href="#" class="l-ui-pagination__item">2</a>
@@ -19,7 +19,7 @@
   <a href="#" class="l-ui-pagination__item" aria-label="Next">&gt;</a>
 </nav>
 
-<div class="l-ui-mt-xl" data-controller="l-ui--modal">
+<div class="mt-6" data-controller="l-ui--modal">
   <button class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-pagination-heading">
     <div class="l-ui-modal__header">
@@ -43,15 +43,15 @@
   </dialog>
 </div>
 
-<h2 class="l-ui-mt-2xl">With the pagy gem (optional)</h2>
+<h2 class="mt-8">With the pagy gem (optional)</h2>
 
-<p class="l-ui-mt-md">Use the <code>l_ui_pagy</code> helper to render styled pagination. Requires the <code>pagy</code> gem in your Gemfile:</p>
+<p class="mt-4">Use the <code>l_ui_pagy</code> helper to render styled pagination. Requires the <code>pagy</code> gem in your Gemfile:</p>
 
-<div class="l-ui-mt-lg">
+<div class="mt-4">
   <%= l_ui_pagy(@pagy) %>
 </div>
 
-<div class="l-ui-mt-xl" data-controller="l-ui--modal">
+<div class="mt-6" data-controller="l-ui--modal">
   <button class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-pagination-pagy-heading">
     <div class="l-ui-modal__header">
@@ -70,9 +70,9 @@
   </dialog>
 </div>
 
-<h2 class="l-ui-mt-2xl">CSS classes</h2>
+<h2 class="mt-8">CSS classes</h2>
 
-<div class="l-ui-table-container l-ui-mt-lg">
+<div class="l-ui-table-container mt-4">
   <table class="l-ui-table">
     <caption class="l-ui-sr-only">Pagination CSS classes</caption>
     <thead class="l-ui-table__header">

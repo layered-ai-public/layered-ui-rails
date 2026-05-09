@@ -5,15 +5,15 @@
   ]
 ) %>
 
-<p class="l-ui-mt-md">layered-ui-rails provides a layout system with a header, sidebar navigation, and slide-out panel. Use <code>content_for</code> blocks to inject content, instance variables to set metadata, and file overrides to change logos and icons.</p>
+<p class="mt-4">layered-ui-rails provides a layout system with a header, sidebar navigation, and slide-out panel. Use <code>content_for</code> blocks to inject content, instance variables to set metadata, and file overrides to change logos and icons.</p>
 
-<h2 class="l-ui-mt-2xl">Application layout</h2>
+<h2 class="mt-8">Application layout</h2>
 
-<p class="l-ui-mt-md">Your application layout should render the layered-ui-rails layout template. Place all <code>content_for</code> blocks <strong>above</strong> the render call - the engine layout reads them when it renders, so they must be defined first.</p>
+<p class="mt-4">Your application layout should render the layered-ui-rails layout template. Place all <code>content_for</code> blocks <strong>above</strong> the render call - the engine layout reads them when it renders, so they must be defined first.</p>
 
-<p class="l-ui-mt-md">Edit your <code>app/views/layouts/application.html.erb</code> with the following content:</p>
+<p class="mt-4">Edit your <code>app/views/layouts/application.html.erb</code> with the following content:</p>
 
-<pre class="l-ui-surface l-ui-mt-lg"><code>&lt;!-- Optional: body modifiers --&gt;
+<pre class="l-ui-surface mt-4"><code>&lt;!-- Optional: body modifiers --&gt;
 &lt;% content_for :l_ui_body_class, "l-ui-body--always-show-navigation l-ui-body--hide-header" %&gt;
 
 &lt;!-- Optional: sidebar navigation --&gt;
@@ -34,11 +34,11 @@
 
 &lt;%= render template: "layouts/layered_ui/application" %&gt;</code></pre>
 
-<h2 class="l-ui-mt-2xl">Features</h2>
+<h2 class="mt-8">Features</h2>
 
-<p class="l-ui-mt-md">The layout provides these configurable features.</p>
+<p class="mt-4">The layout provides these configurable features.</p>
 
-<div class="l-ui-table-container l-ui-mt-lg">
+<div class="l-ui-table-container mt-4">
   <table class="l-ui-table">
     <caption class="l-ui-sr-only">Layout features</caption>
     <thead class="l-ui-table__header">

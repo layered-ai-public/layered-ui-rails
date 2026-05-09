@@ -6,13 +6,13 @@
   ]
 ) %>
 
-<p class="l-ui-mt-md">The header displays a logo on wider screens and an icon on mobile. Both have light and dark variants that switch automatically with the theme.</p>
+<p class="mt-4">The header displays a logo on wider screens and an icon on mobile. Both have light and dark variants that switch automatically with the theme.</p>
 
-<h2 class="l-ui-mt-2xl">Static override</h2>
+<h2 class="mt-8">Static override</h2>
 
-<p class="l-ui-mt-md">Replace the default images by placing files with the same names in <code>app/assets/images/layered_ui/</code> in your host app.</p>
+<p class="mt-4">Replace the default images by placing files with the same names in <code>app/assets/images/layered_ui/</code> in your host app.</p>
 
-<div class="l-ui-table-container l-ui-mt-lg">
+<div class="l-ui-table-container mt-4">
   <table class="l-ui-table">
     <caption class="l-ui-sr-only">Logo files</caption>
     <thead class="l-ui-table__header">
@@ -34,16 +34,16 @@
   </table>
 </div>
 
-<p class="l-ui-mt-lg">
+<p class="mt-4">
   For icon overrides, see the <%= link_to "icons", layout_icons_path %> page.<br />
   <strong>Note:</strong> The logo in the header is substituted for the icon on small width screens to conserve space.
 </p>
 
-<h2 class="l-ui-mt-2xl">Dynamic override</h2>
+<h2 class="mt-8">Dynamic override</h2>
 
-<p class="l-ui-mt-md">Inject a custom logo per request using <code>content_for</code>:</p>
+<p class="mt-4">Inject a custom logo per request using <code>content_for</code>:</p>
 
-<pre class="l-ui-surface l-ui-mt-lg"><code>&lt;% content_for :l_ui_logo_light do %&gt;
+<pre class="l-ui-surface mt-4"><code>&lt;% content_for :l_ui_logo_light do %&gt;
   &lt;%= image_tag @tenant.logo_light_url, alt: "", class: "l-ui-header__logo l-ui-header__logo--light" %&gt;
 &lt;% end %&gt;
 
@@ -51,6 +51,6 @@
   &lt;%= image_tag @tenant.logo_dark_url, alt: "", class: "l-ui-header__logo l-ui-header__logo--dark" %&gt;
 &lt;% end %&gt;</code></pre>
 
-<h2 class="l-ui-mt-2xl">Styling overrides</h2>
+<h2 class="mt-8">Styling overrides</h2>
 
-<p class="l-ui-mt-md">To adjust logo styling (e.g. size), override <code>.l-ui-header__logo</code> in <code>layered_ui_overrides.css</code>. An example is included as a comment in the Tier 3 section of that file.</p>
+<p class="mt-4">To adjust logo styling (e.g. size), override <code>.l-ui-header__logo</code> in <code>layered_ui_overrides.css</code>. An example is included as a comment in the Tier 3 section of that file.</p>

@@ -17,8 +17,13 @@ class ApplicationController < ActionController::Base
   end
   helper_method :gem_spec
 
+  def gem_name_and_version
+    "#{gem_spec.name} (v#{gem_spec.version.to_s})"
+  end
+  helper_method :gem_name_and_version
+
   def set_meta_tags
-    @page_title = "#{gem_spec.name} (v#{gem_spec.version.to_s})"
+    @page_title = gem_name_and_version
     @page_description = gem_spec.description
   end
 

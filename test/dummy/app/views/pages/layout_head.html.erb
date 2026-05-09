@@ -6,42 +6,42 @@
   ]
 ) %>
 
-<p class="l-ui-mt-md">Use <code>content_for :l_ui_head</code> to inject content into the layout <code>&lt;head&gt;</code>, after the stylesheet. This is the right place for dynamic <code>&lt;style&gt;</code> blocks, preload hints, or other per-request head content.</p>
+<p class="mt-4">Use <code>content_for :l_ui_head</code> to inject content into the layout <code>&lt;head&gt;</code>, after the stylesheet. This is the right place for dynamic <code>&lt;style&gt;</code> blocks, preload hints, or other per-request head content.</p>
 
-<h2 class="l-ui-mt-2xl">Dynamic theme tokens</h2>
+<h2 class="mt-8">Dynamic theme tokens</h2>
 
-<p class="l-ui-mt-md">Override CSS custom properties per request (e.g. per-tenant branding) by injecting a <code>&lt;style&gt;</code> block. Placing it after the stylesheet ensures the cascade override takes effect correctly.</p>
+<p class="mt-4">Override CSS custom properties per request (e.g. per-tenant branding) by injecting a <code>&lt;style&gt;</code> block. Placing it after the stylesheet ensures the cascade override takes effect correctly.</p>
 
-<pre class="l-ui-surface l-ui-mt-lg"><code>&lt;% content_for :l_ui_head do %&gt;
+<pre class="l-ui-surface mt-4"><code>&lt;% content_for :l_ui_head do %&gt;
   &lt;style&gt;
     :root { --accent: &lt;%= @tenant.accent_color %&gt;; --accent-foreground: oklch(1 0 0); }
   &lt;/style&gt;
 &lt;% end %&gt;</code></pre>
 
-<p class="l-ui-notice l-ui-notice--warning l-ui-mt-lg"><strong>Security:</strong> never interpolate user-supplied strings directly into a <code>&lt;style&gt;</code> tag - this allows CSS injection. Validate or sanitise any user-derived values before interpolation.</p>
+<p class="l-ui-notice l-ui-notice--warning mt-4"><strong>Security:</strong> never interpolate user-supplied strings directly into a <code>&lt;style&gt;</code> tag - this allows CSS injection. Validate or sanitise any user-derived values before interpolation.</p>
 
-<p class="l-ui-mt-lg">See the <%= link_to "colors", layout_colors_path %> page for the full list of design tokens.</p>
+<p class="mt-4">See the <%= link_to "colors", layout_colors_path %> page for the full list of design tokens.</p>
 
-<h2 class="l-ui-mt-2xl">CSP compatibility</h2>
+<h2 class="mt-8">CSP compatibility</h2>
 
-<p class="l-ui-mt-md">Inline <code>&lt;style&gt;</code> blocks are blocked by a strict <code>Content-Security-Policy: style-src 'self'</code> header. If your app enforces a strict CSP, add a nonce using Rails' <code>content_security_policy_nonce</code> helper - Rails includes the matching nonce in the CSP header automatically:</p>
+<p class="mt-4">Inline <code>&lt;style&gt;</code> blocks are blocked by a strict <code>Content-Security-Policy: style-src 'self'</code> header. If your app enforces a strict CSP, add a nonce using Rails' <code>content_security_policy_nonce</code> helper - Rails includes the matching nonce in the CSP header automatically:</p>
 
-<pre class="l-ui-surface l-ui-mt-lg"><code>&lt;% content_for :l_ui_head do %&gt;
+<pre class="l-ui-surface mt-4"><code>&lt;% content_for :l_ui_head do %&gt;
   &lt;style nonce="&lt;%= content_security_policy_nonce %&gt;"&gt;
     :root { --accent: &lt;%= @tenant.accent_color %&gt;; --accent-foreground: oklch(1 0 0); }
   &lt;/style&gt;
 &lt;% end %&gt;</code></pre>
 
-<h2 class="l-ui-mt-2xl">Turbo Drive compatibility</h2>
+<h2 class="mt-8">Turbo Drive compatibility</h2>
 
-<p class="l-ui-mt-md">Turbo Drive merges <code>&lt;head&gt;</code> content on each navigation - changed <code>&lt;style&gt;</code> blocks are replaced correctly. The caveat is the preview pass: when Turbo restores a snapshot from its cache before the network response arrives, a cached snapshot may briefly show stale tokens.</p>
+<p class="mt-4">Turbo Drive merges <code>&lt;head&gt;</code> content on each navigation - changed <code>&lt;style&gt;</code> blocks are replaced correctly. The caveat is the preview pass: when Turbo restores a snapshot from its cache before the network response arrives, a cached snapshot may briefly show stale tokens.</p>
 
-<p class="l-ui-mt-md">If tokens are stable for a session (e.g. a single-tenant session where branding only changes on login), add <code>data-turbo-track="reload"</code> to the <code>&lt;style&gt;</code> tag. Turbo will trigger a full page reload only when the tag content changes between visits.</p>
+<p class="mt-4">If tokens are stable for a session (e.g. a single-tenant session where branding only changes on login), add <code>data-turbo-track="reload"</code> to the <code>&lt;style&gt;</code> tag. Turbo will trigger a full page reload only when the tag content changes between visits.</p>
 
-<p class="l-ui-mt-md">If tokens vary per navigation (e.g. a user switches between tenants mid-session), <code>data-turbo-track="reload"</code> will reload on every visit, effectively disabling Turbo. The preferred pattern in that case is to serve the theme as a dedicated stylesheet URL:</p>
+<p class="mt-4">If tokens vary per navigation (e.g. a user switches between tenants mid-session), <code>data-turbo-track="reload"</code> will reload on every visit, effectively disabling Turbo. The preferred pattern in that case is to serve the theme as a dedicated stylesheet URL:</p>
 
-<pre class="l-ui-surface l-ui-mt-lg"><code>&lt;% content_for :l_ui_head do %&gt;
+<pre class="l-ui-surface mt-4"><code>&lt;% content_for :l_ui_head do %&gt;
   &lt;link rel="stylesheet" href="&lt;%= @tenant.theme_stylesheet_url %&gt;"&gt;
 &lt;% end %&gt;</code></pre>
 
-<p class="l-ui-mt-md">Turbo caches and reuses stylesheet responses by URL, so this approach is both Turbo-friendly and avoids inline style blocks entirely.</p>
+<p class="mt-4">Turbo caches and reuses stylesheet responses by URL, so this approach is both Turbo-friendly and avoids inline style blocks entirely.</p>
