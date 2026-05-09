@@ -953,10 +953,6 @@
          bg-surface;
 }
 
-:where(pre.l-ui-surface) {
-  @apply m-0;
-}
-
 pre.l-ui-surface {
   @apply overflow-auto;
 
