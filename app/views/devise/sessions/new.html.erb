@@ -1,5 +1,5 @@
-<div class="l-ui-page--vertically-centered">
-  <div class="l-ui-page--width-constrained">
+<div class="l-ui-page__vertically-centered">
+  <div class="l-ui-page__width-constrained">
     <h1>Login</h1>
 
     <%= form_with(model: resource, as: resource_name, url: session_path(resource_name), class: 'l-ui-form l-ui-mt-3') do |f| %>
@@ -20,11 +20,11 @@
       <% if devise_mapping.rememberable? %>
         <div class="l-ui-form__group l-ui-checkbox-container l-ui-mt-8">
           <%= f.check_box :remember_me %>
-          <%= f.label :remember_me, class: "l-ui-label--checkbox" %>
+          <%= f.label :remember_me, class: "l-ui-checkbox-container__label" %>
         </div>
       <% end %>
 
-      <div class="l-ui-form__group--large-gap">
+      <div class="l-ui-form__group l-ui-form__group--large-gap">
         <%= f.submit "Continue", class: "l-ui-button l-ui-button--primary l-ui-button--full" %>
       </div>
     <% end %>

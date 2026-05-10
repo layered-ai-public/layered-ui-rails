@@ -37,7 +37,7 @@
       <span class="l-ui-form__required" aria-hidden="true">*</span>
       <span class="l-ui-sr-only">(required)</span>
     </label>
-    <div class="l-ui-select-wrapper">
+    <div class="l-ui-select-container">
       <select id="role" name="role" class="l-ui-select" required>
         <option value="">Select a role</option>
         <option value="admin">Admin</option>
@@ -85,7 +85,7 @@
 
   &lt;div class="l-ui-form__group"&gt;
     &lt;label class="l-ui-label" for="role"&gt;Role&lt;/label&gt;
-    &lt;div class="l-ui-select-wrapper"&gt;
+    &lt;div class="l-ui-select-container"&gt;
       &lt;select class="l-ui-select"&gt;
         &lt;option value=""&gt;Select a role&lt;/option&gt;
       &lt;/select&gt;
@@ -108,11 +108,11 @@
   <label class="l-ui-label">Preferences</label>
   <div class="l-ui-checkbox-container mt-4">
     <input type="checkbox" id="newsletter" name="newsletter" value="1" checked>
-    <label class="l-ui-label--checkbox" for="newsletter">Subscribe to newsletter</label>
+    <label class="l-ui-checkbox-container__label" for="newsletter">Subscribe to newsletter</label>
   </div>
   <div class="l-ui-checkbox-container mt-4">
     <input type="checkbox" id="updates" name="updates" value="1">
-    <label class="l-ui-label--checkbox" for="updates">Receive product updates</label>
+    <label class="l-ui-checkbox-container__label" for="updates">Receive product updates</label>
   </div>
 </div>
 
@@ -128,7 +128,7 @@
     <div class="l-ui-modal__body">
       <pre class="l-ui-surface"><code>&lt;div class="l-ui-checkbox-container"&gt;
   &lt;input type="checkbox" id="opt" value="1"&gt;
-  &lt;label class="l-ui-label--checkbox" for="opt"&gt;Option&lt;/label&gt;
+  &lt;label class="l-ui-checkbox-container__label" for="opt"&gt;Option&lt;/label&gt;
 &lt;/div&gt;</code></pre>
     </div>
   </dialog>
@@ -347,7 +347,7 @@
       </tr>
       <tr>
         <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-form__group--large-gap</code></th>
-        <td class="l-ui-table__cell">Group with extra top margin</td>
+        <td class="l-ui-table__cell">Modifier for larger top margin (combine with <code>l-ui-form__group</code>)</td>
       </tr>
       <tr>
         <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-form__actions</code></th>
@@ -362,7 +362,7 @@
         <td class="l-ui-table__cell">Text input or textarea</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-select-wrapper</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-select-container</code></th>
         <td class="l-ui-table__cell">Wrapper for select (adds caret icon)</td>
       </tr>
       <tr>

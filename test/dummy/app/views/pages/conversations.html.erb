@@ -31,7 +31,7 @@
         </div>
       </div>
 
-      <div class="l-ui-message--sent">
+      <div class="l-ui-message l-ui-message--sent">
         <div class="l-ui-message__bubble">
           <div class="l-ui-message__author">Bob</div>
           <div class="l-ui-message__body">
@@ -113,7 +113,7 @@ end</code></pre>
         </div>
       </div>
 
-      <div class="l-ui-message--sent">
+      <div class="l-ui-message l-ui-message--sent">
         <div class="l-ui-message__bubble">
           <div class="l-ui-message__body l-ui-markdown">
             <p>Good catches, Bob. I agree with both suggestions. To summarise the changes needed:</p>
@@ -206,7 +206,7 @@ end</code></pre>
     &lt;div class="l-ui-conversation"&gt;
       &lt;!-- Plain text message --&gt;
       &lt;div class="l-ui-message"&gt;...&lt;/div&gt;
-      &lt;div class="l-ui-message--sent"&gt;...&lt;/div&gt;
+      &lt;div class="l-ui-message l-ui-message--sent"&gt;...&lt;/div&gt;
 
       &lt;!-- Markdown message --&gt;
       &lt;div class="l-ui-message"&gt;
@@ -371,7 +371,7 @@ end</code></pre>
         <td class="l-ui-table__cell">Fade-in animation for streamed chunks as they arrive (0.5s ease-out)</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-stream-fade-word</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-stream-fade__word</code></th>
         <td class="l-ui-table__cell">Staggered word-by-word fade-in (0.5s ease-out, 25ms per word via <code>--i</code>, capped at 1s)</td>
       </tr>
     </tbody>
@@ -440,10 +440,10 @@ end</code></pre>
 
 <h2 class="mt-8">Stream fade-in (by word)</h2>
 
-<p class="mt-4">Use <code>l-ui-stream-fade-word</code> for a staggered word-by-word reveal once the full response is available. Set the <code>--i</code> custom property on each word to its index; the per-word delay is 25ms, capped at 1s.</p>
+<p class="mt-4">Use <code>l-ui-stream-fade__word</code> for a staggered word-by-word reveal once the full response is available. Set the <code>--i</code> custom property on each word to its index; the per-word delay is 25ms, capped at 1s.</p>
 
 <div class="l-ui-surface mt-4">
-  <p><span class="l-ui-stream-fade-word" style="--i: 0">Hello,</span> <span class="l-ui-stream-fade-word" style="--i: 1">I'd</span> <span class="l-ui-stream-fade-word" style="--i: 2">be</span> <span class="l-ui-stream-fade-word" style="--i: 3">happy</span> <span class="l-ui-stream-fade-word" style="--i: 4">to</span> <span class="l-ui-stream-fade-word" style="--i: 5">help</span> <span class="l-ui-stream-fade-word" style="--i: 6">with</span> <span class="l-ui-stream-fade-word" style="--i: 7">that.</span></p>
+  <p><span class="l-ui-stream-fade__word" style="--i: 0">Hello,</span> <span class="l-ui-stream-fade__word" style="--i: 1">I'd</span> <span class="l-ui-stream-fade__word" style="--i: 2">be</span> <span class="l-ui-stream-fade__word" style="--i: 3">happy</span> <span class="l-ui-stream-fade__word" style="--i: 4">to</span> <span class="l-ui-stream-fade__word" style="--i: 5">help</span> <span class="l-ui-stream-fade__word" style="--i: 6">with</span> <span class="l-ui-stream-fade__word" style="--i: 7">that.</span></p>
 </div>
 
 <div class="mt-4" data-controller="l-ui--modal">
@@ -457,9 +457,9 @@ end</code></pre>
     </div>
     <div class="l-ui-modal__body">
       <pre class="l-ui-surface"><code>&lt;!-- Wrap each word and pass its index via --i --&gt;
-&lt;span class="l-ui-stream-fade-word" style="--i: 0"&gt;Hello,&lt;/span&gt;
-&lt;span class="l-ui-stream-fade-word" style="--i: 1"&gt;I'd&lt;/span&gt;
-&lt;span class="l-ui-stream-fade-word" style="--i: 2"&gt;be&lt;/span&gt;
+&lt;span class="l-ui-stream-fade__word" style="--i: 0"&gt;Hello,&lt;/span&gt;
+&lt;span class="l-ui-stream-fade__word" style="--i: 1"&gt;I'd&lt;/span&gt;
+&lt;span class="l-ui-stream-fade__word" style="--i: 2"&gt;be&lt;/span&gt;
 ...</code></pre>
     </div>
   </dialog>

@@ -7,8 +7,8 @@ All classes use the `l-ui-` prefix with BEM naming. Use these in host app views.
 ```
 .l-ui-page                       Main content wrapper with responsive padding
 .l-ui-page--with-navigation      Left margin for sidebar on desktop
-.l-ui-page--vertically-centered  Centred layout (e.g. login pages)
-.l-ui-page--width-constrained    Max-width container
+.l-ui-page__vertically-centered  Centred layout element (e.g. login pages)
+.l-ui-page__width-constrained    Max-width container element
 ```
 
 ## Buttons
@@ -57,7 +57,7 @@ Always combine the `l-ui-surface` base class with any modifiers (e.g. `l-ui-surf
 ```
 .l-ui-form                     Form container
 .l-ui-form__group              Vertical field group with spacing
-.l-ui-form__group--large-gap   Larger spacing variant
+.l-ui-form__group--large-gap   Larger spacing modifier (combine with l-ui-form__group)
 .l-ui-form__field              Input/textarea styling
 .l-ui-form__errors             Error summary box
 .l-ui-form__errors-list        Bulleted error list
@@ -67,14 +67,15 @@ Always combine the `l-ui-surface` base class with any modifiers (e.g. `l-ui-surf
 .l-ui-form__required           Required indicator (*)
 
 .l-ui-label                    Form label
-.l-ui-label--checkbox          Checkbox label variant
+
+.l-ui-checkbox-container          Checkbox row (input + label)
+.l-ui-checkbox-container__label   Checkbox label element
 
 .l-ui-select                   Select dropdown
-.l-ui-select-wrapper           Select wrapper (custom arrow)
+.l-ui-select-container           Select wrapper (custom arrow)
 
 .l-ui-search-inline            Inline search form layout
 
-.l-ui-checkbox-container       Checkbox container
 .l-ui-radio                    Radio button group
 .l-ui-radio__item              Radio item wrapper
 .l-ui-radio__input             Radio input element
@@ -98,7 +99,8 @@ Always combine the `l-ui-surface` base class with any modifiers (e.g. `l-ui-surf
 .l-ui-table__cell                  Regular <td> cell
 .l-ui-table__cell--primary         Bold cell (typically first column, use <th scope="row">)
 .l-ui-table__cell--action          Right-aligned action cell
-.l-ui-table__action--danger        Danger action link
+.l-ui-table__action                Action link/button (inside a __cell--action)
+.l-ui-table__action--danger        Danger modifier (combine with l-ui-table__action)
 .l-ui-table-container              Overflow wrapper for responsive tables
 ```
 
@@ -155,6 +157,7 @@ Always combine the base block with a modifier, e.g. `<span class="l-ui-badge l-u
 ## Tabs
 
 ```
+.l-ui-tabs              Tabs wrapper (data-controller="l-ui--tabs")
 .l-ui-tabs__list        Tab list container (role="tablist")
 .l-ui-tabs__tab         Tab button (base class, required)
 .l-ui-tabs__tab--active Active tab with accent border (combine with l-ui-tabs__tab)
@@ -200,11 +203,11 @@ Always combine the base block with a modifier, e.g. `<span class="l-ui-badge l-u
 ## Navigation
 
 ```
-.l-ui-navigation-container        Sidebar container
-.l-ui-navigation-container.open   Visible sidebar
-.l-ui-backdrop                    Base backdrop (always pair with a variant)
-.l-ui-backdrop--navigation        Navigation overlay (use with .l-ui-backdrop)
-.l-ui-backdrop.open               Visible backdrop
+.l-ui-navigation-container         Sidebar container
+.l-ui-navigation-container--open   Visible sidebar (toggled by Stimulus)
+.l-ui-backdrop                     Base backdrop (always pair with a variant)
+.l-ui-backdrop--navigation         Navigation overlay (use with .l-ui-backdrop)
+.l-ui-backdrop--open               Visible backdrop (toggled by Stimulus)
 .l-ui-navigation                  Nav flexbox
 .l-ui-navigation__links           Nav links list
 .l-ui-navigation__item            Nav item (base class, required)
@@ -246,11 +249,12 @@ Always combine the base block with a modifier, e.g. `<span class="l-ui-badge l-u
 
 ```
 .l-ui-panel-container           Side panel container
-.l-ui-panel-container.open      Visible panel
+.l-ui-panel-container--open     Visible panel (toggled by Stimulus)
 .l-ui-panel                     Panel flexbox
 .l-ui-panel__button             Floating action button
 .l-ui-panel__button--dragging   During drag
 .l-ui-panel__button--snapping   Snapping to edge
+.l-ui-panel__button--hidden     Hidden when panel is open (toggled by Stimulus)
 .l-ui-panel__icon               Panel button inline SVG icon
 .l-ui-panel__icon--light        Panel button icon (light, for custom image override)
 .l-ui-panel__icon--dark         Panel button icon (dark, for custom image override)
@@ -270,8 +274,8 @@ Always combine the base block with a modifier, e.g. `<span class="l-ui-badge l-u
 .l-ui-conversation__composer-input   Textarea
 .l-ui-conversation__separator        Date separator
 
-.l-ui-message                        Message wrapper
-.l-ui-message--sent                  Sent message (right-aligned)
+.l-ui-message                        Message wrapper (required with --sent)
+.l-ui-message--sent                  Sent message modifier (right-aligned; combine with l-ui-message)
 .l-ui-message__avatar                User avatar
 .l-ui-message__bubble                Message bubble
 .l-ui-message__author                Author name
@@ -280,7 +284,7 @@ Always combine the base block with a modifier, e.g. `<span class="l-ui-badge l-u
 .l-ui-message__timestamp             Timestamp
 
 .l-ui-stream-fade                    Fade-in for streamed chunks as they arrive (0.5s ease-out)
-.l-ui-stream-fade-word               Per-word staggered fade-in for completed responses
+.l-ui-stream-fade__word               Per-word staggered fade-in for completed responses
                                      (0.5s ease-out; set --i to the word index for a 25ms
                                      stagger, capped at 1s)
 ```

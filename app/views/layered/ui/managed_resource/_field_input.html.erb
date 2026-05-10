@@ -25,14 +25,14 @@
     include_blank = extras.delete(:include_blank)
     include_blank = true if include_blank.nil?
   %>
-  <div class="l-ui-select-wrapper">
+  <div class="l-ui-select-container">
     <%= form.select(attribute, choices, { include_blank: include_blank },
                     class: "l-ui-select", **base_opts, **extras) %>
   </div>
 <% elsif config[:as] == :checkbox %>
   <div class="l-ui-checkbox-container">
     <%= form.check_box(attribute, class: "l-ui-checkbox", **base_opts, **extras) %>
-    <%= form.label(attribute, config[:label], class: "l-ui-label--checkbox") %>
+    <%= form.label(attribute, config[:label], class: "l-ui-checkbox-container__label") %>
   </div>
 <% else %>
   <% method_name = config[:as] == :string ? :text_field : :"#{config[:as]}_field" %>

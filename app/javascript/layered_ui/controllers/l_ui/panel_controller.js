@@ -76,10 +76,10 @@ export default class extends Controller {
     this.previousActiveElement = document.activeElement
 
     this.isOpen = true
-    this.containerTarget.classList.add("open")
+    this.containerTarget.classList.add("l-ui-panel-container--open")
 
     if (this.hasActionButtonTarget) {
-      this.actionButtonTarget.classList.add("hidden")
+      this.actionButtonTarget.classList.add("l-ui-panel__button--hidden")
       this.actionButtonTarget.setAttribute("aria-expanded", "true")
       this.actionButtonTarget.setAttribute("aria-hidden", "true")
       this.actionButtonTarget.setAttribute("tabindex", "-1")
@@ -110,10 +110,10 @@ export default class extends Controller {
   // Close the panel
   close(shouldAnnounce = true) {
     this.isOpen = false
-    this.containerTarget.classList.remove("open")
+    this.containerTarget.classList.remove("l-ui-panel-container--open")
 
     if (this.hasActionButtonTarget) {
-      this.actionButtonTarget.classList.remove("hidden")
+      this.actionButtonTarget.classList.remove("l-ui-panel__button--hidden")
       this.actionButtonTarget.disabled = false
       this.actionButtonTarget.setAttribute("aria-expanded", "false")
       this.actionButtonTarget.removeAttribute("aria-hidden")

@@ -53,8 +53,8 @@ export default class extends Controller {
     this.previousActiveElement = document.activeElement
 
     this.isOpen = true
-    this.navigationTarget.classList.add("open")
-    this.backdropTarget.classList.add("open")
+    this.navigationTarget.classList.add("l-ui-navigation-container--open")
+    this.backdropTarget.classList.add("l-ui-backdrop--open")
     this.setNavigationInteractivity(true)
     this.updateScrollLock()
 
@@ -89,8 +89,8 @@ export default class extends Controller {
     if (!this.hasNavigationTarget) return
 
     this.isOpen = false
-    this.navigationTarget.classList.remove("open")
-    this.backdropTarget.classList.remove("open")
+    this.navigationTarget.classList.remove("l-ui-navigation-container--open")
+    this.backdropTarget.classList.remove("l-ui-backdrop--open")
     this.setNavigationInteractivity(false)
     this.unlockScroll()
 
@@ -136,8 +136,8 @@ export default class extends Controller {
 
     // Desktop in always-show mode: force nav visible
     this.isOpen = false
-    this.navigationTarget.classList.remove("open")
-    this.backdropTarget.classList.remove("open")
+    this.navigationTarget.classList.remove("l-ui-navigation-container--open")
+    this.backdropTarget.classList.remove("l-ui-backdrop--open")
     this.setNavigationInteractivity(true)
     this.unlockScroll()
 
