@@ -2,7 +2,32 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.14.0] - 2026-05-10
+
+### Breaking
+
+- Strict BEM across all components - modifiers no longer carry their base styles. Every modifier (e.g. `l-ui-button--primary`, `l-ui-surface--highlighted`, `l-ui-tabs__tab--active`, `l-ui-navigation__item--active`, `l-ui-table__cell--primary`, `l-ui-message--sent`, `l-ui-page--with-navigation`) must now be paired with its base class.
+- Several misnamed modifiers renamed to reflect their actual role: `l-ui-page--vertically-centered` → `l-ui-page__vertically-centered`, `l-ui-page--width-constrained` → `l-ui-page__width-constrained`, `l-ui-label--checkbox` → `l-ui-checkbox-container__label`, `l-ui-stream-fade-word` → `l-ui-stream-fade__word`, `l-ui-select-wrapper` → `l-ui-select-container`, `l-ui-button--panel-close` → `l-ui-panel__close-button`
+- Bare `<a>`/`<button>` elements inside `l-ui-table__cell--action` are no longer auto-styled; add `l-ui-table__action` explicitly
+- `l-ui--mr-2` utility class removed
+
+### Added
+
+- `l-ui-table__action` element class (with `--danger` modifier) for action links/buttons inside `l-ui-table__cell--action`
+- `l-ui-checkbox` class as an explicit hook for checkbox inputs inside `l-ui-checkbox-container`
+
+### Changed
+
+- Navigation drawer close animation now matches the panel (300ms transform) and no longer snaps via a `visibility` toggle
+- Navigation container right border removed; desktop nav links lose their right padding
+- CSS `@apply` formatting convention adopted Prettier Tailwind plugin group order (layout → sizing → spacing → typography → backgrounds → borders → effects → transitions → interactivity); all multi-line blocks reordered to comply
+- Default table action examples and `l_ui_table` helper now render small outline buttons
+
 ## [0.13.0] - 2026-05-09
+
+### Breaking
+
+- Responsive margin-top utilities `l-ui-mt-sm`/`md`/`lg`/`xl`/`2xl` removed in favour of the fixed scale. Migration: `sm` → `mt-2`, `md` → `mt-3`, `lg` → `mt-4`, `xl` → `mt-6`, `2xl` → `mt-8`. The BEM migration prompt has been updated with the mapping
 
 ### Added
 
@@ -11,7 +36,6 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Changed
 
-- **Breaking:** Responsive margin-top utilities `l-ui-mt-sm`/`md`/`lg`/`xl`/`2xl` removed in favour of the fixed scale. Migration: `sm` → `mt-2`, `md` → `mt-3`, `lg` → `mt-4`, `xl` → `mt-6`, `2xl` → `mt-8`. The BEM migration prompt has been updated with the mapping
 - `pre.l-ui-surface` margin reset moved into `@layer base` so call-site Tailwind spacing utilities (e.g. `mt-4`) reliably override the browser default
 
 ## [0.12.0] - 2026-05-08
@@ -40,15 +64,15 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [0.10.0] - 2026-05-03
 
+### Breaking
+
+- Minimum Ruby version raised to 3.3.0 (Ruby 3.2 is EOL). CI matrix now tests against Ruby 3.3, 3.4, and 4.0
+
 ### Added
 
 - Nested navigation: `l_ui_navigation_section` helper for collapsible sidebar sections, backed by an `l-ui--navigation-section` Stimulus controller and `l-ui-navigation__section`/`__toggle`/`__items` styles
 - Optional `icon:` / `icon_path:` / `icon_html:` arguments on `l_ui_navigation_item` and `l_ui_navigation_section` to render an icon alongside the label; ships with a default `icon_home.svg` as an example
 - `row_id:` option on `l_ui_table` to set a stable DOM id on each row (useful for Turbo Stream targeting)
-
-### Changed
-
-- **Breaking:** Minimum Ruby version raised to 3.3.0 (Ruby 3.2 is EOL). CI matrix now tests against Ruby 3.3, 3.4, and 4.0
 
 ## [0.9.0] - 2026-04-26
 
@@ -67,9 +91,12 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [0.8.0] - 2026-04-24
 
+### Breaking
+
+- Theme tokens migrated from HSL channels (`220 80% 55%`) to full `oklch()` values for perceptually uniform mixing. `@theme` now references the vars directly instead of wrapping them in `hsl()`. Existing overrides files need to be updated: replace `hue sat% lightness%` with the equivalent `oklch(L C H)` value (or any valid CSS color - `#hex`, `rgb()`, and keywords all work now).
+
 ### Changed
 
-- **Breaking:** Theme tokens migrated from HSL channels (`220 80% 55%`) to full `oklch()` values for perceptually uniform mixing. `@theme` now references the vars directly instead of wrapping them in `hsl()`. Existing overrides files need to be updated: replace `hue sat% lightness%` with the equivalent `oklch(L C H)` value (or any valid CSS color - `#hex`, `rgb()`, and keywords all work now).
 - `layered:ui:create_overrides` generator and token documentation (`SKILL.md`, `references/CSS.md`, `README.md`, dummy app colour/head pages) updated to reflect the new `oklch()` format.
 
 ## [0.7.0] - 2026-04-23
