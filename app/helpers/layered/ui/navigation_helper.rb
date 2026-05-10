@@ -6,7 +6,7 @@ module Layered
       def l_ui_navigation_item(label, path, active: nil, match: :exact, icon: nil, icon_path: nil, icon_html: nil)
         is_active = active.nil? ? l_ui_navigation_item_self_active?(path, match) : active
 
-        css_class = is_active ? "l-ui-navigation__item--active" : "l-ui-navigation__item"
+        css_class = is_active ? "l-ui-navigation__item l-ui-navigation__item--active" : "l-ui-navigation__item"
         options = { class: css_class }
         options["aria-current"] = "page" if current_page?(path)
 

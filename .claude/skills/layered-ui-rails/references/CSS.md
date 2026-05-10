@@ -13,24 +13,24 @@ All classes use the `l-ui-` prefix with BEM naming. Use these in host app views.
 
 ## Buttons
 
-Standalone variants (use one of these, not combined with each other):
+Always combine the `l-ui-button` base class with a colour modifier (e.g. `l-ui-button l-ui-button--primary`):
 
 ```
-.l-ui-button                     Plain button with padding and focus ring
-.l-ui-button--primary            Accent-coloured solid button
-.l-ui-button--danger             Solid red button (for destructive actions)
-.l-ui-button--outline            Bordered button
-.l-ui-button--outline-danger     Red bordered button (for destructive actions)
+.l-ui-button                  Base class (required with the modifiers below)
+.l-ui-button--primary         Accent-coloured solid button
+.l-ui-button--danger          Solid red button (for destructive actions)
+.l-ui-button--outline         Bordered button
+.l-ui-button--outline-danger  Red bordered button (for destructive actions)
+.l-ui-button--full            Full-width (e.g. l-ui-button l-ui-button--primary l-ui-button--full)
+.l-ui-button--small           Compact 32px-tall variant
+```
+
+Icon variants (combine with the `l-ui-button` base):
+
+```
 .l-ui-button--icon               Icon-only button (fixed size, no text)
 .l-ui-button--navigation-toggle  Mobile navigation toggle
-.l-ui-button--panel-close        Panel close button
-```
-
-Modifiers (combine with a standalone variant above):
-
-```
-.l-ui-button--full            Full-width (e.g. l-ui-button--primary l-ui-button--full)
-.l-ui-button--small           Compact 32px-tall variant (e.g. l-ui-button--primary l-ui-button--small)
+.l-ui-button--panel-close        Panel close button (combine with --icon)
 ```
 
 Any button variant is automatically styled as disabled when the `disabled` HTML attribute is present - no extra class needed.
@@ -39,12 +39,14 @@ For destructive actions use `l-ui-button--danger` (solid) or `l-ui-button--outli
 
 ## Surfaces
 
+Always combine the `l-ui-surface` base class with any modifiers (e.g. `l-ui-surface l-ui-surface--highlighted`):
+
 ```
-.l-ui-surface                           Rounded, padded container
+.l-ui-surface                           Base class (required with the modifiers below)
 .l-ui-surface--highlighted              Darker background variant
 .l-ui-surface--sm                       Smaller padding
 .l-ui-surface--collapsible              Wraps a <details> element
-.l-ui-surface--collapsible-highlighted  Highlighted variant
+.l-ui-surface--collapsible-highlighted  Highlighted collapsible variant
 .l-ui-surface__summary                  Collapsible toggle (on <summary>)
 .l-ui-surface__chevron                  Chevron indicator (rotates on open)
 .l-ui-surface__content                  Collapsible content area
@@ -110,14 +112,14 @@ WCAG 2.2 AA table pattern:
       <tr>
         <th scope="col" class="l-ui-table__header-cell">Name</th>
         <th scope="col" class="l-ui-table__header-cell">Email</th>
-        <th scope="col" class="l-ui-table__header-cell--action">Actions</th>
+        <th scope="col" class="l-ui-table__header-cell l-ui-table__header-cell--action">Actions</th>
       </tr>
     </thead>
     <tbody class="l-ui-table__body">
       <tr>
-        <th scope="row" class="l-ui-table__cell--primary">Alice</th>
+        <th scope="row" class="l-ui-table__cell l-ui-table__cell--primary">Alice</th>
         <td class="l-ui-table__cell">alice@example.com</td>
-        <td class="l-ui-table__cell--action">
+        <td class="l-ui-table__cell l-ui-table__cell--action">
           <a href="/users/1/edit">Edit</a>
         </td>
       </tr>
@@ -154,8 +156,8 @@ Always combine the base block with a modifier, e.g. `<span class="l-ui-badge l-u
 
 ```
 .l-ui-tabs__list        Tab list container (role="tablist")
-.l-ui-tabs__tab         Tab button
-.l-ui-tabs__tab--active Active tab with accent border
+.l-ui-tabs__tab         Tab button (base class, required)
+.l-ui-tabs__tab--active Active tab with accent border (combine with l-ui-tabs__tab)
 .l-ui-tabs__panel       Tab panel content
 ```
 
@@ -205,8 +207,8 @@ Always combine the base block with a modifier, e.g. `<span class="l-ui-badge l-u
 .l-ui-backdrop.open               Visible backdrop
 .l-ui-navigation                  Nav flexbox
 .l-ui-navigation__links           Nav links list
-.l-ui-navigation__item            Nav item
-.l-ui-navigation__item--active    Active nav item (highlighted bg)
+.l-ui-navigation__item            Nav item (base class, required)
+.l-ui-navigation__item--active    Active nav item (combine with l-ui-navigation__item)
 .l-ui-navigation__item-icon       Icon image inside a nav item
 .l-ui-navigation__item-icon-slot  Wrapper for caller-supplied icon HTML (e.g. icon fonts)
 .l-ui-navigation__item-label      Label span inside a nav item

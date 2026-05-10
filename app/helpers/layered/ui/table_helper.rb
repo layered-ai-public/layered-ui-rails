@@ -51,7 +51,7 @@ module Layered
                 tag.th(col[:label], class: "l-ui-table__header-cell", scope: "col")
               end
             end
-            cells << tag.th(actions_label, class: "l-ui-table__header-cell--action", scope: "col") if actions
+            cells << tag.th(actions_label, class: "l-ui-table__header-cell l-ui-table__header-cell--action", scope: "col") if actions
             safe_join(cells)
           end
         end
@@ -67,7 +67,7 @@ module Layered
                 cells = columns.map do |col|
                   table_cell(record, col)
                 end
-                cells << tag.td(class: "l-ui-table__cell--action") { actions.call(record) } if actions
+                cells << tag.td(class: "l-ui-table__cell l-ui-table__cell--action") { actions.call(record) } if actions
                 safe_join(cells)
               end
             end)
@@ -109,7 +109,7 @@ module Layered
         value = col[:render].call(record)
 
         if col[:primary]
-          tag.th(value, class: "l-ui-table__cell--primary", scope: "row")
+          tag.th(value, class: "l-ui-table__cell l-ui-table__cell--primary", scope: "row")
         else
           tag.td(value, class: "l-ui-table__cell")
         end
