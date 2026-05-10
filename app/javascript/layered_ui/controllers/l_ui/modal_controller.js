@@ -39,9 +39,20 @@ export default class extends Controller {
     this.dialogTarget.close()
   }
 
-  // Close the modal when clicking outside the dialog
+  // Close the modal when clicking outside the dialog rect (on the backdrop).
+  // Comparing against event.target alone is unreliable: clicks on the dialog's
+  // own padding/empty space also have target === dialog, which would close it.
   closeOnBackdrop(event) {
-    if (event.target === this.dialogTarget) {
+    if (event.target !== this.dialogTarget) return
+
+    const rect = this.dialogTarget.getBoundingClientRect()
+    const insideDialog =
+      event.clientX >= rect.left &&
+      event.clientX <= rect.right &&
+      event.clientY >= rect.top &&
+      event.clientY <= rect.bottom
+
+    if (!insideDialog) {
       this.close()
     }
   }

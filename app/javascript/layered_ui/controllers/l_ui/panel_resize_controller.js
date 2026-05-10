@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 import { storageGet, storageSet, storageRemove } from "layered_ui/utilities/storage"
 import { isMobile, hasNavigation, NAV_WIDTH } from "layered_ui/utilities/layout"
 
-const MIN_WIDTH = 240
+const MIN_WIDTH = 256
 const DEFAULT_WIDTH = 480
 
 export default class extends Controller {

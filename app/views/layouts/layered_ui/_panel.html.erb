@@ -17,7 +17,7 @@
       aria-label="Resize panel"
       aria-orientation="vertical"
       aria-valuenow="480"
-      aria-valuemin="240"
+      aria-valuemin="256"
       aria-valuemax="1200"
       aria-valuetext="Panel width: 480 pixels"
       tabindex="0"
@@ -35,13 +35,13 @@
 
             <div class="l-ui-panel__header-actions">
               <button type="button"
-                class="l-ui-button l-ui-button--icon l-ui-panel__close-button"
+                class="l-ui-button l-ui-button--outline l-ui-button--icon"
                 aria-label="Hide panel"
                 aria-controls="panel"
                 title="Toggle panel (Ctrl+i / ⌘i)"
                 data-action="click->l-ui--panel#toggle"
                 data-l-ui--panel-target="hideButton">
-                <%= image_tag "layered_ui/icon_chevron_right.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+                <%= image_tag "layered_ui/icon_panel_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
               </button>
             </div>
           </div>

@@ -271,7 +271,6 @@ Always combine the base block with a modifier, e.g. `<span class="l-ui-badge l-u
 .l-ui-panel__button--dragging   During drag
 .l-ui-panel__button--snapping   Snapping to edge
 .l-ui-panel__button--hidden     Hidden when panel is open (toggled by Stimulus)
-.l-ui-panel__close-button       Panel close button (combine with l-ui-button l-ui-button--icon)
 .l-ui-panel__icon               Panel button inline SVG icon
 .l-ui-panel__icon--light        Panel button icon (light, for custom image override)
 .l-ui-panel__icon--dark         Panel button icon (dark, for custom image override)

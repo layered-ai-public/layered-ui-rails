@@ -140,7 +140,7 @@ Drag handle for resizing the panel width on desktop.
 **Keyboard:** Arrow Left/Right (10px), Shift+Arrow (50px), Home/End
 **Storage key:** `panelWidth` (pixel value)
 
-- Min width: 240px
+- Min width: 256px
 - Default width: 480px
 - Double-click handle to reset to default
 

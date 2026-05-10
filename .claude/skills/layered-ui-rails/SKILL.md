@@ -37,7 +37,7 @@ Then render the engine layout from your application layout. Place all `content_f
 
 ## Layout structure
 
-The engine layout provides a fixed header (63px), optional sidebar navigation (240px wide), optional resizable panel (320px default), and a main content area. Dark mode is built in with a toggle and localStorage persistence.
+The engine layout provides a fixed header (63px), optional sidebar navigation (256px wide), optional resizable panel (320px default), and a main content area. Dark mode is built in with a toggle and localStorage persistence.
 
 ### Content blocks
 
