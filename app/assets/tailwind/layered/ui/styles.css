@@ -585,21 +585,21 @@
 /* Navigation */
 
 .l-ui-navigation-container {
-  @apply invisible fixed top-[var(--header-height)] left-0 bottom-0
+  @apply fixed top-[var(--header-height)] left-0 bottom-0
          z-50
          w-[240px]
          bg-background
-         border-r border-t border-border
+         border-t border-border
          -translate-x-full
-         transition-transform duration-200;
+         transition-transform duration-300;
 }
 
 .l-ui-navigation-container--open {
-  @apply visible translate-x-0;
+  @apply translate-x-0;
 }
 
 .l-ui-body--always-show-navigation .l-ui-navigation-container {
-  @apply md:visible md:translate-x-0;
+  @apply md:translate-x-0;
 }
 
 .l-ui-backdrop {
@@ -726,7 +726,7 @@
 .l-ui-navigation__links {
   @apply flex flex-col flex-1 overflow-y-auto
          min-h-0
-         gap-0.5 px-3 py-3;
+         gap-0.5 px-3 md:pr-0 py-3;
 }
 
 .l-ui-navigation__user {
