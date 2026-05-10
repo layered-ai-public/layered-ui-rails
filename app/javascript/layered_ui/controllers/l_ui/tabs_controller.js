@@ -64,9 +64,7 @@ export default class extends Controller {
       const panel = this.panelTargets[index]
       const isSelected = tab === selectedTab
 
-      // Swap classes
       tab.classList.toggle("l-ui-tabs__tab--active", isSelected)
-      tab.classList.toggle("l-ui-tabs__tab", !isSelected)
 
       // Update ARIA
       tab.setAttribute("aria-selected", isSelected)

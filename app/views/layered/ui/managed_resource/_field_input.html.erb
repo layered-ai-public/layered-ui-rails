@@ -1,6 +1,7 @@
 <%
   attribute = config[:attribute]
   extras = (config[:extras] || {}).dup
+  extra_class = extras.delete(:class)
   base_opts = {}
   base_opts[:placeholder] = config[:placeholder] if config[:placeholder]
   base_opts[:required] = true if config[:required]
@@ -10,12 +11,14 @@
     describedby.unshift(l_ui_field_hint_id(record, attribute)) if config[:hint]
     base_opts["aria-describedby"] = describedby.join(" ")
   end
+
+  field_class = ->(base) { token_list(base, extra_class) }
 %>
 
 <% if config[:as] == :hidden %>
-  <%= form.hidden_field(attribute, **extras) %>
+  <%= form.hidden_field(attribute, **(extra_class ? { class: extra_class } : {}), **extras) %>
 <% elsif config[:as] == :text %>
-  <%= form.text_area(attribute, class: "l-ui-form__field",
+  <%= form.text_area(attribute, class: field_class.call("l-ui-form__field"),
                      rows: extras.delete(:rows) || 4,
                      **base_opts, **extras) %>
 <% elsif config[:as] == :select %>
@@ -27,15 +30,15 @@
   %>
   <div class="l-ui-select-container">
     <%= form.select(attribute, choices, { include_blank: include_blank },
-                    class: "l-ui-select", **base_opts, **extras) %>
+                    class: field_class.call("l-ui-select"), **base_opts, **extras) %>
   </div>
 <% elsif config[:as] == :checkbox %>
   <div class="l-ui-checkbox-container">
-    <%= form.check_box(attribute, class: "l-ui-checkbox", **base_opts, **extras) %>
+    <%= form.check_box(attribute, class: field_class.call("l-ui-checkbox"), **base_opts, **extras) %>
     <%= form.label(attribute, config[:label], class: "l-ui-checkbox-container__label") %>
   </div>
 <% else %>
   <% method_name = config[:as] == :string ? :text_field : :"#{config[:as]}_field" %>
   <%= form.public_send(method_name, attribute,
-                       class: "l-ui-form__field", **base_opts, **extras) %>
+                       class: field_class.call("l-ui-form__field"), **base_opts, **extras) %>
 <% end %>
