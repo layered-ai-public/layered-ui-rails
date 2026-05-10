@@ -1,15 +1,21 @@
-/*
- * CSS Formatting Convention
+/* CSS Formatting Convention
  *
- * All @apply directives use multi-line formatting with logical grouping:
- * 1. Layout (flex, block, fixed, relative, etc.)
- * 2. Spacing (padding, margin, gap, width, height)
- * 3. Typography (text, font)
- * 4. Colors (bg, text, border)
- * 5. Effects (hover, transitions, shadows, etc.)
+ * All @apply directives use multi-line formatting with logical grouping,
+ * following the Prettier Tailwind plugin order:
  *
- * Single-utility classes may remain on one line for brevity.
- * This structure improves readability, maintainability, and makes diffs easier to review.
+ * 1. Layout         (block, flex, grid, fixed, relative, absolute, z-index)
+ * 2. Sizing         (width, height, min/max dimensions)
+ * 3. Spacing        (padding, margin, gap, space-between)
+ * 4. Typography     (font, text, leading, tracking, whitespace)
+ * 5. Backgrounds    (bg-*)
+ * 6. Borders        (border, rounded, divide, ring, outline)
+ * 7. Effects        (shadow, opacity, blur, filter)
+ * 8. Transitions    (transition, duration, ease, animate)
+ * 9. Interactivity  (cursor, select, pointer-events)
+ *
+ * Within each group, follow Tailwind's own ordering (not alphabetical).
+ * State variants (hover:, focus:, active:, disabled:) and responsive
+ * prefixes (sm:, md:, lg:) are grouped with their base utility.
  */
 
 /* Fonts */
@@ -125,7 +131,7 @@
 
   p {
     @apply mt-0
-           text-sm text-foreground-muted leading-relaxed;
+           text-sm leading-relaxed text-foreground-muted;
   }
 
   ul, ol {
@@ -141,8 +147,8 @@
   code {
     font-size: 0.8125rem;
     line-height: 1.25rem;
-    @apply whitespace-pre overflow-x-auto
-           text-foreground-muted;
+    @apply overflow-x-auto
+           whitespace-pre text-foreground-muted;
   }
 
   /* Scrollbars */
@@ -198,23 +204,20 @@
 }
 
 .l-ui-skip-link {
-  @apply absolute
-         left-4 -top-12
+  @apply absolute z-[100]
+         left-4 -top-12 focus:top-4
          px-4 py-2
-         text-sm font-medium
+         text-sm font-medium text-foreground
          bg-background
-         text-foreground
          border border-border rounded-sm
-         z-[100]
          focus-ring
-         focus:top-4
          transition-[top];
 }
 
 .l-ui-sr-only {
-  @apply absolute
-         w-px h-px p-0 -m-px
-         overflow-hidden
+  @apply absolute overflow-hidden
+         w-px h-px
+         p-0 -m-px
          whitespace-nowrap
          border-0;
   clip: rect(0, 0, 0, 0);
@@ -265,8 +268,8 @@
 /* List */
 
 .l-ui-list {
-  @apply list-disc list-inside
-         space-y-1;
+  @apply space-y-1
+         list-disc list-inside;
 }
 
 /* Horizontal rule */
@@ -328,14 +331,12 @@
 
 .l-ui-markdown ul {
   @apply my-3 pl-5
-         text-sm
-         list-disc;
+         text-sm list-disc;
 }
 
 .l-ui-markdown ol {
   @apply my-3 pl-5
-         text-sm
-         list-decimal;
+         text-sm list-decimal;
 }
 
 .l-ui-markdown li {
@@ -356,10 +357,10 @@
 }
 
 .l-ui-markdown pre {
-  @apply my-3 p-3
+  @apply overflow-x-auto
+         my-3 p-3
          bg-surface
-         rounded-md
-         overflow-x-auto;
+         rounded-md;
 }
 
 .l-ui-markdown pre code {
@@ -371,8 +372,7 @@
 
 .l-ui-markdown blockquote {
   @apply my-3 pl-3
-         text-sm
-         text-foreground-muted
+         text-sm text-foreground-muted
          border-l-2 border-border;
 }
 
@@ -385,15 +385,15 @@
 }
 
 .l-ui-markdown table {
-  @apply my-3 w-full
+  @apply w-full
+         my-3
          text-sm
          border-collapse;
 }
 
 .l-ui-markdown caption {
   @apply mb-2
-         text-left text-sm font-bold
-         text-foreground;
+         text-left text-sm font-bold text-foreground;
   caption-side: top;
 }
 
@@ -429,11 +429,10 @@
 /* Body */
 
 .l-ui-body {
-  @apply min-h-dvh flex flex-col
-         antialiased
-         font-inter
-         bg-background
-         text-foreground;
+  @apply flex flex-col
+         min-h-dvh
+         antialiased font-inter text-foreground
+         bg-background;
 }
 
 .l-ui-body--hide-header {
@@ -443,18 +442,17 @@
 /* Page */
 
 .l-ui-page {
-  @apply flex flex-1 flex-col
-         min-h-full
-         max-w-full px-4 pb-4 pt-[calc(var(--header-height)+1rem)]
-         overflow-x-clip
+  @apply flex flex-1 flex-col overflow-x-clip
+         min-h-full max-w-full
+         px-4 pb-4 pt-[calc(var(--header-height)+1rem)]
          transition-[margin] duration-300;
 }
 
 .l-ui-page a:not([class*="l-ui-"]),
 .l-ui-panel__body a:not([class*="l-ui-"]) {
-  @apply underline underline-offset-4 decoration-foreground-muted/60
-         text-foreground
-         focus-ring rounded-sm;
+  @apply text-foreground underline underline-offset-4 decoration-foreground-muted/60
+         rounded-sm
+         focus-ring;
 }
 
 .l-ui-body--always-show-navigation .l-ui-page--with-navigation {
@@ -466,9 +464,9 @@
 }
 
 .l-ui-page__width-constrained {
-  @apply flex flex-col w-full
-         my-auto
-         md:max-w-sm;
+  @apply flex flex-col
+         w-full md:max-w-sm
+         my-auto;
 }
 
 /* Header */
@@ -476,8 +474,8 @@
 .l-ui-header-container {
   @apply fixed top-0 left-0 right-0
          z-50
-         border-b border-border
-         bg-background;
+         bg-background
+         border-b border-border;
 }
 
 .l-ui-body--hide-header .l-ui-header-container {
@@ -486,7 +484,8 @@
 
 .l-ui-header {
   @apply flex items-center justify-between
-         h-[var(--header-height)] px-4 py-3;
+         h-[var(--header-height)]
+         px-4 py-3;
 }
 
 .l-ui-header__navigation {
@@ -586,12 +585,11 @@
 /* Navigation */
 
 .l-ui-navigation-container {
-  @apply fixed top-[var(--header-height)] left-0 bottom-0
-         w-[240px]
+  @apply invisible fixed top-[var(--header-height)] left-0 bottom-0
          z-50
-         border-r border-t border-border
+         w-[240px]
          bg-background
-         invisible
+         border-r border-t border-border
          -translate-x-full
          transition-transform duration-200;
 }
@@ -606,13 +604,14 @@
 
 .l-ui-backdrop {
   @apply z-[45]
-         backdrop-blur-sm
-         opacity-0 pointer-events-none
-         transition-opacity duration-200;
+         backdrop-blur-sm opacity-0
+         transition-opacity duration-200
+         pointer-events-none;
 }
 
 .l-ui-backdrop--open {
-  @apply opacity-100 pointer-events-auto;
+  @apply opacity-100
+         pointer-events-auto;
 }
 
 .l-ui-backdrop--navigation {
@@ -629,27 +628,29 @@
 }
 
 .l-ui-navigation__item {
-  @apply flex items-center gap-3
-         w-full min-h-[40px] px-3
-         text-sm text-foreground-muted font-medium
+  @apply flex items-center
+         w-full min-h-[40px]
+         gap-3 px-3
+         text-sm font-medium text-foreground-muted
          rounded-sm
          focus-ring
          transition-colors;
 }
 
 .l-ui-navigation__item--active {
-  @apply bg-surface-highlighted
-         text-foreground;
+  @apply text-foreground
+         bg-surface-highlighted;
 }
 
 .l-ui-navigation__item-icon {
-  @apply w-4 h-4 shrink-0
+  @apply shrink-0
+         w-4 h-4
          dark:invert;
 }
 
 .l-ui-navigation__item-icon-slot {
-  @apply inline-flex items-center justify-center
-         w-4 h-4 shrink-0;
+  @apply inline-flex shrink-0 items-center justify-center
+         w-4 h-4;
 }
 
 .l-ui-navigation__item-label {
@@ -670,24 +671,27 @@
 }
 
 .l-ui-navigation__section-heading {
-  @apply flex items-center gap-2
-         w-full px-3 pt-4 pb-1
-         text-xs text-foreground-muted font-medium uppercase tracking-wider;
+  @apply flex items-center
+         w-full
+         gap-2 px-3 pt-4 pb-1
+         text-xs font-medium uppercase tracking-wider text-foreground-muted;
 }
 
 .l-ui-navigation__section-toggle {
-  @apply flex items-center gap-3
-         w-full min-h-[40px] px-3
-         text-sm text-foreground-muted font-medium
+  @apply flex items-center
+         w-full min-h-[40px]
+         gap-3 px-3
+         text-sm font-medium text-foreground-muted
          rounded-sm
          focus-ring
-         cursor-pointer
-         transition-colors;
+         transition-colors
+         cursor-pointer;
 }
 
 .l-ui-navigation__section-chevron {
-  @apply ml-auto inline-block
+  @apply inline-block
          w-3 h-3
+         ml-auto
          transition-transform duration-150;
 
   background-color: currentColor;
@@ -720,10 +724,9 @@
 }
 
 .l-ui-navigation__links {
-  @apply flex flex-col flex-1
-         gap-0.5
-         px-3 py-3 min-h-0
-         overflow-y-auto;
+  @apply flex flex-col flex-1 overflow-y-auto
+         min-h-0
+         gap-0.5 px-3 py-3;
 }
 
 .l-ui-navigation__user {
@@ -754,8 +757,7 @@
 .l-ui-breadcrumbs__list {
   @apply flex flex-wrap items-center
          gap-1
-         list-none
-         text-xs text-foreground-muted;
+         text-xs list-none text-foreground-muted;
 }
 
 .l-ui-breadcrumbs__item {
@@ -770,9 +772,9 @@
 }
 
 .l-ui-breadcrumbs__link {
-  @apply underline underline-offset-2 decoration-foreground-muted/30
-         text-foreground-muted
-         focus-ring rounded-sm;
+  @apply text-foreground-muted underline underline-offset-2 decoration-foreground-muted/30
+         rounded-sm
+         focus-ring;
 }
 
 /* Title bar */
@@ -790,21 +792,21 @@
 }
 
 .l-ui-title-bar__actions {
-  @apply flex flex-wrap items-center justify-end
-         gap-2
-         shrink-0;
+  @apply flex flex-wrap shrink-0 items-center justify-end
+         gap-2;
 }
 
 /* Buttons */
 
 .l-ui-button {
-  @apply flex items-center justify-center gap-2
-         px-4 min-h-[44px]
+  @apply flex items-center justify-center
+         min-h-[44px]
+         gap-2 px-4
          text-sm font-medium
-         cursor-pointer
          rounded-sm
          focus-ring
-         transition-colors;
+         transition-colors
+         cursor-pointer;
 }
 
 .l-ui-button--full {
@@ -813,27 +815,28 @@
 }
 
 .l-ui-button--primary {
-  @apply bg-button-primary-bg
-         text-button-primary-text;
+  @apply text-button-primary-text
+         bg-button-primary-bg;
 }
 
 .l-ui-button--outline {
-  @apply border border-border-control
-         text-foreground;
+  @apply text-foreground
+         border border-border-control;
 }
 
 .l-ui-button--danger {
-  @apply bg-danger
-         text-white;
+  @apply text-white
+         bg-danger;
 }
 
 .l-ui-button--outline-danger {
-  @apply border border-danger
-         text-danger;
+  @apply text-danger
+         border border-danger;
 }
 
 .l-ui-button--navigation-toggle {
-  @apply min-w-[44px] p-2
+  @apply min-w-[44px]
+         p-2
          text-foreground;
 }
 
@@ -842,13 +845,14 @@
 }
 
 .l-ui-button--icon {
-  @apply min-w-[44px] p-2
+  @apply min-w-[44px]
+         p-2
          text-foreground-muted;
 }
 
 .l-ui-button--small {
-  @apply gap-1
-         px-3 min-h-[32px]
+  @apply min-h-[32px]
+         gap-1 px-3
          text-xs;
 }
 
@@ -860,7 +864,8 @@
 /* Notice */
 
 @utility notice {
-  @apply w-full py-2 px-3 mb-4
+  @apply w-full
+         py-2 px-3 mb-4
          text-sm
          rounded;
 }
@@ -870,26 +875,25 @@
 }
 
 .l-ui-notice--success {
-  @apply bg-success-bg
-         text-success-text;
+  @apply text-success-text
+         bg-success-bg;
 }
 
 .l-ui-notice--warning {
-  @apply bg-warning-bg
-         text-warning-text;
+  @apply text-warning-text
+         bg-warning-bg;
 }
 
 .l-ui-notice--error {
-  @apply bg-error-bg
-         text-error-text;
+  @apply text-error-text
+         bg-error-bg;
 }
 
 /* Grid */
 
 .l-ui-grid {
-  @apply grid grid-cols-1
-         gap-4
-         md:grid-cols-2;
+  @apply grid grid-cols-1 md:grid-cols-2
+         gap-4;
 }
 
 /* Spread */
@@ -902,9 +906,10 @@
 /* Surface */
 
 .l-ui-surface {
-  @apply p-4
-         rounded-sm overflow-x-auto
-         bg-surface;
+  @apply overflow-x-auto
+         p-4
+         bg-surface
+         rounded-sm;
 }
 
 @layer base {
@@ -961,8 +966,9 @@ pre.l-ui-surface {
 .l-ui-surface__summary {
   @apply flex items-center justify-between
          p-4
-         font-bold
-         list-none cursor-pointer select-none focus-ring;
+         font-bold list-none
+         focus-ring
+         cursor-pointer select-none;
 
   &::-webkit-details-marker {
     display: none;
@@ -986,8 +992,7 @@ pre.l-ui-surface {
 .l-ui-form__errors-list {
   @apply flex flex-col
          gap-1 pl-3
-         text-sm font-inter
-         list-disc;
+         text-sm font-inter list-disc;
 }
 
 .l-ui-form__group {
@@ -995,8 +1000,8 @@ pre.l-ui-surface {
 }
 
 .l-ui-form__actions {
-  @apply flex flex-col gap-2 justify-end
-         mt-8;
+  @apply flex flex-col justify-end
+         mt-8 gap-2;
 
   @media (min-width: 768px) {
     @apply flex-row;
@@ -1008,7 +1013,8 @@ pre.l-ui-surface {
 }
 
 .l-ui-form__errors {
-  @apply notice mt-4
+  @apply notice
+         mt-4
          bg-error-bg;
 }
 
@@ -1023,10 +1029,11 @@ pre.l-ui-surface {
 
 @utility form__field {
   @apply block
-         w-full px-3 py-2.5 min-h-[44px]
+         w-full min-h-[44px]
+         px-3 py-2.5
          /* text-base at mobile; text-sm at md+ */
-         text-base font-inter
-         bg-background text-foreground
+         text-base font-inter text-foreground
+         bg-background
          border border-border-control rounded-sm
          focus-ring;
 
@@ -1041,7 +1048,8 @@ pre.l-ui-surface {
 }
 
 .field_with_errors .l-ui-form__field {
-  @apply border-2 border-danger bg-error-bg/10;
+  @apply bg-error-bg/10
+         border-2 border-danger;
 }
 
 .l-ui-form__field-error {
@@ -1056,8 +1064,8 @@ pre.l-ui-surface {
 .l-ui-checkbox {
   @apply w-6 h-6
          accent-foreground
-         focus-ring
          rounded-sm
+         focus-ring
          cursor-pointer;
 }
 
@@ -1088,7 +1096,8 @@ pre.l-ui-surface {
 .l-ui-switch__track {
   @apply relative shrink-0
          w-12 h-7
-         bg-border-control rounded-full
+         bg-border-control
+         rounded-full
          transition-colors;
 }
 
@@ -1101,13 +1110,15 @@ pre.l-ui-surface {
 }
 
 .l-ui-switch__input:disabled + .l-ui-switch__track {
-  @apply opacity-50 cursor-default;
+  @apply opacity-50
+         cursor-default;
 }
 
 .l-ui-switch__track::after {
   @apply absolute top-[3px] left-[3px]
          w-[22px] h-[22px]
-         bg-background rounded-full
+         bg-background
+         rounded-full
          transition-transform;
   content: '';
 }
@@ -1119,12 +1130,12 @@ pre.l-ui-surface {
 .l-ui-label {
   @apply block
          w-full
-         text-sm font-manrope font-bold
-         text-foreground;
+         text-sm font-manrope font-bold text-foreground;
 }
 
 .l-ui-checkbox-container__label {
-  @apply text-sm cursor-pointer;
+  @apply text-sm
+         cursor-pointer;
 }
 
 .l-ui-select-container {
@@ -1132,8 +1143,9 @@ pre.l-ui-surface {
 }
 
 .l-ui-select-container::after {
-  @apply absolute right-3 top-1/2 -translate-y-1/2
+  @apply absolute right-3 top-1/2
          w-4 h-4
+         -translate-y-1/2
          pointer-events-none;
   content: '';
   background-color: var(--foreground);
@@ -1145,13 +1157,13 @@ pre.l-ui-surface {
 
 .l-ui-select {
   @apply block
-         w-full pl-3 pr-8 py-2.5 mt-2 min-h-[44px]
-         text-sm font-inter
+         w-full min-h-[44px]
+         pl-3 pr-8 py-2.5 mt-2
+         text-sm font-inter text-foreground
          bg-background
-         text-foreground
          border border-border-control rounded-sm
-         cursor-pointer
-         focus-ring;
+         focus-ring
+         cursor-pointer;
   appearance: none;
 }
 
@@ -1173,7 +1185,8 @@ pre.l-ui-surface {
 }
 
 .l-ui-radio__label {
-  @apply text-sm cursor-pointer;
+  @apply text-sm
+         cursor-pointer;
 }
 
 /* Tabs */
@@ -1189,13 +1202,13 @@ pre.l-ui-surface {
 }
 
 .l-ui-tabs__tab {
-  @apply -mb-px min-h-[44px]
-         text-sm font-medium
-         text-foreground-muted
+  @apply min-h-[44px]
+         -mb-px
+         text-sm font-medium text-foreground-muted
          border-b-2 border-transparent
-         cursor-pointer
          focus-ring
-         transition-colors;
+         transition-colors
+         cursor-pointer;
 }
 
 .l-ui-tabs__tab--active {
@@ -1220,8 +1233,7 @@ pre.l-ui-surface {
 
 .l-ui-table caption {
   @apply mb-2
-         text-left text-sm font-bold font-manrope
-         text-foreground;
+         text-left text-sm font-bold font-manrope text-foreground;
   caption-side: top;
 }
 
@@ -1230,9 +1242,9 @@ pre.l-ui-surface {
 }
 
 .l-ui-table__header-cell {
-  @apply min-h-6 px-2 py-2
-         text-sm font-bold font-manrope
-         text-left;
+  @apply min-h-6
+         px-2 py-2
+         text-left text-sm font-bold font-manrope;
 }
 
 .l-ui-table__header-cell--action {
@@ -1240,9 +1252,9 @@ pre.l-ui-surface {
 }
 
 .l-ui-table__sort-link {
-  @apply inline-flex items-center gap-1
-         no-underline
-         text-foreground;
+  @apply inline-flex items-center
+         gap-1
+         text-foreground no-underline;
 }
 
 .l-ui-table__sort-indicator {
@@ -1257,24 +1269,28 @@ pre.l-ui-surface {
 
 .l-ui-table__cell {
   @apply px-2 py-2.5
-         text-sm text-foreground-muted whitespace-nowrap;
+         text-sm whitespace-nowrap text-foreground-muted;
 }
 
 .l-ui-table__cell--primary {
-  @apply text-left font-medium
-         text-foreground;
+  @apply text-left font-medium text-foreground;
 }
 
 .l-ui-table__cell--action {
-  @apply flex items-center justify-end gap-4
+  @apply flex items-center justify-end
+         gap-4
          font-medium;
 }
 
 .l-ui-table__action {
   @apply inline-flex items-center justify-center
-         min-w-6 min-h-6 px-0.5
-         text-foreground-muted bg-transparent
-         border-0 cursor-pointer focus-ring rounded-sm;
+         min-w-6 min-h-6
+         px-0.5
+         text-foreground-muted
+         bg-transparent
+         border-0 rounded-sm
+         focus-ring
+         cursor-pointer;
 }
 
 .l-ui-table__action--danger {
@@ -1301,34 +1317,33 @@ pre.l-ui-surface {
 
 @utility pagination-item {
   @apply flex items-center justify-center
-         h-[44px] px-3 min-w-[44px]
-         text-sm font-medium
+         h-[44px] min-w-[44px]
+         px-3
+         text-sm font-medium text-foreground
+         hover:bg-surface
          rounded-sm
-         text-foreground
          focus-ring
-         transition-colors
-         hover:bg-surface;
+         transition-colors;
 }
 
 @utility pagination-item-active {
-  @apply font-bold
+  @apply font-bold text-foreground
          bg-surface-highlighted
-         text-foreground
          pointer-events-none;
 }
 
 @utility pagination-item-disabled {
-  @apply opacity-50
-         text-foreground-muted
-         cursor-not-allowed
-         hover:bg-transparent;
+  @apply text-foreground-muted
+         hover:bg-transparent
+         opacity-50
+         cursor-not-allowed;
 }
 
 @utility pagination-gap {
   @apply flex items-center justify-center
-         h-[44px] px-3 min-w-[44px]
-         text-sm font-medium
-         text-foreground-muted
+         h-[44px] min-w-[44px]
+         px-3
+         text-sm font-medium text-foreground-muted
          pointer-events-none;
 }
 
@@ -1389,37 +1404,37 @@ pre.l-ui-surface {
 }
 
 .l-ui-badge--default {
-  @apply bg-surface-highlighted
-         text-foreground-muted;
+  @apply text-foreground-muted
+         bg-surface-highlighted;
 }
 
 .l-ui-badge--success {
-  @apply bg-success-bg
-         text-success-text;
+  @apply text-success-text
+         bg-success-bg;
 }
 
 .l-ui-badge--warning {
-  @apply bg-warning-bg
-         text-warning-text;
+  @apply text-warning-text
+         bg-warning-bg;
 }
 
 .l-ui-badge--danger {
-  @apply bg-error-bg
-         text-error-text;
+  @apply text-error-text
+         bg-error-bg;
 }
 
 /* Panel */
 
 .l-ui-panel__button {
   @apply fixed flex items-center justify-center
-         w-14 h-14
          z-40
-         cursor-pointer
-         bg-button-primary-bg
+         w-14 h-14
          text-button-primary-icon
+         bg-button-primary-bg
          rounded-full
          focus-ring
-         transition-all;
+         transition-all
+         cursor-pointer;
   touch-action: none;
 }
 
@@ -1440,7 +1455,8 @@ pre.l-ui-surface {
 
 .l-ui-panel__button--hidden {
   @apply invisible
-         opacity-0 pointer-events-none;
+         opacity-0
+         pointer-events-none;
 }
 
 .l-ui-panel__icon {
@@ -1467,10 +1483,10 @@ pre.l-ui-surface {
 
 .l-ui-panel-container {
   @apply fixed top-[var(--header-height)] right-0 bottom-0
-         w-full md:w-[480px]
          z-40
-         md:border-l md:border-border
+         w-full md:w-[480px]
          bg-background
+         md:border-l md:border-border
          transform translate-x-full
          transition-transform duration-300;
 }
@@ -1480,18 +1496,17 @@ pre.l-ui-surface {
 }
 
 .l-ui-panel__resize-handle {
-  @apply absolute -left-3 top-0 bottom-0
-         w-6
+  @apply absolute hidden md:block -left-3 top-0 bottom-0
          z-50
-         cursor-col-resize
+         w-6
          focus-ring
-         hidden md:block;
+         cursor-col-resize;
 
   &::before {
     @apply absolute left-1/2 top-0 bottom-0
            w-px
-           -translate-x-1/2
            bg-transparent
+           -translate-x-1/2
            transition-colors;
     content: "";
   }
@@ -1519,7 +1534,8 @@ pre.l-ui-surface {
 
 .l-ui-panel__header-buttons {
   @apply flex items-center
-         gap-2 w-full;
+         w-full
+         gap-2;
 }
 
 .l-ui-panel__header-heading {
@@ -1540,10 +1556,8 @@ pre.l-ui-surface {
 }
 
 .l-ui-panel__body {
-  @apply flex-1
-         p-4 space-y-4
-         overflow-y-auto
-         overscroll-contain;
+  @apply flex-1 overflow-y-auto overscroll-contain
+         p-4 space-y-4;
 }
 
 .l-ui-panel__body:has(.l-ui-conversation__container) {
@@ -1569,19 +1583,19 @@ pre.l-ui-surface {
 }
 
 .l-ui-conversation__container {
-  @apply flex flex-col
+  @apply flex flex-col flex-1
+         min-h-0
          gap-4
-         flex-1 min-h-0
          bg-background;
 }
 
 .l-ui-page:has(.l-ui-conversation__container) {
-  @apply max-h-dvh overflow-hidden;
+  @apply overflow-hidden
+         max-h-dvh;
 }
 
 .l-ui-conversation__messages {
-  @apply flex-1
-         overflow-y-auto;
+  @apply flex-1 overflow-y-auto;
 }
 
 .l-ui-conversation__composer {
@@ -1598,8 +1612,7 @@ pre.l-ui-surface {
 .l-ui-conversation__separator {
   @apply flex items-center
          gap-3 my-1
-         text-xs
-         text-foreground-muted;
+         text-xs text-foreground-muted;
 
   &::before,
   &::after {
@@ -1612,36 +1625,36 @@ pre.l-ui-surface {
 
 .l-ui-message {
   @apply flex items-end
-         gap-2
-         w-full;
+         w-full
+         gap-2;
 }
 
 .l-ui-message--sent {
   @apply flex
-         max-w-[80%] ml-auto;
+         max-w-[80%]
+         ml-auto;
 }
 
 .l-ui-message__avatar {
-  @apply flex items-center justify-center shrink-0
+  @apply flex shrink-0 items-center justify-center
          w-7 h-7
-         text-xs font-bold
+         text-xs font-bold text-foreground
          bg-surface
-         text-foreground
          rounded-full;
 }
 
 .l-ui-message__bubble {
-  @apply flex flex-col gap-4
-         p-4
+  @apply flex flex-col
          w-full min-w-0
-         bg-surface
+         p-4 gap-4
          text-foreground
+         bg-surface
          rounded-md;
 }
 
 .l-ui-message--sent .l-ui-message__bubble {
-  @apply bg-button-primary-bg
-         text-button-primary-text;
+  @apply text-button-primary-text
+         bg-button-primary-bg;
 }
 
 .l-ui-message__author {
@@ -1686,21 +1699,23 @@ pre.l-ui-surface {
 /* Scroll-to-bottom button */
 
 .l-ui-scroll-to-bottom {
-  @apply
-    sticky bottom-2 flex items-center justify-center
-    mx-auto -mt-9 h-9 w-9
-    rounded-full
-    cursor-pointer
-    bg-button-primary-bg text-button-primary-icon
-    shadow-sm
-    focus-ring
-    opacity-0 pointer-events-none
-    transition-opacity duration-200;
+  @apply sticky flex items-center justify-center bottom-2
+         h-9 w-9
+         mx-auto -mt-9
+         text-button-primary-icon
+         bg-button-primary-bg
+         rounded-full
+         shadow-sm opacity-0
+         focus-ring
+         transition-opacity duration-200
+         cursor-pointer pointer-events-none;
 }
 
 .l-ui-scroll-to-bottom::before {
   content: "";
-  @apply block w-4 h-4 bg-button-primary-icon;
+  @apply block
+         w-4 h-4
+         bg-button-primary-icon;
   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
   mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
   -webkit-mask-size: contain;
@@ -1712,8 +1727,8 @@ pre.l-ui-surface {
 }
 
 .l-ui-scroll-to-bottom[data-visible] {
-  @apply
-    opacity-100 pointer-events-auto;
+  @apply opacity-100
+         pointer-events-auto;
 }
 
 /* Typing indicator */
@@ -1725,8 +1740,8 @@ pre.l-ui-surface {
 
 .l-ui-typing-indicator {
   @apply flex items-center
-         gap-1
-         h-5;
+         h-5
+         gap-1;
 }
 
 .l-ui-typing-indicator__dot {
@@ -1772,12 +1787,11 @@ pre.l-ui-surface {
 
 .l-ui-modal {
   @apply fixed inset-0
-         w-screen h-screen max-w-none max-h-none m-0 p-0
-         md:w-full md:h-fit md:max-w-2xl md:max-h-[80vh] md:m-auto
-         border-0 md:border md:border-border
-         bg-background
+         w-screen h-screen max-w-none max-h-none md:w-full md:h-fit md:max-w-2xl md:max-h-[80vh]
+         m-0 md:m-auto p-0
          text-foreground
-         rounded-none md:rounded-sm;
+         bg-background
+         border-0 md:border md:border-border rounded-none md:rounded-sm;
 }
 
 .l-ui-modal::backdrop {
@@ -1791,8 +1805,8 @@ pre.l-ui-surface {
 }
 
 .l-ui-modal__body {
-  @apply px-5 py-4
-         overflow-y-auto;
+  @apply overflow-y-auto
+         px-5 py-4;
 }
 
 /* Safari */
