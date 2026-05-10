@@ -1,5 +1,5 @@
 export const MOBILE_BREAKPOINT = 768
-export const NAV_WIDTH = 240
+export const NAV_WIDTH = 256
 
 export function isMobile() {
   return window.innerWidth < MOBILE_BREAKPOINT

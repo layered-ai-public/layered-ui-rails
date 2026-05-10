@@ -1,6 +1,13 @@
 <h2 class="mt-6">Features</h2>
 <div class="l-ui-grid mt-4">
   <div class="l-ui-surface flex items-center gap-4">
+    <%= image_tag "icon_minimal.svg", class: "l-ui-icon l-ui-icon--xl", alt: "", aria: { hidden: true } %>
+    <div>
+      <h3>Minimal style</h3>
+      <p>Monochrome out of the box and fully extensible - override colours, typography, and components to suit your project.</p>
+    </div>
+  </div>
+  <div class="l-ui-surface flex items-center gap-4">
     <%= image_tag "icon_moon.svg", class: "l-ui-icon l-ui-icon--xl", alt: "", aria: { hidden: true } %>
     <div>
       <h3>Dark/light theme</h3>
@@ -8,17 +15,31 @@
     </div>
   </div>
   <div class="l-ui-surface flex items-center gap-4">
+    <%= image_tag "icon_paint.svg", class: "l-ui-icon l-ui-icon--xl", alt: "", aria: { hidden: true } %>
+    <div>
+      <h3>Customisable logo and icons</h3>
+      <p>Override the default logos and icons to match your brand.</p>
+    </div>
+  </div>
+  <div class="l-ui-surface flex items-center gap-4">
     <%= image_tag "icon_device.svg", class: "l-ui-icon l-ui-icon--xl", alt: "", aria: { hidden: true } %>
     <div>
       <h3>Responsive layout</h3>
-      <p>Header, sidebar navigation, main content area, and optional resizable panel.</p>
+      <p>Tested thoroughly across form factors, from mobile to ultrawide.</p>
     </div>
   </div>
   <div class="l-ui-surface flex items-center gap-4">
     <%= image_tag "icon_eye.svg", class: "l-ui-icon l-ui-icon--xl", alt: "", aria: { hidden: true } %>
     <div>
-      <h3>WCAG 2.2 AA compliant</h3>
+      <h3>WCAG 2.2 AA accessible</h3>
       <p>Skip links, focus indicators, ARIA attributes, and 4.5:1 contrast ratios. Read the <%= link_to "latest accessibility audits", "https://github.com/layered-ai-public/layered-ui-rails/blob/main/audits/accessibility", target: "_blank", rel: "noopener noreferrer" %>.</p>
+    </div>
+  </div>
+  <div class="l-ui-surface flex items-center gap-4">
+    <%= image_tag "icon_lighthouse.svg", class: "l-ui-icon l-ui-icon--xl", alt: "", aria: { hidden: true } %>
+    <div>
+      <h3>Google Lighthouse optimised</h3>
+      <p><code>layered-ui-rails</code> scores a <%= link_to "perfect 100", image_path("lighthouse.webp"), target: "_blank" %> across all four Google Lighthouse categories - performance, accessibility, best practices, and SEO.</p>
     </div>
   </div>
   <div class="l-ui-surface flex items-center gap-4">
@@ -29,17 +50,10 @@
     </div>
   </div>
   <div class="l-ui-surface flex items-center gap-4">
-    <%= image_tag "icon_paint.svg", class: "l-ui-icon l-ui-icon--xl", alt: "", aria: { hidden: true } %>
+    <%= image_tag "icon_agent.svg", class: "l-ui-icon l-ui-icon--xl", alt: "", aria: { hidden: true } %>
     <div>
-      <h3>Customisable branding</h3>
-      <p>Override the default logos, icons and colors.</p>
-    </div>
-  </div>
-  <div class="l-ui-surface flex items-center gap-4">
-    <%= image_tag "icon_lighthouse.svg", class: "l-ui-icon l-ui-icon--xl", alt: "", aria: { hidden: true } %>
-    <div>
-      <h3>Google Lighthouse</h3>
-      <p><code>layered-ui-rails</code> scores a <%= link_to "perfect 100", image_path("lighthouse.webp"), target: "_blank" %> across all four Google Lighthouse categories - performance, accessibility, best practices, and SEO.</p>
+      <h3>Agent skill</h3>
+      <p>Bundled agent skill teaches AI agents to install, configure, and build with <code>layered-ui-rails</code>.</p>
     </div>
   </div>
 </div>
