@@ -18,7 +18,7 @@ Wherever a modifier appears without its base, prepend the base class:
 | `l-ui-button--full` (with any colour)  | `l-ui-button l-ui-button--<colour> l-ui-button--full`         |
 | `l-ui-button--icon`                    | `l-ui-button l-ui-button--icon`                               |
 | `l-ui-button--navigation-toggle`       | `l-ui-button l-ui-button--navigation-toggle`                  |
-| `l-ui-button--panel-close`             | `l-ui-button l-ui-button--icon l-ui-button--panel-close`      |
+| `l-ui-button--panel-close`             | `l-ui-button l-ui-button--icon l-ui-panel__close-button` (renamed; see below) |
 | `l-ui-surface--highlighted`            | `l-ui-surface l-ui-surface--highlighted`                      |
 | `l-ui-surface--collapsible`            | `l-ui-surface l-ui-surface--collapsible`                      |
 | `l-ui-surface--collapsible-highlighted`| `l-ui-surface l-ui-surface--collapsible-highlighted`          |
@@ -41,6 +41,7 @@ A few classes that read as modifiers were not deltas of their named base; they h
 | `l-ui-label--checkbox`             | `l-ui-checkbox-container__label`   | Belongs to `l-ui-checkbox-container`, not the standalone `l-ui-label`. |
 | `l-ui-stream-fade-word`            | `l-ui-stream-fade__word`           | A child of `l-ui-stream-fade`, written BEM-correct as an element.      |
 | `l-ui-select-wrapper`              | `l-ui-select-container`            | Renamed for consistency with other `*-container` wrapper classes.      |
+| `l-ui-button--panel-close`         | `l-ui-panel__close-button`         | Panel-specific positioning belongs to the panel block, not the button. |
 
 ### Table action element
 

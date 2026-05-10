@@ -1571,7 +1571,7 @@ pre.l-ui-surface {
          gap-2;
 }
 
-.l-ui-button--panel-close {
+.l-ui-panel__close-button {
   @apply -mr-4;
 }
 
