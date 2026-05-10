@@ -56,7 +56,7 @@ Native `<dialog>` wrapper with focus trap, scroll lock, and focus restoration.
   <dialog data-l-ui--modal-target="dialog" class="l-ui-modal">
     <div class="l-ui-modal__header">
       <h2>Title</h2>
-      <button data-action="click->l-ui--modal#close" class="l-ui-button--icon">
+      <button data-action="click->l-ui--modal#close" class="l-ui-button l-ui-button--icon">
         Close
       </button>
     </div>
@@ -82,7 +82,7 @@ Accessible tabbed interface with keyboard navigation.
 **Keyboard:** Arrow Left/Right, Home, End
 
 ```html
-<div data-controller="l-ui--tabs">
+<div class="l-ui-tabs" data-controller="l-ui--tabs">
   <div role="tablist" class="l-ui-tabs__list">
     <button role="tab" data-l-ui--tabs-target="tab"
             data-action="click->l-ui--tabs#select keydown->l-ui--tabs#keydown"

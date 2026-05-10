@@ -125,14 +125,14 @@ Key components:
 
 | Component | Key classes |
 |---|---|
-| Page layout | `.l-ui-page`, `--with-navigation`, `--vertically-centered`, `--width-constrained` |
+| Page layout | `.l-ui-page`, `--with-navigation`, `__vertically-centered`, `__width-constrained` |
 | Buttons | `.l-ui-button`, `--primary`, `--outline`, `--outline-danger`, `--full`, `--icon` |
-| Surfaces | `.l-ui-surface`, `--active`, `--sm`, `--collapsible` |
+| Surfaces | `.l-ui-surface`, `--highlighted`, `--sm`, `--collapsible`, `--collapsible-highlighted` |
 | Forms | `.l-ui-form`, `.l-ui-form__group`, `.l-ui-form__field`, `.l-ui-label`, `.l-ui-select` |
 | Tables | `.l-ui-table`, `.l-ui-table__header`, `.l-ui-table__cell`, `--primary`, `--action` |
 | Badges | `.l-ui-badge`, `--rounded`, `--default`, `--success`, `--warning`, `--danger` |
 | Notices | `.l-ui-notice` (base), `--success`, `--warning`, `--error` |
-| Tabs | `.l-ui-tabs__list`, `.l-ui-tabs__tab`, `--active` |
+| Tabs | `.l-ui-tabs`, `.l-ui-tabs__list`, `.l-ui-tabs__tab`, `--active` |
 | Modal | `.l-ui-modal`, `.l-ui-modal__header`, `.l-ui-modal__body` |
 
 ## Stimulus controllers

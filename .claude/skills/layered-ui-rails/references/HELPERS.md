@@ -80,7 +80,7 @@ l_ui_title_bar(title:, breadcrumbs: [], actions: nil, &block)
     ["Admin", admin_path]
   ]
 ) do %>
-  <%= link_to "New user", new_user_path, class: "l-ui-button--primary" %>
+  <%= link_to "New user", new_user_path, class: "l-ui-button l-ui-button--primary" %>
 <% end %>
 ```
 
@@ -132,7 +132,7 @@ Custom mode:
   <%= render "layered_ui/shared/search_field", form: f, field: :name_cont, label: "Name" %>
   <%= render "layered_ui/shared/search_select", form: f, field: :status_eq,
       label: "Status", options: ["Active", "Inactive"], include_blank: "Any" %>
-  <%= f.submit "Search", class: "l-ui-button--primary" %>
+  <%= f.submit "Search", class: "l-ui-button l-ui-button--primary" %>
 <% end %>
 ```
 
