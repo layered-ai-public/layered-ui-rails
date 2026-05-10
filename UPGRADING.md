@@ -18,7 +18,6 @@ Wherever a modifier appears without its base, prepend the base class:
 | `l-ui-button--full` (with any colour)  | `l-ui-button l-ui-button--<colour> l-ui-button--full`         |
 | `l-ui-button--icon`                    | `l-ui-button l-ui-button--icon`                               |
 | `l-ui-button--navigation-toggle`       | `l-ui-button l-ui-button--navigation-toggle`                  |
-| `l-ui-button--panel-close`             | `l-ui-button l-ui-button--icon l-ui-panel__close-button` (renamed; see below) |
 | `l-ui-surface--highlighted`            | `l-ui-surface l-ui-surface--highlighted`                      |
 | `l-ui-surface--collapsible`            | `l-ui-surface l-ui-surface--collapsible`                      |
 | `l-ui-surface--collapsible-highlighted`| `l-ui-surface l-ui-surface--collapsible-highlighted`          |
@@ -29,6 +28,7 @@ Wherever a modifier appears without its base, prepend the base class:
 | `l-ui-table__header-cell--action`      | `l-ui-table__header-cell l-ui-table__header-cell--action`     |
 | `l-ui-form__group--large-gap`          | `l-ui-form__group l-ui-form__group--large-gap`                |
 | `l-ui-message--sent`                   | `l-ui-message l-ui-message--sent`                             |
+| `l-ui-page--with-navigation`           | `l-ui-page l-ui-page--with-navigation`                        |
 
 ### Renamed classes
 
@@ -88,16 +88,16 @@ Runtime state classes that were toggled as unprefixed `.open` / `.hidden` are no
 | `.l-ui-panel-container.open`       | `.l-ui-panel-container--open`      |
 | `.l-ui-panel__button.hidden`       | `.l-ui-panel__button--hidden`      |
 
-`l-ui-page--with-navigation` no longer re-applies `l-ui-page`; existing `class="l-ui-page l-ui-page--with-navigation"` markup is already correct and needs no change. If you used `l-ui-page--with-navigation` alone, add the `l-ui-page` base class.
+`l-ui-page--with-navigation` no longer re-applies `l-ui-page`. The engine layout already pairs the two classes (`class="l-ui-page l-ui-page--with-navigation"`), so most apps need no change; only standalone usages need the base class added.
 
 If you call `l_ui_table` (or `l_ui_sort_link` indirectly), the helper handles its own classes - no changes needed in your view.
 
 ### Quick grep to find offenders in a host app
 
 ```bash
-grep -rEn 'class[:=][^>]*l-ui-(button|surface|tabs__tab|navigation__item|table__cell|table__header-cell|page)--[a-z-]+' \
+grep -rEn 'class[:=][^>]*l-ui-(button|surface|tabs__tab|navigation__item|table__cell|table__header-cell|page|form__group|message)--[a-z-]+' \
   app/ --include='*.erb' --include='*.html' --include='*.rb' \
-  | grep -vE 'l-ui-(button|surface|tabs__tab|navigation__item|table__cell|table__header-cell|page)\b[^"'\'']*l-ui-\1--'
+  | grep -vE 'l-ui-(button|surface|tabs__tab|navigation__item|table__cell|table__header-cell|page|form__group|message)\b[^"'\'']*l-ui-\1--'
 ```
 
 ### Visual check after upgrading
