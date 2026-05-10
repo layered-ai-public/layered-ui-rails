@@ -115,7 +115,7 @@
       { attribute: :name, render: ->(r) { r.name } },
       { attribute: :email, render: ->(r) { r.email } },
     ],
-    actions: ->(r) { link_to("Edit", "#") },
+    actions: ->(r) { link_to("Edit", "#", class: "l-ui-table__action") },
     caption: "Users with actions") %>
 
 <div class="mt-6" data-controller="l-ui--modal">
@@ -132,7 +132,7 @@
       { attribute: :name, render: -&gt;(r) { r.name } },
       { attribute: :email, render: -&gt;(r) { r.email } },
     ],
-    actions: -&gt;(r) { link_to("Edit", edit_user_path(r)) },
+    actions: -&gt;(r) { link_to("Edit", edit_user_path(r), class: "l-ui-table__action") },
     caption: "Users with actions") %&gt;</code></pre>
     </div>
   </dialog>

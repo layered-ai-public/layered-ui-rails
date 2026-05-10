@@ -852,7 +852,6 @@
          text-xs;
 }
 
-[class*="l-ui-button--"]:disabled,
 .l-ui-button:disabled {
   @apply opacity-50
          cursor-not-allowed;
@@ -1269,13 +1268,6 @@ pre.l-ui-surface {
 .l-ui-table__cell--action {
   @apply flex items-center justify-end gap-4
          font-medium;
-
-  & button, & a {
-    @apply inline-flex items-center justify-center
-           min-w-6 min-h-6 px-0.5
-           text-foreground-muted bg-transparent
-           border-0 cursor-pointer focus-ring rounded-sm;
-  }
 }
 
 .l-ui-table__action {
@@ -1301,13 +1293,13 @@ pre.l-ui-surface {
 
 /* Pagination */
 
-@utility pagination {
+@utility pagination-base {
   @apply flex items-center justify-center
          gap-1
          select-none;
 }
 
-@utility pagination__item {
+@utility pagination-item {
   @apply flex items-center justify-center
          h-[44px] px-3 min-w-[44px]
          text-sm font-medium
@@ -1318,21 +1310,21 @@ pre.l-ui-surface {
          hover:bg-surface;
 }
 
-@utility pagination__item--active {
+@utility pagination-item-active {
   @apply font-bold
          bg-surface-highlighted
          text-foreground
          pointer-events-none;
 }
 
-@utility pagination__item--disabled {
+@utility pagination-item-disabled {
   @apply opacity-50
          text-foreground-muted
          cursor-not-allowed
          hover:bg-transparent;
 }
 
-@utility pagination__gap {
+@utility pagination-gap {
   @apply flex items-center justify-center
          h-[44px] px-3 min-w-[44px]
          text-sm font-medium
@@ -1341,46 +1333,46 @@ pre.l-ui-surface {
 }
 
 .l-ui-pagination {
-  @apply pagination;
+  @apply pagination-base;
 }
 
 .l-ui-pagination__item {
-  @apply pagination__item;
+  @apply pagination-item;
 }
 
 .l-ui-pagination__item--active {
-  @apply pagination__item--active;
+  @apply pagination-item-active;
 }
 
 .l-ui-pagination__item--disabled {
-  @apply pagination__item--disabled;
+  @apply pagination-item-disabled;
 }
 
 .l-ui-pagination__gap {
-  @apply pagination__gap;
+  @apply pagination-gap;
 }
 
 /* Pagination (pagy) */
 
 .l-ui-pagy-container .pagy.series-nav {
-  @apply pagination;
+  @apply pagination-base;
 }
 
 .l-ui-pagy-container .pagy.series-nav a,
 .l-ui-pagy-container .pagy.series-nav span {
-  @apply pagination__item no-underline;
+  @apply pagination-item no-underline;
 }
 
 .l-ui-pagy-container .pagy.series-nav a[aria-current="page"] {
-  @apply pagination__item--active;
+  @apply pagination-item-active;
 }
 
 .l-ui-pagy-container .pagy.series-nav .disabled {
-  @apply pagination__item--disabled;
+  @apply pagination-item-disabled;
 }
 
 .l-ui-pagy-container .pagy.series-nav .gap {
-  @apply pagination__gap;
+  @apply pagination-gap;
 }
 
 /* Badges */

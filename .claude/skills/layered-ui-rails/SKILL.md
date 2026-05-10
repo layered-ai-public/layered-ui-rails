@@ -129,7 +129,7 @@ Key components:
 | Buttons | `.l-ui-button`, `--primary`, `--outline`, `--outline-danger`, `--full`, `--icon` |
 | Surfaces | `.l-ui-surface`, `--highlighted`, `--sm`, `--collapsible`, `--collapsible-highlighted` |
 | Forms | `.l-ui-form`, `.l-ui-form__group`, `.l-ui-form__field`, `.l-ui-label`, `.l-ui-select` |
-| Tables | `.l-ui-table`, `.l-ui-table__header`, `.l-ui-table__cell`, `--primary`, `--action` |
+| Tables | `.l-ui-table`, `.l-ui-table__header`, `.l-ui-table__cell`, `--primary`, `--action`, `.l-ui-table__action`, `--danger` |
 | Badges | `.l-ui-badge`, `--rounded`, `--default`, `--success`, `--warning`, `--danger` |
 | Notices | `.l-ui-notice` (base), `--success`, `--warning`, `--error` |
 | Tabs | `.l-ui-tabs`, `.l-ui-tabs__list`, `.l-ui-tabs__tab`, `--active` |

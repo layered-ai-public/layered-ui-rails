@@ -45,7 +45,7 @@ A few classes that read as modifiers were not deltas of their named base; they h
 
 ### Table action element
 
-`l-ui-table__action` is now a real element. Apply it explicitly to action links/buttons inside an `l-ui-table__cell--action`, and combine with `--danger` for destructive actions:
+`l-ui-table__action` is now a real element and is required on every action link/button inside an `l-ui-table__cell--action`. The previous descendant selector that styled bare `<a>`/`<button>` has been removed, so unmarked elements will render unstyled. Combine with `--danger` for destructive actions:
 
 ```html
 <td class="l-ui-table__cell l-ui-table__cell--action">
@@ -53,8 +53,6 @@ A few classes that read as modifiers were not deltas of their named base; they h
   <button class="l-ui-table__action l-ui-table__action--danger">Delete</button>
 </td>
 ```
-
-The descendant selector that styled bare `<a>`/`<button>` elements inside `l-ui-table__cell--action` is retained for backwards compatibility, but new markup should use the explicit class so `--danger` has a real base.
 
 ### Checkbox input class
 
