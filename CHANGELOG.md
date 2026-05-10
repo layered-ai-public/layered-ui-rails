@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.15.0] - 2026-05-11
+
+### Breaking
+
+- `l-ui-panel__close-button` modifier removed; the panel close button is now an `l-ui-button--outline l-ui-button--icon`
+- Navigation width increased from 240px to 256px (affects `NAV_WIDTH` consumers and the panel resize minimum width)
+
+### Added
+
+- `icon_panel_close.svg` asset for the panel close button
+
+### Changed
+
+- Borders removed from navigation container (right and top), navigation user block, panel container (left edge), and panel header
+- `h2` elements now have a bottom border for stronger visual separation
+- Table cell padding evened out to `p-2`
+- Panel header padding adjusted (`p-4 pb-0`) and header button gap increased to `gap-4`
+- Modal backdrop click detection now uses the dialog's bounding rect, so clicks on the dialog's own padding no longer close it
+- Navigation item corners rounded on the left only (`rounded-l-sm`)
+
 ## [0.14.0] - 2026-05-10
 
 ### Breaking
