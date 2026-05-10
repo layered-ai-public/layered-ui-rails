@@ -48,7 +48,7 @@ class TableHelperTest < ActionView::TestCase
         { attribute: :email, render: ->(r) { r.email } },
       ]
     )
-    assert_includes result, '<th class="l-ui-table__cell--primary" scope="row">Alice</th>'
+    assert_includes result, '<th class="l-ui-table__cell l-ui-table__cell--primary" scope="row">Alice</th>'
   end
 
   test "explicit primary overrides default" do
@@ -61,7 +61,7 @@ class TableHelperTest < ActionView::TestCase
     )
     # name should be a regular cell, email should be primary
     assert_includes result, '<td class="l-ui-table__cell">Alice</td>'
-    assert_includes result, '<th class="l-ui-table__cell--primary" scope="row">alice@example.com</th>'
+    assert_includes result, '<th class="l-ui-table__cell l-ui-table__cell--primary" scope="row">alice@example.com</th>'
   end
 
   # -- caption --
@@ -132,7 +132,7 @@ class TableHelperTest < ActionView::TestCase
       [mock_record("Alice")],
       actions: ->(r) { "Edit" }
     )
-    assert_includes result, '<th class="l-ui-table__header-cell--action" scope="col">Actions</th>'
+    assert_includes result, '<th class="l-ui-table__header-cell l-ui-table__header-cell--action" scope="col">Actions</th>'
   end
 
   test "renders action cells with correct class" do
@@ -140,7 +140,7 @@ class TableHelperTest < ActionView::TestCase
       [mock_record("Alice")],
       actions: ->(r) { "Edit" }
     )
-    assert_includes result, 'class="l-ui-table__cell--action"'
+    assert_includes result, 'class="l-ui-table__cell l-ui-table__cell--action"'
     assert_includes result, "Edit"
   end
 
@@ -260,9 +260,9 @@ class TableHelperTest < ActionView::TestCase
       ],
       caption: "People"
     )
-    assert_includes result, '<th class="l-ui-table__cell--primary" scope="row">Alice</th>'
+    assert_includes result, '<th class="l-ui-table__cell l-ui-table__cell--primary" scope="row">Alice</th>'
     assert_includes result, '<td class="l-ui-table__cell">Admin</td>'
-    assert_includes result, '<th class="l-ui-table__cell--primary" scope="row">Bob</th>'
+    assert_includes result, '<th class="l-ui-table__cell l-ui-table__cell--primary" scope="row">Bob</th>'
     assert_includes result, '<td class="l-ui-table__cell">Editor</td>'
   end
 

@@ -10,36 +10,36 @@
 <h2 class="mt-8">Button variants</h2>
 
 <div class="l-ui-spread mt-4">
-  <button class="l-ui-button--primary">Primary button</button>
-  <button class="l-ui-button--outline">Outline button</button>
-  <button class="l-ui-button--danger">Danger button</button>
-  <button class="l-ui-button--outline-danger">Outline danger button</button>
-  <button class="l-ui-button--icon" aria-label="Close">
+  <button class="l-ui-button l-ui-button--primary">Primary button</button>
+  <button class="l-ui-button l-ui-button--outline">Outline button</button>
+  <button class="l-ui-button l-ui-button--danger">Danger button</button>
+  <button class="l-ui-button l-ui-button--outline-danger">Outline danger button</button>
+  <button class="l-ui-button l-ui-button--icon" aria-label="Close">
     <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
   </button>
-  <button class="l-ui-button--icon" aria-label="Toggle dark mode">
+  <button class="l-ui-button l-ui-button--icon" aria-label="Toggle dark mode">
     <%= image_tag "layered_ui/icon_moon.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
   </button>
 </div>
 
 <div class="mt-6" data-controller="l-ui--modal">
-  <button class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-buttons-variants-heading">
     <div class="l-ui-modal__header">
       <h3 id="modal-buttons-variants-heading">Button variants</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
         <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
-      <pre class="l-ui-surface"><code>&lt;button class="l-ui-button--primary"&gt;Primary&lt;/button&gt;
-&lt;button class="l-ui-button--outline"&gt;Outline&lt;/button&gt;
-&lt;button class="l-ui-button--danger"&gt;Danger&lt;/button&gt;
-&lt;button class="l-ui-button--outline-danger"&gt;Outline danger&lt;/button&gt;
-&lt;button class="l-ui-button--icon" aria-label="Close"&gt;
+      <pre class="l-ui-surface"><code>&lt;button class="l-ui-button l-ui-button--primary"&gt;Primary&lt;/button&gt;
+&lt;button class="l-ui-button l-ui-button--outline"&gt;Outline&lt;/button&gt;
+&lt;button class="l-ui-button l-ui-button--danger"&gt;Danger&lt;/button&gt;
+&lt;button class="l-ui-button l-ui-button--outline-danger"&gt;Outline danger&lt;/button&gt;
+&lt;button class="l-ui-button l-ui-button--icon" aria-label="Close"&gt;
   &lt;svg class="l-ui-icon l-ui-icon--sm"&gt;...&lt;/svg&gt;
 &lt;/button&gt;
-&lt;button class="l-ui-button--icon" aria-label="Toggle dark mode"&gt;
+&lt;button class="l-ui-button l-ui-button--icon" aria-label="Toggle dark mode"&gt;
   &lt;svg class="l-ui-icon l-ui-icon--sm"&gt;...&lt;/svg&gt;
 &lt;/button&gt;</code></pre>
     </div>
@@ -49,23 +49,23 @@
 <h2 class="mt-8">Disabled</h2>
 
 <div class="l-ui-spread mt-4">
-  <button class="l-ui-button--primary" disabled>Primary disabled</button>
-  <button class="l-ui-button--outline" disabled>Outline disabled</button>
-  <button class="l-ui-button--danger" disabled>Danger disabled</button>
-  <button class="l-ui-button--outline-danger" disabled>Outline danger disabled</button>
+  <button class="l-ui-button l-ui-button--primary" disabled>Primary disabled</button>
+  <button class="l-ui-button l-ui-button--outline" disabled>Outline disabled</button>
+  <button class="l-ui-button l-ui-button--danger" disabled>Danger disabled</button>
+  <button class="l-ui-button l-ui-button--outline-danger" disabled>Outline danger disabled</button>
 </div>
 
 <div class="mt-6" data-controller="l-ui--modal">
-  <button class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-buttons-disabled-heading">
     <div class="l-ui-modal__header">
       <h3 id="modal-buttons-disabled-heading">Disabled</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
         <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
-      <pre class="l-ui-surface"><code>&lt;button class="l-ui-button--primary" disabled&gt;
+      <pre class="l-ui-surface"><code>&lt;button class="l-ui-button l-ui-button--primary" disabled&gt;
   Primary disabled
 &lt;/button&gt;</code></pre>
     </div>
@@ -77,23 +77,23 @@
 <p class="mt-4">Compact button for dense areas like header bars. 32px hit area comfortably exceeds the WCAG 2.2 AA 24px target size minimum.</p>
 
 <div class="l-ui-spread mt-4">
-  <button class="l-ui-button--primary l-ui-button--small">Primary small</button>
-  <button class="l-ui-button--outline l-ui-button--small">Outline small</button>
-  <button class="l-ui-button--danger l-ui-button--small">Danger small</button>
-  <button class="l-ui-button--outline-danger l-ui-button--small">Outline danger small</button>
+  <button class="l-ui-button l-ui-button--primary l-ui-button--small">Primary small</button>
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small">Outline small</button>
+  <button class="l-ui-button l-ui-button--danger l-ui-button--small">Danger small</button>
+  <button class="l-ui-button l-ui-button--outline-danger l-ui-button--small">Outline danger small</button>
 </div>
 
 <div class="mt-6" data-controller="l-ui--modal">
-  <button class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-buttons-small-heading">
     <div class="l-ui-modal__header">
       <h3 id="modal-buttons-small-heading">Small</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
         <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
-      <pre class="l-ui-surface"><code>&lt;button class="l-ui-button--primary l-ui-button--small"&gt;
+      <pre class="l-ui-surface"><code>&lt;button class="l-ui-button l-ui-button--primary l-ui-button--small"&gt;
   Primary small
 &lt;/button&gt;</code></pre>
     </div>
@@ -103,20 +103,20 @@
 <h2 class="mt-8">Full width</h2>
 
 <div class="mt-4">
-  <button class="l-ui-button--primary l-ui-button--full">Full width button</button>
+  <button class="l-ui-button l-ui-button--primary l-ui-button--full">Full width button</button>
 </div>
 
 <div class="mt-6" data-controller="l-ui--modal">
-  <button class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-buttons-full-width-heading">
     <div class="l-ui-modal__header">
       <h3 id="modal-buttons-full-width-heading">Full width</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
         <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
-      <pre class="l-ui-surface"><code>&lt;button class="l-ui-button--primary l-ui-button--full"&gt;
+      <pre class="l-ui-surface"><code>&lt;button class="l-ui-button l-ui-button--primary l-ui-button--full"&gt;
   Full width button
 &lt;/button&gt;</code></pre>
     </div>
@@ -136,31 +136,31 @@
     </thead>
     <tbody class="l-ui-table__body">
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-button--primary</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-button--primary</code></th>
         <td class="l-ui-table__cell">Primary action button with solid background (standalone)</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-button--outline</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-button--outline</code></th>
         <td class="l-ui-table__cell">Secondary action button with outline style (standalone)</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-button--danger</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-button--danger</code></th>
         <td class="l-ui-table__cell">Solid red destructive action button (standalone)</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-button--outline-danger</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-button--outline-danger</code></th>
         <td class="l-ui-table__cell">Destructive action button with red outline (standalone)</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-button--icon</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-button l-ui-button--icon</code></th>
         <td class="l-ui-table__cell">Icon-only button for close, theme toggle, and other actions (standalone)</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-button--full</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-button--full</code></th>
         <td class="l-ui-table__cell">Modifier - combine with a variant above for full-width</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-button--small</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-button--small</code></th>
         <td class="l-ui-table__cell">Modifier - combine with a variant above for a compact 32px-tall button</td>
       </tr>
     </tbody>

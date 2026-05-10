@@ -89,7 +89,7 @@ class FormHelperTest < ActionView::TestCase
       attribute: :user_id, as: :select,
       collection: [["Alice", 1], ["Bob", 2]]
     })
-    assert_includes result, "l-ui-select-wrapper"
+    assert_includes result, "l-ui-select-container"
     assert_includes result, "l-ui-select"
     assert_includes result, "<option"
     assert_includes result, "Alice"
@@ -109,7 +109,7 @@ class FormHelperTest < ActionView::TestCase
     result = render_field({ attribute: :user_id, as: :checkbox })
     assert_includes result, "l-ui-checkbox-container"
     assert_includes result, 'type="checkbox"'
-    assert_includes result, "l-ui-label--checkbox"
+    assert_includes result, "l-ui-checkbox-container__label"
   end
 
   test "checkbox does not render duplicate shared label" do

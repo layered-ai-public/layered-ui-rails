@@ -17,11 +17,11 @@
 </div>
 
 <div class="mt-6" data-controller="l-ui--modal">
-  <button class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-typography-headings-heading">
     <div class="l-ui-modal__header">
       <h3 id="modal-typography-headings-heading">Headings</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
         <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
@@ -42,11 +42,11 @@
 </div>
 
 <div class="mt-6" data-controller="l-ui--modal">
-  <button class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-typography-paragraphs-heading">
     <div class="l-ui-modal__header">
       <h3 id="modal-typography-paragraphs-heading">Paragraphs</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
         <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
@@ -68,11 +68,11 @@
 </div>
 
 <div class="mt-6" data-controller="l-ui--modal">
-  <button class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-typography-horizontal-rule-heading">
     <div class="l-ui-modal__header">
       <h3 id="modal-typography-horizontal-rule-heading">Horizontal rule</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
         <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
@@ -106,11 +106,11 @@
 </div>
 
 <div class="mt-6" data-controller="l-ui--modal">
-  <button class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-typography-lists-heading">
     <div class="l-ui-modal__header">
       <h3 id="modal-typography-lists-heading">Lists</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
         <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
@@ -144,12 +144,12 @@
     </thead>
     <tbody class="l-ui-table__body">
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>font-manrope</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>font-manrope</code></th>
         <td class="l-ui-table__cell">Manrope, ui-sans-serif, system-ui, sans-serif</td>
         <td class="l-ui-table__cell">Headings and labels</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>font-inter</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>font-inter</code></th>
         <td class="l-ui-table__cell">Inter, ui-sans-serif, system-ui, sans-serif</td>
         <td class="l-ui-table__cell">Body text and form fields</td>
       </tr>
@@ -170,43 +170,43 @@
     </thead>
     <tbody class="l-ui-table__body">
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>h1</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>h1</code></th>
         <td class="l-ui-table__cell">Manrope bold, text-xl</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>h2</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>h2</code></th>
         <td class="l-ui-table__cell">Manrope bold, text-lg</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>h3</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>h3</code></th>
         <td class="l-ui-table__cell">Manrope bold, base size</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>h4</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>h4</code></th>
         <td class="l-ui-table__cell">Manrope bold, text-sm</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>p</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>p</code></th>
         <td class="l-ui-table__cell">Muted foreground, text-sm, relaxed line height</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>p a</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>p a</code></th>
         <td class="l-ui-table__cell">Foreground color with bottom border underline</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>ul, ol, li</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>ul, ol, li</code></th>
         <td class="l-ui-table__cell">Muted foreground, text-sm</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-list</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-list</code></th>
         <td class="l-ui-table__cell">Disc bullets, inside position, vertical spacing</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-hr</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-hr</code></th>
         <td class="l-ui-table__cell">Horizontal rule with theme border and vertical spacing</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>code</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>code</code></th>
         <td class="l-ui-table__cell">Muted foreground, text-sm</td>
       </tr>
     </tbody>

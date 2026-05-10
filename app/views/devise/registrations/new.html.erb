@@ -1,5 +1,5 @@
-<div class="l-ui-page--vertically-centered">
-  <div class="l-ui-page--width-constrained">
+<div class="l-ui-page__vertically-centered">
+  <div class="l-ui-page__width-constrained">
     <h1>Register</h1>
 
     <%= form_with(model: resource, as: resource_name, url: registration_path(resource_name), class: 'l-ui-form l-ui-mt-3') do |f| %>
@@ -41,8 +41,8 @@
         <% end %>
       </div>
 
-      <div class="l-ui-form__group--large-gap">
-        <%= f.submit "Continue", class: "l-ui-button--primary l-ui-button--full" %>
+      <div class="l-ui-form__group l-ui-form__group--large-gap">
+        <%= f.submit "Continue", class: "l-ui-button l-ui-button--primary l-ui-button--full" %>
       </div>
 
       <div class="l-ui-form__group">

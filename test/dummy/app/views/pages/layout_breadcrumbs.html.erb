@@ -18,11 +18,11 @@
 </div>
 
 <div class="mt-6" data-controller="l-ui--modal">
-  <button type="button" class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <button type="button" class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-breadcrumbs-basic-heading">
     <div class="l-ui-modal__header">
       <h3 id="modal-breadcrumbs-basic-heading">Basic usage</h3>
-      <button type="button" class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+      <button type="button" class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
         <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
@@ -45,16 +45,16 @@
       ["Buttons", buttons_path]
     ]
   ) do %>
-    <button type="button" class="l-ui-button--primary">New</button>
+    <button type="button" class="l-ui-button l-ui-button--primary">New</button>
   <% end %>
 </div>
 
 <div class="mt-6" data-controller="l-ui--modal">
-  <button type="button" class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <button type="button" class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-title-bar-heading">
     <div class="l-ui-modal__header">
       <h3 id="modal-title-bar-heading">With a title bar helper</h3>
-      <button type="button" class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+      <button type="button" class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
         <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
@@ -66,7 +66,7 @@
     ["Buttons", buttons_path]
   ]
 ) do %&gt;
-  &lt;button type="button" class="l-ui-button--primary"&gt;New&lt;/button&gt;
+  &lt;button type="button" class="l-ui-button l-ui-button--primary"&gt;New&lt;/button&gt;
 &lt;% end %&gt;</code></pre>
     </div>
   </dialog>
@@ -85,15 +85,15 @@
     </thead>
     <tbody class="l-ui-table__body">
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l_ui_breadcrumbs</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l_ui_breadcrumbs</code></th>
         <td class="l-ui-table__cell">Wraps breadcrumb items in a <code>&lt;nav&gt;</code> with <code>aria-label="Breadcrumb"</code></td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l_ui_breadcrumb_item(label, path)</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l_ui_breadcrumb_item(label, path)</code></th>
         <td class="l-ui-table__cell">Renders a linked breadcrumb item with a separator</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l_ui_title_bar(title:, breadcrumbs: [], actions: nil, &amp;block)</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l_ui_title_bar(title:, breadcrumbs: [], actions: nil, &amp;block)</code></th>
         <td class="l-ui-table__cell">Renders breadcrumbs, an <code>&lt;h1&gt;</code> title, and optional actions in a responsive title bar</td>
       </tr>
     </tbody>
@@ -113,35 +113,35 @@
     </thead>
     <tbody class="l-ui-table__body">
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-breadcrumbs</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-breadcrumbs</code></th>
         <td class="l-ui-table__cell">Wrapper nav element</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-breadcrumbs__list</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-breadcrumbs__list</code></th>
         <td class="l-ui-table__cell">Ordered list containing items</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-breadcrumbs__item</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-breadcrumbs__item</code></th>
         <td class="l-ui-table__cell">Individual breadcrumb item with separator</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-breadcrumbs__link</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-breadcrumbs__link</code></th>
         <td class="l-ui-table__cell">Link styling within breadcrumb items</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-title-bar</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-title-bar</code></th>
         <td class="l-ui-table__cell">Responsive wrapper for breadcrumbs, title, and actions</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-title-bar__content</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-title-bar__content</code></th>
         <td class="l-ui-table__cell">Content column containing breadcrumbs and title</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-title-bar__title</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-title-bar__title</code></th>
         <td class="l-ui-table__cell">Page title element</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-title-bar__actions</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-title-bar__actions</code></th>
         <td class="l-ui-table__cell">Action area for buttons or links</td>
       </tr>
     </tbody>

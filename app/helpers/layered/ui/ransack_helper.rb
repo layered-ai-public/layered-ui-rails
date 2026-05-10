@@ -9,7 +9,7 @@ module Layered
       # Custom usage (full control via block):
       #   l_ui_search_form(@q, url: users_path) do |f|
       #     render "layered_ui/shared/search_field", form: f, field: :name_cont, label: "Name"
-      #     f.submit "Go", class: "l-ui-button--primary"
+      #     f.submit "Go", class: "l-ui-button l-ui-button--primary"
       #   end
       def l_ui_search_form(query, url: nil, fields: [], predicate: :cont, combinator: :or, label: "Search", placeholder: nil, button: "Search", clear: nil, turbo_frame: nil, html: {}, &block)
         result = require_ransack("l_ui_search_form") { |msg| tag.p(msg, class: "l-ui-notice l-ui-notice--warning") }
@@ -46,10 +46,10 @@ module Layered
             f.label(combined_field, label, class: "l-ui-sr-only") +
               tag.div(class: "l-ui-search-inline") do
                 content = f.text_field(combined_field, class: "l-ui-form__field", placeholder: placeholder) +
-                  f.submit(button, class: "l-ui-button--primary")
+                  f.submit(button, class: "l-ui-button l-ui-button--primary")
                 if clear
                   raise ArgumentError, "l_ui_search_form requires an explicit url: when clear: is set" unless url
-                  clear_options = { class: "l-ui-button--outline" }
+                  clear_options = { class: "l-ui-button l-ui-button--outline" }
                   clear_options[:data] = { turbo_frame: turbo_frame, turbo_action: turbo_action, action: "click->l-ui--search-form#clear" } if turbo_frame
                   content += link_to(clear == true ? "Clear" : clear, url, **clear_options)
                 end

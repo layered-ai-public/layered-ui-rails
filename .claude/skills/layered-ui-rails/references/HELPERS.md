@@ -80,7 +80,7 @@ l_ui_title_bar(title:, breadcrumbs: [], actions: nil, &block)
     ["Admin", admin_path]
   ]
 ) do %>
-  <%= link_to "New user", new_user_path, class: "l-ui-button--primary" %>
+  <%= link_to "New user", new_user_path, class: "l-ui-button l-ui-button--primary" %>
 <% end %>
 ```
 
@@ -132,7 +132,7 @@ Custom mode:
   <%= render "layered_ui/shared/search_field", form: f, field: :name_cont, label: "Name" %>
   <%= render "layered_ui/shared/search_select", form: f, field: :status_eq,
       label: "Status", options: ["Active", "Inactive"], include_blank: "Any" %>
-  <%= f.submit "Search", class: "l-ui-button--primary" %>
+  <%= f.submit "Search", class: "l-ui-button l-ui-button--primary" %>
 <% end %>
 ```
 
@@ -199,7 +199,7 @@ Formats a date/time value as `"%-d %b %Y, %H:%M"` (e.g. "15 Apr 2026, 10:30"). R
     { attribute: :email, render: ->(r) { r.email } },
     { attribute: :created_at, label: "Joined", render: ->(r) { l_ui_format_datetime(r.created_at) } },
   ],
-  actions: ->(r) { link_to "Edit", edit_user_path(r) },
+  actions: ->(r) { link_to "Edit", edit_user_path(r), class: "l-ui-table__action" },
   caption: "Users",
   query: @q,
   turbo_frame: "users") %>

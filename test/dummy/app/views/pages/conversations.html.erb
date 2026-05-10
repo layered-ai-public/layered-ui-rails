@@ -31,7 +31,7 @@
         </div>
       </div>
 
-      <div class="l-ui-message--sent">
+      <div class="l-ui-message l-ui-message--sent">
         <div class="l-ui-message__bubble">
           <div class="l-ui-message__author">Bob</div>
           <div class="l-ui-message__body">
@@ -64,7 +64,7 @@
         <div class="l-ui-message__avatar">BK</div>
         <div class="l-ui-message__bubble">
           <div class="l-ui-message__author">Bob</div>
-          <details class="l-ui-surface--collapsible-highlighted l-ui-surface--sm">
+          <details class="l-ui-surface l-ui-surface--collapsible-highlighted l-ui-surface--sm">
             <summary class="l-ui-surface__summary">
               <span>Reasoning</span>
               <%= image_tag "layered_ui/icon_chevron_right.svg", alt: "", class: "l-ui-icon l-ui-icon--sm l-ui-surface__chevron", aria: { hidden: true } %>
@@ -95,7 +95,7 @@ end</code></pre>
         <div class="l-ui-message__avatar">BK</div>
         <div class="l-ui-message__bubble">
           <div class="l-ui-message__author">Bob</div>
-          <details class="l-ui-surface--collapsible-highlighted l-ui-surface--sm">
+          <details class="l-ui-surface l-ui-surface--collapsible-highlighted l-ui-surface--sm">
             <summary class="l-ui-surface__summary">
               <span><strong>Tool:</strong> greet</span>
               <%= image_tag "layered_ui/icon_chevron_right.svg", alt: "", class: "l-ui-icon l-ui-icon--sm l-ui-surface__chevron", aria: { hidden: true } %>
@@ -113,7 +113,7 @@ end</code></pre>
         </div>
       </div>
 
-      <div class="l-ui-message--sent">
+      <div class="l-ui-message l-ui-message--sent">
         <div class="l-ui-message__bubble">
           <div class="l-ui-message__body l-ui-markdown">
             <p>Good catches, Bob. I agree with both suggestions. To summarise the changes needed:</p>
@@ -187,16 +187,16 @@ end</code></pre>
   </div>
   <div class="l-ui-conversation__composer">
     <textarea class="l-ui-conversation__composer-input" placeholder="Type a message..." rows="1" aria-label="Type a message"></textarea>
-    <button class="l-ui-button--primary">Send</button>
+    <button class="l-ui-button l-ui-button--primary">Send</button>
   </div>
 </div>
 
 <div class="mt-6" data-controller="l-ui--modal">
-  <button class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-conversations-container-heading">
     <div class="l-ui-modal__header">
       <h3 id="modal-conversations-container-heading">Conversation container</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
         <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
@@ -206,7 +206,7 @@ end</code></pre>
     &lt;div class="l-ui-conversation"&gt;
       &lt;!-- Plain text message --&gt;
       &lt;div class="l-ui-message"&gt;...&lt;/div&gt;
-      &lt;div class="l-ui-message--sent"&gt;...&lt;/div&gt;
+      &lt;div class="l-ui-message l-ui-message--sent"&gt;...&lt;/div&gt;
 
       &lt;!-- Markdown message --&gt;
       &lt;div class="l-ui-message"&gt;
@@ -222,7 +222,7 @@ end</code></pre>
       &lt;div class="l-ui-message"&gt;
         &lt;div class="l-ui-message__avatar"&gt;BK&lt;/div&gt;
         &lt;div class="l-ui-message__bubble"&gt;
-          &lt;details class="l-ui-surface--collapsible-highlighted l-ui-surface--sm"&gt;
+          &lt;details class="l-ui-surface l-ui-surface--collapsible-highlighted l-ui-surface--sm"&gt;
             &lt;summary class="l-ui-surface__summary"&gt;
               &lt;span&gt;Reasoning&lt;/span&gt;
               &lt;img src="layered_ui/icon_chevron_right.svg" alt="" class="l-ui-icon l-ui-icon--sm l-ui-surface__chevron" aria-hidden="true"&gt;
@@ -239,7 +239,7 @@ end</code></pre>
         &lt;div class="l-ui-message__avatar"&gt;BK&lt;/div&gt;
         &lt;div class="l-ui-message__bubble"&gt;
           &lt;div class="l-ui-message__author"&gt;Bob&lt;/div&gt;
-          &lt;details class="l-ui-surface--collapsible-highlighted l-ui-surface--sm"&gt;
+          &lt;details class="l-ui-surface l-ui-surface--collapsible-highlighted l-ui-surface--sm"&gt;
             &lt;summary class="l-ui-surface__summary"&gt;
               &lt;span&gt;&lt;strong&gt;Tool:&lt;/strong&gt; greet&lt;/span&gt;
               &lt;img ... class="l-ui-icon l-ui-icon--sm l-ui-surface__chevron"&gt;
@@ -271,7 +271,7 @@ end</code></pre>
     &lt;textarea class="l-ui-conversation__composer-input"
       placeholder="Type a message..." rows="1"&gt;
     &lt;/textarea&gt;
-    &lt;button class="l-ui-button--primary"&gt;Send&lt;/button&gt;
+    &lt;button class="l-ui-button l-ui-button--primary"&gt;Send&lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
     </div>
@@ -291,87 +291,87 @@ end</code></pre>
     </thead>
     <tbody class="l-ui-table__body">
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-conversation</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-conversation</code></th>
         <td class="l-ui-table__cell">Container for a list of messages</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-conversation__container</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-conversation__container</code></th>
         <td class="l-ui-table__cell">Full-height container with scrolling messages and composer</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-conversation__messages</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-conversation__messages</code></th>
         <td class="l-ui-table__cell">Scrollable messages area</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-conversation__composer</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-conversation__composer</code></th>
         <td class="l-ui-table__cell">Message input area pinned to bottom</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-conversation__composer-input</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-conversation__composer-input</code></th>
         <td class="l-ui-table__cell">Textarea overrides for composing messages (use with <code>l-ui-form__field</code>)</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-conversation__separator</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-conversation__separator</code></th>
         <td class="l-ui-table__cell">Date separator with horizontal lines</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-message</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-message</code></th>
         <td class="l-ui-table__cell">Received message (left-aligned with avatar)</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-message--sent</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-message--sent</code></th>
         <td class="l-ui-table__cell">Sent message (right-aligned, no avatar)</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-message__avatar</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-message__avatar</code></th>
         <td class="l-ui-table__cell">Circular avatar aligned to bottom of bubble</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-message__bubble</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-message__bubble</code></th>
         <td class="l-ui-table__cell">Message bubble with background</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-message__author</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-message__author</code></th>
         <td class="l-ui-table__cell">Author name inside bubble</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-message__body</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-message__body</code></th>
         <td class="l-ui-table__cell">Message text</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-message__footer</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-message__footer</code></th>
         <td class="l-ui-table__cell">Container for tokens and timestamp</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-message__metadata</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-message__metadata</code></th>
         <td class="l-ui-table__cell">Metadata text, left-aligned in footer</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-message__timestamp</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-message__timestamp</code></th>
         <td class="l-ui-table__cell">Message time, right-aligned in footer</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-scroll-to-bottom</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-scroll-to-bottom</code></th>
         <td class="l-ui-table__cell">Sticky scroll-to-bottom button, hidden by default</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-scroll-to-bottom[data-visible]</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-scroll-to-bottom[data-visible]</code></th>
         <td class="l-ui-table__cell">Reveals the scroll-to-bottom button</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-typing-indicator</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-typing-indicator</code></th>
         <td class="l-ui-table__cell">Animated typing indicator with bouncing dots</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-typing-indicator__dot</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-typing-indicator__dot</code></th>
         <td class="l-ui-table__cell">Individual dot inside the typing indicator</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-stream-fade</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-stream-fade</code></th>
         <td class="l-ui-table__cell">Fade-in animation for streamed chunks as they arrive (0.5s ease-out)</td>
       </tr>
       <tr>
-        <th class="l-ui-table__cell--primary" scope="row"><code>l-ui-stream-fade-word</code></th>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-stream-fade__word</code></th>
         <td class="l-ui-table__cell">Staggered word-by-word fade-in (0.5s ease-out, 25ms per word via <code>--i</code>, capped at 1s)</td>
       </tr>
     </tbody>
@@ -390,11 +390,11 @@ end</code></pre>
 </div>
 
 <div class="mt-4" data-controller="l-ui--modal">
-  <button class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-conversations-scroll-to-bottom-heading">
     <div class="l-ui-modal__header">
       <h3 id="modal-conversations-scroll-to-bottom-heading">Scroll to bottom</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
         <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
@@ -419,11 +419,11 @@ end</code></pre>
 </div>
 
 <div class="mt-4" data-controller="l-ui--modal">
-  <button class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-conversations-stream-fade-heading">
     <div class="l-ui-modal__header">
       <h3 id="modal-conversations-stream-fade-heading">Stream fade-in</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
         <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
@@ -440,26 +440,26 @@ end</code></pre>
 
 <h2 class="mt-8">Stream fade-in (by word)</h2>
 
-<p class="mt-4">Use <code>l-ui-stream-fade-word</code> for a staggered word-by-word reveal once the full response is available. Set the <code>--i</code> custom property on each word to its index; the per-word delay is 25ms, capped at 1s.</p>
+<p class="mt-4">Use <code>l-ui-stream-fade__word</code> for a staggered word-by-word reveal once the full response is available. Set the <code>--i</code> custom property on each word to its index; the per-word delay is 25ms, capped at 1s.</p>
 
 <div class="l-ui-surface mt-4">
-  <p><span class="l-ui-stream-fade-word" style="--i: 0">Hello,</span> <span class="l-ui-stream-fade-word" style="--i: 1">I'd</span> <span class="l-ui-stream-fade-word" style="--i: 2">be</span> <span class="l-ui-stream-fade-word" style="--i: 3">happy</span> <span class="l-ui-stream-fade-word" style="--i: 4">to</span> <span class="l-ui-stream-fade-word" style="--i: 5">help</span> <span class="l-ui-stream-fade-word" style="--i: 6">with</span> <span class="l-ui-stream-fade-word" style="--i: 7">that.</span></p>
+  <p><span class="l-ui-stream-fade__word" style="--i: 0">Hello,</span> <span class="l-ui-stream-fade__word" style="--i: 1">I'd</span> <span class="l-ui-stream-fade__word" style="--i: 2">be</span> <span class="l-ui-stream-fade__word" style="--i: 3">happy</span> <span class="l-ui-stream-fade__word" style="--i: 4">to</span> <span class="l-ui-stream-fade__word" style="--i: 5">help</span> <span class="l-ui-stream-fade__word" style="--i: 6">with</span> <span class="l-ui-stream-fade__word" style="--i: 7">that.</span></p>
 </div>
 
 <div class="mt-4" data-controller="l-ui--modal">
-  <button class="l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-conversations-stream-fade-word-heading">
     <div class="l-ui-modal__header">
       <h3 id="modal-conversations-stream-fade-word-heading">Stream fade-in (by word)</h3>
-      <button class="l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
         <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
       </button>
     </div>
     <div class="l-ui-modal__body">
       <pre class="l-ui-surface"><code>&lt;!-- Wrap each word and pass its index via --i --&gt;
-&lt;span class="l-ui-stream-fade-word" style="--i: 0"&gt;Hello,&lt;/span&gt;
-&lt;span class="l-ui-stream-fade-word" style="--i: 1"&gt;I'd&lt;/span&gt;
-&lt;span class="l-ui-stream-fade-word" style="--i: 2"&gt;be&lt;/span&gt;
+&lt;span class="l-ui-stream-fade__word" style="--i: 0"&gt;Hello,&lt;/span&gt;
+&lt;span class="l-ui-stream-fade__word" style="--i: 1"&gt;I'd&lt;/span&gt;
+&lt;span class="l-ui-stream-fade__word" style="--i: 2"&gt;be&lt;/span&gt;
 ...</code></pre>
     </div>
   </dialog>

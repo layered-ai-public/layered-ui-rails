@@ -234,21 +234,6 @@
   @apply font-manrope font-bold;
 }
 
-@utility label {
-  @apply block
-         w-full
-         text-sm font-manrope font-bold
-         text-foreground;
-}
-
-@utility page {
-  @apply flex flex-1 flex-col
-         min-h-full
-         max-w-full px-4 pb-4 pt-[calc(var(--header-height)+1rem)]
-         overflow-x-clip
-         transition-[margin] duration-300;
-}
-
 .l-ui-mt-0 {
   @apply !mt-0;
 }
@@ -458,7 +443,11 @@
 /* Page */
 
 .l-ui-page {
-  @apply page;
+  @apply flex flex-1 flex-col
+         min-h-full
+         max-w-full px-4 pb-4 pt-[calc(var(--header-height)+1rem)]
+         overflow-x-clip
+         transition-[margin] duration-300;
 }
 
 .l-ui-page a:not([class*="l-ui-"]),
@@ -468,19 +457,15 @@
          focus-ring rounded-sm;
 }
 
-.l-ui-page--with-navigation {
-  @apply page;
-}
-
 .l-ui-body--always-show-navigation .l-ui-page--with-navigation {
   @apply md:ml-[240px];
 }
 
-.l-ui-page--vertically-centered {
+.l-ui-page__vertically-centered {
   @apply flex flex-1 flex-col items-center justify-center;
 }
 
-.l-ui-page--width-constrained {
+.l-ui-page__width-constrained {
   @apply flex flex-col w-full
          my-auto
          md:max-w-sm;
@@ -611,7 +596,7 @@
          transition-transform duration-200;
 }
 
-.l-ui-navigation-container.open {
+.l-ui-navigation-container--open {
   @apply visible translate-x-0;
 }
 
@@ -626,7 +611,7 @@
          transition-opacity duration-200;
 }
 
-.l-ui-backdrop.open {
+.l-ui-backdrop--open {
   @apply opacity-100 pointer-events-auto;
 }
 
@@ -643,7 +628,7 @@
          h-full;
 }
 
-@utility navigation__item {
+.l-ui-navigation__item {
   @apply flex items-center gap-3
          w-full min-h-[40px] px-3
          text-sm text-foreground-muted font-medium
@@ -652,13 +637,8 @@
          transition-colors;
 }
 
-.l-ui-navigation__item {
-  @apply navigation__item;
-}
-
 .l-ui-navigation__item--active {
-  @apply navigation__item
-         bg-surface-highlighted
+  @apply bg-surface-highlighted
          text-foreground;
 }
 
@@ -817,7 +797,7 @@
 
 /* Buttons */
 
-@utility button {
+.l-ui-button {
   @apply flex items-center justify-center gap-2
          px-4 min-h-[44px]
          text-sm font-medium
@@ -827,47 +807,34 @@
          transition-colors;
 }
 
-.l-ui-button {
-  @apply button;
-}
-
 .l-ui-button--full {
   @apply w-full
          text-center;
 }
 
 .l-ui-button--primary {
-  @apply button
-         bg-button-primary-bg
+  @apply bg-button-primary-bg
          text-button-primary-text;
 }
 
 .l-ui-button--outline {
-  @apply button
-         border border-border-control
+  @apply border border-border-control
          text-foreground;
 }
 
 .l-ui-button--danger {
-  @apply button
-         bg-danger
+  @apply bg-danger
          text-white;
 }
 
 .l-ui-button--outline-danger {
-  @apply button
-         border border-danger
+  @apply border border-danger
          text-danger;
 }
 
 .l-ui-button--navigation-toggle {
-  @apply flex items-center justify-center
-         min-w-[44px] min-h-[44px] p-2
-         cursor-pointer
-         text-foreground
-         rounded-sm
-         focus-ring
-         transition-colors;
+  @apply min-w-[44px] p-2
+         text-foreground;
 }
 
 .l-ui-body--always-show-navigation .l-ui-button--navigation-toggle {
@@ -875,13 +842,8 @@
 }
 
 .l-ui-button--icon {
-  @apply flex items-center justify-center
-         min-w-[44px] min-h-[44px] p-2
-         cursor-pointer
-         text-foreground-muted
-         rounded-sm
-         focus-ring
-         transition-colors;
+  @apply min-w-[44px] p-2
+         text-foreground-muted;
 }
 
 .l-ui-button--small {
@@ -890,7 +852,6 @@
          text-xs;
 }
 
-[class*="l-ui-button--"]:disabled,
 .l-ui-button:disabled {
   @apply opacity-50
          cursor-not-allowed;
@@ -940,13 +901,9 @@
 
 /* Surface */
 
-@utility surface {
-  @apply p-4
-         rounded-sm overflow-x-auto;
-}
-
 .l-ui-surface {
-  @apply surface
+  @apply p-4
+         rounded-sm overflow-x-auto
          bg-surface;
 }
 
@@ -965,19 +922,15 @@ pre.l-ui-surface {
 }
 
 .l-ui-surface--highlighted {
-  @apply surface
-         bg-surface-highlighted;
+  @apply bg-surface-highlighted;
 }
 
 .l-ui-surface--collapsible {
-  @apply surface
-         p-0
-         bg-surface;
+  @apply p-0;
 }
 
 .l-ui-surface--collapsible-highlighted {
-  @apply surface
-         p-0
+  @apply p-0
          bg-surface-highlighted;
 }
 
@@ -1100,7 +1053,7 @@ pre.l-ui-surface {
          mt-2 gap-3;
 }
 
-.l-ui-checkbox-container input[type="checkbox"] {
+.l-ui-checkbox {
   @apply w-6 h-6
          accent-foreground
          focus-ring
@@ -1164,18 +1117,21 @@ pre.l-ui-surface {
 }
 
 .l-ui-label {
-  @apply label;
+  @apply block
+         w-full
+         text-sm font-manrope font-bold
+         text-foreground;
 }
 
-.l-ui-label--checkbox {
+.l-ui-checkbox-container__label {
   @apply text-sm cursor-pointer;
 }
 
-.l-ui-select-wrapper {
+.l-ui-select-container {
   @apply relative;
 }
 
-.l-ui-select-wrapper::after {
+.l-ui-select-container::after {
   @apply absolute right-3 top-1/2 -translate-y-1/2
          w-4 h-4
          pointer-events-none;
@@ -1222,13 +1178,17 @@ pre.l-ui-surface {
 
 /* Tabs */
 
+.l-ui-tabs {
+  @apply block;
+}
+
 .l-ui-tabs__list {
   @apply flex
          gap-4
          border-b border-border;
 }
 
-@utility tabs__tab {
+.l-ui-tabs__tab {
   @apply -mb-px min-h-[44px]
          text-sm font-medium
          text-foreground-muted
@@ -1238,13 +1198,8 @@ pre.l-ui-surface {
          transition-colors;
 }
 
-.l-ui-tabs__tab {
-  @apply tabs__tab;
-}
-
 .l-ui-tabs__tab--active {
-  @apply tabs__tab
-         text-accent
+  @apply text-accent
          border-accent;
 }
 
@@ -1253,10 +1208,6 @@ pre.l-ui-surface {
 }
 
 /* Tables */
-
-@utility table-cell-padding {
-  @apply px-2 py-2.5;
-}
 
 .l-ui-table-container {
   @apply overflow-x-auto;
@@ -1285,9 +1236,7 @@ pre.l-ui-surface {
 }
 
 .l-ui-table__header-cell--action {
-  @apply min-h-6 px-2 py-2
-         text-sm font-bold font-manrope
-         text-right;
+  @apply text-right;
 }
 
 .l-ui-table__sort-link {
@@ -1307,30 +1256,29 @@ pre.l-ui-surface {
 }
 
 .l-ui-table__cell {
-  @apply table-cell-padding
+  @apply px-2 py-2.5
          text-sm text-foreground-muted whitespace-nowrap;
 }
 
 .l-ui-table__cell--primary {
-  @apply table-cell-padding
-         text-left text-sm font-medium whitespace-nowrap;
+  @apply text-left font-medium
+         text-foreground;
 }
 
 .l-ui-table__cell--action {
-  @apply table-cell-padding
-         flex items-center justify-end gap-4
-         text-sm font-medium whitespace-nowrap;
+  @apply flex items-center justify-end gap-4
+         font-medium;
+}
 
-  & button, & a {
-    @apply inline-flex items-center justify-center
-           min-w-6 min-h-6 px-0.5
-           text-foreground-muted bg-transparent
-           border-0 cursor-pointer focus-ring rounded-sm;
-  }
+.l-ui-table__action {
+  @apply inline-flex items-center justify-center
+         min-w-6 min-h-6 px-0.5
+         text-foreground-muted bg-transparent
+         border-0 cursor-pointer focus-ring rounded-sm;
+}
 
-  & .l-ui-table__action--danger {
-    @apply text-danger underline underline-offset-2 decoration-danger/60;
-  }
+.l-ui-table__action--danger {
+  @apply text-danger underline underline-offset-2 decoration-danger/60;
 }
 
 .l-ui-table th:first-child,
@@ -1345,13 +1293,13 @@ pre.l-ui-surface {
 
 /* Pagination */
 
-@utility pagination {
+@utility pagination-base {
   @apply flex items-center justify-center
          gap-1
          select-none;
 }
 
-@utility pagination__item {
+@utility pagination-item {
   @apply flex items-center justify-center
          h-[44px] px-3 min-w-[44px]
          text-sm font-medium
@@ -1362,21 +1310,21 @@ pre.l-ui-surface {
          hover:bg-surface;
 }
 
-@utility pagination__item--active {
+@utility pagination-item-active {
   @apply font-bold
          bg-surface-highlighted
          text-foreground
          pointer-events-none;
 }
 
-@utility pagination__item--disabled {
+@utility pagination-item-disabled {
   @apply opacity-50
          text-foreground-muted
          cursor-not-allowed
          hover:bg-transparent;
 }
 
-@utility pagination__gap {
+@utility pagination-gap {
   @apply flex items-center justify-center
          h-[44px] px-3 min-w-[44px]
          text-sm font-medium
@@ -1385,59 +1333,55 @@ pre.l-ui-surface {
 }
 
 .l-ui-pagination {
-  @apply pagination;
+  @apply pagination-base;
 }
 
 .l-ui-pagination__item {
-  @apply pagination__item;
+  @apply pagination-item;
 }
 
 .l-ui-pagination__item--active {
-  @apply pagination__item--active;
+  @apply pagination-item-active;
 }
 
 .l-ui-pagination__item--disabled {
-  @apply pagination__item--disabled;
+  @apply pagination-item-disabled;
 }
 
 .l-ui-pagination__gap {
-  @apply pagination__gap;
+  @apply pagination-gap;
 }
 
 /* Pagination (pagy) */
 
 .l-ui-pagy-container .pagy.series-nav {
-  @apply pagination;
+  @apply pagination-base;
 }
 
 .l-ui-pagy-container .pagy.series-nav a,
 .l-ui-pagy-container .pagy.series-nav span {
-  @apply pagination__item no-underline;
+  @apply pagination-item no-underline;
 }
 
 .l-ui-pagy-container .pagy.series-nav a[aria-current="page"] {
-  @apply pagination__item--active;
+  @apply pagination-item-active;
 }
 
 .l-ui-pagy-container .pagy.series-nav .disabled {
-  @apply pagination__item--disabled;
+  @apply pagination-item-disabled;
 }
 
 .l-ui-pagy-container .pagy.series-nav .gap {
-  @apply pagination__gap;
+  @apply pagination-gap;
 }
 
 /* Badges */
 
-@utility badge {
+.l-ui-badge {
   @apply inline-flex items-center
          px-2 py-1
          text-xs font-medium
          rounded;
-}
-
-.l-ui-badge {
-  @apply badge;
 }
 
 .l-ui-badge--rounded {
@@ -1445,26 +1389,22 @@ pre.l-ui-surface {
 }
 
 .l-ui-badge--default {
-  @apply badge
-         bg-surface-highlighted
+  @apply bg-surface-highlighted
          text-foreground-muted;
 }
 
 .l-ui-badge--success {
-  @apply badge
-         bg-success-bg
+  @apply bg-success-bg
          text-success-text;
 }
 
 .l-ui-badge--warning {
-  @apply badge
-         bg-warning-bg
+  @apply bg-warning-bg
          text-warning-text;
 }
 
 .l-ui-badge--danger {
-  @apply badge
-         bg-error-bg
+  @apply bg-error-bg
          text-error-text;
 }
 
@@ -1498,7 +1438,7 @@ pre.l-ui-surface {
   transition-timing-function: ease-out;
 }
 
-.l-ui-panel__button.hidden {
+.l-ui-panel__button--hidden {
   @apply invisible
          opacity-0 pointer-events-none;
 }
@@ -1535,7 +1475,7 @@ pre.l-ui-surface {
          transition-transform duration-300;
 }
 
-.l-ui-panel-container.open {
+.l-ui-panel-container--open {
   @apply translate-x-0;
 }
 
@@ -1595,7 +1535,7 @@ pre.l-ui-surface {
          gap-2;
 }
 
-.l-ui-button--panel-close {
+.l-ui-panel__close-button {
   @apply -mr-4;
 }
 
@@ -1815,7 +1755,7 @@ pre.l-ui-surface {
   animation: l-ui-stream-fade-in 0.5s ease-out both;
 }
 
-.l-ui-stream-fade-word {
+.l-ui-stream-fade__word {
   display: inline-block;
   animation: l-ui-stream-fade-in 0.5s ease-out both;
   animation-delay: min(calc(var(--i, 0) * 25ms), 1s);
@@ -1823,7 +1763,7 @@ pre.l-ui-surface {
 
 @media (prefers-reduced-motion: reduce) {
   .l-ui-stream-fade,
-  .l-ui-stream-fade-word {
+  .l-ui-stream-fade__word {
     animation: none;
   }
 }

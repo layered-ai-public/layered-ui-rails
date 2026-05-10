@@ -39,7 +39,7 @@ class TitleBarHelperTest < ActionView::TestCase
   end
 
   test "renders actions passed as content" do
-    action = button_tag("New", type: "button", class: "l-ui-button--primary")
+    action = button_tag("New", type: "button", class: "l-ui-button l-ui-button--primary")
     result = l_ui_title_bar(title: "Users", actions: action)
 
     assert_includes result, 'class="l-ui-title-bar__actions"'
@@ -51,8 +51,8 @@ class TitleBarHelperTest < ActionView::TestCase
     result = l_ui_title_bar(
       title: "Users",
       actions: [
-        link_to("Export", "/users.csv", class: "l-ui-button--outline"),
-        link_to("New", "/users/new", class: "l-ui-button--primary")
+        link_to("Export", "/users.csv", class: "l-ui-button l-ui-button--outline"),
+        link_to("New", "/users/new", class: "l-ui-button l-ui-button--primary")
       ]
     )
 
@@ -64,7 +64,7 @@ class TitleBarHelperTest < ActionView::TestCase
 
   test "renders actions passed as a block" do
     result = l_ui_title_bar(title: "Users") do
-      button_tag("New", type: "button", class: "l-ui-button--primary")
+      button_tag("New", type: "button", class: "l-ui-button l-ui-button--primary")
     end
 
     assert_includes result, 'class="l-ui-title-bar__actions"'
