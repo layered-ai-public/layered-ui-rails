@@ -199,7 +199,7 @@ Formats a date/time value as `"%-d %b %Y, %H:%M"` (e.g. "15 Apr 2026, 10:30"). R
     { attribute: :email, render: ->(r) { r.email } },
     { attribute: :created_at, label: "Joined", render: ->(r) { l_ui_format_datetime(r.created_at) } },
   ],
-  actions: ->(r) { link_to "Edit", edit_user_path(r), class: "l-ui-table__action" },
+  actions: ->(r) { link_to "Edit", edit_user_path(r), class: "l-ui-button l-ui-button--outline l-ui-button--small" },
   caption: "Users",
   query: @q,
   turbo_frame: "users") %>
