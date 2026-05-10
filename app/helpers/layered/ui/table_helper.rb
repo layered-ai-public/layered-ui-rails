@@ -20,7 +20,7 @@ module Layered
       #       { attribute: :name, primary: true, render: ->(r) { link_to r.name, persona_path(r) } },
       #       { attribute: :description, render: ->(r) { truncate(r.description, length: 60) } },
       #     ],
-      #     actions: ->(r) { link_to "Edit", edit_persona_path(r), class: "l-ui-table__action" },
+      #     actions: ->(r) { link_to "Edit", edit_persona_path(r), class: "l-ui-button l-ui-button--outline l-ui-button--small" },
       #     caption: "Personas"
       #   )
       #
