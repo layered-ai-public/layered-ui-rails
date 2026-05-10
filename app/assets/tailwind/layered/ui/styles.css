@@ -1077,7 +1077,7 @@ pre.l-ui-surface {
          mt-2 gap-3;
 }
 
-.l-ui-checkbox-container input[type="checkbox"] {
+.l-ui-checkbox {
   @apply w-6 h-6
          accent-foreground
          focus-ring

@@ -55,6 +55,17 @@ A few classes that read as modifiers were not deltas of their named base; they h
 
 The descendant selector that styled bare `<a>`/`<button>` elements inside `l-ui-table__cell--action` is retained for backwards compatibility, but new markup should use the explicit class so `--danger` has a real base.
 
+### Checkbox input class
+
+`l-ui-checkbox` is now a real class. Previously, checkbox inputs inside `.l-ui-checkbox-container` were styled by a descendant selector; that selector has been replaced with an explicit class so the input has a documented hook. Add `l-ui-checkbox` to bare `<input type="checkbox">` elements (or pass `class: "l-ui-checkbox"` to `f.check_box`):
+
+```html
+<div class="l-ui-checkbox-container">
+  <input class="l-ui-checkbox" type="checkbox" id="opt" value="1">
+  <label class="l-ui-checkbox-container__label" for="opt">Option</label>
+</div>
+```
+
 ### Tabs wrapper class
 
 `l-ui-tabs` is now a defined block. Add it to the tabs container so the BEM children (`__list`, `__tab`, `__panel`) have a parent block:

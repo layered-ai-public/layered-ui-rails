@@ -19,7 +19,7 @@
 
       <% if devise_mapping.rememberable? %>
         <div class="l-ui-form__group l-ui-checkbox-container l-ui-mt-8">
-          <%= f.check_box :remember_me %>
+          <%= f.check_box :remember_me, class: "l-ui-checkbox" %>
           <%= f.label :remember_me, class: "l-ui-checkbox-container__label" %>
         </div>
       <% end %>

@@ -69,6 +69,7 @@ Always combine the `l-ui-surface` base class with any modifiers (e.g. `l-ui-surf
 .l-ui-label                    Form label
 
 .l-ui-checkbox-container          Checkbox row (input + label)
+.l-ui-checkbox                    Checkbox input
 .l-ui-checkbox-container__label   Checkbox label element
 
 .l-ui-select                   Select dropdown
@@ -93,6 +94,7 @@ Always combine the `l-ui-surface` base class with any modifiers (e.g. `l-ui-surf
 .l-ui-table__header                <thead> row
 .l-ui-table__header-cell           <th> cell
 .l-ui-table__header-cell--action   Right-aligned action header
+.l-ui-table__header-cell--sortable Marker class for sortable headers (no engine styles; host-app/JS hook)
 .l-ui-table__sort-link             Sortable header link
 .l-ui-table__sort-indicator        Sort direction indicator (arrow)
 .l-ui-table__body                  <tbody>
@@ -218,7 +220,7 @@ Always combine the base block with a modifier, e.g. `<span class="l-ui-badge l-u
 .l-ui-navigation__section         Section group (li)
 .l-ui-navigation__section--has-heading  Section that has a visible heading
 .l-ui-navigation__section--separated    Section with top border separator
-.l-ui-navigation__section--collapsible  Section with toggle button heading
+.l-ui-navigation__section--collapsible  Marker class for collapsible sections (no engine styles; host-app/JS hook)
 .l-ui-navigation__section-heading       Plain section label (small, uppercase, muted)
 .l-ui-navigation__section-toggle        Collapsible section heading (item-row sized button)
 .l-ui-navigation__section-chevron       Toggle chevron (rotates when closed)
