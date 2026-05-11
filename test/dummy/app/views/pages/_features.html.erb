@@ -1,56 +1,75 @@
+<% icon_class = "l-ui-icon l-ui-icon--xl brightness-0 invert" %>
+<% bubble_class = "flex shrink-0 items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br" %>
+
 <h2 class="mt-6">Features</h2>
 <div class="l-ui-grid mt-4">
   <div class="l-ui-surface flex items-center gap-4">
-    <%= image_tag "icon_minimal.svg", class: "l-ui-icon l-ui-icon--xl", alt: "", aria: { hidden: true } %>
+    <div class="<%= bubble_class %> from-black to-black">
+      <%= image_tag "icon_minimal.svg", class: icon_class, alt: "", aria: { hidden: true } %>
+    </div>
     <div>
       <h3>Minimal style</h3>
       <p>Monochrome out of the box and fully extensible - override colours, typography, and components to suit your project.</p>
     </div>
   </div>
   <div class="l-ui-surface flex items-center gap-4">
-    <%= image_tag "icon_moon.svg", class: "l-ui-icon l-ui-icon--xl", alt: "", aria: { hidden: true } %>
+    <div class="<%= bubble_class %> from-black to-black">
+      <%= image_tag "icon_moon.svg", class: icon_class, alt: "", aria: { hidden: true } %>
+    </div>
     <div>
       <h3>Dark/light theme</h3>
       <p>System preference detection with localStorage persistence and manual toggle.</p>
     </div>
   </div>
   <div class="l-ui-surface flex items-center gap-4">
-    <%= image_tag "icon_paint.svg", class: "l-ui-icon l-ui-icon--xl", alt: "", aria: { hidden: true } %>
+    <div class="<%= bubble_class %> from-fuchsia-500 via-pink-500 to-orange-400">
+      <%= image_tag "icon_paint.svg", class: icon_class, alt: "", aria: { hidden: true } %>
+    </div>
     <div>
       <h3>Customisable logo and icons</h3>
       <p>Override the default logos and icons to match your brand.</p>
     </div>
   </div>
   <div class="l-ui-surface flex items-center gap-4">
-    <%= image_tag "icon_device.svg", class: "l-ui-icon l-ui-icon--xl", alt: "", aria: { hidden: true } %>
+    <div class="<%= bubble_class %> from-sky-500 to-cyan-500">
+      <%= image_tag "icon_device.svg", class: icon_class, alt: "", aria: { hidden: true } %>
+    </div>
     <div>
       <h3>Responsive layout</h3>
       <p>Tested thoroughly across form factors, from mobile to ultrawide.</p>
     </div>
   </div>
   <div class="l-ui-surface flex items-center gap-4">
-    <%= image_tag "icon_eye.svg", class: "l-ui-icon l-ui-icon--xl", alt: "", aria: { hidden: true } %>
+    <div class="<%= bubble_class %> from-emerald-500 to-teal-500">
+      <%= image_tag "icon_eye.svg", class: icon_class, alt: "", aria: { hidden: true } %>
+    </div>
     <div>
       <h3>WCAG 2.2 AA accessible</h3>
       <p>Skip links, focus indicators, ARIA attributes, and 4.5:1 contrast ratios. Read the <%= link_to "latest accessibility audits", "https://github.com/layered-ai-public/layered-ui-rails/blob/main/audits/accessibility", target: "_blank", rel: "noopener noreferrer" %>.</p>
     </div>
   </div>
   <div class="l-ui-surface flex items-center gap-4">
-    <%= image_tag "icon_lighthouse.svg", class: "l-ui-icon l-ui-icon--xl", alt: "", aria: { hidden: true } %>
+    <div class="<%= bubble_class %> from-amber-400 to-orange-500">
+      <%= image_tag "icon_lighthouse.svg", class: icon_class, alt: "", aria: { hidden: true } %>
+    </div>
     <div>
       <h3>Google Lighthouse optimised</h3>
       <p><code>layered-ui-rails</code> scores a <%= link_to "perfect 100", image_path("lighthouse.webp"), target: "_blank" %> across all four Google Lighthouse categories - performance, accessibility, best practices, and SEO.</p>
     </div>
   </div>
   <div class="l-ui-surface flex items-center gap-4">
-    <%= image_tag "icon_puzzle.svg", class: "l-ui-icon l-ui-icon--xl", alt: "", aria: { hidden: true } %>
+    <div class="<%= bubble_class %> from-cyan-400 via-blue-500 to-violet-600">
+      <%= image_tag "icon_puzzle.svg", class: icon_class, alt: "", aria: { hidden: true } %>
+    </div>
     <div>
       <h3>Optional integrations</h3>
       <p><%= link_to "Devise", devise_path %> authentication, <%= link_to "Pagy", pagy_path %> pagination, and <%= link_to "Ransack", ransack_path %> search and sort with styled controls.</p>
     </div>
   </div>
   <div class="l-ui-surface flex items-center gap-4">
-    <%= image_tag "icon_agent.svg", class: "l-ui-icon l-ui-icon--xl", alt: "", aria: { hidden: true } %>
+    <div class="<%= bubble_class %> from-indigo-500 via-purple-500 to-pink-500">
+      <%= image_tag "icon_agent.svg", class: icon_class, alt: "", aria: { hidden: true } %>
+    </div>
     <div>
       <h3>Agent skill</h3>
       <p>Bundled agent skill teaches AI agents to install, configure, and build with <code>layered-ui-rails</code>.</p>
