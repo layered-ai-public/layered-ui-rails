@@ -1787,6 +1787,10 @@ pre.l-ui-surface {
          border-0 md:border md:border-border rounded-none md:rounded-sm;
 }
 
+.l-ui-modal[open] {
+  @apply flex flex-col;
+}
+
 .l-ui-modal::backdrop {
   @apply backdrop-blur-sm;
 }
@@ -1798,7 +1802,7 @@ pre.l-ui-surface {
 }
 
 .l-ui-modal__body {
-  @apply overflow-y-auto
+  @apply flex-1 min-h-0 overflow-y-auto
          px-5 py-4;
 }
 

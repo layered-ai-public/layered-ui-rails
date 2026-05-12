@@ -1,0 +1,183 @@
+<%= l_ui_title_bar(
+  title: "Modals",
+  breadcrumbs: [
+    ["Home", root_path]
+  ]
+) %>
+
+<p class="mt-4">Modal dialogs built on the native <code>&lt;dialog&gt;</code> element, with a trigger button, header, scrollable body, and backdrop-click to close. Wired up to the <code>l-ui--modal</code> Stimulus controller.</p>
+
+<h2 class="mt-8">CSS-classes example</h2>
+
+<p class="mt-4">Use the <code>l-ui-modal</code> classes directly when you need full control over markup.</p>
+
+<div class="mt-4" data-controller="l-ui--modal">
+  <button type="button" class="l-ui-button l-ui-button--outline" data-action="l-ui--modal#open">Open modal</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-classes-example-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-classes-example-heading">Example modal</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <p>The body scrolls when content overflows. Close by pressing <kbd>Esc</kbd>, clicking the close button, or clicking the backdrop.</p>
+    </div>
+  </dialog>
+</div>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-classes-code-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-classes-code-heading">CSS-classes example</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;div data-controller="l-ui--modal"&gt;
+  &lt;button type="button" class="l-ui-button l-ui-button--outline"
+          data-action="l-ui--modal#open"&gt;Open modal&lt;/button&gt;
+  &lt;dialog class="l-ui-modal"
+          data-l-ui--modal-target="dialog"
+          data-action="click-&gt;l-ui--modal#closeOnBackdrop"
+          aria-labelledby="modal-example-heading"&gt;
+    &lt;div class="l-ui-modal__header"&gt;
+      &lt;h3 id="modal-example-heading"&gt;Example modal&lt;/h3&gt;
+      &lt;button class="l-ui-button l-ui-button--icon"
+              data-action="l-ui--modal#close"
+              aria-label="Close"&gt;
+        &lt;%= image_tag "layered_ui/icon_close.svg",
+              class: "l-ui-icon l-ui-icon--sm",
+              alt: "", aria: { hidden: true } %&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class="l-ui-modal__body"&gt;
+      &lt;p&gt;Body content.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/dialog&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="mt-8">Helper</h2>
+
+<p class="mt-4">The <code>l_ui_modal</code> helper renders the trigger, dialog, header (with title and close button), and Stimulus wiring for you. The block's content is the modal body. Use <code>&lt;%</code> (not <code>&lt;%=</code>) when calling <code>m.trigger</code> - the builder captures its content.</p>
+
+<%= l_ui_modal(title: "Helper example", id: "modal-helper-example", container: { class: "mt-4" }) do |m| %>
+  <% m.trigger(class: "l-ui-button l-ui-button--outline") do %>
+    Open modal
+  <% end %>
+  <p>Rendered by <code>l_ui_modal</code>. Same markup, less boilerplate.</p>
+<% end %>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-helper-code-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-helper-code-heading">Helper example</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;%= l_ui_modal(title: "Helper example") do |m| %&gt;
+  &lt;% m.trigger(class: "l-ui-button l-ui-button--outline") do %&gt;
+    Open modal
+  &lt;% end %&gt;
+  &lt;p&gt;Rendered by l_ui_modal.&lt;/p&gt;
+&lt;% end %&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="mt-8">Opening from elsewhere</h2>
+
+<p class="mt-4">Give the modal a known <code>id:</code> and add <code>data-l-ui-modal-open="&lt;that id&gt;"</code> to any button on the page. The button does not need to be inside the helper's wrapper, and no <code>data-controller</code> or <code>data-action</code> is required - the <code>l-ui--modal</code> controller listens at the document level for matching clicks.</p>
+
+<%= l_ui_modal(title: "External trigger example", id: "modal-external-trigger", container: { class: "mt-4" }) do |m| %>
+  <% m.trigger(class: "l-ui-button l-ui-button--outline") do %>
+    Colocated trigger
+  <% end %>
+  <p>Both buttons open the same dialog. The second one lives outside the helper's wrapper entirely.</p>
+<% end %>
+
+<div class="mt-4">
+  <button type="button" class="l-ui-button l-ui-button--outline" data-l-ui-modal-open="modal-external-trigger">External trigger</button>
+</div>
+
+<p class="mt-4">Calling <code>dialog.showModal()</code> directly is not supported - it bypasses the <code>l-ui--modal</code> controller and skips scroll lock, focus restoration, open-count tracking, and the screen-reader announcement.</p>
+
+<h2 class="mt-8">Helper options</h2>
+
+<div class="l-ui-table-container mt-4">
+  <table class="l-ui-table">
+    <caption class="l-ui-sr-only">l_ui_modal options</caption>
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell" scope="col">Option</th>
+        <th class="l-ui-table__header-cell" scope="col">Description</th>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>title:</code></th>
+        <td class="l-ui-table__cell">Required. Heading text; also used for <code>aria-labelledby</code></td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>id:</code></th>
+        <td class="l-ui-table__cell">DOM id for the <code>&lt;dialog&gt;</code>; defaults to an auto-generated id</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>heading_level:</code></th>
+        <td class="l-ui-table__cell">Heading tag for the title (e.g. <code>:h2</code>, <code>:h3</code>); defaults to <code>:h3</code></td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>container:</code></th>
+        <td class="l-ui-table__cell">Extra HTML attributes for the wrapping <code>&lt;div&gt;</code> (e.g. <code>class:</code>)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>m.trigger(**opts)</code></th>
+        <td class="l-ui-table__cell">Optional. Renders a colocated trigger <code>&lt;button&gt;</code>; <code>opts</code> are merged as HTML attributes. For additional or external triggers, add <code>data-l-ui-modal-open="&lt;id&gt;"</code> to any button</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row">block content</th>
+        <td class="l-ui-table__cell">The block's output (anything outside <code>m.trigger</code>) is rendered inside the scrollable <code>l-ui-modal__body</code></td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row">icon-only triggers</th>
+        <td class="l-ui-table__cell">If the trigger contains only an icon (no visible text), pass <code>aria-label:</code> so it has an accessible name</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 class="mt-8">CSS classes</h2>
+
+<div class="l-ui-table-container mt-4">
+  <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Modal CSS classes</caption>
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell" scope="col">Class</th>
+        <th class="l-ui-table__header-cell" scope="col">Description</th>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-modal</code></th>
+        <td class="l-ui-table__cell">Applied to the <code>&lt;dialog&gt;</code>; fullscreen on mobile, centred and capped on desktop</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-modal__header</code></th>
+        <td class="l-ui-table__cell">Top bar containing the title and close button</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-modal__body</code></th>
+        <td class="l-ui-table__cell">Scrollable body region; fills the remaining dialog height</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
