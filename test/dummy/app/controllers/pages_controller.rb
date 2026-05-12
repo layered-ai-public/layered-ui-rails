@@ -61,6 +61,9 @@ class PagesController < ApplicationController
   def tabs
   end
 
+  def modals
+  end
+
   def conversations
   end
 

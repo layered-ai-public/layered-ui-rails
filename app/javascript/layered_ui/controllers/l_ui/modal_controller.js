@@ -57,7 +57,8 @@ export default class extends Controller {
     }
   }
 
-  // Handle the close event on the dialog
+  // Handle the close event on the dialog and document-level clicks from
+  // external triggers (any button with data-l-ui-modal-open="<dialog id>").
   dialogTargetConnected(element) {
     this._closeHandler = () => {
       this.constructor.openCount = Math.max(0, this.constructor.openCount - 1)
@@ -71,11 +72,21 @@ export default class extends Controller {
       announce("Dialog closed", this)
     }
     element.addEventListener("close", this._closeHandler)
+
+    this._externalOpenHandler = (event) => {
+      if (!element.id) return
+      const trigger = event.target.closest(`[data-l-ui-modal-open="${CSS.escape(element.id)}"]`)
+      if (!trigger) return
+      event.preventDefault()
+      this.open()
+    }
+    document.addEventListener("click", this._externalOpenHandler)
   }
 
-  // Remove the close event listener on the dialog
+  // Remove listeners
   dialogTargetDisconnected(element) {
     element.removeEventListener("close", this._closeHandler)
+    document.removeEventListener("click", this._externalOpenHandler)
   }
 
   disconnect() {

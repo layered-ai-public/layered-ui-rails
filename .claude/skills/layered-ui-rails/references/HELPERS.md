@@ -246,6 +246,46 @@ l_ui_field_error_id(record, attribute)  # Error element ID for aria-describedby
 l_ui_field_hint_id(record, attribute)   # Hint element ID for aria-describedby
 ```
 
+## Modal
+
+```ruby
+l_ui_modal(title:, id: nil, heading_level: :h3, container: {}, &block)
+```
+
+- `title` (String) - heading shown in the modal header and used for `aria-labelledby`
+- `id` (String, optional) - DOM id for the `<dialog>`; defaults to an auto-generated id
+- `heading_level` (Symbol, optional) - heading tag for the title (e.g. `:h2`, `:h3`). Defaults to `:h3`
+- `container` (Hash, optional) - extra HTML attributes for the wrapping `<div>` (e.g. `class:`)
+- `&block` - the block's content is the modal body; call `m.trigger(**options, &block)` inside it to render a colocated trigger button
+
+```erb
+<%= l_ui_modal(title: "Socials") do |m| %>
+  <% m.trigger(class: "l-ui-button l-ui-button--outline") do %>
+    Open socials
+  <% end %>
+  <p>Body content.</p>
+<% end %>
+```
+
+Renders the trigger `<button>` (if `m.trigger` is called), the `<dialog class="l-ui-modal">` with a header (title + close button), and wires the `l-ui--modal` Stimulus controller, including backdrop-click close.
+
+If the trigger contains only an icon (no visible text), pass `aria-label:` to `m.trigger` so the button has an accessible name.
+
+`m.trigger` renders a colocated trigger button. To open the same modal from elsewhere on the page (or to have multiple triggers), give the modal a known `id:` and add `data-l-ui-modal-open="<that id>"` to any button:
+
+```erb
+<%= l_ui_modal(title: "Confirm", id: "confirm-modal") do |m| %>
+  <% m.trigger(class: "l-ui-button") do %>Open<% end %>
+  <p>Body content.</p>
+<% end %>
+
+<button type="button" data-l-ui-modal-open="confirm-modal">Open from elsewhere</button>
+```
+
+The button does not need to be inside the helper's wrapper, and no `data-controller` or `data-action` is required - the `l-ui--modal` controller listens at the document level for clicks on `[data-l-ui-modal-open]` matching its dialog id.
+
+Calling `dialog.showModal()` directly is not supported - it bypasses the `l-ui--modal` controller and skips scroll lock, focus restoration, open-count tracking, and the screen-reader announcement.
+
 ## Authentication
 
 ```ruby
