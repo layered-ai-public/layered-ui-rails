@@ -501,7 +501,8 @@
 
 .l-ui-header__links {
   @apply hidden sm:flex items-center
-         gap-6
+         mr-auto ml-8
+         gap-8
          text-sm font-medium;
 }
 
