@@ -40,6 +40,20 @@
 
 &lt;%= render template: "layouts/layered_ui/application" %&gt;</code></pre>
 
+<h2 class="mt-6">Header links (landing pages)</h2>
+
+<p class="mt-4">For landing pages, use the <code>:l_ui_header_links</code> yield to render plain inline links in the header (no icons, no sidebar). Combine with <code>l-ui-body--header-contained</code> to constrain the header's inner row to the same width as your page content. The links are hidden below the <code>sm</code> breakpoint; pair with <code>:l_ui_navigation_items</code> if you need a mobile menu.</p>
+
+<pre class="l-ui-surface mt-4"><code>&lt;% content_for :l_ui_body_class, "l-ui-body--header-contained" %&gt;
+
+&lt;% content_for :l_ui_header_links do %&gt;
+  &lt;%= link_to "Features", "#features" %&gt;
+  &lt;%= link_to "Pricing", "#pricing" %&gt;
+  &lt;%= link_to "Docs", docs_path %&gt;
+&lt;% end %&gt;
+
+&lt;%= render template: "layouts/layered_ui/application" %&gt;</code></pre>
+
 <h2 class="mt-6">Override</h2>
 
 <p class="mt-4">For full control, override the partial by creating <code>app/views/layouts/layered_ui/_navigation.html.erb</code> in your application.</p>

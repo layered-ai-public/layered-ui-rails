@@ -17,6 +17,16 @@ Two patterns deviate from strict BEM by design - leave them in place rather than
 
 This gives author-written links inside long-form content (Markdown, prose, ad-hoc views) consistent underline/colour treatment without forcing an explicit class on every link. Engine elements opt out automatically because their class names contain `l-ui-`. Side effect: any host-app class containing the substring `l-ui-` will also opt an `<a>` out of bare-link styling.
 
+## Body modifiers
+
+Applied to `<body>` via the `:l_ui_body_class` yield to toggle layout-level behaviour:
+
+```
+.l-ui-body--always-show-navigation  Pin sidebar navigation open on desktop
+.l-ui-body--hide-header             Hide the header and collapse its reserved space
+.l-ui-body--header-contained        Constrain the header's inner row to max-w-7xl (landing pages)
+```
+
 ## Page layout
 
 ```
@@ -249,6 +259,7 @@ Always combine the base block with a modifier, e.g. `<span class="l-ui-badge l-u
 ```
 .l-ui-header-container           Fixed header container
 .l-ui-header                     Header flexbox
+.l-ui-header__links              Inline link list for landing-page headers (yielded via :l_ui_header_links)
 .l-ui-header__icon               Header icon (responsive)
 .l-ui-header__icon--light        Light theme icon
 .l-ui-header__icon--dark         Dark theme icon

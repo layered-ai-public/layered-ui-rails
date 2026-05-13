@@ -489,9 +489,26 @@
          px-4 py-3;
 }
 
+.l-ui-body--header-contained .l-ui-header {
+  @apply w-full max-w-7xl
+         mx-auto;
+}
+
 .l-ui-header__navigation {
   @apply flex items-center
          gap-4;
+}
+
+.l-ui-header__links {
+  @apply hidden sm:flex items-center
+         gap-6
+         text-sm font-medium;
+}
+
+.l-ui-header__links a {
+  @apply text-foreground-muted
+         rounded-sm
+         focus-ring;
 }
 
 .l-ui-header__icon {
