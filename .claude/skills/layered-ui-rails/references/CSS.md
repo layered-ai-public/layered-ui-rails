@@ -249,6 +249,7 @@ Always combine the base block with a modifier, e.g. `<span class="l-ui-badge l-u
 ```
 .l-ui-header-container           Fixed header container
 .l-ui-header                     Header flexbox
+.l-ui-header__links              Inline link list for landing-page headers (yielded via :l_ui_header_links)
 .l-ui-header__icon               Header icon (responsive)
 .l-ui-header__icon--light        Light theme icon
 .l-ui-header__icon--dark         Dark theme icon
@@ -372,7 +373,8 @@ Tier 2 - Full palette (override individually as needed):
 --warning-text          Warning text
 --error-bg              Error background
 --error-text            Error text
---header-height         Header height (default 63px)
+--header-height           Header height (default 63px)
+--l-ui-header-max-width   Max width of the header inner row when l-ui-body--header-contained is set (default 80rem)
 ```
 
 Override --button-primary-text when your accent color needs a different text/icon color on buttons (e.g. a pink accent with white button text in dark mode). Override --button-primary-icon instead when only the icon color should change.
