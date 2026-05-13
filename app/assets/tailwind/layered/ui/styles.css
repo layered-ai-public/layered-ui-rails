@@ -440,10 +440,6 @@
   --header-height: 0px;
 }
 
-.l-ui-body--header-contained {
-  --l-ui-header-max-width: 80rem;
-}
-
 /* Page */
 
 .l-ui-page {
@@ -494,9 +490,8 @@
 }
 
 .l-ui-body--header-contained .l-ui-header {
-  @apply w-full
+  @apply w-full max-w-7xl
          mx-auto;
-  max-width: var(--l-ui-header-max-width);
 }
 
 .l-ui-header__navigation {
@@ -513,8 +508,7 @@
 .l-ui-header__links a {
   @apply text-foreground-muted
          rounded-sm
-         focus-ring
-         transition-colors;
+         focus-ring;
 }
 
 .l-ui-header__icon {

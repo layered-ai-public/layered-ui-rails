@@ -8,9 +8,9 @@
     <% end %>
 
     <% if yield(:l_ui_header_links).present? %>
-      <div class="l-ui-header__links">
+      <nav class="l-ui-header__links" aria-label="Sections">
         <%= yield(:l_ui_header_links) %>
-      </div>
+      </nav>
     <% end %>
 
     <nav class="l-ui-header__navigation" aria-label="Header navigation">

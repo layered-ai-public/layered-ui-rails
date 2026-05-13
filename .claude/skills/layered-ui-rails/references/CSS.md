@@ -24,7 +24,7 @@ Applied to `<body>` via the `:l_ui_body_class` yield to toggle layout-level beha
 ```
 .l-ui-body--always-show-navigation  Pin sidebar navigation open on desktop
 .l-ui-body--hide-header             Hide the header and collapse its reserved space
-.l-ui-body--header-contained        Constrain the header's inner row to --l-ui-header-max-width (landing pages)
+.l-ui-body--header-contained        Constrain the header's inner row to max-w-7xl (landing pages)
 ```
 
 ## Page layout
@@ -383,8 +383,7 @@ Tier 2 - Full palette (override individually as needed):
 --warning-text          Warning text
 --error-bg              Error background
 --error-text            Error text
---header-height           Header height (default 63px)
---l-ui-header-max-width   Max width of the header inner row when l-ui-body--header-contained is set (default 80rem)
+--header-height         Header height (default 63px)
 ```
 
 Override --button-primary-text when your accent color needs a different text/icon color on buttons (e.g. a pink accent with white button text in dark mode). Override --button-primary-icon instead when only the icon color should change.
