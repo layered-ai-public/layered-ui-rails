@@ -208,14 +208,14 @@ Formats a date/time value as `"%-d %b %Y, %H:%M"` (e.g. "15 Apr 2026, 10:30"). R
 ## Form
 
 ```ruby
-l_ui_form(record, fields:, url:, method: nil, submit: "Submit")
+l_ui_form(record, fields:, url:, method: nil, submit: nil)
 ```
 
 - `record` (ActiveRecord) - the model instance
 - `fields` (Array<Hash>) - field definitions (see below)
 - `url` (String) - form action URL
 - `method` (Symbol, optional) - HTTP method override
-- `submit` (String, optional) - submit button text; defaults to "Submit"
+- `submit` (String, optional) - submit button text; defaults to "Create" for new records and "Save" for persisted records
 
 Renders a complete form with all fields, error summary, and submit button via the `layered/ui/managed_resource/form` partial.
 

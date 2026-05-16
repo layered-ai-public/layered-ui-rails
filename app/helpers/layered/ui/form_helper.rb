@@ -10,7 +10,7 @@ module Layered
       #     fields: Post.l_managed_resource_fields,
       #     url: managed_posts_path)
       #
-      def l_ui_form(record, fields:, url:, method: nil, submit: "Submit")
+      def l_ui_form(record, fields:, url:, method: nil, submit: nil)
         render partial: "layered/ui/managed_resource/form",
                locals: { record: record, fields: fields, url: url, method: method, submit: submit }
       end
