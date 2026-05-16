@@ -17,7 +17,7 @@ All notable changes to this project will be documented in this file. This projec
 - Modal backdrop now tinted in addition to the existing blur (foreground at 25% in light mode, background at 60% in dark mode)
 - Active navigation items now round on all four corners (`rounded-sm`) rather than the left only
 - Panel close button now uses `l-ui-button--primary` instead of `l-ui-button--outline`
-- Icons inside `l-ui-button--primary` no longer invert in dark mode, so they remain visible against the inverted-accent background
+- Icons inside `l-ui-button--primary` now invert in light mode and stay un-inverted in dark mode, so they always contrast against the accent-coloured button background
 
 ## [0.15.0] - 2026-05-11
 

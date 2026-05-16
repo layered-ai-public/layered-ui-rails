@@ -582,7 +582,7 @@
 }
 
 .l-ui-button--primary .l-ui-icon {
-  @apply dark:invert-0;
+  @apply invert dark:invert-0;
 }
 
 .l-ui-icon--xs {
