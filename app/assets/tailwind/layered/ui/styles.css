@@ -361,7 +361,7 @@
   @apply overflow-x-auto
          my-3 p-3
          bg-surface
-         rounded-md;
+         rounded-sm;
 }
 
 .l-ui-markdown pre code {
@@ -581,6 +581,10 @@
   @apply dark:invert;
 }
 
+.l-ui-button--primary .l-ui-icon {
+  @apply dark:invert-0;
+}
+
 .l-ui-icon--xs {
   @apply w-4 h-4;
 }
@@ -651,7 +655,7 @@
          w-full min-h-[40px]
          gap-3 px-3
          text-sm font-medium text-foreground-muted
-         rounded-l-sm
+         rounded-sm
          focus-ring
          transition-colors;
 }
@@ -1541,12 +1545,13 @@ pre.l-ui-surface {
 }
 
 .l-ui-panel__header {
-  @apply flex flex-col;
+  @apply flex flex-col
+         border-b border-border;
 }
 
 .l-ui-panel__header-content {
   @apply flex items-center
-         p-4 pb-0;
+         p-4 py-3;
 }
 
 .l-ui-panel__header-buttons {
@@ -1662,7 +1667,7 @@ pre.l-ui-surface {
          p-4 gap-4
          text-foreground
          bg-surface
-         rounded-md;
+         rounded-sm;
 }
 
 .l-ui-message--sent .l-ui-message__bubble {
@@ -1813,6 +1818,11 @@ pre.l-ui-surface {
 
 .l-ui-modal::backdrop {
   @apply backdrop-blur-sm;
+  background-color: color-mix(in oklch, var(--foreground) 25%, transparent);
+}
+
+.dark .l-ui-modal::backdrop {
+  background-color: color-mix(in oklch, var(--background) 60%, transparent);
 }
 
 .l-ui-modal__header {

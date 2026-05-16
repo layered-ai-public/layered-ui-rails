@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.16.0] - 2026-05-16
+
+### Added
+
+- `l_ui_modal` helper with external-trigger support for declaratively rendering modal dialogs
+- `l-ui-header--contained` modifier and a yield slot for header links
+- `submit:` option on `l_ui_form` to override the submit button text (defaults to "Create" for new records, "Save" for persisted)
+
+### Changed
+
+- Header links now left-aligned
+- Navigation container right border restored at `md` and above; panel container left border restored
+- Modal backdrop now tinted in addition to the existing blur (foreground at 25% in light mode, background at 60% in dark mode)
+- Active navigation items now round on all four corners (`rounded-sm`) rather than the left only
+- Panel close button now uses `l-ui-button--primary` instead of `l-ui-button--outline`
+- Icons inside `l-ui-button--primary` no longer invert in dark mode, so they remain visible against the inverted-accent background
+
 ## [0.15.0] - 2026-05-11
 
 ### Breaking
