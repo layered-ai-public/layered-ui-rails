@@ -608,7 +608,7 @@
          z-50
          w-[256px]
          bg-background
-         border-r border-border
+         md:border-r md:border-border
          -translate-x-full
          transition-transform duration-300;
 }
