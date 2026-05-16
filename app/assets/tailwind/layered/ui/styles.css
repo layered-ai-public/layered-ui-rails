@@ -608,6 +608,7 @@
          z-50
          w-[256px]
          bg-background
+         border-r border-border
          -translate-x-full
          transition-transform duration-300;
 }
@@ -1503,6 +1504,7 @@ pre.l-ui-surface {
          z-40
          w-full md:w-[480px]
          bg-background
+         border-l border-border
          transform translate-x-full
          transition-transform duration-300;
 }
