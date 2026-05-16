@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.16.1] - 2026-05-16
+
+### Fixed
+
+- Modal body height collapsing to zero in Safari when the dialog used `h-fit`
+
 ## [0.16.0] - 2026-05-16
 
 ### Added
