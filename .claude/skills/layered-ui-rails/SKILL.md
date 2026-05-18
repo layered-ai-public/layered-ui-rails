@@ -77,6 +77,28 @@ Populate layout regions with `content_for` (always above the render call):
 <% content_for :l_ui_logo_dark do %>
   <%= image_tag "my_logo_dark.svg", alt: "", class: "l-ui-header__logo l-ui-header__logo--dark" %>
 <% end %>
+
+<%# Prepend or append items to the header actions group %>
+<% content_for :l_ui_header_actions_start do %>
+  <%= link_to "Docs", docs_path, class: "l-ui-button l-ui-button--ghost l-ui-button--small" %>
+<% end %>
+<% content_for :l_ui_header_actions_end do %>
+  <%= link_to "Help", help_path, class: "l-ui-button l-ui-button--ghost l-ui-button--small" %>
+<% end %>
+
+<%# Or replace the default actions group entirely and compose with helpers %>
+<% content_for :l_ui_header_actions do %>
+  <%= link_to "Docs", docs_path, class: "l-ui-button l-ui-button--ghost l-ui-button--small" %>
+  <%= l_ui_theme_toggle %>
+  <%= l_ui_authentication %>
+  <%= l_ui_navigation_toggle %>
+<% end %>
+
+<%# Inline header links (alongside the logo) %>
+<% content_for :l_ui_header_links do %>
+  <%= link_to "Pricing", pricing_path %>
+  <%= link_to "About", about_path %>
+<% end %>
 ```
 
 Body class modifiers:
@@ -116,6 +138,9 @@ Quick reference:
 | `l_ui_normalise_field(record, config)` | Normalise a raw field config hash into canonical form |
 | `l_ui_user_signed_in?` | Check if user is authenticated |
 | `l_ui_current_user` | Current user object |
+| `l_ui_theme_toggle` | Default header theme toggle button |
+| `l_ui_authentication` | Default header login/register buttons (Devise) |
+| `l_ui_navigation_toggle` | Default header sidebar toggle button |
 
 ## CSS classes
 

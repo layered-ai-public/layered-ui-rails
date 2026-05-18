@@ -9,7 +9,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   %w[
     buttons icons notices badges links surfaces forms containers
     utilities typography layout layout_metadata layout_navigation layout_panel
-    layout_logos layout_icons layout_colors layout_breadcrumbs tabs
+    layout_logos layout_icons layout_colors layout_breadcrumbs layout_header tabs
     conversations devise integrations
   ].each do |page|
     test "#{page} page renders" do
@@ -102,6 +102,31 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "img[src='https://example.com/custom_logo_light.svg']"
     assert_select "img[src='https://example.com/custom_logo_dark.svg']"
+  end
+
+  test "default header actions render the theme toggle and navigation toggle" do
+    get "/"
+    assert_response :success
+    assert_select "nav.l-ui-header__navigation button.l-ui-theme-toggle"
+    assert_select "nav.l-ui-header__navigation button.l-ui-button--navigation-toggle"
+  end
+
+  test "header actions start and end yields prepend and append items around the defaults" do
+    get "/test_header_actions"
+    assert_response :success
+    assert_select "nav.l-ui-header__navigation a[data-test='actions-start']"
+    assert_select "nav.l-ui-header__navigation a[data-test='actions-end']"
+    assert_select "nav.l-ui-header__navigation button.l-ui-theme-toggle"
+  end
+
+  test "header actions yield replaces the default action group" do
+    get "/test_header_actions_replaced"
+    assert_response :success
+    assert_select "nav.l-ui-header__navigation a[data-test='actions-replaced']"
+    assert_select "nav.l-ui-header__navigation button.l-ui-theme-toggle"
+    assert_select "nav.l-ui-header__navigation button.l-ui-button--navigation-toggle", count: 0
+    assert_select "nav.l-ui-header__navigation a[data-test='actions-start-suppressed']", count: 0
+    assert_select "nav.l-ui-header__navigation a[data-test='actions-end-suppressed']", count: 0
   end
 
   test "l_ui_head content_for is injected into the head when set" do

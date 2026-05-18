@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   get "layout", to: "pages#layout"
   get "layout_metadata", to: "pages#layout_metadata"
   get "layout_navigation", to: "pages#layout_navigation"
+  get "layout_header", to: "pages#layout_header"
   get "layout_panel", to: "pages#layout_panel"
   get "layout_logos", to: "pages#layout_logos"
   get "layout_icons", to: "pages#layout_icons"
@@ -42,4 +43,6 @@ Rails.application.routes.draw do
   get "test_panel_icon_dark_only", to: "pages#test_panel_icon_dark_only"
   get "test_logo_override", to: "pages#test_logo_override"
   get "test_head_injection", to: "pages#test_head_injection"
+  get "test_header_actions", to: "pages#test_header_actions"
+  get "test_header_actions_replaced", to: "pages#test_header_actions_replaced"
 end

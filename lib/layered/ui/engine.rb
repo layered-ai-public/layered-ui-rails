@@ -33,6 +33,7 @@ module Layered
           helper Layered::Ui::TableHelper
           helper Layered::Ui::TitleBarHelper
           helper Layered::Ui::FormHelper
+          helper Layered::Ui::HeaderHelper
           helper Layered::Ui::ModalHelper
           helper Layered::Ui::RansackHelper
         end

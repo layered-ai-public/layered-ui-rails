@@ -1,0 +1,14 @@
+<% if yield(:l_ui_navigation_items).present? || l_ui_user_signed_in? %>
+  <button
+    type="button"
+    class="l-ui-button l-ui-button--navigation-toggle"
+    data-action="click->l-ui--navigation#toggle"
+    data-l-ui--navigation-target="toggleButton"
+    aria-label="Toggle navigation menu"
+    aria-expanded="false"
+    aria-controls="l-ui-navigation"
+  >
+    <%= image_tag "layered_ui/icon_hamburger.svg", alt: "", class: "l-ui-icon l-ui-icon--md", data: { "l-ui--navigation-target": "openIcon" }, aria: { hidden: true } %>
+    <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--md", style: "display: none;", data: { "l-ui--navigation-target": "closeIcon" }, aria: { hidden: true } %>
+  </button>
+<% end %>

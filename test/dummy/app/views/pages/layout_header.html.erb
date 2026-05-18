@@ -1,0 +1,84 @@
+<%= l_ui_title_bar(
+  title: "Header",
+  breadcrumbs: [
+    ["Home", root_path],
+    ["Layout", layout_path]
+  ]
+) %>
+
+<p class="mt-4">The header is a fixed 63px bar containing the logo, optional inline links, and an actions group on the right. By default the actions group shows the theme toggle, Devise login/register buttons (when signed out), and the navigation toggle (when navigation items or a signed-in user are present).</p>
+
+<h2 class="mt-8">Inline links</h2>
+
+<p class="mt-4">For landing pages, use the <code>:l_ui_header_links</code> yield to render plain inline links beside the logo. Combine with <code>l-ui-body--header-contained</code> to constrain the header's inner row to the same width as your page content. The links are hidden below the <code>sm</code> breakpoint; pair with <code>:l_ui_navigation_items</code> if you need a mobile menu.</p>
+
+<pre class="l-ui-surface mt-4"><code>&lt;% content_for :l_ui_body_class, "l-ui-body--header-contained" %&gt;
+
+&lt;% content_for :l_ui_header_links do %&gt;
+  &lt;%= link_to "Features", "#features" %&gt;
+  &lt;%= link_to "Pricing", "#pricing" %&gt;
+  &lt;%= link_to "Docs", docs_path %&gt;
+&lt;% end %&gt;
+
+&lt;%= render template: "layouts/layered_ui/application" %&gt;</code></pre>
+
+<h2 class="mt-8">Prepend or append actions</h2>
+
+<p class="mt-4">Add items either side of the default actions group with the <code>:l_ui_header_actions_start</code> and <code>:l_ui_header_actions_end</code> yields. The default theme toggle, authentication, and navigation toggle remain in place.</p>
+
+<pre class="l-ui-surface mt-4"><code>&lt;% content_for :l_ui_header_actions_start do %&gt;
+  &lt;%= link_to "Docs", docs_path, class: "l-ui-button l-ui-button--ghost l-ui-button--small" %&gt;
+&lt;% end %&gt;
+
+&lt;% content_for :l_ui_header_actions_end do %&gt;
+  &lt;%= link_to "Help", help_path, class: "l-ui-button l-ui-button--ghost l-ui-button--small" %&gt;
+&lt;% end %&gt;</code></pre>
+
+<h2 class="mt-8">Replace the actions group</h2>
+
+<p class="mt-4">For full control over the action area, set <code>:l_ui_header_actions</code> and compose your own bar using the default building blocks. Any helper you omit will not render, and <code>:l_ui_header_actions_start</code> and <code>:l_ui_header_actions_end</code> are skipped when this yield is set.</p>
+
+<div class="l-ui-table-container mt-4">
+  <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Header action helpers</caption>
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell" scope="col">Helper</th>
+        <th class="l-ui-table__header-cell" scope="col">Renders</th>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l_ui_theme_toggle</code></th>
+        <td class="l-ui-table__cell">Dark/light mode toggle button</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l_ui_authentication</code></th>
+        <td class="l-ui-table__cell">Devise login/register buttons (only when signed out and the routes exist)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l_ui_navigation_toggle</code></th>
+        <td class="l-ui-table__cell">Hamburger toggle (only when navigation items exist or a user is signed in)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<pre class="l-ui-surface mt-4"><code>&lt;% content_for :l_ui_header_actions do %&gt;
+  &lt;%= link_to "Docs", docs_path, class: "l-ui-button l-ui-button--ghost l-ui-button--small" %&gt;
+  &lt;%= l_ui_theme_toggle %&gt;
+  &lt;%= l_ui_authentication %&gt;
+  &lt;%= l_ui_navigation_toggle %&gt;
+&lt;% end %&gt;</code></pre>
+
+<h2 class="mt-8">Hide the header</h2>
+
+<p class="mt-4">Add the <code>l-ui-body--hide-header</code> modifier to the body to hide the header and reclaim its 63px of vertical space.</p>
+
+<pre class="l-ui-surface mt-4"><code>&lt;% content_for :l_ui_body_class, "l-ui-body--hide-header" %&gt;
+
+&lt;%= render template: "layouts/layered_ui/application" %&gt;</code></pre>
+
+<h2 class="mt-8">Override</h2>
+
+<p class="mt-4">For full control, override the partial by creating <code>app/views/layouts/layered_ui/_header.html.erb</code> in your application.</p>

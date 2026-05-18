@@ -287,6 +287,25 @@ The button does not need to be inside the helper's wrapper, and no `data-control
 
 Calling `dialog.showModal()` directly is not supported - it bypasses the `l-ui--modal` controller and skips scroll lock, focus restoration, open-count tracking, and the screen-reader announcement.
 
+## Header
+
+```ruby
+l_ui_theme_toggle      # Renders the dark/light theme toggle button
+l_ui_authentication    # Renders Devise login/register buttons (no-op when signed in or when Devise routes are absent)
+l_ui_navigation_toggle # Renders the hamburger that toggles the sidebar (only when navigation items exist or a user is signed in)
+```
+
+Use these when overriding the header actions group with `:l_ui_header_actions` to compose your own bar from the default building blocks. The header also exposes `:l_ui_header_actions_start` and `:l_ui_header_actions_end` yields to prepend or append items without replacing the defaults, and `:l_ui_header_links` for inline links beside the logo.
+
+```erb
+<% content_for :l_ui_header_actions do %>
+  <%= link_to "Docs", docs_path, class: "l-ui-button l-ui-button--ghost l-ui-button--small" %>
+  <%= l_ui_theme_toggle %>
+  <%= l_ui_authentication %>
+  <%= l_ui_navigation_toggle %>
+<% end %>
+```
+
 ## Authentication
 
 ```ruby
