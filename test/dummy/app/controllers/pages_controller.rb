@@ -49,6 +49,9 @@ class PagesController < ApplicationController
   def layout_navigation
   end
 
+  def layout_header
+  end
+
   def layout_panel
   end
 
@@ -130,6 +133,12 @@ class PagesController < ApplicationController
   end
 
   def test_head_injection
+  end
+
+  def test_header_actions
+  end
+
+  def test_header_actions_replaced
   end
 
   private

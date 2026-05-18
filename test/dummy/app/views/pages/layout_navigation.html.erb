@@ -8,7 +8,7 @@
 
 <p class="mt-4">Populate the navigation using the <code>:l_ui_navigation_items</code> yield with <code>l_ui_navigation_item</code> for clickable items and <code>l_ui_navigation_section</code> for grouping.</p>
 
-<p class="mt-4">The navigation is off-canvas by default and toggled via the header button on all screen sizes. Add <code>l-ui-body--always-show-navigation</code> to the body to pin it as a persistent sidebar on desktop. The header is shown by default - use <code>l-ui-body--hide-header</code> to hide it and collapse its reserved space.</p>
+<p class="mt-4">The navigation is off-canvas by default and toggled via the header button on all screen sizes. Add <code>l-ui-body--always-show-navigation</code> to the body to pin it as a persistent sidebar on desktop.</p>
 
 <h2 class="mt-6">Example</h2>
 
@@ -40,19 +40,7 @@
 
 &lt;%= render template: "layouts/layered_ui/application" %&gt;</code></pre>
 
-<h2 class="mt-6">Header links (landing pages)</h2>
-
-<p class="mt-4">For landing pages, use the <code>:l_ui_header_links</code> yield to render plain inline links in the header (no icons, no sidebar). Combine with <code>l-ui-body--header-contained</code> to constrain the header's inner row to the same width as your page content. The links are hidden below the <code>sm</code> breakpoint; pair with <code>:l_ui_navigation_items</code> if you need a mobile menu.</p>
-
-<pre class="l-ui-surface mt-4"><code>&lt;% content_for :l_ui_body_class, "l-ui-body--header-contained" %&gt;
-
-&lt;% content_for :l_ui_header_links do %&gt;
-  &lt;%= link_to "Features", "#features" %&gt;
-  &lt;%= link_to "Pricing", "#pricing" %&gt;
-  &lt;%= link_to "Docs", docs_path %&gt;
-&lt;% end %&gt;
-
-&lt;%= render template: "layouts/layered_ui/application" %&gt;</code></pre>
+<p class="mt-4">For inline header links on landing pages, see the <%= link_to "header", layout_header_path %> page.</p>
 
 <h2 class="mt-6">Override</h2>
 

@@ -14,43 +14,17 @@
     <% end %>
 
     <nav class="l-ui-header__navigation" aria-label="Header navigation">
-      <button
-        type="button"
-        data-controller="l-ui--theme"
-        data-action="click->l-ui--theme#toggle"
-        data-l-ui--theme-target="button"
-        class="l-ui-button l-ui-button--icon l-ui-theme-toggle"
-        aria-label="Toggle dark mode"
-        aria-pressed="false"
-      >
-        <%= image_tag "layered_ui/icon_moon.svg", alt: "", class: "l-ui-icon l-ui-icon--sm l-ui-theme-toggle__icon l-ui-theme-toggle__icon--light", aria: { hidden: true } %>
-        <%= image_tag "layered_ui/icon_sun.svg", alt: "", class: "l-ui-icon l-ui-icon--sm l-ui-theme-toggle__icon l-ui-theme-toggle__icon--dark", aria: { hidden: true } %>
-      </button>
+      <%= yield(:l_ui_header_actions_start) %>
 
-      <% unless l_ui_user_signed_in? %>
-        <% if respond_to?(:new_user_registration_path) %>
-          <%= link_to "Register", main_app.new_user_registration_path, class: "l-ui-button l-ui-button--outline l-ui-button--small" %>
-        <% end %>
-
-        <% if respond_to?(:new_user_session_path) %>
-          <%= link_to "Login", main_app.new_user_session_path, class: "l-ui-button l-ui-button--primary l-ui-button--small" %>
-        <% end %>
+      <% if content_for?(:l_ui_header_actions) %>
+        <%= yield(:l_ui_header_actions) %>
+      <% else %>
+        <%= l_ui_theme_toggle %>
+        <%= l_ui_authentication %>
+        <%= l_ui_navigation_toggle %>
       <% end %>
 
-      <% if yield(:l_ui_navigation_items).present? || l_ui_user_signed_in? %>
-        <button
-          type="button"
-          class="l-ui-button l-ui-button--navigation-toggle"
-          data-action="click->l-ui--navigation#toggle"
-          data-l-ui--navigation-target="toggleButton"
-          aria-label="Toggle navigation menu"
-          aria-expanded="false"
-          aria-controls="l-ui-navigation"
-        >
-          <%= image_tag "layered_ui/icon_hamburger.svg", alt: "", class: "l-ui-icon l-ui-icon--md", data: { "l-ui--navigation-target": "openIcon" }, aria: { hidden: true } %>
-          <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--md", style: "display: none;", data: { "l-ui--navigation-target": "closeIcon" }, aria: { hidden: true } %>
-        </button>
-      <% end %>
+      <%= yield(:l_ui_header_actions_end) %>
     </nav>
   </div>
 </header>

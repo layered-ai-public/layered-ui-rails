@@ -1,0 +1,12 @@
+<button
+  type="button"
+  data-controller="l-ui--theme"
+  data-action="click->l-ui--theme#toggle"
+  data-l-ui--theme-target="button"
+  class="l-ui-button l-ui-button--icon l-ui-theme-toggle"
+  aria-label="Toggle dark mode"
+  aria-pressed="false"
+>
+  <%= image_tag "layered_ui/icon_moon.svg", alt: "", class: "l-ui-icon l-ui-icon--sm l-ui-theme-toggle__icon l-ui-theme-toggle__icon--light", aria: { hidden: true } %>
+  <%= image_tag "layered_ui/icon_sun.svg", alt: "", class: "l-ui-icon l-ui-icon--sm l-ui-theme-toggle__icon l-ui-theme-toggle__icon--dark", aria: { hidden: true } %>
+</button>
