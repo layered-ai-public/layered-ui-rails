@@ -14,17 +14,15 @@
     <% end %>
 
     <nav class="l-ui-header__navigation" aria-label="Header navigation">
-      <%= yield(:l_ui_header_actions_start) %>
-
       <% if content_for?(:l_ui_header_actions) %>
         <%= yield(:l_ui_header_actions) %>
       <% else %>
+        <%= yield(:l_ui_header_actions_start) %>
         <%= l_ui_theme_toggle %>
         <%= l_ui_authentication %>
         <%= l_ui_navigation_toggle %>
+        <%= yield(:l_ui_header_actions_end) %>
       <% end %>
-
-      <%= yield(:l_ui_header_actions_end) %>
     </nav>
   </div>
 </header>

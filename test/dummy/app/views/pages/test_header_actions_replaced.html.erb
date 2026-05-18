@@ -1,3 +1,11 @@
+<% content_for :l_ui_header_actions_start do %>
+  <a href="/start" data-test="actions-start-suppressed">Start</a>
+<% end %>
+
+<% content_for :l_ui_header_actions_end do %>
+  <a href="/end" data-test="actions-end-suppressed">End</a>
+<% end %>
+
 <% content_for :l_ui_header_actions do %>
   <a href="/docs" class="l-ui-button l-ui-button--ghost l-ui-button--small" data-test="actions-replaced">Docs</a>
   <%= l_ui_theme_toggle %>

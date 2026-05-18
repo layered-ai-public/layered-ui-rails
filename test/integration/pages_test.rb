@@ -125,6 +125,8 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_select "nav.l-ui-header__navigation a[data-test='actions-replaced']"
     assert_select "nav.l-ui-header__navigation button.l-ui-theme-toggle"
     assert_select "nav.l-ui-header__navigation button.l-ui-button--navigation-toggle", count: 0
+    assert_select "nav.l-ui-header__navigation a[data-test='actions-start-suppressed']", count: 0
+    assert_select "nav.l-ui-header__navigation a[data-test='actions-end-suppressed']", count: 0
   end
 
   test "l_ui_head content_for is injected into the head when set" do
