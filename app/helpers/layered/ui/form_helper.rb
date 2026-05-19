@@ -1,7 +1,12 @@
 module Layered
   module Ui
     module FormHelper
-      FIELD_TYPES = %i[string text email password number date datetime select checkbox hidden].freeze
+      FIELD_TYPES = %i[
+        string text email password number tel url search
+        date datetime time month week
+        color range file
+        select checkbox hidden
+      ].freeze
 
       # Renders a complete form with all fields, error summary,
       # and submit button.
@@ -10,9 +15,10 @@ module Layered
       #     fields: Post.l_managed_resource_fields,
       #     url: managed_posts_path)
       #
-      def l_ui_form(record, fields:, url:, method: nil, submit: nil)
+      def l_ui_form(record, fields:, url:, method: nil, submit: nil, multipart: nil)
         render partial: "layered/ui/managed_resource/form",
-               locals: { record: record, fields: fields, url: url, method: method, submit: submit }
+               locals: { record: record, fields: fields, url: url, method: method,
+                         submit: submit, multipart: multipart }
       end
 
       # Normalises a raw field config hash into a canonical form.
