@@ -39,7 +39,7 @@
 
 <h2 class="mt-8">All field types</h2>
 
-<p class="mt-4">Use <code>as:</code> to explicitly set the field type. Supported types: <code>:string</code>, <code>:text</code>, <code>:email</code>, <code>:number</code>, <code>:date</code>, <code>:datetime</code>, <code>:select</code>, <code>:checkbox</code>, and <code>:hidden</code>.</p>
+<p class="mt-4">Use <code>as:</code> to explicitly set the field type. Supported types: <code>:string</code>, <code>:text</code>, <code>:email</code>, <code>:password</code>, <code>:number</code>, <code>:tel</code>, <code>:url</code>, <code>:search</code>, <code>:date</code>, <code>:datetime</code>, <code>:time</code>, <code>:month</code>, <code>:week</code>, <code>:color</code>, <code>:range</code>, <code>:file</code>, <code>:select</code>, <code>:checkbox</code>, and <code>:hidden</code>. The form is automatically rendered as <code>multipart</code> when any field uses <code>:file</code>.</p>
 
 <%= l_ui_form(@post, fields: [
       { attribute: :title, as: :string, required: true, placeholder: "Enter a title" },
@@ -47,6 +47,22 @@
       { attribute: :user_id, as: :select, label: "Author",
         prompt: "Choose an author",
         collection: @users.map { |u| [u.name, u.id] } },
+      { attribute: :title, as: :email, label: "Email" },
+      { attribute: :title, as: :password, label: "Password" },
+      { attribute: :user_id, as: :number, label: "Number" },
+      { attribute: :title, as: :tel, label: "Telephone" },
+      { attribute: :title, as: :url, label: "URL" },
+      { attribute: :title, as: :search, label: "Search" },
+      { attribute: :created_at, as: :date, label: "Date" },
+      { attribute: :created_at, as: :datetime, label: "Datetime" },
+      { attribute: :created_at, as: :time, label: "Time" },
+      { attribute: :created_at, as: :month, label: "Month" },
+      { attribute: :created_at, as: :week, label: "Week" },
+      { attribute: :title, as: :color, label: "Color" },
+      { attribute: :user_id, as: :range, label: "Range" },
+      { attribute: :title, as: :file, label: "File" },
+      { attribute: :user_id, as: :checkbox, label: "Checkbox" },
+      { attribute: :user_id, as: :hidden },
     ],
     url: "#") %>
 
@@ -68,6 +84,22 @@
       { attribute: :user_id, as: :select, label: "Author",
         prompt: "Choose an author",
         collection: User.pluck(:name, :id) },
+      { attribute: :email, as: :email },
+      { attribute: :password, as: :password },
+      { attribute: :age, as: :number },
+      { attribute: :phone, as: :tel },
+      { attribute: :website, as: :url },
+      { attribute: :query, as: :search },
+      { attribute: :starts_on, as: :date },
+      { attribute: :starts_at, as: :datetime },
+      { attribute: :starts_time, as: :time },
+      { attribute: :starts_month, as: :month },
+      { attribute: :starts_week, as: :week },
+      { attribute: :tint, as: :color },
+      { attribute: :volume, as: :range },
+      { attribute: :avatar, as: :file },
+      { attribute: :accepted, as: :checkbox },
+      { attribute: :secret_id, as: :hidden },
     ],
     url: posts_path) %&gt;</code></pre>
     </div>
@@ -112,9 +144,16 @@
         <td class="l-ui-table__cell">String</td>
         <td class="l-ui-table__cell">Submit button text (defaults to "Create" for new records, "Save" for persisted records)</td>
       </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>multipart:</code></th>
+        <td class="l-ui-table__cell">Boolean</td>
+        <td class="l-ui-table__cell">Override multipart encoding. Defaults to auto-detection (true when any field is <code>:file</code>). Pass <code>true</code> or <code>false</code> to force.</td>
+      </tr>
     </tbody>
   </table>
 </div>
+
+<p class="mt-4">Need more control? Override the partial by creating <code>app/views/layered/ui/managed_resource/_form.html.erb</code> in your host app, or write the form directly with <code>form_with</code> and reuse <code>layered_ui/shared/form_errors</code>, <code>layered_ui/shared/label</code>, and <code>layered_ui/shared/field_error</code>.</p>
 
 <h2 class="mt-8">Field options</h2>
 
@@ -137,7 +176,7 @@
       <tr>
         <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>as:</code></th>
         <td class="l-ui-table__cell">Symbol</td>
-        <td class="l-ui-table__cell">Field type (<code>:string</code>, <code>:text</code>, <code>:email</code>, <code>:password</code>, <code>:number</code>, <code>:date</code>, <code>:datetime</code>, <code>:select</code>, <code>:checkbox</code>, <code>:hidden</code>). Inferred from column type when omitted.</td>
+        <td class="l-ui-table__cell">Field type (<code>:string</code>, <code>:text</code>, <code>:email</code>, <code>:password</code>, <code>:number</code>, <code>:tel</code>, <code>:url</code>, <code>:search</code>, <code>:date</code>, <code>:datetime</code>, <code>:time</code>, <code>:month</code>, <code>:week</code>, <code>:color</code>, <code>:range</code>, <code>:file</code>, <code>:select</code>, <code>:checkbox</code>, <code>:hidden</code>). Inferred from column type when omitted.</td>
       </tr>
       <tr>
         <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>label:</code></th>

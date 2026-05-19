@@ -77,6 +77,58 @@ class FormHelperTest < ActionView::TestCase
     assert_includes result, 'datetime'
   end
 
+  test "renders password field" do
+    result = render_field({ attribute: :title, as: :password })
+    assert_includes result, 'type="password"'
+    assert_includes result, 'class="l-ui-form__field"'
+  end
+
+  test "renders tel field (maps to telephone_field)" do
+    result = render_field({ attribute: :title, as: :tel })
+    assert_includes result, 'type="tel"'
+    assert_includes result, 'class="l-ui-form__field"'
+  end
+
+  test "renders url field" do
+    result = render_field({ attribute: :title, as: :url })
+    assert_includes result, 'type="url"'
+  end
+
+  test "renders search field" do
+    result = render_field({ attribute: :title, as: :search })
+    assert_includes result, 'type="search"'
+  end
+
+  test "renders time field" do
+    result = render_field({ attribute: :created_at, as: :time })
+    assert_includes result, 'type="time"'
+  end
+
+  test "renders month field" do
+    result = render_field({ attribute: :created_at, as: :month })
+    assert_includes result, 'type="month"'
+  end
+
+  test "renders week field" do
+    result = render_field({ attribute: :created_at, as: :week })
+    assert_includes result, 'type="week"'
+  end
+
+  test "renders color field" do
+    result = render_field({ attribute: :title, as: :color })
+    assert_includes result, 'type="color"'
+  end
+
+  test "renders range field" do
+    result = render_field({ attribute: :user_id, as: :range })
+    assert_includes result, 'type="range"'
+  end
+
+  test "renders file field" do
+    result = render_field({ attribute: :title, as: :file })
+    assert_includes result, 'type="file"'
+  end
+
   test "renders hidden field without group wrapper" do
     result = render_field({ attribute: :user_id, as: :hidden })
     assert_includes result, 'type="hidden"'
@@ -193,6 +245,26 @@ class FormHelperTest < ActionView::TestCase
     assert_includes result, 'rows="8"'
   end
 
+  # -- multipart auto-detection --
+
+  test "form auto-enables multipart when any field is :file" do
+    result = render_form(fields: [
+      { attribute: :title },
+      { attribute: :body, as: :file }
+    ])
+    assert_includes result, 'enctype="multipart/form-data"'
+  end
+
+  test "form omits multipart when no :file fields" do
+    result = render_form(fields: [{ attribute: :title }, { attribute: :body, as: :text }])
+    assert_not_includes result, 'enctype="multipart/form-data"'
+  end
+
+  test "multipart: true forces multipart without any :file field" do
+    result = render_form(fields: [{ attribute: :title }], multipart: true)
+    assert_includes result, 'enctype="multipart/form-data"'
+  end
+
   # -- type validation --
 
   test "raises ArgumentError for unsupported field type" do
@@ -221,6 +293,14 @@ class FormHelperTest < ActionView::TestCase
     )
     render partial: "layered/ui/managed_resource/field",
            locals: { form: builder, record: record, config: config }
+    rendered
+  end
+
+  def render_form(fields:, multipart: nil)
+    record = Post.new
+    render partial: "layered/ui/managed_resource/form",
+           locals: { record: record, fields: fields, url: "/posts",
+                     method: nil, submit: nil, multipart: multipart }
     rendered
   end
 end

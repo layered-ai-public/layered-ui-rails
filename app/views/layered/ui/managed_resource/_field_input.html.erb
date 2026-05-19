@@ -42,7 +42,13 @@
     <%= form.label(attribute, config[:label], class: "l-ui-checkbox-container__label") %>
   </div>
 <% else %>
-  <% method_name = config[:as] == :string ? :text_field : :"#{config[:as]}_field" %>
+  <%
+    method_name = case config[:as]
+                  when :string then :text_field
+                  when :tel then :telephone_field
+                  else :"#{config[:as]}_field"
+                  end
+  %>
   <%= form.public_send(method_name, attribute,
                        class: field_class.call("l-ui-form__field"), **base_opts, **extras) %>
 <% end %>

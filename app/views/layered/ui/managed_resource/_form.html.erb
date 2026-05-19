@@ -1,5 +1,7 @@
+<% multipart = local_assigns.fetch(:multipart, nil) %>
 <% form_opts = { url: url, class: "l-ui-form" } %>
 <% form_opts[:method] = method if method %>
+<% form_opts[:multipart] = multipart.nil? ? fields.any? { |f| f[:as] == :file } : multipart %>
 
 <%= form_with(model: record, **form_opts) do |f| %>
   <%= render "layered_ui/shared/form_errors", item: record %>

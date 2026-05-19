@@ -208,7 +208,7 @@ Formats a date/time value as `"%-d %b %Y, %H:%M"` (e.g. "15 Apr 2026, 10:30"). R
 ## Form
 
 ```ruby
-l_ui_form(record, fields:, url:, method: nil, submit: nil)
+l_ui_form(record, fields:, url:, method: nil, submit: nil, multipart: nil)
 ```
 
 - `record` (ActiveRecord) - the model instance
@@ -216,12 +216,15 @@ l_ui_form(record, fields:, url:, method: nil, submit: nil)
 - `url` (String) - form action URL
 - `method` (Symbol, optional) - HTTP method override
 - `submit` (String, optional) - submit button text; defaults to "Create" for new records and "Save" for persisted records
+- `multipart` (Boolean, optional) - override multipart encoding. Defaults to auto-detection: `true` when any field is `:file`, otherwise `false`. Pass `true`/`false` to force.
+
+If you need control beyond these options, override the partial in your host app by creating `app/views/layered/ui/managed_resource/_form.html.erb` (Rails view lookup prefers the host's copy), or write the form directly with `form_with` and reuse `layered_ui/shared/form_errors`, `layered_ui/shared/label`, and `layered_ui/shared/field_error`.
 
 Renders a complete form with all fields, error summary, and submit button via the `layered/ui/managed_resource/form` partial.
 
 Field options:
 - `attribute` (Symbol) - model attribute
-- `as` (Symbol, optional) - field type; auto-detected from column type. Supported: `:string`, `:text`, `:email`, `:password`, `:number`, `:date`, `:datetime`, `:select`, `:checkbox`, `:hidden`
+- `as` (Symbol, optional) - field type; auto-detected from column type. Supported: `:string`, `:text`, `:email`, `:password`, `:number`, `:tel`, `:url`, `:search`, `:date`, `:datetime`, `:time`, `:month`, `:week`, `:color`, `:range`, `:file`, `:select`, `:checkbox`, `:hidden`. Forms automatically become `multipart` when any field is `:file`.
 - `label` (String, optional) - custom label text; defaults to humanised attribute
 - `required` (Boolean, optional) - marks field as required; default false
 - `hint` (String, optional) - help text below the field
