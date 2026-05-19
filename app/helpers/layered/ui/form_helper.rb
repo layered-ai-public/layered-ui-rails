@@ -35,7 +35,7 @@ module Layered
         label = config[:label] || attribute.to_s.humanize
 
         extras = config.except(:attribute, :as, :label, :required, :hint,
-                               :collection, :placeholder)
+                               :collection, :placeholder, :prompt, :include_blank)
 
         {
           attribute: attribute,
@@ -45,6 +45,8 @@ module Layered
           hint: config[:hint],
           collection: config[:collection],
           placeholder: config[:placeholder],
+          prompt: config[:prompt],
+          include_blank: config[:include_blank],
           extras: extras
         }
       end

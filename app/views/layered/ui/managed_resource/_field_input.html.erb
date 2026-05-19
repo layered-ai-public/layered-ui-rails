@@ -25,8 +25,8 @@
   <%
     collection = config[:collection]
     choices = collection.respond_to?(:call) ? collection.call : collection
-    include_blank = extras.delete(:include_blank)
-    prompt = extras.delete(:prompt)
+    include_blank = config[:include_blank]
+    prompt = config[:prompt]
     include_blank = true if include_blank.nil? && prompt.nil?
     select_options = {}
     select_options[:include_blank] = include_blank unless include_blank.nil?
