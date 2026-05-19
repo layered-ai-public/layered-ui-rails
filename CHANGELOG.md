@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- `prompt:` field option on `:select` fields in `l_ui_form`, shown as the first option and only selectable when no value is set; suppresses the default blank option
+
 ## [0.16.1] - 2026-05-16
 
 ### Fixed
