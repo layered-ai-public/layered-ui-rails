@@ -45,6 +45,7 @@
       { attribute: :title, as: :string, required: true, placeholder: "Enter a title" },
       { attribute: :body, as: :text, hint: "A longer description" },
       { attribute: :user_id, as: :select, label: "Author",
+        prompt: "Choose an author",
         collection: @users.map { |u| [u.name, u.id] } },
     ],
     url: "#") %>
@@ -65,6 +66,7 @@
       { attribute: :body, as: :text,
         hint: "A longer description" },
       { attribute: :user_id, as: :select, label: "Author",
+        prompt: "Choose an author",
         collection: User.pluck(:name, :id) },
     ],
     url: posts_path) %&gt;</code></pre>
@@ -161,6 +163,16 @@
         <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>collection:</code></th>
         <td class="l-ui-table__cell">Array / Proc</td>
         <td class="l-ui-table__cell">Options for <code>:select</code> fields. Array of <code>[label, value]</code> pairs or a callable.</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>prompt:</code></th>
+        <td class="l-ui-table__cell">String</td>
+        <td class="l-ui-table__cell">Prompt text for <code>:select</code> fields (e.g. "Choose an author"). Shown as the first option; only selectable when no value is set. Setting <code>prompt:</code> suppresses the default blank option.</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>include_blank:</code></th>
+        <td class="l-ui-table__cell">Boolean / String</td>
+        <td class="l-ui-table__cell">For <code>:select</code> fields. Defaults to <code>true</code>. Pass a string to use it as the blank option's label, or <code>false</code> to omit the blank option entirely.</td>
       </tr>
     </tbody>
   </table>

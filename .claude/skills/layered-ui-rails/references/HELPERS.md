@@ -226,6 +226,8 @@ Field options:
 - `required` (Boolean, optional) - marks field as required; default false
 - `hint` (String, optional) - help text below the field
 - `collection` (Array, optional) - required for `:select` type; e.g. `[['Label', value], ...]`
+- `include_blank` (Boolean or String, optional) - for `:select` fields; defaults to `true`. Pass a string to use as the blank option's label, or `false` to omit it. Suppressed when `prompt:` is set
+- `prompt` (String, optional) - for `:select` fields; prompt text shown as the first option, only selectable when no value is set
 - `placeholder` (String, optional) - input placeholder text
 
 ```erb

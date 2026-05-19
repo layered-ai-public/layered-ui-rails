@@ -25,11 +25,15 @@
   <%
     collection = config[:collection]
     choices = collection.respond_to?(:call) ? collection.call : collection
-    include_blank = extras.delete(:include_blank)
-    include_blank = true if include_blank.nil?
+    include_blank = config[:include_blank]
+    prompt = config[:prompt]
+    include_blank = true if include_blank.nil? && prompt.nil?
+    select_options = {}
+    select_options[:include_blank] = include_blank unless include_blank.nil?
+    select_options[:prompt] = prompt unless prompt.nil?
   %>
   <div class="l-ui-select-container">
-    <%= form.select(attribute, choices, { include_blank: include_blank },
+    <%= form.select(attribute, choices, select_options,
                     class: field_class.call("l-ui-select"), **base_opts, **extras) %>
   </div>
 <% elsif config[:as] == :checkbox %>
