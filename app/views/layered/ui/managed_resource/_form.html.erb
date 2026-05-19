@@ -1,4 +1,4 @@
-<% local_assigns[:multipart] = nil unless local_assigns.key?(:multipart) %>
+<% multipart = local_assigns.fetch(:multipart, nil) %>
 <% form_opts = { url: url, class: "l-ui-form" } %>
 <% form_opts[:method] = method if method %>
 <% form_opts[:multipart] = multipart.nil? ? fields.any? { |f| f[:as] == :file } : multipart %>
