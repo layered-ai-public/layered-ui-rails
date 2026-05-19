@@ -2,10 +2,14 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.17.0] - 2026-05-19
 
 ### Added
 
+- `header_actions` helper for inserting custom action buttons into the layout header, alongside the existing authentication/theme/navigation toggles
+- Header partial split into `_authentication`, `_navigation_toggle`, and `_theme_toggle` sub-partials
+- Expanded `l_ui_form` field types: `tel`, `url`, `search`, `time`, `month`, `week`, `color`, `range`, and `file`
+- `multipart:` option on `l_ui_form` to override the form's multipart encoding (auto-detected from `:file` fields otherwise)
 - `prompt:` field option on `:select` fields in `l_ui_form`, shown as the first option and only selectable when no value is set; suppresses the default blank option
 
 ## [0.16.1] - 2026-05-16
