@@ -8,7 +8,7 @@ Guidance for AI agents working in this repository.
 - **Engine:** importmap, assets, Pagy helpers when present; helpers: `AuthenticationHelper`, `NavigationHelper`, `PagyHelper`
 - **CSS** `app/assets/tailwind/layered_ui/engine.css` (the tailwindcss-rails engine entry point): OKLCH tokens, `.dark` on `<html>`, `@theme` utilities (`bg-background`, etc.), BEM components (`.l-ui-button--primary`, etc.). Layout: 63px header, 256px sidebar, 320px panel. WCAG 2.2 AA.
 - **CSS `@apply`:** Multi-line with grouping, following the Prettier Tailwind plugin order: layout → sizing → spacing → typography → backgrounds → borders → effects → transitions → interactivity. Within each group, follow Tailwind's own ordering (not alphabetical). State variants (`hover:`, `focus:`, `active:`, `disabled:`) and responsive prefixes (`sm:`, `md:`, `lg:`) are grouped with their base utility. Single utilities may stay on one line.
-- **Generators:** `bin/rails generate layered:ui:install` (copy CSS, import CSS, import JS)
+- **Generators:** `bin/rails generate layered:ui:install` (import engine CSS via `@import "../builds/tailwind/layered_ui"`, create overrides file, import JS)
 - **JS** `app/javascript/layered_ui/`: Stimulus controllers registered as `l-ui--theme`, `l-ui--navigation`, `l-ui--panel`, `l-ui--modal`, `l-ui--tabs`
 - **Layout yields** (prefixed `l_ui_`): `:l_ui_navigation_items`, `:l_ui_panel_heading`, `:l_ui_panel_body`, `:l_ui_body_class`
   - `:l_ui_body_class` modifiers: `l-ui-body--always-show-navigation` (pins nav as sidebar on desktop), `l-ui-body--hide-header` (hides header and collapses its space)
