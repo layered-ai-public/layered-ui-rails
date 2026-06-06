@@ -1,2 +1,2 @@
 @import "tailwindcss";
-@import "../../../../../app/assets/tailwind/layered/ui/styles.css";
+@import "../builds/tailwind/layered_ui";

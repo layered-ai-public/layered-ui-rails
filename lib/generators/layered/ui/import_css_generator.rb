@@ -10,7 +10,7 @@ module Layered
           return unless File.exist?(application_css)
 
           content = File.read(application_css)
-          import_line = '@import "./layered_ui";'
+          import_line = '@import "../builds/tailwind/layered_ui";'
           overrides_line = '@import "./layered_ui_overrides";'
 
           unless content.include?(import_line)

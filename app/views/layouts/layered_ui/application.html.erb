@@ -20,7 +20,7 @@
 
     <%# Apply dark class before paint to prevent white flash on reload %>
     <script>try{var s=localStorage.getItem("theme");(s==="dark"||(!s&&matchMedia("(prefers-color-scheme:dark)").matches))&&document.documentElement.classList.add("dark")}catch(e){}</script>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= yield(:l_ui_head) %>
     <%= javascript_importmap_tags %>
   </head>

@@ -76,8 +76,8 @@ bin/rails generate layered:ui:install
 ```
 
 The install generator will:
-- Copy `layered_ui.css` to `app/assets/tailwind/`
-- Add `@import "./layered_ui";` to your `application.css`
+- Add `@import "../builds/tailwind/layered_ui";` to your `application.css` (the engine's CSS is served straight from the gem via [tailwindcss-rails' engine support](https://github.com/rails/tailwindcss-rails#rails-engines-support-experimental), so it stays in sync when you upgrade)
+- Create `app/assets/tailwind/layered_ui_overrides.css` for your theme customisations (never overwritten on re-install)
 - Add `import "layered_ui"` to your `application.js`
 
 Then update your application layout to render the engine layout. Place any `content_for` blocks **above** the render call - the engine layout reads them when it renders, so they must be defined first:
@@ -101,7 +101,7 @@ All colors are CSS custom properties on `:root` using a two-tier system:
 
 ```css
 /* app/assets/tailwind/application.css */
-@import "./layered_ui";
+@import "../builds/tailwind/layered_ui";
 
 :root {
   --accent: oklch(0.58 0.19 255);
