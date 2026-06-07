@@ -25,7 +25,7 @@ Applied to `<body>` via the `:l_ui_body_class` yield to toggle layout-level beha
 .l-ui-body--always-show-navigation  Pin sidebar navigation open on desktop
 .l-ui-body--hide-header             Hide the header and collapse its reserved space
 .l-ui-body--header-contained        Constrain the header's inner row to --l-ui-contained-width (landing pages)
-.l-ui-body--glass-header            Frost the header (translucent + backdrop blur); content scrolls under it
+.l-ui-body--glass-header            Glass header (translucent + backdrop blur); content scrolls under it
 .l-ui-body--flush-top               Zero the page's top gutter so the first section sits flush at the top, behind the header
 ```
 
