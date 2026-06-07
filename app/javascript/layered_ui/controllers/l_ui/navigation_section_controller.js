@@ -56,13 +56,24 @@ export default class extends Controller {
     }
   }
 
-  // Slide the items in only on user-initiated open, not on initial page load.
+  // Slide the panel open by transitioning its height from 0 to its natural
+  // height, only on user-initiated open, not on initial page load.
   #animateOpen() {
     const panel = this.panelTarget
     const CLASS = "l-ui-navigation__section-items--opening"
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+    const endHeight = panel.scrollHeight
     panel.classList.add(CLASS)
-    panel.addEventListener("animationend", () => {
+    panel.style.height = "0px"
+    panel.offsetHeight // Force a reflow so the starting height is applied.
+    panel.style.height = `${endHeight}px`
+
+    panel.addEventListener("transitionend", (event) => {
+      if (event.propertyName !== "height") return
       panel.classList.remove(CLASS)
+      panel.style.height = ""
     }, { once: true })
   }
 }
