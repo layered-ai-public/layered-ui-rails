@@ -240,12 +240,6 @@
   @apply font-manrope font-bold;
 }
 
-/* Frosted, translucent treatment: tints with --background and blurs what scrolls behind it.
-   The single source for the glass look (currently the header, via .l-ui-body--glass-header). */
-@utility l-ui-glass {
-  @apply bg-background/60 backdrop-blur-xl;
-}
-
 .l-ui-mt-0 {
   @apply !mt-0;
 }
@@ -513,8 +507,9 @@
 /* Frost the header so page content scrolls under it, dropping the solid bottom border.
    Pair with .l-ui-body--flush-top for a hero behind the header. */
 .l-ui-body--glass-header .l-ui-header-container {
-  @apply l-ui-glass
-         border-b-transparent;
+  @apply bg-background/60
+         border-b-transparent
+         backdrop-blur-xl;
 }
 
 .l-ui-header {
