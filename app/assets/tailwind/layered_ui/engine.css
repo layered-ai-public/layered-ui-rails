@@ -581,8 +581,20 @@
   @apply dark:invert;
 }
 
+/* Painted from the --button-primary-icon token via a mask, so any accent
+   foreground works in both themes (not just black/white as `invert` allowed).
+   The icon shape comes from --l-ui-icon-src, set inline at the call site. */
 .l-ui-button--primary .l-ui-icon {
-  @apply invert dark:invert-0;
+  @apply inline-block shrink-0;
+  background-color: var(--button-primary-icon);
+  -webkit-mask: var(--l-ui-icon-src) no-repeat center / contain;
+          mask: var(--l-ui-icon-src) no-repeat center / contain;
+}
+
+/* Higher specificity than `.dark .l-ui-icon` so the base dark-mode invert
+   does not flip the token colour above. */
+.dark .l-ui-button--primary .l-ui-icon {
+  filter: none;
 }
 
 .l-ui-icon--xs {
