@@ -36,6 +36,8 @@ Applied to `<body>` via the `:l_ui_body_class` yield to toggle layout-level beha
 .l-ui-page__width-constrained    Max-width container element
 ```
 
+`.l-ui-page` (and `--with-navigation`) is applied by the engine layout around your view's `yield` - you do not add it yourself. Wrapping your view content in another `.l-ui-page` nests two containers. The `__vertically-centered` and `__width-constrained` elements are used *inside* views (e.g. the Devise auth pages) for centred, width-limited content.
+
 ## Buttons
 
 Always combine the `l-ui-button` base class with a colour modifier (e.g. `l-ui-button l-ui-button--primary`):

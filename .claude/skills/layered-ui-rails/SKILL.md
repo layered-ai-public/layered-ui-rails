@@ -39,6 +39,8 @@ Then render the engine layout from your application layout. Place all `content_f
 
 The engine layout provides a fixed header (63px), optional sidebar navigation (256px wide), optional resizable panel (320px default), and a main content area. Dark mode is built in with a toggle and localStorage persistence.
 
+**Your view's `yield` content is already wrapped in `.l-ui-page`** by the engine layout (which applies the responsive padding and `--with-navigation` margin). Do not add your own `.l-ui-page` wrapper around your view content - it duplicates the container and nests two `.l-ui-page` elements. Start your view with its actual content (headings, sections, components) directly.
+
 ### Content blocks
 
 Populate layout regions with `content_for` (always above the render call):
