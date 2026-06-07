@@ -897,6 +897,11 @@
          text-xs;
 }
 
+.l-ui-button--icon.l-ui-button--small {
+  @apply min-w-[32px]
+         p-1.5;
+}
+
 .l-ui-button:disabled {
   @apply opacity-50
          cursor-not-allowed;

@@ -60,7 +60,8 @@ Always combine the `l-ui-button` base class with a colour modifier (e.g. `l-ui-b
 Icon variants (combine with the `l-ui-button` base):
 
 ```
-.l-ui-button--icon               Icon-only button (fixed size, no text)
+.l-ui-button--icon               Icon-only button (44px square, no text)
+                                 Add --small (l-ui-button--icon l-ui-button--small) for a 32px square icon button
 .l-ui-button--navigation-toggle  Mobile navigation toggle
 ```
 

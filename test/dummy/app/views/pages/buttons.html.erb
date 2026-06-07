@@ -100,6 +100,36 @@
   </dialog>
 </div>
 
+<h2 class="mt-8">Small icon button</h2>
+
+<p class="mt-4">Combine <code>l-ui-button--icon</code> with <code>l-ui-button--small</code> for a compact 32px square icon button, useful in dense areas like panel actions or comment toolbars. The 32px hit area comfortably exceeds the WCAG 2.2 AA 24px target size minimum.</p>
+
+<div class="l-ui-spread mt-4">
+  <button class="l-ui-button l-ui-button--icon l-ui-button--small" aria-label="Close">
+    <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+  </button>
+  <button class="l-ui-button l-ui-button--primary l-ui-button--icon l-ui-button--small" aria-label="Toggle dark mode">
+    <%= image_tag "layered_ui/icon_moon.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+  </button>
+</div>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-buttons-small-icon-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-buttons-small-icon-heading">Small icon button</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;button class="l-ui-button l-ui-button--icon l-ui-button--small" aria-label="Close"&gt;
+  &lt;svg class="l-ui-icon l-ui-icon--sm"&gt;...&lt;/svg&gt;
+&lt;/button&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
 <h2 class="mt-8">Full width</h2>
 
 <div class="mt-4">
