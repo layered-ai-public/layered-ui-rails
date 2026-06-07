@@ -467,6 +467,13 @@
   @apply md:ml-[256px];
 }
 
+/* Zero the page's top gutter so the first section sits flush at the viewport top, behind the
+   header. Intended with .l-ui-body--glass-header (content shows through the glass header) or
+   .l-ui-body--hide-header; over an opaque header it would tuck content out of sight. */
+.l-ui-body--flush-top .l-ui-page {
+  @apply pt-0;
+}
+
 .l-ui-page__vertically-centered {
   @apply flex flex-1 flex-col items-center justify-center;
 }
@@ -495,6 +502,12 @@
 
 .l-ui-body--hide-header .l-ui-header-container {
   @apply hidden;
+}
+
+.l-ui-body--glass-header .l-ui-header-container {
+  @apply bg-background/60
+         border-b-transparent
+         backdrop-blur-xl;
 }
 
 .l-ui-header {
