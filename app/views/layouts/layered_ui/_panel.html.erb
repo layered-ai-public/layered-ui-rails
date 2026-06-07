@@ -41,7 +41,7 @@
                 title="Toggle panel (Ctrl+i / ⌘i)"
                 data-action="click->l-ui--panel#toggle"
                 data-l-ui--panel-target="hideButton">
-                <%= image_tag "layered_ui/icon_panel_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+                <span class="l-ui-icon l-ui-icon--sm" style="--l-ui-icon-src: url(<%= asset_path "layered_ui/icon_panel_close.svg" %>)" aria-hidden="true"></span>
               </button>
             </div>
           </div>

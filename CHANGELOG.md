@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+### Fixed
+
+- Primary-button icons (e.g. the panel hide button) are now painted from the `--button-primary-icon` token via a CSS mask instead of a binary `invert` filter. `invert` could only ever produce black or white, so accents with a non-white foreground rendered the wrong colour and had to be patched out downstream with `filter: none`. Any accent foreground now works in both themes; the downstream override can be removed.
+
 ### Changed
 
 - **Breaking (install flow):** the engine's CSS is now served directly from the gem using [tailwindcss-rails' engine support](https://github.com/rails/tailwindcss-rails#rails-engines-support-experimental) instead of being copied into the host app. The install generator no longer creates `app/assets/tailwind/layered_ui.css`; instead it adds `@import "../builds/tailwind/layered_ui";` to your `application.css`. The CSS now stays in sync with the installed gem version automatically - no need to re-run the generator after upgrading.
