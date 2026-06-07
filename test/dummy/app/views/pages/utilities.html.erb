@@ -70,7 +70,7 @@
 
 <h2 class="mt-8">Full-bleed</h2>
 
-<p class="mt-4">The page applies a gutter (the <code>--l-ui-gutter</code> custom property, default <code>1rem</code>) as its horizontal and bottom padding, shared with the header so the two always align. Add <code>l-ui-bleed</code> to a single child to break it out to the page edge - a full-bleed hero or banner - without reverse-engineering the padding. It cancels exactly the current gutter, so there are no magic numbers to match. It affects the horizontal edges only; content still sits below the page's top padding.</p>
+<p class="mt-4">The page applies a gutter (the <code>--l-ui-gutter</code> custom property, default <code>1rem</code>) as its horizontal and bottom padding, shared with the header so the two always align. Add <code>l-ui-bleed</code> to a single child to break it out to the page edge - a full-bleed hero or banner - without reverse-engineering the padding. It cancels exactly the current gutter, so there are no magic numbers to match. It affects the horizontal edges only; content still sits below the page's top padding. To pull the first section up to the very top of the viewport - behind the header - add <code>l-ui-body--flush-top</code> to the body and pair it with <code>l-ui-body--glass-header</code> (see <%= link_to "Header", layout_header_path %>).</p>
 
 <div class="mt-4">
   <p>Padded page content sits within the gutter.</p>
