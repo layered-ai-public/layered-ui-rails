@@ -132,7 +132,7 @@ Populate layout regions with `content_for` (always above the render call):
 Body class modifiers:
 - `l-ui-body--always-show-navigation` - pins navigation as a sidebar on desktop
 - `l-ui-body--hide-header` - hides the header and collapses its space
-- `l-ui-body--glass-header` - frosts the header (translucent + blur); content scrolls under it
+- `l-ui-body--glass-header` - glass header (translucent + blur); content scrolls under it
 - `l-ui-body--flush-top` - zeroes the page's top gutter so a hero sits flush at the top, behind the header (pair with `--glass-header` or `--hide-header`)
 
 ### Controller instance variables
