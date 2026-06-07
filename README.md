@@ -127,15 +127,7 @@ For *dynamic* theming whose values are only known per request (e.g. per-tenant b
 
 > **Security:** never interpolate user-supplied strings directly into the served CSS - this allows CSS injection (Important: Validate or sanitise any user-derived values before interpolation).
 
-> **CSP compatibility:** inline `<style>` blocks are blocked by a strict `Content-Security-Policy: style-src 'self'` header. If your app enforces a strict CSP, add a nonce to the style tag using Rails' `content_security_policy_nonce` helper - Rails automatically includes the matching nonce in the CSP header:
->
-> ```erb
-> <% content_for :l_ui_head do %>
->   <style nonce="<%= content_security_policy_nonce %>">
->     :root { --accent: <%= @tenant.accent_color %>; --accent-foreground: oklch(1 0 0); }
->   </style>
-> <% end %>
-> ```
+> **CSP and Turbo:** a stylesheet served from your own origin satisfies a strict `Content-Security-Policy: style-src 'self'` with no nonce, and Turbo caches it by URL - both reasons the linked-stylesheet pattern above is preferable. If you do inject an inline `<style>` block instead, add a nonce with Rails' `content_security_policy_nonce` helper (Rails includes the matching nonce in the CSP header automatically), and note Turbo's preview pass may briefly show stale tokens from a cached snapshot.
 
 See the [Colors documentation](https://layered-ui-rails.layered.ai/layout_colors) for the full list of tokens.
 

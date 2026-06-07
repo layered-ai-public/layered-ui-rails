@@ -28,9 +28,11 @@
 
 <p class="l-ui-notice l-ui-notice--warning mt-4"><strong>Security:</strong> never interpolate user-supplied strings directly into the served CSS - this allows CSS injection. Validate or sanitise any user-derived values before interpolation.</p>
 
-<h2 class="mt-8">CSP compatibility</h2>
+<h2 class="mt-8">CSP and Turbo compatibility</h2>
 
-<p class="mt-4">Inline <code>&lt;style&gt;</code> blocks are blocked by a strict <code>Content-Security-Policy: style-src 'self'</code> header. If your app enforces a strict CSP, add a nonce using Rails' <code>content_security_policy_nonce</code> helper - Rails includes the matching nonce in the CSP header automatically:</p>
+<p class="mt-4">The linked-stylesheet pattern above sidesteps two issues that an inline <code>&lt;style&gt;</code> block runs into. A stylesheet served from your own origin satisfies a strict <code>Content-Security-Policy: style-src 'self'</code> with no nonce, and Turbo caches and reuses it by URL - both reasons to prefer it.</p>
+
+<p class="mt-4">If you do inject an inline <code>&lt;style&gt;</code> block instead, two caveats apply. Under a strict CSP, add a nonce with Rails' <code>content_security_policy_nonce</code> helper - Rails includes the matching nonce in the CSP header automatically:</p>
 
 <pre class="l-ui-surface mt-4"><code>&lt;% content_for :l_ui_head do %&gt;
   &lt;style nonce="&lt;%= content_security_policy_nonce %&gt;"&gt;
@@ -38,16 +40,4 @@
   &lt;/style&gt;
 &lt;% end %&gt;</code></pre>
 
-<h2 class="mt-8">Turbo Drive compatibility</h2>
-
-<p class="mt-4">Turbo Drive merges <code>&lt;head&gt;</code> content on each navigation - changed <code>&lt;style&gt;</code> blocks are replaced correctly. The caveat is the preview pass: when Turbo restores a snapshot from its cache before the network response arrives, a cached snapshot may briefly show stale tokens.</p>
-
-<p class="mt-4">If tokens are stable for a session (e.g. a single-tenant session where branding only changes on login), add <code>data-turbo-track="reload"</code> to the <code>&lt;style&gt;</code> tag. Turbo will trigger a full page reload only when the tag content changes between visits.</p>
-
-<p class="mt-4">If tokens vary per navigation (e.g. a user switches between tenants mid-session), <code>data-turbo-track="reload"</code> will reload on every visit, effectively disabling Turbo. The preferred pattern in that case is to serve the theme as a dedicated stylesheet URL:</p>
-
-<pre class="l-ui-surface mt-4"><code>&lt;% content_for :l_ui_head do %&gt;
-  &lt;link rel="stylesheet" href="&lt;%= @tenant.theme_stylesheet_url %&gt;"&gt;
-&lt;% end %&gt;</code></pre>
-
-<p class="mt-4">Turbo caches and reuses stylesheet responses by URL, so this approach is both Turbo-friendly and avoids inline style blocks entirely.</p>
+<p class="mt-4">And on Turbo's preview pass - when it restores a cached snapshot before the network response arrives - an inline block may briefly show stale tokens. If tokens are stable for a session, add <code>data-turbo-track="reload"</code> so Turbo reloads only when the block changes between visits; if they vary per navigation this disables Turbo, so the linked stylesheet is the better fit.</p>
