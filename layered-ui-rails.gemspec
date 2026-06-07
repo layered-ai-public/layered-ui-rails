@@ -48,9 +48,11 @@ Gem::Specification.new do |spec|
       bin/rails generate layered:ui:install
 
     This command will:
-      • Copy the layered UI CSS to your host app at app/assets/tailwind/layered_ui.css
-        • This approach ensures the CSS is processed with your host app's Tailwind configuration
-      • Add an import statement to your app/assets/tailwind/application.css
+      • Add `@import "../builds/tailwind/layered_ui";` to your app/assets/tailwind/application.css
+        • The engine's CSS is served directly from the gem via tailwindcss-rails' engine
+          support, so it is compiled with your host app's Tailwind configuration and stays
+          in sync automatically when you upgrade
+      • Create app/assets/tailwind/layered_ui_overrides.css for your theme customisations
       • Add `import "layered_ui"` to your app/javascript/application.js (just after `import "@hotwired/turbo-rails"`, if present)
 
     If these imports already exist, they will not be duplicated.

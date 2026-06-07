@@ -37,12 +37,12 @@ curl -fsSL https://raw.githubusercontent.com/layered-ai-public/layered-ui-rails/
 <pre class="l-ui-surface mt-4"><code>bundle install</code></pre>
 
 <h2 class="mt-6">Setup</h2>
-<p class="mt-4">Run the install generator to copy CSS and JS to your application:</p>
+<p class="mt-4">Run the install generator to wire up CSS and JS in your application:</p>
 <pre class="l-ui-surface mt-4"><code>bin/rails generate layered:ui:install</code></pre>
 <p class="mt-4">This will:</p>
 <ul class="l-ui-list mt-2">
-  <li>Copy <code>layered_ui.css</code> to <code>app/assets/tailwind/</code></li>
-  <li>Add <code>@import "./layered_ui";</code> to your application.css</li>
+  <li>Add <code>@import "../builds/tailwind/layered_ui";</code> to your application.css (the engine's CSS is served straight from the gem via tailwindcss-rails' engine support, so it stays in sync when you upgrade)</li>
+  <li>Create <code>layered_ui_overrides.css</code> for your theme customisations</li>
   <li>Add <code>import "layered_ui"</code> to your application.js</li>
 </ul>
 

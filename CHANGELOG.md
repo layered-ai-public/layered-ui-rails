@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+
+- **Breaking (install flow):** the engine's CSS is now served directly from the gem using [tailwindcss-rails' engine support](https://github.com/rails/tailwindcss-rails#rails-engines-support-experimental) instead of being copied into the host app. The install generator no longer creates `app/assets/tailwind/layered_ui.css`; instead it adds `@import "../builds/tailwind/layered_ui";` to your `application.css`. The CSS now stays in sync with the installed gem version automatically - no need to re-run the generator after upgrading.
+- The engine layout now links the compiled Tailwind build explicitly (`stylesheet_link_tag "tailwind"`) rather than the `:app` bundle, matching tailwindcss-rails' own convention and avoiding a stray link to the engine's intermediate build file.
+- Moved the engine's source stylesheet from `app/assets/tailwind/layered/ui/styles.css` to `app/assets/tailwind/layered_ui/engine.css` (the path tailwindcss-rails' engine support expects).
+
+### Removed
+
+- `CopyAssetsGenerator` (`layered:ui:copy_assets`), which copied the engine CSS into the host app. It is replaced by the engine-support import above.
+
+### Migration
+
+Re-run `bin/rails generate layered:ui:install` (it adds the new import without duplicating existing ones), then delete the now-unused copied file at `app/assets/tailwind/layered_ui.css` and remove its `@import "./layered_ui";` line from `application.css`. Your `layered_ui_overrides.css` and any customisations are unaffected.
+
 ## [0.17.0] - 2026-05-19
 
 ### Added

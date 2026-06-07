@@ -15,10 +15,6 @@ module Layered
           end
         end
 
-        def copy_assets
-          invoke "layered:ui:copy_assets"
-        end
-
         def create_overrides
           invoke "layered:ui:create_overrides"
         end

@@ -15,8 +15,7 @@ class InstallGeneratorTest < Rails::Generators::TestCase
 
     Dir.chdir(destination_root) { run_generator }
 
-    assert_file "app/assets/tailwind/layered_ui.css"
-    assert_file "app/assets/tailwind/application.css", /@import "\.\/layered_ui"/
+    assert_file "app/assets/tailwind/application.css", %r{@import "\.\./builds/tailwind/layered_ui"}
     assert_file "app/javascript/application.js", /import "layered_ui"/
   end
 end
