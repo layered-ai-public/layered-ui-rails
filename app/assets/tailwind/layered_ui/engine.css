@@ -747,8 +747,16 @@
   mask-size: contain;
 }
 
+/* transition-none is intentional: the after-change style determines the
+   transition, so this gives "animate open, snap shut" - opening matches the
+   base rule (animates), closing matches this rule (snaps instantly). */
 .l-ui-navigation__section-toggle[aria-expanded="false"] .l-ui-navigation__section-chevron {
-  @apply -rotate-90;
+  @apply -rotate-90
+         transition-none;
+}
+
+.l-ui-navigation__section-toggle--no-transition .l-ui-navigation__section-chevron {
+  @apply transition-none;
 }
 
 .l-ui-navigation__section-items {
@@ -769,6 +777,22 @@
   @apply flex flex-col flex-1 overflow-y-auto
          min-h-0
          gap-0.5 px-3 py-3;
+}
+
+@keyframes l-ui-navigation-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-0.375rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.l-ui-navigation__section-items--opening > li {
+  animation: l-ui-navigation-slide-down 0.2s ease-out both;
 }
 
 .l-ui-navigation__user {

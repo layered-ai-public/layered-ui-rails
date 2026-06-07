@@ -21,12 +21,21 @@ export default class extends Controller {
     if (stored === null) return
 
     const isOpen = stored === "true"
-    this.toggleTarget.setAttribute("aria-expanded", isOpen ? "true" : "false")
+    // Apply the restored state without animating the chevron on load; it should
+    // simply render in the correct position.
+    const toggle = this.toggleTarget
+    toggle.classList.add("l-ui-navigation__section-toggle--no-transition")
+    toggle.setAttribute("aria-expanded", isOpen ? "true" : "false")
     if (isOpen) {
       this.panelTarget.removeAttribute("hidden")
     } else {
       this.panelTarget.setAttribute("hidden", "")
     }
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        toggle.classList.remove("l-ui-navigation__section-toggle--no-transition")
+      })
+    })
   }
 
   toggle() {
@@ -34,6 +43,7 @@ export default class extends Controller {
     this.toggleTarget.setAttribute("aria-expanded", isOpen ? "true" : "false")
     if (isOpen) {
       this.panelTarget.removeAttribute("hidden")
+      this.#animateOpen()
     } else {
       this.panelTarget.setAttribute("hidden", "")
     }
@@ -44,5 +54,15 @@ export default class extends Controller {
     } catch (_e) {
       // ignore
     }
+  }
+
+  // Slide the items in only on user-initiated open, not on initial page load.
+  #animateOpen() {
+    const panel = this.panelTarget
+    const CLASS = "l-ui-navigation__section-items--opening"
+    panel.classList.add(CLASS)
+    panel.addEventListener("animationend", () => {
+      panel.classList.remove(CLASS)
+    }, { once: true })
   }
 }
