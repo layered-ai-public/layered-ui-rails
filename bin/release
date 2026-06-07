@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+#
+# Build the layered-ui-rails gem and push it to RubyGems.
+#
+# RubyGems MFA is enabled (rubygems_mfa_required = true) and configured with a
+# passkey, so the final `gem push` will print a URL. Open it in your browser to
+# validate your passkey and complete the push.
+
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+GEMSPEC="layered-ui-rails.gemspec"
+NAME="layered-ui-rails"
+VERSION="$(ruby -r./lib/layered/ui/version -e 'print Layered::Ui::VERSION')"
+GEM_FILE="${NAME}-${VERSION}.gem"
+
+echo "Building ${NAME} v${VERSION}..."
+gem build "$GEMSPEC"
+
+echo
+echo "Pushing ${GEM_FILE} to RubyGems..."
+echo "MFA is enabled: watch for a URL below and open it to validate your passkey."
+echo
+gem push "$GEM_FILE"
+
+echo
+echo "Done. Published ${NAME} v${VERSION}."
+echo "Cleaning up ${GEM_FILE}..."
+rm -f "$GEM_FILE"
