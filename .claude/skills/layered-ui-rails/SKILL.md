@@ -153,7 +153,7 @@ Quick reference:
 
 | Helper | Purpose |
 |---|---|
-| `l_ui_navigation_item(label, path, ...)` | Sidebar nav link (supports `icon:`, `match: :starts_with`, `expandable:`) |
+| `l_ui_navigation_item(label, path, ...)` | Sidebar nav link (supports `icon:`, `match: :starts_with`, `expandable:`). For valid `icon:` names and the missing-asset gotcha, see the "Icons" section in `references/HELPERS.md` |
 | `l_ui_navigation_section(heading = nil, ...)` | Group nav items; supports `collapsible:`, `storage_key:`, `separated:` |
 | `l_ui_breadcrumbs(&block)` | Breadcrumb nav wrapper |
 | `l_ui_breadcrumb_item(label, path = nil)` | Individual breadcrumb |
