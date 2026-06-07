@@ -24,7 +24,7 @@ Applied to `<body>` via the `:l_ui_body_class` yield to toggle layout-level beha
 ```
 .l-ui-body--always-show-navigation  Pin sidebar navigation open on desktop
 .l-ui-body--hide-header             Hide the header and collapse its reserved space
-.l-ui-body--header-contained        Constrain the header's inner row to max-w-7xl (landing pages)
+.l-ui-body--header-contained        Constrain the header's inner row to --l-ui-contained-width (landing pages)
 ```
 
 ## Page layout
@@ -34,10 +34,11 @@ Applied to `<body>` via the `:l_ui_body_class` yield to toggle layout-level beha
 .l-ui-page--with-navigation      Left margin for sidebar on desktop
 .l-ui-page__vertically-centered  Centred layout element (e.g. login pages)
 .l-ui-page__narrow               Narrow column (md:max-w-sm, ~384px) for any compact, centred content
+.l-ui-page__contained            Centred column capped at --l-ui-contained-width; aligns with the contained header
 .l-ui-bleed                      Breaks a child out to the page edge (full-bleed hero etc.)
 ```
 
-`.l-ui-page` (and `--with-navigation`) is applied by the engine layout around your view's `yield` - you do not add it yourself. Wrapping your view content in another `.l-ui-page` nests two containers. The `__vertically-centered` and `__narrow` elements are used *inside* views for centred, compact content (the Devise auth pages are one example, but they are general-purpose). `__narrow` caps width at `md:max-w-sm` (~384px). For a wider content area, add your own max-width wrapper in the host app - `.l-ui-page` already holds content to the available width.
+`.l-ui-page` (and `--with-navigation`) is applied by the engine layout around your view's `yield` - you do not add it yourself. Wrapping your view content in another `.l-ui-page` nests two containers. The `__vertically-centered` and `__narrow` elements are used *inside* views for centred, compact content (the Devise auth pages are one example, but they are general-purpose). `__narrow` caps width at `md:max-w-sm` (~384px). For a wider content area, wrap your content in `.l-ui-page__contained`: it caps width at the `--l-ui-contained-width` token (default `80rem`) and centres with `mx-auto`. Because the contained header (`.l-ui-body--header-contained`) reads the same token, the two line up automatically - override `--l-ui-contained-width` once to move both. Left to itself, `.l-ui-page` holds content to the full available width.
 
 The page gutter (horizontal and bottom padding) is the `--l-ui-gutter` custom property (default `1rem`), shared by `.l-ui-page` and `.l-ui-header` so they always align. Override it on a container to change the gutter in one place rather than reverse-engineering padding values. To take a single child edge-to-edge (a full-bleed hero, a banner), add `.l-ui-bleed` to it - it cancels exactly the current gutter, so no negative-margin guesswork. Note `.l-ui-bleed` only handles the horizontal edges; content still sits below the page's top padding (header offset + gutter).
 
@@ -392,6 +393,8 @@ Tier 2 - Full palette (override individually as needed):
 --error-bg              Error background
 --error-text            Error text
 --header-height         Header height (default 63px)
+--l-ui-gutter           Page/header horizontal + bottom padding (default 1rem)
+--l-ui-contained-width  Max width of contained content - header + .l-ui-page__contained (default 80rem)
 ```
 
 Override --button-primary-text when your accent color needs a different text/icon color on buttons (e.g. a pink accent with white button text in dark mode). Override --button-primary-icon instead when only the icon color should change.
