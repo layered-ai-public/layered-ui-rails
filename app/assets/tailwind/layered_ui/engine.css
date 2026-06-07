@@ -747,6 +747,9 @@
   mask-size: contain;
 }
 
+/* transition-none is intentional: the after-change style determines the
+   transition, so this gives "animate open, snap shut" - opening matches the
+   base rule (animates), closing matches this rule (snaps instantly). */
 .l-ui-navigation__section-toggle[aria-expanded="false"] .l-ui-navigation__section-chevron {
   @apply -rotate-90
          transition-none;
