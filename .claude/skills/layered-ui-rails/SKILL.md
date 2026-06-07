@@ -178,7 +178,7 @@ Key components:
 
 | Component | Key classes |
 |---|---|
-| Page layout | `.l-ui-page`, `--with-navigation`, `__vertically-centered`, `__narrow` (narrow ~384px column, md:max-w-sm) |
+| Page layout | `.l-ui-page`, `--with-navigation`, `__vertically-centered`, `__narrow` (narrow ~384px column, md:max-w-sm), `__contained` (wide column capped at `--l-ui-contained-width`) |
 | Buttons | `.l-ui-button`, `--primary`, `--outline`, `--outline-danger`, `--full`, `--icon` |
 | Surfaces | `.l-ui-surface`, `--highlighted`, `--sm`, `--collapsible`, `--collapsible-highlighted` |
 | Forms | `.l-ui-form`, `.l-ui-form__group`, `.l-ui-form__field`, `.l-ui-label`, `.l-ui-select` |
