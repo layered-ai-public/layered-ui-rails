@@ -115,17 +115,17 @@ All colors are CSS custom properties on `:root` using a two-tier system:
 }
 ```
 
-For dynamic theming (e.g. per-tenant branding), use `content_for :l_ui_head` to inject content into the layout `<head>`:
+`content_for :l_ui_head` injects arbitrary content into `<head>` (third-party scripts, a page-specific inline `<script>`, meta tags, preload hints). As a rule of thumb, styles are easier to maintain elsewhere: layered-ui token and component overrides fit in the overrides file above, and other custom styling fits in your app's own application stylesheet, like any normal Rails app.
+
+For *dynamic* theming whose values are only known per request (e.g. per-tenant branding), a good option is to serve the tokens as a stylesheet from a Rails controller and link it via `:l_ui_head` - Turbo- and CSP-friendly, and it keeps styling out of the markup:
 
 ```erb
 <% content_for :l_ui_head do %>
-  <style>
-    :root { --accent: <%= @tenant.accent_color %>; --accent-foreground: oklch(1 0 0); }
-  </style>
+  <%= stylesheet_link_tag tenant_theme_path(current_tenant) %>
 <% end %>
 ```
 
-> **Security:** never interpolate user-supplied strings directly into a `<style>` tag - this allows CSS injection (Important: Validate or sanitise any user-derived values before interpolation).
+> **Security:** never interpolate user-supplied strings directly into the served CSS - this allows CSS injection (Important: Validate or sanitise any user-derived values before interpolation).
 
 > **CSP compatibility:** inline `<style>` blocks are blocked by a strict `Content-Security-Policy: style-src 'self'` header. If your app enforces a strict CSP, add a nonce to the style tag using Rails' `content_security_policy_nonce` helper - Rails automatically includes the matching nonce in the CSP header:
 >

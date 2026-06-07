@@ -58,11 +58,13 @@ Populate layout regions with `content_for` (always above the render call):
   <p>Panel content here.</p>
 <% end %>
 
-<%# Inject into <head> (e.g. per-tenant theming) %>
+<%# Inject arbitrary content into <head>: third-party scripts (analytics,
+    chat widgets), a page-specific inline <script>, meta/verification tags,
+    preload hints, or a per-request stylesheet link. For styling, the overrides
+    file is usually a better fit - see note below. %>
 <% content_for :l_ui_head do %>
-  <style nonce="<%= content_security_policy_nonce %>">
-    :root { --accent: oklch(0.58 0.19 255); }
-  </style>
+  <%= javascript_include_tag "https://cdn.example.com/widget.js", defer: true %>
+  <meta name="google-site-verification" content="...">
 <% end %>
 
 <%# Add CSS classes to <body> %>
@@ -100,6 +102,30 @@ Populate layout regions with `content_for` (always above the render call):
   <%= link_to "About", about_path %>
 <% end %>
 ```
+
+> `:l_ui_head` injects whatever you like into `<head>`. As a rule of thumb,
+> reach for it for head content rather than styling, because styles are easier
+> to maintain when they live with the rest of your CSS:
+>
+> - **layered-ui token or component overrides** (e.g. `--accent`, restyling a
+>   `.l-ui-*` class) fit best in `app/assets/tailwind/layered_ui_overrides.css`
+>   - see [Theming](#theming) - so they are part of the Tailwind build and can
+>   use `@apply` and the design tokens.
+> - **Other custom styling** fits in the host app's own application stylesheet,
+>   like any normal Rails app.
+>
+> For *per-request* values that cannot be known at build time (e.g. per-tenant
+> brand tokens), a good option is to serve them as a stylesheet from a Rails
+> controller and link it via `:l_ui_head`:
+>
+> ```erb
+> <% content_for :l_ui_head do %>
+>   <%= stylesheet_link_tag tenant_theme_path(current_tenant) %>
+> <% end %>
+> ```
+>
+> The controller renders CSS that overrides the design tokens (`--accent`,
+> etc.) - Turbo- and CSP-friendly, and it keeps styling out of the markup.
 
 Body class modifiers:
 - `l-ui-body--always-show-navigation` - pins navigation as a sidebar on desktop
