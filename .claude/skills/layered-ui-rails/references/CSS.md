@@ -38,6 +38,8 @@ Applied to `<body>` via the `:l_ui_body_class` yield to toggle layout-level beha
 
 `.l-ui-page` (and `--with-navigation`) is applied by the engine layout around your view's `yield` - you do not add it yourself. Wrapping your view content in another `.l-ui-page` nests two containers. The `__vertically-centered` and `__width-constrained` elements are used *inside* views (e.g. the Devise auth pages) for centred, width-limited content.
 
+`.l-ui-page` is a flex column (`flex flex-1 flex-col`) and uses `overflow-x-clip` to hold its content to the available width: intrinsically wide content (tables, code blocks, long unbroken strings) is clipped rather than expanding the page or adding a horizontal page scrollbar. So make such content scroll internally (e.g. wrap a table in an `overflow-x-auto` element) instead of expecting the page to grow.
+
 ## Buttons
 
 Always combine the `l-ui-button` base class with a colour modifier (e.g. `l-ui-button l-ui-button--primary`):
