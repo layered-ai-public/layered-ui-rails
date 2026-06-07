@@ -14,13 +14,13 @@ l_ui_navigation_section(heading = nil, icon: nil, icon_path: nil, icon_html: nil
 - `path` (String) - URL
 - `active` (Boolean, optional) - force the active style; defaults to a match against the current request path. Does not affect `aria-current`, which is set only when `current_page?(path)` is true
 - `match` (Symbol) - `:exact` (default) uses `current_page?`; `:starts_with` activates when the request path begins with `path` (use for parents whose sub-routes should keep the parent highlighted)
-- `icon` (String, optional) - icon name; `"home"` ships with the gem. For others, supply the SVG in the host app at `app/assets/images/layered_ui/icon_NAME.svg`
+- `icon` (String, optional) - icon name. Resolves to the asset `layered_ui/icon_NAME.svg`. See "Icons" below for the names that ship with the gem and how to add your own. A name with no matching asset raises `Propshaft::MissingAssetError` (a 500 in dev) when the page renders, so only pass a name you know resolves
 - `icon_path` (String, optional) - explicit asset path; takes precedence over `icon:`
 - `icon_html` (ActiveSupport::SafeBuffer, optional) - pre-rendered icon markup for icon-font libraries (e.g. `tag.i(class: "fa-solid fa-house")`); takes precedence over `icon:` and `icon_path:`. Must be already html-safe - plain strings will be escaped. Never pass user-controlled input
 
 `l_ui_navigation_section`:
 - `heading` (String, optional) - non-clickable section heading; omit for an unlabelled group. To expose the parent route of a section, add an "Overview" item inside the block
-- `icon` (String, optional) - host-app icon name next to the heading; resolves the same way as `l_ui_navigation_item`'s `icon:`
+- `icon` (String, optional) - icon name next to the heading; resolves the same way as `l_ui_navigation_item`'s `icon:` (see "Icons" below)
 - `icon_path` (String, optional) - explicit asset path next to the heading; takes precedence over `icon:`
 - `icon_html` (String, optional) - pre-rendered icon markup; takes precedence over `icon:` and `icon_path:`
 - `collapsible` (Boolean) - when `true` and a heading is given, renders a toggle button with a chevron and wires `aria-controls` to the panel
@@ -42,6 +42,20 @@ l_ui_navigation_section(heading = nil, icon: nil, icon_path: nil, icon_html: nil
   <% end %>
 <% end %>
 ```
+
+### Icons
+
+The `icon:` argument (on `l_ui_navigation_item` and `l_ui_navigation_section`) resolves to the asset `layered_ui/icon_NAME.svg`. There is no fallback: a name with no matching asset raises `Propshaft::MissingAssetError` and renders a 500. Only pass a name you know resolves.
+
+Names that ship with the gem (use the bare name, e.g. `icon: "globe"`):
+
+- General-purpose (black `currentColor` sources, recoloured for dark mode by `dark:invert` - safe to use via `icon:`): `home`, `globe`, `mail`, `github`, `discord`, `linkedin`, `x`, `youtube`
+- Internal UI (engine chrome - theme toggle, nav chevrons, close buttons): `close`, `chevron_down`, `chevron_right`, `hamburger`, `sun`, `moon`, `light`, `dark`, `panel_close`. Several are CSS mask shapes or carry baked theme colours (e.g. `chevron_down` is white, `dark` fills white), so they will **not** render correctly through `icon:`. Don't use these for nav icons
+
+To add your own, drop an SVG in the host app at `app/assets/images/layered_ui/icon_NAME.svg` and pass `icon: "NAME"`. Alternatively:
+
+- `icon_path:` - point at any asset path directly (e.g. `icon_path: "my_icons/star.svg"`), bypassing the `layered_ui/icon_` convention
+- `icon_html:` - pass pre-rendered, html-safe markup for icon-font libraries (e.g. `tag.i(class: "fa-solid fa-house")`); never pass user-controlled input
 
 ## Breadcrumbs
 
