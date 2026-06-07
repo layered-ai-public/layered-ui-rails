@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.18.2] - 2026-06-08
+
+### Added
+
+- `--l-ui-contained-width` token (default `80rem`) and `l-ui-page__contained`, a centred content column capped at that width. The contained header (`l-ui-body--header-contained`) now reads the same token, so header and page content align and can be moved together with a single override.
+- `l-ui-body--glass-header`: glass header (translucent background plus backdrop blur, dropping the solid bottom border) so page content scrolls beneath it.
+- `l-ui-body--flush-top`: zeroes the page's top padding so the first section sits flush at the top of the viewport, behind the header. Pair with `l-ui-body--glass-header` (content shows through the frosted header) or `l-ui-body--hide-header` for full-bleed heroes.
+
 ## [0.18.1] - 2026-06-07
 
 ### Added
