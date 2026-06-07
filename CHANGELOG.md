@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.18.1] - 2026-06-07
+
+### Added
+
+- Small icon buttons: combining `l-ui-button--icon` with `l-ui-button--small` now renders a 32px square (still above the WCAG 2.2 AA 24px target-size minimum) instead of stretching to 44px wide, since `--small` previously only shrank the height. The panel close button now uses this variant.
+- Documented the icons bundled with the gem and clarified `icon:` usage: the name resolves to `layered_ui/icon_NAME.svg`, and an unknown name raises `Propshaft::MissingAssetError`. Added an "Available icons" section to the dummy app showing the general-purpose set (internal-UI chrome icons are not usable via `icon:`).
+
+### Changed
+
+- Navigation sub-sections now animate open by transitioning height from 0 to their natural height, replacing the per-item slide keyframe animation. Respects `prefers-reduced-motion`.
+
+### Fixed
+
+- Navigation section chevron no longer animates when restoring its saved open/closed state on page load; it now renders in position.
+
 ## [0.18.0] - 2026-06-07
 
 ### Fixed
