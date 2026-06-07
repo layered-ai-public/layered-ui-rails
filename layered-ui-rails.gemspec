@@ -56,5 +56,10 @@ Gem::Specification.new do |spec|
       • Add `import "layered_ui"` to your app/javascript/application.js (just after `import "@hotwired/turbo-rails"`, if present)
 
     If these imports already exist, they will not be duplicated.
+
+    To let AI coding agents work with layered-ui-rails in your project, install
+    the included agent skill:
+
+      bin/rails generate layered:ui:install_agent_skill
   MSG
 end

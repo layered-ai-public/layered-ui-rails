@@ -80,6 +80,12 @@ The install generator will:
 - Create `app/assets/tailwind/layered_ui_overrides.css` for your theme customisations (never overwritten on re-install)
 - Add `import "layered_ui"` to your `application.js`
 
+To let AI coding agents work with `layered-ui-rails` in your project, install the included [agent skill](#agent-skill):
+
+```bash
+bin/rails generate layered:ui:install_agent_skill
+```
+
 Then update your application layout to render the engine layout. Place any `content_for` blocks **above** the render call - the engine layout reads them when it renders, so they must be defined first:
 
 ```erb
