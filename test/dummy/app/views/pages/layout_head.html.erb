@@ -21,10 +21,9 @@
 
 <pre class="l-ui-surface mt-4"><code>&lt;% content_for :l_ui_head do %&gt;
   &lt;%= stylesheet_link_tag tenant_theme_path(current_tenant) %&gt;
-&lt;% end %&gt;
+&lt;% end %&gt;</code></pre>
 
-# the controller renders CSS that overrides tokens:
-# :root { --accent: &lt;%= @tenant.accent_color %&gt;; --accent-foreground: oklch(1 0 0); }</code></pre>
+<p class="mt-4">The controller behind <code>tenant_theme_path</code> renders CSS that overrides the design tokens, for example <code>:root { --accent: &lt;%= @tenant.accent_color %&gt;; --accent-foreground: oklch(1 0 0); }</code>.</p>
 
 <p class="l-ui-notice l-ui-notice--warning mt-4"><strong>Security:</strong> never interpolate user-supplied strings directly into the served CSS - this allows CSS injection. Validate or sanitise any user-derived values before interpolation.</p>
 
