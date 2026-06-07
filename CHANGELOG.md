@@ -8,8 +8,14 @@ All notable changes to this project will be documented in this file. This projec
 
 - Primary-button icons (e.g. the panel hide button) are now painted from the `--button-primary-icon` token via a CSS mask instead of a binary `invert` filter. `invert` could only ever produce black or white, so accents with a non-white foreground rendered the wrong colour and had to be patched out downstream with `filter: none`. Any accent foreground now works in both themes; the downstream override can be removed.
 
+### Added
+
+- `--l-ui-gutter` custom property (default `1rem`) now drives the page's horizontal and bottom padding, shared with `.l-ui-header` so the two always align. Override it on a container to retune the gutter in one place.
+- `.l-ui-bleed` utility to take a child element edge-to-edge by cancelling the current page gutter (e.g. a full-bleed hero), with no negative-margin guesswork.
+
 ### Changed
 
+- **Breaking:** `l-ui-page__width-constrained` renamed to `l-ui-page__narrow`. The old name read as a general page-width container, but it is a narrow ~384px column for any compact, centred content (the auth pages are one use). See `UPGRADING.md`.
 - **Breaking (install flow):** the engine's CSS is now served directly from the gem using [tailwindcss-rails' engine support](https://github.com/rails/tailwindcss-rails#rails-engines-support-experimental) instead of being copied into the host app. The install generator no longer creates `app/assets/tailwind/layered_ui.css`; instead it adds `@import "../builds/tailwind/layered_ui";` to your `application.css`. The CSS now stays in sync with the installed gem version automatically - no need to re-run the generator after upgrading.
 - The engine layout now links the compiled Tailwind build explicitly (`stylesheet_link_tag "tailwind"`) rather than the `:app` bundle, matching tailwindcss-rails' own convention and avoiding a stray link to the engine's intermediate build file.
 - Moved the engine's source stylesheet from `app/assets/tailwind/layered/ui/styles.css` to `app/assets/tailwind/layered_ui/engine.css` (the path tailwindcss-rails' engine support expects).

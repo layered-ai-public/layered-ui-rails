@@ -1,5 +1,15 @@
 # Upgrading
 
+## Unreleased
+
+### Renamed classes
+
+| Old class                       | New class            | Notes                                                                       |
+| ------------------------------- | -------------------- | --------------------------------------------------------------------------- |
+| `l-ui-page__width-constrained`  | `l-ui-page__narrow`  | A narrow ~384px column for any compact, centred content, not a page container. |
+
+Search-and-replace `l-ui-page__width-constrained` with `l-ui-page__narrow` in your views.
+
 ## 0.14.0 - Strict BEM across all components
 
 This release tightens BEM project-wide: every component modifier is now a true modifier and no longer carries its base styles. Update host app markup so the base class is always present alongside the modifier.

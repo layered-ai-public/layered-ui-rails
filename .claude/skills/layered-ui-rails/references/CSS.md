@@ -33,11 +33,11 @@ Applied to `<body>` via the `:l_ui_body_class` yield to toggle layout-level beha
 .l-ui-page                       Main content wrapper with responsive padding
 .l-ui-page--with-navigation      Left margin for sidebar on desktop
 .l-ui-page__vertically-centered  Centred layout element (e.g. login pages)
-.l-ui-page__width-constrained    Narrow column (md:max-w-sm, ~384px) for compact forms - NOT a general page container
+.l-ui-page__narrow               Narrow column (md:max-w-sm, ~384px) for any compact, centred content
 .l-ui-bleed                      Breaks a child out to the page edge (full-bleed hero etc.)
 ```
 
-`.l-ui-page` (and `--with-navigation`) is applied by the engine layout around your view's `yield` - you do not add it yourself. Wrapping your view content in another `.l-ui-page` nests two containers. The `__vertically-centered` and `__width-constrained` elements are used *inside* views (e.g. the Devise auth pages) for centred, width-limited content. `__width-constrained` caps width at `md:max-w-sm` (~384px) - it is tuned for narrow auth/login cards and compact forms, *not* a general-purpose page-width container. For wider content areas, do not reach for this class; the engine's `.l-ui-page` already constrains content to the available width, so add your own max-width wrapper in the host app if you need a specific wider measure.
+`.l-ui-page` (and `--with-navigation`) is applied by the engine layout around your view's `yield` - you do not add it yourself. Wrapping your view content in another `.l-ui-page` nests two containers. The `__vertically-centered` and `__narrow` elements are used *inside* views for centred, compact content (the Devise auth pages are one example, but they are general-purpose). `__narrow` caps width at `md:max-w-sm` (~384px). For a wider content area, add your own max-width wrapper in the host app - `.l-ui-page` already holds content to the available width.
 
 The page gutter (horizontal and bottom padding) is the `--l-ui-gutter` custom property (default `1rem`), shared by `.l-ui-page` and `.l-ui-header` so they always align. Override it on a container to change the gutter in one place rather than reverse-engineering padding values. To take a single child edge-to-edge (a full-bleed hero, a banner), add `.l-ui-bleed` to it - it cancels exactly the current gutter, so no negative-margin guesswork. Note `.l-ui-bleed` only handles the horizontal edges; content still sits below the page's top padding (header offset + gutter).
 

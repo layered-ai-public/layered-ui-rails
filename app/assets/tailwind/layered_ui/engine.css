@@ -470,8 +470,8 @@
   @apply flex flex-1 flex-col items-center justify-center;
 }
 
-/* Narrow column (~384px) for auth cards / compact forms - not a general page container. */
-.l-ui-page__width-constrained {
+/* Narrow ~384px column (md:max-w-sm) for any compact, centred content. */
+.l-ui-page__narrow {
   @apply flex flex-col
          w-full md:max-w-sm
          my-auto;
