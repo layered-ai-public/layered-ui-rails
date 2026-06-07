@@ -468,7 +468,7 @@
 }
 
 /* Zero the page's top gutter so the first section sits flush at the viewport top, behind the
-   header. Intended with .l-ui-body--glass-header (content shows through the frosted header) or
+   header. Intended with .l-ui-body--glass-header (content shows through the glass header) or
    .l-ui-body--hide-header; over an opaque header it would tuck content out of sight. */
 .l-ui-body--flush-top .l-ui-page {
   @apply pt-0;
@@ -504,8 +504,6 @@
   @apply hidden;
 }
 
-/* Frost the header so page content scrolls under it, dropping the solid bottom border.
-   Pair with .l-ui-body--flush-top for a hero behind the header. */
 .l-ui-body--glass-header .l-ui-header-container {
   @apply bg-background/60
          border-b-transparent
