@@ -1,6 +1,6 @@
 # Upgrading
 
-## Unreleased
+## 0.18.0
 
 ### Renamed classes
 
