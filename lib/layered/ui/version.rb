@@ -1,5 +1,5 @@
 module Layered
   module Ui
-    VERSION = "0.18.2"
+    VERSION = "0.18.3"
   end
 end

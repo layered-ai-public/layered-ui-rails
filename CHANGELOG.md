@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.18.3] - 2026-06-08
+
+### Added
+
+- `l-ui-page__contained--no-gutter`: opts the contained column out of the page gutter. The column runs flush to the page edge while narrower than `--l-ui-contained-width`, then centres and caps once there is room - useful for tables, media, or full-width cards that should run edge-to-edge on small screens without losing the cap on large ones.
+
+### Changed
+
+- The page gutter is now owned by the `.l-ui-page` and `.l-ui-header-container` shells, with the contained header and `.l-ui-page__contained` capping their inner content within that gutter the same way. Header and contained page content now align by construction at every width. The horizontal padding moved from `.l-ui-header` to `.l-ui-header-container`; the header's bottom border still spans edge to edge.
+
 ## [0.18.2] - 2026-06-08
 
 ### Added
