@@ -29,6 +29,7 @@ Guidance for AI agents working in this repository.
 - Importmap for JS (no bundler)
 - Put new changes on a branch with a meaningful name, but do not commit; the user will ask when ready to commit
 - We are currently in pre-release, so breaking changes may be introduced. Flag any expected breaking changes clearly before making them, but do not avoid necessary improvements solely to preserve backwards compatibility
+- Do not overthink basic tasks. Match the effort to the request: a one-line change is a one-line change. Avoid unnecessary investigation, refactoring, or generalisation beyond what was asked.
 - CRITICAL: Retain WCAG 2.2 AA compliance. Do not be too pedantic though as this introduces audit loops which are undesirable.
 - A WCAG 2.2 AA table looks like this:
 ```
