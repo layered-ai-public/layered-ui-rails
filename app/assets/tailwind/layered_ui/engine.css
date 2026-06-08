@@ -485,10 +485,23 @@
          my-auto;
 }
 
-/* Centred content column capped at --l-ui-contained-width; aligns with the contained header. */
+/* Centred content column capped at --l-ui-contained-width; aligns with the contained header.
+   Keeps the page gutter, so its content sits within the same horizontal padding as the rest of
+   the page. */
 .l-ui-page__contained {
   @apply w-full max-w-[var(--l-ui-contained-width)]
          mx-auto;
+}
+
+/* Opt out of the page gutter: reclaim it (as .l-ui-bleed does) so the column can reach the page
+   edge, then re-cap and re-centre the content with padding. Flush to the edge while narrower than
+   --l-ui-contained-width; centred and capped once there is room. */
+.l-ui-page__contained--no-gutter {
+  @apply w-auto max-w-none
+         mx-[calc(var(--l-ui-gutter)*-1)];
+  /* +gutter cancels the negative margin's effect on the % basis, so this nets to
+     max(0, (page - contained) / 2): centred when there's room, flush when not. */
+  padding-inline: max(0px, calc((100% - var(--l-ui-contained-width)) / 2 + var(--l-ui-gutter)));
 }
 
 /* Header */

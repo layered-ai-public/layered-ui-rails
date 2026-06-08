@@ -108,6 +108,32 @@
   </dialog>
 </div>
 
+<p class="mt-6">By default the contained column keeps the page gutter, so its content lines up with the rest of the page. Add <code>l-ui-page__contained--no-gutter</code> to opt out: the column reaches the page edge while it is narrower than <code>--l-ui-contained-width</code>, then centres and caps once there is room. This is useful for content that should run flush on small screens - tables, media, or full-width cards - without losing the width cap on large ones. The example keeps the <code>40rem</code> cap so the centred state is visible:</p>
+
+<div class="l-ui-page__contained--no-gutter mt-4" style="--l-ui-contained-width: 40rem;">
+  <div class="l-ui-surface">
+    <h3>Flush, then capped</h3>
+    <p class="mt-2">This column has no gutter: it runs to the page edge until it reaches <code>--l-ui-contained-width</code>, then centres.</p>
+  </div>
+</div>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-containers-no-gutter-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-containers-no-gutter-heading">Contained width without gutter</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;div class="l-ui-page__contained--no-gutter"&gt;
+  &lt;!-- flush to the page edge until --l-ui-contained-width, then centred --&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
 <h2 class="mt-8">Full-bleed</h2>
 
 <p class="mt-4">The page applies a gutter (the <code>--l-ui-gutter</code> custom property, default <code>1rem</code>) as its horizontal and bottom padding, shared with the header so the two always align. Add <code>l-ui-bleed</code> to a single child to break it out to the page edge - a full-bleed hero or banner - without reverse-engineering the padding. It cancels exactly the current gutter, so there are no magic numbers to match. It affects the horizontal edges only; content still sits below the page's top padding. To pull the first section up to the very top of the viewport - behind the header - add <code>l-ui-body--flush-top</code> to the body and pair it with <code>l-ui-body--glass-header</code> (see <%= link_to "Header", layout_header_path %>).</p>
@@ -162,6 +188,10 @@
       <tr>
         <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-page__contained</code></th>
         <td class="l-ui-table__cell">Centred column capped at <code>--l-ui-contained-width</code> (default 80rem)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-page__contained--no-gutter</code></th>
+        <td class="l-ui-table__cell">Contained column that runs flush to the page edge until it reaches the cap, then centres</td>
       </tr>
       <tr>
         <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-bleed</code></th>
