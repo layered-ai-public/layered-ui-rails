@@ -25,7 +25,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="l-ui-body <%= yield :l_ui_body_class %>" data-controller="l-ui--navigation" data-action="click@window->l-ui--navigation#close keydown.esc@window->l-ui--navigation#close">
+  <body class="<%= l_ui_body_classes %>" data-controller="l-ui--navigation" data-action="click@window->l-ui--navigation#close keydown.esc@window->l-ui--navigation#close">
     <a href="#main-content" class="l-ui-skip-link">Skip to main content</a>
     <div id="l-ui-live-region" class="l-ui-sr-only" aria-live="polite" aria-atomic="true"></div>
     <%= render "layouts/layered_ui/header" %>

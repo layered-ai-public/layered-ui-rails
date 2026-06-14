@@ -22,10 +22,10 @@ bin/rails generate layered:ui:install
 
 The generator adds `@import "../builds/tailwind/layered_ui";` to `application.css` (the engine's CSS is served straight from the gem via tailwindcss-rails' engine support), creates a `layered_ui_overrides.css` file for theme customisations, and adds the JS import to `application.js`.
 
-Then render the engine layout from your application layout. Place all `content_for` blocks **above** the render call - the engine layout reads them when it renders, so they must be defined first:
+Then render the engine layout from your application layout. Place all `content_for` blocks and `l_ui_add_body_class` calls **above** the render call - the engine layout reads them when it renders, so they must be defined first:
 
 ```erb
-<% content_for :l_ui_body_class, "l-ui-body--always-show-navigation" %>
+<% l_ui_add_body_class "l-ui-body--always-show-navigation" %>
 
 <% content_for :l_ui_navigation_items do %>
   <%= l_ui_navigation_item("Dashboard", dashboard_path) %>
@@ -69,10 +69,8 @@ Populate layout regions with `content_for` (always above the render call):
   <meta name="google-site-verification" content="...">
 <% end %>
 
-<%# Add CSS classes to <body> %>
-<% content_for :l_ui_body_class do %>
-  l-ui-body--always-show-navigation
-<% end %>
+<%# Add CSS classes to <body> (call multiple times or pass several; they compose) %>
+<% l_ui_add_body_class "l-ui-body--always-show-navigation" %>
 
 <%# Override logos %>
 <% content_for :l_ui_logo_light do %>
@@ -131,7 +129,7 @@ Populate layout regions with `content_for` (always above the render call):
 
 #### Layout modes
 
-The engine layout has two header/navigation modes, both selected through the body class (`content_for :l_ui_body_class`). The default - setting nothing - is a **full-width header with the sidebar shown only on toggle**. Add `l-ui-body--header-contained` for a centred, contained header (pair it with `l-ui-page__contained` to constrain the body width), or `l-ui-body--always-show-navigation` to pin the sidebar open on desktop. The modes compose, and because the layout reads the body class at render time, a page that sets nothing gets the full-width default.
+The engine layout has two header/navigation modes, both selected through the body class (`l_ui_add_body_class`). The default - setting nothing - is a **full-width header with the sidebar shown only on toggle**. Add `l-ui-body--header-contained` for a centred, contained header (pair it with `l-ui-page__contained` to constrain the body width), or `l-ui-body--always-show-navigation` to pin the sidebar open on desktop. The modes compose, and because the layout reads the body class at render time, a page that sets nothing gets the full-width default.
 
 The two intended defaults:
 

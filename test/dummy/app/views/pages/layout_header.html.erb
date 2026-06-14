@@ -12,7 +12,7 @@
 
 <p class="mt-4">For landing pages, use the <code>:l_ui_header_links</code> yield to render plain inline links beside the logo. Combine with <code>l-ui-body--header-contained</code> to constrain the header's inner row to the same width as your page content. The links are hidden below the <code>sm</code> breakpoint; pair with <code>:l_ui_navigation_items</code> if you need a mobile menu.</p>
 
-<pre class="l-ui-surface mt-4"><code>&lt;% content_for :l_ui_body_class, "l-ui-body--header-contained" %&gt;
+<pre class="l-ui-surface mt-4"><code>&lt;% l_ui_add_body_class "l-ui-body--header-contained" %&gt;
 
 &lt;% content_for :l_ui_header_links do %&gt;
   &lt;%= link_to "Features", "#features" %&gt;
@@ -75,7 +75,7 @@
 
 <p class="mt-4">Add the <code>l-ui-body--hide-header</code> modifier to the body to hide the header and reclaim its 63px of vertical space.</p>
 
-<pre class="l-ui-surface mt-4"><code>&lt;% content_for :l_ui_body_class, "l-ui-body--hide-header" %&gt;
+<pre class="l-ui-surface mt-4"><code>&lt;% l_ui_add_body_class "l-ui-body--hide-header" %&gt;
 
 &lt;%= render template: "layouts/layered_ui/application" %&gt;</code></pre>
 
@@ -85,7 +85,7 @@
 
 <p class="mt-4">To start the page content at very top of the viewport, behind the header, also add <code>l-ui-body--flush-top</code> - it zeroes the page's top gutter so the first section reaches the top edge and shows through a glass header. Give the hero its own internal top padding (at least <code>--header-height</code>) so its content clears the bar.</p>
 
-<pre class="l-ui-surface mt-4"><code>&lt;% content_for :l_ui_body_class, "l-ui-body--glass-header l-ui-body--flush-top" %&gt;
+<pre class="l-ui-surface mt-4"><code>&lt;% l_ui_add_body_class "l-ui-body--glass-header", "l-ui-body--flush-top" %&gt;
 
 &lt;%= render template: "layouts/layered_ui/application" %&gt;</code></pre>
 
