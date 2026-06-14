@@ -14,7 +14,7 @@
 <p class="mt-4">Edit your <code>app/views/layouts/application.html.erb</code> with the following content:</p>
 
 <pre class="l-ui-surface mt-4"><code>&lt;!-- Optional: body modifiers --&gt;
-&lt;% content_for :l_ui_body_class, "l-ui-body--always-show-navigation l-ui-body--hide-header" %&gt;
+&lt;% l_ui_add_body_class "l-ui-body--always-show-navigation", "l-ui-body--hide-header" %&gt;
 
 &lt;!-- Optional: sidebar navigation --&gt;
 &lt;% content_for :l_ui_navigation_items do %&gt;

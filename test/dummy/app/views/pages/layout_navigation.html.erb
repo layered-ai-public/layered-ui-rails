@@ -34,9 +34,9 @@
 
 <h2 class="mt-6">Always-show navigation</h2>
 
-<p class="mt-4">Pin the navigation open on desktop by passing the <code>l-ui-body--always-show-navigation</code> modifier via the <code>:l_ui_body_class</code> yield.</p>
+<p class="mt-4">Pin the navigation open on desktop by registering the <code>l-ui-body--always-show-navigation</code> modifier with <code>l_ui_add_body_class</code>.</p>
 
-<pre class="l-ui-surface mt-4"><code>&lt;% content_for :l_ui_body_class, "l-ui-body--always-show-navigation" %&gt;
+<pre class="l-ui-surface mt-4"><code>&lt;% l_ui_add_body_class "l-ui-body--always-show-navigation" %&gt;
 
 &lt;%= render template: "layouts/layered_ui/application" %&gt;</code></pre>
 

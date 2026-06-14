@@ -27,6 +27,7 @@ module Layered
       initializer "layered-ui-rails.helpers" do
         ActiveSupport.on_load(:action_controller) do
           helper Layered::Ui::AuthenticationHelper
+          helper Layered::Ui::BodyHelper
           helper Layered::Ui::BreadcrumbsHelper
           helper Layered::Ui::NavigationHelper
           helper Layered::Ui::PagyHelper

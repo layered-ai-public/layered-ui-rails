@@ -19,7 +19,7 @@ This gives author-written links inside long-form content (Markdown, prose, ad-ho
 
 ## Body modifiers
 
-Applied to `<body>` via the `:l_ui_body_class` yield to toggle layout-level behaviour:
+Registered with the `l_ui_add_body_class` helper (call from any template or layout above the engine layout render; calls accumulate) to toggle layout-level behaviour:
 
 ```
 .l-ui-body--always-show-navigation  Pin sidebar navigation open on desktop

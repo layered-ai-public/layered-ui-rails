@@ -2,6 +2,22 @@
 
 All helpers are prefixed `l_ui_` and are available in all views automatically.
 
+## Body modifiers
+
+```ruby
+l_ui_add_body_class(*modifiers)
+```
+
+Registers one or more body modifier classes (see the [body modifiers](CSS.md) list). Call it from any template or layout **above** the engine layout render; calls accumulate, so a shared layout and an individual page can each contribute without clobbering one another. Pass full class names:
+
+```erb
+<% l_ui_add_body_class "l-ui-body--always-show-navigation" %>
+<% l_ui_add_body_class "l-ui-body--glass-header", "l-ui-body--flush-top" %>
+<% l_ui_add_body_class "l-ui-body--hide-header" if minimal_chrome? %>
+```
+
+The resulting classes are deduplicated and space-joined, so repeated modifiers are harmless.
+
 ## Navigation
 
 ```ruby
