@@ -129,7 +129,19 @@ Populate layout regions with `content_for` (always above the render call):
 > The controller renders CSS that overrides the design tokens (`--accent`,
 > etc.) - Turbo- and CSP-friendly, and it keeps styling out of the markup.
 
+#### Layout modes
+
+The engine layout has two header/navigation modes, both selected through the body class (`content_for :l_ui_body_class`). The default - setting nothing - is a **full-width header with the sidebar shown only on toggle**. Add `l-ui-body--header-contained` for a centred, contained header (pair it with `l-ui-page__contained` to constrain the body width), or `l-ui-body--always-show-navigation` to pin the sidebar open on desktop. The modes compose, and because the layout reads the body class at render time, a page that sets nothing gets the full-width default.
+
+The two intended defaults:
+
+- **Landing / marketing pages** - contained header and contained page width: `l-ui-body--header-contained` plus `l-ui-page__contained` on the body.
+- **Admin / back-office pages** - full-width with the menu pinned open: `l-ui-body--always-show-navigation`, and no `--header-contained` (full-width is the default).
+
+Which pages get which mode (per-section layouts, controllers, etc.) is an application concern, not something the gem dictates.
+
 Body class modifiers:
+- `l-ui-body--header-contained` - centres the header's inner row at `--l-ui-contained-width` (pair with `l-ui-page__contained`); landing pages
 - `l-ui-body--always-show-navigation` - pins navigation as a sidebar on desktop
 - `l-ui-body--hide-header` - hides the header and collapses its space
 - `l-ui-body--glass-header` - glass header (translucent + blur); content scrolls under it
