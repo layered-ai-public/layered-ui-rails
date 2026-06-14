@@ -86,10 +86,10 @@ To let AI coding agents work with `layered-ui-rails` in your project, install th
 bin/rails generate layered:ui:install_agent_skill
 ```
 
-Then update your application layout to render the engine layout. Place any `content_for` blocks **above** the render call - the engine layout reads them when it renders, so they must be defined first:
+Then update your application layout to render the engine layout. Place any `content_for` blocks and `l_ui_add_body_class` calls **above** the render call - the engine layout reads them when it renders, so they must be defined first:
 
 ```erb
-<% content_for :l_ui_body_class, "l-ui-body--always-show-navigation" %>
+<% l_ui_add_body_class "l-ui-body--always-show-navigation" %>
 
 <% content_for :l_ui_navigation_items do %>
   <%= l_ui_navigation_item "Home", root_path %>

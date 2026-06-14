@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.18.4] - 2026-06-14
+
+### Added
+
+- `l_ui_add_body_class(*modifiers)` helper for registering `<body>` modifier classes. Calls accumulate across templates and layouts, so a shared layout and an individual page can each contribute modifiers without clobbering one another; the result is deduplicated and space-joined.
+
+### Changed
+
+- The engine layout now builds its `<body>` class via `l_ui_add_body_class` instead of `content_for :l_ui_body_class`. The legacy `content_for :l_ui_body_class` is still honoured as a temporary bridge but is deprecated; migrate to `l_ui_add_body_class`.
+
 ## [0.18.3] - 2026-06-08
 
 ### Added
