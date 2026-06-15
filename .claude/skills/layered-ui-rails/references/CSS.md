@@ -103,6 +103,40 @@ The `__inner` picks up the fixed-header offset automatically under `l-ui-body--f
 
 A good-looking default background ships with the gem and is on by default, driven by the `--l-ui-hero-image` token (light/dark). Re-skin it by overriding `--l-ui-hero-image` in the overrides file (global) or inline on one section (per-hero); set it to `none` to remove it. For per-page art with proper light/dark `<img>` loading, add a `l-ui-hero__media` picture instead - it paints above the token background.
 
+## Tint palette
+
+A decorative, **control-agnostic** colour palette, separate from the Tier 1 brand `--accent`. `--accent` is the single interactive/emphasis colour (primary buttons, active tab/nav); the tints are a set of categorical decorative colours (cards, tags, sections). Both use `-foreground` for "the readable text/icon colour on this colour", so they read as siblings: `--accent` / `--accent-foreground` vs `--l-ui-tint-1-…` / `--l-ui-tint-1-foreground`.
+
+```
+.l-ui-tint-1 … .l-ui-tint-5   Select a palette slot (defaults: teal, green, amber, rose, purple)
+```
+
+Each `l-ui-tint-N` class only sets four "current tint" role variables, which any control reads:
+
+```
+--l-ui-tint-border       Border / outline tone
+--l-ui-tint-foreground   Strong text / icon tone
+--l-ui-tint-from         Gradient fill start
+--l-ui-tint-to           Gradient fill end
+```
+
+The defaults live in `@layer base` as `--l-ui-tint-N-border` / `-foreground` / `-from` / `-to` (light and dark). **Slot numbers are palette positions, not fixed hues**, so re-skinning a slot (override the `--l-ui-tint-N-*` tokens in the overrides file) never makes a class name misleading. The tints are independent of `--accent`; to colour a control with the brand accent instead, point the role variables at `var(--accent)` inline - no special class needed. Apply `l-ui-tint-N` to any control that reads the role variables (the card below is one consumer).
+
+## Card
+
+A content card in two composable styles. The base `l-ui-card` is bordered; add `l-ui-card--gradient` for a soft tint fill behind the same border. Colour comes from a separate `l-ui-tint-N` slot (see Tint palette above), so style and colour compose independently (`l-ui-card l-ui-card--gradient l-ui-tint-1`):
+
+```
+.l-ui-card                 Base card (bordered, on the surface background)
+.l-ui-card--gradient       Adds the 135° tint fill behind the border
+.l-ui-card__eyebrow        Small uppercase label above the title
+.l-ui-card__title          Card heading, coloured by the active tint
+.l-ui-card__icon           Optional title icon, painted in the tint colour (set --l-ui-icon-src inline)
+.l-ui-card__body           Body copy in the muted foreground colour
+```
+
+The card reads the shared `--l-ui-tint-*` role variables, falling back to the neutral `--border`/`--foreground` when no tint slot is present (so a plain `l-ui-card` is a neutral bordered card). The gradient modifier reads `--l-ui-tint-from`/`-to`. Set the role variables inline (or point them at `var(--accent)`) for a one-off colour. `__icon` uses the same mask technique as the primary-button icon, so set `--l-ui-icon-src` at the call site.
+
 ## Surfaces
 
 Always combine the `l-ui-surface` base class with any modifiers (e.g. `l-ui-surface l-ui-surface--highlighted`):
