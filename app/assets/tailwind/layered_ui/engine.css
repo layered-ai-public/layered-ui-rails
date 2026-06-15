@@ -79,6 +79,8 @@
     --warning-text: oklch(0.3625 0.0732 93.12);
     --error-bg: oklch(0.748 0.1306 20.64);
     --error-text: oklch(0.2248 0.0874 28.11);
+    /* Default hero background; override here, per-hero inline, or set to `none`. */
+    --l-ui-hero-image: url('layered_ui/hero_background_light.webp');
     --header-height: 63px;
     --l-ui-gutter: 1rem;
     --l-ui-contained-width: 80rem;
@@ -111,6 +113,7 @@
     --warning-text: oklch(0.9336 0.1 95.79);
     --error-bg: oklch(0.2248 0.0874 28.11);
     --error-text: oklch(0.748 0.1306 20.64);
+    --l-ui-hero-image: url('layered_ui/hero_background_dark.webp');
   }
 
   /* Typography */
@@ -509,14 +512,21 @@
 
 /* Full-bleed marketing hero. Pair the section with .l-ui-bleed, and (for a top-of-page hero)
    the body with .l-ui-body--glass-header + .l-ui-body--flush-top so it sits flush to the
-   viewport top and the optional media shows through the glass header. */
+   viewport top and the background shows through the glass header.
+
+   Ships with a default background via the --l-ui-hero-image token (light/dark, set in @layer
+   base). Painted on the element itself so it sits below the overlays and needs no markup. Override
+   it globally in the overrides file, per-hero with an inline `--l-ui-hero-image`, or set it to
+   `none` to drop the background. For per-page art with proper light/dark <img> loading, add a
+   .l-ui-hero__media element instead (it paints above this background). */
 .l-ui-hero {
   @apply relative isolate overflow-hidden
-         bg-background;
+         bg-background bg-cover bg-right bg-no-repeat;
+  background-image: var(--l-ui-hero-image);
 }
 
-/* Optional decorative background media; sits behind the content and scrims. Provide a
-   --light and --dark variant and the active theme's is shown. */
+/* Optional per-hero media layer; overrides the default background. Provide a --light and --dark
+   variant and the active theme's is shown. */
 .l-ui-hero__media {
   @apply absolute inset-0 z-[-3]
          block w-full h-full
@@ -540,7 +550,7 @@
   @apply block;
 }
 
-/* Left-to-right scrim keeps text legible over media; fades out so the media stays visible
+/* Left-to-right overlay keeps text legible over media; fades out so the media stays visible
    on the right. Token-driven, so it adapts to the active theme. */
 .l-ui-hero::before {
   content: "";

@@ -78,7 +78,7 @@ For destructive actions use `l-ui-button--danger` (solid) or `l-ui-button--outli
 Full-bleed marketing hero for the top of a landing page. Add `l-ui-bleed` to the section to break out of the page gutter, and pair the body with `l-ui-body--glass-header` + `l-ui-body--flush-top` so it sits flush to the viewport top with optional media showing through the glass header (see Page layout above):
 
 ```
-.l-ui-hero                       Full-bleed hero section (pair with l-ui-bleed)
+.l-ui-hero                       Full-bleed hero section (pair with l-ui-bleed); ships with a default background
 .l-ui-hero__inner                Content column, capped at the contained width with the page gutter
 .l-ui-hero__title                Large, tight-tracked hero heading
 .l-ui-hero__title-accent         Gradient-clipped accent span for part of the title
@@ -89,7 +89,9 @@ Full-bleed marketing hero for the top of a landing page. Add `l-ui-bleed` to the
 .l-ui-hero__media-img            Image inside a media layer (covers, right-aligned)
 ```
 
-The `__inner` picks up the fixed-header offset automatically under `l-ui-body--flush-top`. A token-driven scrim over the media keeps text legible and fades the hero into the page background below.
+The `__inner` picks up the fixed-header offset automatically under `l-ui-body--flush-top`. A token-driven overlay over the media keeps text legible and fades the hero into the page background below.
+
+A good-looking default background ships with the gem and is on by default, driven by the `--l-ui-hero-image` token (light/dark). Re-skin it by overriding `--l-ui-hero-image` in the overrides file (global) or inline on one section (per-hero); set it to `none` to remove it. For per-page art with proper light/dark `<img>` loading, add a `l-ui-hero__media` picture instead - it paints above the token background.
 
 ## Surfaces
 

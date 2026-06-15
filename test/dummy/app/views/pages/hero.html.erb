@@ -9,14 +9,17 @@
   A full-bleed marketing hero for the top of a landing page. Pair the section with
   <code>l-ui-bleed</code> to break out of the page gutter, and the body with
   <code>l-ui-body--glass-header</code> and <code>l-ui-body--flush-top</code> so it sits flush
-  to the viewport top with optional background media showing through the glass header.
+  to the viewport top with the background showing through the glass header.
 </p>
 
 <h2 class="mt-8">Default hero</h2>
 
 <p class="mt-2">
-  The example below is shown inside a bordered box for the documentation. On a real page the
-  hero spans the full viewport width and tucks under the glass header.
+  A sensible background ships with the gem, so <code>l-ui-hero</code> looks good out of the box
+  with no image markup of your own - the overlay keeps the text legible and the active theme's
+  variant is chosen automatically. Toggle the theme to see the dark variant. The example is shown
+  inside a bordered box for the documentation; on a real page the hero spans the full viewport
+  width and tucks under the glass header.
 </p>
 
 <div class="mt-4 overflow-hidden rounded-lg border border-border">
@@ -73,26 +76,17 @@
   </dialog>
 </div>
 
-<h2 class="mt-8">With background media</h2>
+<h2 class="mt-8">Without a background</h2>
 
 <p class="mt-2">
-  Add a <code>l-ui-hero__media</code> picture behind the content for a decorative background
-  image. Provide a <code>--light</code> and <code>--dark</code> variant and the active theme's
-  image is shown. A token-driven scrim keeps the text legible and fades the media into the page
-  below. Toggle the theme to see the dark variant.
+  Set <code>--l-ui-hero-image: none</code> (inline for one hero, or in your overrides file for all
+  of them) to drop the background and fall back to the plain page background.
 </p>
 
 <div class="mt-4 overflow-hidden rounded-lg border border-border">
-  <section class="l-ui-hero" aria-labelledby="hero-media-heading">
-    <picture class="l-ui-hero__media l-ui-hero__media--light">
-      <%= image_tag "hero_wave_light.webp", class: "l-ui-hero__media-img", alt: "", aria: { hidden: true } %>
-    </picture>
-    <picture class="l-ui-hero__media l-ui-hero__media--dark">
-      <%= image_tag "hero_wave_dark.webp", class: "l-ui-hero__media-img", alt: "", aria: { hidden: true } %>
-    </picture>
-
+  <section class="l-ui-hero" style="--l-ui-hero-image: none" aria-labelledby="hero-plain-heading">
     <div class="l-ui-hero__inner">
-      <h1 id="hero-media-heading" class="l-ui-hero__title">
+      <h1 id="hero-plain-heading" class="l-ui-hero__title">
         <span class="l-ui-hero__title-accent">Build better,</span> run smarter.
       </h1>
 
@@ -106,9 +100,41 @@
 
 <div class="mt-6" data-controller="l-ui--modal">
   <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-hero-plain-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-hero-plain-heading">Hero without a background</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;section class="l-ui-hero l-ui-bleed" style="--l-ui-hero-image: none" aria-labelledby="hero-heading"&gt;
+  &lt;div class="l-ui-hero__inner"&gt;
+    &lt;h1 id="hero-heading" class="l-ui-hero__title"&gt;
+      &lt;span class="l-ui-hero__title-accent"&gt;Build better,&lt;/span&gt; run smarter.
+    &lt;/h1&gt;
+    &lt;p class="l-ui-hero__subtitle"&gt;Your supporting copy here.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="mt-8">Custom background</h2>
+
+<p class="mt-2">
+  Re-skin the background by overriding the <code>--l-ui-hero-image</code> token - globally in your
+  overrides file, or inline on a single section to give different heroes different art. For
+  per-page art with proper light/dark <code>&lt;img&gt;</code> loading, add a
+  <code>l-ui-hero__media</code> picture instead; it paints above the token background, and the
+  same overlay keeps the text legible.
+</p>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
   <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-hero-media-heading">
     <div class="l-ui-modal__header">
-      <h3 id="modal-hero-media-heading">Hero with background media</h3>
+      <h3 id="modal-hero-media-heading">Hero with custom background media</h3>
       <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
         <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
       </button>
@@ -116,10 +142,10 @@
     <div class="l-ui-modal__body">
       <pre class="l-ui-surface"><code>&lt;section class="l-ui-hero l-ui-bleed" aria-labelledby="hero-heading"&gt;
   &lt;picture class="l-ui-hero__media l-ui-hero__media--light"&gt;
-    &lt;img class="l-ui-hero__media-img" src="hero_wave_light.webp" alt="" aria-hidden="true"&gt;
+    &lt;img class="l-ui-hero__media-img" src="my_hero_light.webp" alt="" aria-hidden="true"&gt;
   &lt;/picture&gt;
   &lt;picture class="l-ui-hero__media l-ui-hero__media--dark"&gt;
-    &lt;img class="l-ui-hero__media-img" src="hero_wave_dark.webp" alt="" aria-hidden="true"&gt;
+    &lt;img class="l-ui-hero__media-img" src="my_hero_dark.webp" alt="" aria-hidden="true"&gt;
   &lt;/picture&gt;
 
   &lt;div class="l-ui-hero__inner"&gt;
@@ -184,3 +210,9 @@
     </tbody>
   </table>
 </div>
+
+<p class="mt-4">
+  The background is driven by the <code>--l-ui-hero-image</code> custom property (a light and dark
+  default ships with the gem). Override it in your overrides file to re-skin every hero, inline on
+  a single section for one-off art, or set it to <code>none</code> to remove it.
+</p>
