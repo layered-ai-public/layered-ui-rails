@@ -199,15 +199,34 @@
 
 <p class="mt-2">
   For a colour outside the shipped palette, set the four <code>--l-ui-tint-*</code> role variables
-  inline on a single card instead of adding a tint slot. To re-skin a slot everywhere, override its
-  <code>--l-ui-tint-N-*</code> tokens in your overrides file. You can also reach the brand accent on
-  demand by pointing the role variables at <code>var(--accent)</code> - no special class needed.
+  yourself instead of adding a tint slot. The shipped slots carry separate light and dark values, so
+  a single set of values is <strong>theme-fixed</strong>: for full dark-mode support supply both, with
+  a <code>.dark</code> rule (or <code>prefers-color-scheme</code>), as the magenta card below does.
+  To re-skin a slot everywhere instead, override its <code>--l-ui-tint-N-*</code> tokens in your
+  overrides file. You can also reach the brand accent on demand by pointing the role variables at
+  <code>var(--accent)</code> - it already adapts to the theme, so no extra rule is needed.
 </p>
 
+<style>
+  .demo-tint-magenta {
+    --l-ui-tint-border: oklch(0.6 0.13 320);
+    --l-ui-tint-foreground: oklch(0.45 0.16 320);
+    --l-ui-tint-from: oklch(0.95 0.05 320);
+    --l-ui-tint-to: oklch(0.88 0.09 320);
+  }
+
+  .dark .demo-tint-magenta {
+    --l-ui-tint-border: oklch(0.55 0.15 320);
+    --l-ui-tint-foreground: oklch(0.78 0.15 320);
+    --l-ui-tint-from: oklch(0.28 0.06 320);
+    --l-ui-tint-to: oklch(0.22 0.07 320);
+  }
+</style>
+
 <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-  <div class="l-ui-card l-ui-card--gradient" style="--l-ui-tint-border: oklch(0.6 0.13 320); --l-ui-tint-foreground: oklch(0.45 0.16 320); --l-ui-tint-from: oklch(0.95 0.05 320); --l-ui-tint-to: oklch(0.88 0.09 320);">
+  <div class="l-ui-card l-ui-card--gradient demo-tint-magenta">
     <h3 class="l-ui-card__title">Custom magenta</h3>
-    <p class="l-ui-card__body">Four inline variables set the border, title, and gradient stops.</p>
+    <p class="l-ui-card__body">Light and dark values keep the card readable in both themes.</p>
   </div>
 
   <div class="l-ui-card" style="--l-ui-tint-border: var(--accent); --l-ui-tint-foreground: var(--accent);">
@@ -226,16 +245,32 @@
       </button>
     </div>
     <div class="l-ui-modal__body">
-      <pre class="l-ui-surface"><code>&lt;div class="l-ui-card l-ui-card--gradient"
-     style="--l-ui-tint-border: oklch(0.6 0.13 320);
-            --l-ui-tint-foreground:  oklch(0.45 0.16 320);
-            --l-ui-tint-from:   oklch(0.95 0.05 320);
-            --l-ui-tint-to:     oklch(0.88 0.09 320);"&gt;
+      <pre class="l-ui-surface"><code>&lt;%# Define light + dark values so the card adapts when the theme is toggled %&gt;
+&lt;style&gt;
+  .tint-magenta {
+    --l-ui-tint-border:     oklch(0.6 0.13 320);
+    --l-ui-tint-foreground: oklch(0.45 0.16 320);
+    --l-ui-tint-from:       oklch(0.95 0.05 320);
+    --l-ui-tint-to:         oklch(0.88 0.09 320);
+  }
+
+  .dark .tint-magenta {
+    --l-ui-tint-border:     oklch(0.55 0.15 320);
+    --l-ui-tint-foreground: oklch(0.78 0.15 320);
+    --l-ui-tint-from:       oklch(0.28 0.06 320);
+    --l-ui-tint-to:         oklch(0.22 0.07 320);
+  }
+&lt;/style&gt;
+
+&lt;div class="l-ui-card l-ui-card--gradient tint-magenta"&gt;
   &lt;h3 class="l-ui-card__title"&gt;Custom magenta&lt;/h3&gt;
   &lt;p class="l-ui-card__body"&gt;Your content here.&lt;/p&gt;
 &lt;/div&gt;
 
-&lt;%# Or reuse the brand accent - no special class %&gt;
+&lt;%# A one-off light-only card can set the variables inline instead - just note %&gt;
+&lt;%# that inline values are theme-fixed and will not adapt in dark mode. %&gt;
+
+&lt;%# Or reuse the brand accent - it already adapts to the theme, no rule needed %&gt;
 &lt;div class="l-ui-card"
      style="--l-ui-tint-border: var(--accent);
             --l-ui-tint-foreground: var(--accent);"&gt;

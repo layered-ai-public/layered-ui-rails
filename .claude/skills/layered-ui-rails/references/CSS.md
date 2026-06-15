@@ -135,7 +135,7 @@ A content card in two composable styles. The base `l-ui-card` is bordered; add `
 .l-ui-card__body           Body copy in the muted foreground colour
 ```
 
-The card reads the shared `--l-ui-tint-*` role variables, falling back to the neutral `--border`/`--foreground` when no tint slot is present (so a plain `l-ui-card` is a neutral bordered card). The gradient modifier reads `--l-ui-tint-from`/`-to`. Set the role variables inline (or point them at `var(--accent)`) for a one-off colour. `__icon` uses the same mask technique as the primary-button icon, so set `--l-ui-icon-src` at the call site.
+The card reads the shared `--l-ui-tint-*` role variables, falling back to the neutral `--border`/`--foreground` when no tint slot is present (so a plain `l-ui-card` is a neutral bordered card). The gradient modifier reads `--l-ui-tint-from`/`-to`. Set the role variables inline (or point them at `var(--accent)`, which is already theme-aware) for a one-off colour - but note that fixed inline values are theme-fixed: for a custom colour that should adapt to dark mode, supply light and dark values via a `.dark` rule (or `prefers-color-scheme`) rather than inline. `__icon` uses the same mask technique as the primary-button icon, so set `--l-ui-icon-src` at the call site.
 
 ## Logo block
 
