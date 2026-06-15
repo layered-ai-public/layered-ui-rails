@@ -137,6 +137,19 @@ A content card in two composable styles. The base `l-ui-card` is bordered; add `
 
 The card reads the shared `--l-ui-tint-*` role variables, falling back to the neutral `--border`/`--foreground` when no tint slot is present (so a plain `l-ui-card` is a neutral bordered card). The gradient modifier reads `--l-ui-tint-from`/`-to`. Set the role variables inline (or point them at `var(--accent)`) for a one-off colour. `__icon` uses the same mask technique as the primary-button icon, so set `--l-ui-icon-src` at the call site.
 
+## Logo block
+
+A responsive strip of brand or partner logos (a "trusted by" / "works with" row). Logos are normalised to a common height and flattened to one tone (black in light, white in dark) so a mismatched set reads as a tidy row. Wraps three-up on small screens and spreads to a single row from `md` up:
+
+```
+.l-ui-logo-block                  Strip container; wraps three-up on small screens, single row from md
+.l-ui-logo-block__item            Wrapper for one logo (give it role="listitem")
+.l-ui-logo-block__logo            The logo image; normalised height, flattened to the foreground tone
+.l-ui-logo-block__logo--wordmark  Taller variant for wide name lockups
+```
+
+Mark the container `role="list"` with an `aria-label`, each item `role="listitem"`, and keep meaningful `alt` text on every logo. Supply normal full-colour logos - the tone is applied with a CSS filter, so source colours are ignored.
+
 ## Surfaces
 
 Always combine the `l-ui-surface` base class with any modifiers (e.g. `l-ui-surface l-ui-surface--highlighted`):

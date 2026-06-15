@@ -28,6 +28,9 @@ class PagesController < ApplicationController
   def cards
   end
 
+  def logo_block
+  end
+
   def tables
   end
 
