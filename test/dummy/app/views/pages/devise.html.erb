@@ -8,7 +8,7 @@
 
 <p class="mt-4">Devise is fully supported but entirely optional. The engine works without any authentication system.</p>
 
-<h2 class="mt-8">When Devise is installed</h2>
+<h2 class="mt-8 l-ui-heading--section">When Devise is installed</h2>
 
 <p class="mt-4">The engine automatically detects Devise and provides:</p>
 
@@ -18,7 +18,7 @@
   <li>User info display in sidebar when signed in</li>
 </ul>
 
-<h2 class="mt-8">Installation</h2>
+<h2 class="mt-8 l-ui-heading--section">Installation</h2>
 
 <p class="mt-4">Add Devise to your application:</p>
 <pre class="l-ui-surface mt-4"><code>bundle add devise</code></pre>
@@ -31,7 +31,7 @@
 <p class="mt-4">Add Devise routes to your <code>routes.rb</code>:</p>
 <pre class="l-ui-surface mt-4"><code>devise_for :users</code></pre>
 
-<h2 class="mt-8">Configuration</h2>
+<h2 class="mt-8 l-ui-heading--section">Configuration</h2>
 
 <p class="mt-4">The engine uses <code>current_user</code> by default. If your app uses a different method, configure it in an initializer:</p>
 <pre class="l-ui-surface mt-4"><code>Layered::Ui.current_user_method = :current_admin</code></pre>
@@ -48,7 +48,7 @@ def configure_permitted_parameters
   devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
 end</code></pre>
 
-<h2 class="mt-8">Helper methods</h2>
+<h2 class="mt-8 l-ui-heading--section">Helper methods</h2>
 
 <p class="mt-4">These helpers allow your views to work with or without Devise:</p>
 

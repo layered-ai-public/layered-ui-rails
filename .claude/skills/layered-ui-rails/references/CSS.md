@@ -47,6 +47,16 @@ The page gutter (horizontal and bottom padding) is the `--l-ui-gutter` custom pr
 
 `.l-ui-page` is a flex column (`flex flex-1 flex-col`) and uses `overflow-x-clip` to hold its content to the available width: intrinsically wide content (tables, code blocks, long unbroken strings) is clipped rather than expanding the page or adding a horizontal page scrollbar. So make such content scroll internally (e.g. wrap a table in an `overflow-x-auto` element) instead of expecting the page to grow.
 
+## Typography
+
+Base elements (`h1`-`h4`, `p`, `ul`/`ol`, `code`, etc.) are styled via `@layer base` so the host app can override them. Headings set type scale and weight only - they carry **no** divider by default, so the heading level can be chosen for document structure alone (e.g. an `h2` inside a panel header or hero, without an unwanted rule).
+
+```
+.l-ui-heading--section            Opt-in bottom divider; add to any heading to separate a section from the content above it
+```
+
+Add `l-ui-heading--section` wherever a visual section rule is wanted (the section headings on the documentation pages use it). It applies to whichever heading element you already have, so it does not change the heading level.
+
 ## Buttons
 
 Always combine the `l-ui-button` base class with a colour modifier (e.g. `l-ui-button l-ui-button--primary`):
@@ -72,6 +82,26 @@ Icon variants (combine with the `l-ui-button` base):
 Any button variant is automatically styled as disabled when the `disabled` HTML attribute is present - no extra class needed.
 
 For destructive actions use `l-ui-button--danger` (solid) or `l-ui-button--outline-danger` (bordered).
+
+## Hero
+
+Full-bleed marketing hero for the top of a landing page. Add `l-ui-bleed` to the section to break out of the page gutter, and pair the body with `l-ui-body--glass-header` + `l-ui-body--flush-top` so it sits flush to the viewport top with optional media showing through the glass header (see Page layout above):
+
+```
+.l-ui-hero                       Full-bleed hero section (pair with l-ui-bleed); ships with a default background
+.l-ui-hero__inner                Content column, capped at the contained width with the page gutter
+.l-ui-hero__title                Large, tight-tracked hero heading
+.l-ui-hero__title-accent         Gradient-clipped accent span for part of the title
+.l-ui-hero__subtitle             Supporting subtitle paragraph below the title
+.l-ui-hero__actions              Row of call-to-action buttons or links
+.l-ui-hero__media                Optional decorative background media layer
+.l-ui-hero__media--light/--dark  Theme-specific media; only the active theme's variant shows
+.l-ui-hero__media-img            Image inside a media layer (covers, right-aligned)
+```
+
+The `__inner` picks up the fixed-header offset automatically under `l-ui-body--flush-top`. A token-driven overlay over the media keeps text legible and fades the hero into the page background below.
+
+A good-looking default background ships with the gem and is on by default, driven by the `--l-ui-hero-image` token (light/dark). Re-skin it by overriding `--l-ui-hero-image` in the overrides file (global) or inline on one section (per-hero); set it to `none` to remove it. For per-page art with proper light/dark `<img>` loading, add a `l-ui-hero__media` picture instead - it paints above the token background.
 
 ## Surfaces
 

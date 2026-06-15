@@ -9,7 +9,7 @@
 <p class="mt-4">layered-ui-rails supports a two-tier color customisation system.</p>
 <p class="mt-4">Set a single accent color for quick branding, or override any of the individual color tokens for full control.</p>
 
-<h2 class="mt-8">Getting started</h2>
+<h2 class="mt-8 l-ui-heading--section">Getting started</h2>
 
 <p class="mt-4">Run the install generator to create the overrides file:</p>
 
@@ -17,7 +17,7 @@
 
 <p class="mt-4">This creates <code>app/assets/tailwind/layered_ui_overrides.css</code> with all variables commented out. The file is not overwritten on subsequent runs, so your changes are preserved.</p>
 
-<h2 class="mt-8">Tier 1 - Accent color</h2>
+<h2 class="mt-8 l-ui-heading--section">Tier 1 - Accent color</h2>
 
 <p class="mt-4">Set <code>--accent</code> and <code>--accent-foreground</code> in your overrides file. Primary buttons, active tabs, and active navigation items all inherit from these two variables.</p>
 
@@ -48,7 +48,7 @@
 
 <p class="mt-4">If your accent color needs a different text/icon color on buttons (e.g. a pink accent with white button text in dark mode), override <code>--button-primary-text</code> in Tier 2. To recolor only the icon while leaving button text unchanged, override <code>--button-primary-icon</code> instead.</p>
 
-<h2 class="mt-8">Tier 2 - Full color overrides</h2>
+<h2 class="mt-8 l-ui-heading--section">Tier 2 - Full color overrides</h2>
 
 <p class="mt-4">Override any individual design token for complete control. Uncomment only the variables you need in your overrides file. Values are full CSS colors - <code>oklch()</code> is recommended for perceptually uniform mixing and consistent contrast, but <code>#hex</code>, <code>rgb()</code>, and keywords also work.</p>
 <p class="mt-4">When setting custom colors, check that text, controls, and states still meet WCAG 2.2 AA. See the <%= link_to "WCAG 2.2 quick reference", "https://www.w3.org/WAI/WCAG22/quickref/", target: "_blank", rel: "noopener noreferrer" %> for guidance.</p>
@@ -69,11 +69,11 @@
   --surface: oklch(0.12 0.015 255);
 }</code></pre>
 
-<h2 class="mt-8">Dynamic theming</h2>
+<h2 class="mt-8 l-ui-heading--section">Dynamic theming</h2>
 
 <p class="mt-4">Override tokens per request (e.g. per-tenant branding) using <code>content_for :l_ui_head</code>. See the <%= link_to "head", layout_head_path %> page for usage and CSP compatibility notes.</p>
 
-<h2 class="mt-8">Design tokens</h2>
+<h2 class="mt-8 l-ui-heading--section">Design tokens</h2>
 
 <div class="l-ui-table-container mt-4">
   <table class="l-ui-table">

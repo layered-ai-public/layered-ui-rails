@@ -126,6 +126,22 @@ module Layered
               @apply h-7.5 w-auto;
             }
             */
+
+            /*
+             * Hero background. A default ships with the gem; re-skin it here
+             * (or set it to `none` to remove it). Set --l-ui-hero-image inline
+             * on a single hero to give different heroes different art.
+             */
+
+            /*
+            :root {
+              --l-ui-hero-image: url('my_hero_light.webp');
+            }
+
+            .dark {
+              --l-ui-hero-image: url('my_hero_dark.webp');
+            }
+            */
           CSS
         end
       end

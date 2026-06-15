@@ -8,7 +8,7 @@
 
 <p class="mt-4">The header displays a logo on wider screens and an icon on mobile. Both have light and dark variants that switch automatically with the theme.</p>
 
-<h2 class="mt-8">Static override</h2>
+<h2 class="mt-8 l-ui-heading--section">Static override</h2>
 
 <p class="mt-4">Replace the default images by placing files with the same names in <code>app/assets/images/layered_ui/</code> in your host app.</p>
 
@@ -39,7 +39,7 @@
   <strong>Note:</strong> The logo in the header is substituted for the icon on small width screens to conserve space.
 </p>
 
-<h2 class="mt-8">Dynamic override</h2>
+<h2 class="mt-8 l-ui-heading--section">Dynamic override</h2>
 
 <p class="mt-4">Inject a custom logo per request using <code>content_for</code>:</p>
 
@@ -51,6 +51,6 @@
   &lt;%= image_tag @tenant.logo_dark_url, alt: "", class: "l-ui-header__logo l-ui-header__logo--dark" %&gt;
 &lt;% end %&gt;</code></pre>
 
-<h2 class="mt-8">Styling overrides</h2>
+<h2 class="mt-8 l-ui-heading--section">Styling overrides</h2>
 
 <p class="mt-4">To adjust logo styling (e.g. size), override <code>.l-ui-header__logo</code> in <code>layered_ui_overrides.css</code>. An example is included as a comment in the Tier 3 section of that file.</p>

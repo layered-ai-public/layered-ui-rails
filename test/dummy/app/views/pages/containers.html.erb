@@ -7,7 +7,7 @@
 
 <p class="mt-4">Layout containers for common page patterns.</p>
 
-<h2 class="mt-8">Spread container</h2>
+<h2 class="mt-8 l-ui-heading--section">Spread container</h2>
 
 <p class="mt-4">Flexbox container with title on the left and actions on the right:</p>
 
@@ -34,7 +34,7 @@
   </dialog>
 </div>
 
-<h2 class="mt-8">Grid container</h2>
+<h2 class="mt-8 l-ui-heading--section">Grid container</h2>
 
 <p class="mt-4">Responsive grid that stacks on mobile and switches to two columns on medium screens:</p>
 
@@ -77,7 +77,7 @@
   </dialog>
 </div>
 
-<h2 class="mt-8">Contained width</h2>
+<h2 class="mt-8 l-ui-heading--section">Contained width</h2>
 
 <p class="mt-4">Wrap page content in <code>l-ui-page__contained</code> to cap its width and centre it. The cap is the <code>--l-ui-contained-width</code> token (default <code>80rem</code>), the same token read by the contained header (<code>l-ui-body--header-contained</code>), so the two line up. Override the token once - on <code>:root</code>, a container, or inline - to move both. The example below sets it to <code>40rem</code> so the centring is visible at any screen width:</p>
 
@@ -134,7 +134,7 @@
   </dialog>
 </div>
 
-<h2 class="mt-8">Full-bleed</h2>
+<h2 class="mt-8 l-ui-heading--section">Full-bleed</h2>
 
 <p class="mt-4">The page applies a gutter (the <code>--l-ui-gutter</code> custom property, default <code>1rem</code>) as its horizontal and bottom padding, shared with the header so the two always align. Add <code>l-ui-bleed</code> to a single child to break it out to the page edge - a full-bleed hero or banner - without reverse-engineering the padding. It cancels exactly the current gutter, so there are no magic numbers to match. It affects the horizontal edges only; content still sits below the page's top padding. To pull the first section up to the very top of the viewport - behind the header - add <code>l-ui-body--flush-top</code> to the body and pair it with <code>l-ui-body--glass-header</code> (see <%= link_to "Header", layout_header_path %>).</p>
 
@@ -165,7 +165,7 @@
   </dialog>
 </div>
 
-<h2 class="mt-8">CSS classes</h2>
+<h2 class="mt-8 l-ui-heading--section">CSS classes</h2>
 
 <div class="l-ui-table-container mt-4">
   <table class="l-ui-table">

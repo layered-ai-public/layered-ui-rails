@@ -15,7 +15,7 @@
 
 <p class="l-ui-notice mt-4"><strong>Where styles fit best.</strong> layered-ui token and component overrides (e.g. <code>--accent</code>, restyling a <code>.l-ui-*</code> class) fit in <code>app/assets/tailwind/layered_ui_overrides.css</code> - see the <%= link_to "colors", layout_colors_path %> page. Other custom styling fits in your app's own application stylesheet, like any normal Rails app. Both keep styles with the rest of your CSS, where they are easier to maintain than inline in the head.</p>
 
-<h2 class="mt-8">Per-tenant theming</h2>
+<h2 class="mt-8 l-ui-heading--section">Per-tenant theming</h2>
 
 <p class="mt-4">When brand colors vary per request and cannot be known at build time, a good option is to serve them as a dedicated stylesheet from a Rails controller and link it here. The stylesheet overrides the design tokens, and this approach is Turbo- and CSP-friendly while keeping styling out of the markup.</p>
 
@@ -27,7 +27,7 @@
 
 <p class="l-ui-notice l-ui-notice--warning mt-4"><strong>Security:</strong> never interpolate user-supplied strings directly into the served CSS - this allows CSS injection. Validate or sanitise any user-derived values before interpolation.</p>
 
-<h2 class="mt-8">CSP and Turbo compatibility</h2>
+<h2 class="mt-8 l-ui-heading--section">CSP and Turbo compatibility</h2>
 
 <p class="mt-4">The linked-stylesheet pattern above sidesteps two issues that an inline <code>&lt;style&gt;</code> block runs into. A stylesheet served from your own origin satisfies a strict <code>Content-Security-Policy: style-src 'self'</code> with no nonce, and Turbo caches and reuses it by URL - both reasons to prefer it.</p>
 

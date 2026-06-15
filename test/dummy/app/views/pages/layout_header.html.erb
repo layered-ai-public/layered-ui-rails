@@ -8,7 +8,7 @@
 
 <p class="mt-4">The header is a fixed 63px bar containing the logo, optional inline links, and an actions group on the right. By default the actions group shows the theme toggle, Devise login/register buttons (when signed out), and the navigation toggle (when navigation items or a signed-in user are present).</p>
 
-<h2 class="mt-8">Inline links</h2>
+<h2 class="mt-8 l-ui-heading--section">Inline links</h2>
 
 <p class="mt-4">For landing pages, use the <code>:l_ui_header_links</code> yield to render plain inline links beside the logo. Combine with <code>l-ui-body--header-contained</code> to constrain the header's inner row to the same width as your page content. The links are hidden below the <code>sm</code> breakpoint; pair with <code>:l_ui_navigation_items</code> if you need a mobile menu.</p>
 
@@ -22,7 +22,7 @@
 
 &lt;%= render template: "layouts/layered_ui/application" %&gt;</code></pre>
 
-<h2 class="mt-8">Prepend or append actions</h2>
+<h2 class="mt-8 l-ui-heading--section">Prepend or append actions</h2>
 
 <p class="mt-4">Add items either side of the default actions group with the <code>:l_ui_header_actions_start</code> and <code>:l_ui_header_actions_end</code> yields. The default theme toggle, authentication, and navigation toggle remain in place.</p>
 
@@ -34,7 +34,7 @@
   &lt;%= link_to "Help", help_path, class: "l-ui-button l-ui-button--ghost l-ui-button--small" %&gt;
 &lt;% end %&gt;</code></pre>
 
-<h2 class="mt-8">Replace the actions group</h2>
+<h2 class="mt-8 l-ui-heading--section">Replace the actions group</h2>
 
 <p class="mt-4">For full control over the action area, set <code>:l_ui_header_actions</code> and compose your own bar using the default building blocks. Any helper you omit will not render, and <code>:l_ui_header_actions_start</code> and <code>:l_ui_header_actions_end</code> are skipped when this yield is set.</p>
 
@@ -71,7 +71,7 @@
   &lt;%= l_ui_navigation_toggle %&gt;
 &lt;% end %&gt;</code></pre>
 
-<h2 class="mt-8">Hide the header</h2>
+<h2 class="mt-8 l-ui-heading--section">Hide the header</h2>
 
 <p class="mt-4">Add the <code>l-ui-body--hide-header</code> modifier to the body to hide the header and reclaim its 63px of vertical space.</p>
 
@@ -79,7 +79,7 @@
 
 &lt;%= render template: "layouts/layered_ui/application" %&gt;</code></pre>
 
-<h2 class="mt-8">Glass header</h2>
+<h2 class="mt-8 l-ui-heading--section">Glass header</h2>
 
 <p class="mt-4">Add <code>l-ui-body--glass-header</code> for a glass header: it turns translucent and blurs whatever scrolls beneath it, dropping the solid bottom border. On its own, page content keeps its normal top padding and slides under the glass bar as you scroll.</p>
 
@@ -89,6 +89,6 @@
 
 &lt;%= render template: "layouts/layered_ui/application" %&gt;</code></pre>
 
-<h2 class="mt-8">Override</h2>
+<h2 class="mt-8 l-ui-heading--section">Override</h2>
 
 <p class="mt-4">For full control, override the partial by creating <code>app/views/layouts/layered_ui/_header.html.erb</code> in your application.</p>

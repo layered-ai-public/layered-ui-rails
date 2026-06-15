@@ -7,7 +7,7 @@
 
 <p class="mt-4">Modal dialogs built on the native <code>&lt;dialog&gt;</code> element, with a trigger button, header, scrollable body, and backdrop-click to close. Wired up to the <code>l-ui--modal</code> Stimulus controller.</p>
 
-<h2 class="mt-8">CSS-classes example</h2>
+<h2 class="mt-8 l-ui-heading--section">CSS-classes example</h2>
 
 <p class="mt-4">Use the <code>l-ui-modal</code> classes directly when you need full control over markup.</p>
 
@@ -62,7 +62,7 @@
   </dialog>
 </div>
 
-<h2 class="mt-8">Helper</h2>
+<h2 class="mt-8 l-ui-heading--section">Helper</h2>
 
 <p class="mt-4">The <code>l_ui_modal</code> helper renders the trigger, dialog, header (with title and close button), and Stimulus wiring for you. The block's content is the modal body. Use <code>&lt;%</code> (not <code>&lt;%=</code>) when calling <code>m.trigger</code> - the builder captures its content.</p>
 
@@ -93,7 +93,7 @@
   </dialog>
 </div>
 
-<h2 class="mt-8">Opening from elsewhere</h2>
+<h2 class="mt-8 l-ui-heading--section">Opening from elsewhere</h2>
 
 <p class="mt-4">Give the modal a known <code>id:</code> and add <code>data-l-ui-modal-open="&lt;that id&gt;"</code> to any button on the page. The button does not need to be inside the helper's wrapper, and no <code>data-controller</code> or <code>data-action</code> is required - the <code>l-ui--modal</code> controller listens at the document level for matching clicks.</p>
 
@@ -110,7 +110,7 @@
 
 <p class="mt-4">Calling <code>dialog.showModal()</code> directly is not supported - it bypasses the <code>l-ui--modal</code> controller and skips scroll lock, focus restoration, open-count tracking, and the screen-reader announcement.</p>
 
-<h2 class="mt-8">Helper options</h2>
+<h2 class="mt-8 l-ui-heading--section">Helper options</h2>
 
 <div class="l-ui-table-container mt-4">
   <table class="l-ui-table">
@@ -154,7 +154,7 @@
   </table>
 </div>
 
-<h2 class="mt-8">CSS classes</h2>
+<h2 class="mt-8 l-ui-heading--section">CSS classes</h2>
 
 <div class="l-ui-table-container mt-4">
   <table class="l-ui-table">
