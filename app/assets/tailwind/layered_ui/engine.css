@@ -650,6 +650,38 @@
          mt-7;
 }
 
+/* Logo block */
+
+/* A responsive strip of brand or partner logos, normalised to a common height and flattened to a
+   single tone (black in light, white in dark) so a mismatched set of source logos reads as one
+   tidy row. Wraps three-up on small screens and spreads to a single row from md up. Use the
+   --wordmark modifier on wide name lockups that need more height than icon-style marks. */
+.l-ui-logo-block {
+  @apply flex flex-wrap items-center justify-center
+         gap-x-5 gap-y-6
+         md:flex-nowrap md:justify-between md:gap-4;
+}
+
+.l-ui-logo-block__item {
+  @apply flex shrink-0 grow-0 justify-center
+         min-w-0 basis-[calc(33.333%-1rem)]
+         md:block md:shrink md:basis-auto;
+}
+
+.l-ui-logo-block__logo {
+  @apply w-auto max-w-full;
+  height: clamp(1.1rem, 2vw, 2rem);
+  filter: brightness(0);
+}
+
+.l-ui-logo-block__logo--wordmark {
+  height: clamp(1.85rem, 3.3vw, 3.3rem);
+}
+
+.dark .l-ui-logo-block__logo {
+  filter: brightness(0) invert(1);
+}
+
 /* Header */
 
 /* The container owns the gutter (mirroring .l-ui-page), so .l-ui-header fills the gutter-inset

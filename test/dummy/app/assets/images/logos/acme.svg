@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 40" role="img" aria-label="Acme">
+  <circle cx="20" cy="20" r="12" fill="#ea580c"/>
+  <text x="40" y="28" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-weight="700" fill="#1e293b">Acme</text>
+</svg>
