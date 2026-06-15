@@ -1,5 +1,29 @@
 # Upgrading
 
+## 0.19.0
+
+### Headings no longer carry a divider by default
+
+Headings (`h1`-`h4`) now set type scale and weight only. Previously `h2` rendered a bottom border (`border-b`); that divider is now opt-in via the new `l-ui-heading--section` modifier, so a heading level can be chosen for document structure alone (e.g. an `h2` inside a panel header or hero) without an unwanted rule.
+
+To keep the previous look, add `l-ui-heading--section` to any heading that should show a section divider:
+
+```html
+<!-- Before: bare h2 drew a divider -->
+<h2>Section title</h2>
+
+<!-- After: opt in to the divider -->
+<h2 class="l-ui-heading--section">Section title</h2>
+```
+
+### Regenerating the overrides file (optional)
+
+0.19.0 adds commented-out `--l-ui-hero-image` and decorative tint (`--l-ui-tint-*`) token blocks to the overrides scaffold. The defaults ship in the engine, so existing apps need no change. If you want the new commented examples in your own `layered_ui_overrides.css`, regenerate it with the new `--force` flag (this overwrites the file, so copy any customisations out first):
+
+```sh
+bin/rails generate layered:ui:create_overrides --force
+```
+
 ## 0.18.0
 
 ### Renamed classes

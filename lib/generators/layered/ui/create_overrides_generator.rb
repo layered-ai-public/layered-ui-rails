@@ -6,13 +6,16 @@ module Layered
 
         OVERRIDES_PATH = "app/assets/tailwind/layered_ui_overrides.css"
 
+        class_option :force, type: :boolean, default: false,
+          desc: "Regenerate the overrides file even if it exists (overwrites your customisations - back it up first)"
+
         def create_overrides_file
-          if File.exist?(OVERRIDES_PATH)
-            say "Overrides file already exists at #{OVERRIDES_PATH}, skipping", :yellow
+          if File.exist?(OVERRIDES_PATH) && !options[:force]
+            say "Overrides file already exists at #{OVERRIDES_PATH}, skipping (pass --force to regenerate)", :yellow
             return
           end
 
-          create_file OVERRIDES_PATH, overrides_content
+          create_file OVERRIDES_PATH, overrides_content, force: options[:force]
         end
 
         private

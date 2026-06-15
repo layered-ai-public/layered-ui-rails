@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.19.0] - 2026-06-15
+
+### Added
+
+- `l-ui-hero`: a full-bleed marketing hero for the top of a landing page, with `__inner`, `__title`, `__title-accent` (gradient-clipped emphasis span), `__subtitle`, and `__actions`. Pair the section with `l-ui-bleed` and the body with `l-ui-body--glass-header` + `l-ui-body--flush-top` to sit flush to the viewport top behind the glass header. Ships with a default light/dark background driven by the `--l-ui-hero-image` token (override globally, per-hero inline, or set to `none`); supply per-page art with the optional `l-ui-hero__media`/`__media-img` layer (`--light`/`--dark` variants for theme-aware `<img>` loading).
+- `l-ui-card`: a content card in two composable styles - the base bordered card plus `l-ui-card--gradient` for a soft tint fill behind the same border - with `__eyebrow`, `__title`, `__icon` (masked, set `--l-ui-icon-src` inline), and `__body`. Colour comes from a separate tint slot, so style and colour compose independently; a plain `l-ui-card` falls back to neutral `--border`/`--foreground`.
+- Decorative tint palette: `l-ui-tint-1` … `l-ui-tint-5` set the shared `--l-ui-tint-border`/`-foreground`/`-from`/`-to` role variables that tint-aware controls (such as the card) read. The palette is categorical and independent of the brand `--accent`; slot numbers are palette positions, not fixed hues, and each slot's `--l-ui-tint-N-*` tokens can be re-skinned in the overrides file (light and dark).
+- `l-ui-logo-block`: a responsive "trusted by" / "works with" strip with `__item`, `__logo`, and `__logo--wordmark`. Logos are normalised to a common height and flattened to a single tone (black in light, white in dark); wraps three-up on small screens and spreads to one row from `md` up.
+- `l-ui-heading--section`: an opt-in bottom divider that can be added to any heading to separate a section from the content above it, without changing the heading level.
+- The overrides generator now scaffolds commented-out `--l-ui-hero-image` and `--l-ui-tint-*` token blocks (light and dark) so hosts can re-skin the hero background and tint palette. Pass `--force` to `layered:ui:create_overrides` to regenerate an existing overrides file and pick up the new scaffolding (this overwrites the file, so back up your customisations first).
+
+### Breaking
+
+- Headings (`h1`-`h4`) now set type scale and weight only and carry no divider by default. Previously `h2` rendered a bottom border; the divider is now opt-in via `l-ui-heading--section`. This lets the heading level be chosen for document structure alone (e.g. an `h2` inside a panel header or hero) without an unwanted rule. Add `l-ui-heading--section` to any `h2` that should keep its previous divider. See `UPGRADING.md`.
+
 ## [0.18.4] - 2026-06-14
 
 ### Added
@@ -56,10 +71,13 @@ All notable changes to this project will be documented in this file. This projec
 - `--l-ui-gutter` custom property (default `1rem`) now drives the page's horizontal and bottom padding, shared with `.l-ui-header` so the two always align. Override it on a container to retune the gutter in one place.
 - `.l-ui-bleed` utility to take a child element edge-to-edge by cancelling the current page gutter (e.g. a full-bleed hero), with no negative-margin guesswork.
 
+### Breaking
+
+- `l-ui-page__width-constrained` renamed to `l-ui-page__narrow`. The old name read as a general page-width container, but it is a narrow ~384px column for any compact, centred content (the auth pages are one use). See `UPGRADING.md`.
+- Install flow: the engine's CSS is now served directly from the gem using [tailwindcss-rails' engine support](https://github.com/rails/tailwindcss-rails#rails-engines-support-experimental) instead of being copied into the host app. The install generator no longer creates `app/assets/tailwind/layered_ui.css`; instead it adds `@import "../builds/tailwind/layered_ui";` to your `application.css`. The CSS now stays in sync with the installed gem version automatically - no need to re-run the generator after upgrading.
+
 ### Changed
 
-- **Breaking:** `l-ui-page__width-constrained` renamed to `l-ui-page__narrow`. The old name read as a general page-width container, but it is a narrow ~384px column for any compact, centred content (the auth pages are one use). See `UPGRADING.md`.
-- **Breaking (install flow):** the engine's CSS is now served directly from the gem using [tailwindcss-rails' engine support](https://github.com/rails/tailwindcss-rails#rails-engines-support-experimental) instead of being copied into the host app. The install generator no longer creates `app/assets/tailwind/layered_ui.css`; instead it adds `@import "../builds/tailwind/layered_ui";` to your `application.css`. The CSS now stays in sync with the installed gem version automatically - no need to re-run the generator after upgrading.
 - The engine layout now links the compiled Tailwind build explicitly (`stylesheet_link_tag "tailwind"`) rather than the `:app` bundle, matching tailwindcss-rails' own convention and avoiding a stray link to the engine's intermediate build file.
 - Moved the engine's source stylesheet from `app/assets/tailwind/layered/ui/styles.css` to `app/assets/tailwind/layered_ui/engine.css` (the path tailwindcss-rails' engine support expects).
 

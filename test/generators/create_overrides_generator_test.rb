@@ -27,4 +27,16 @@ class CreateOverridesGeneratorTest < Rails::Generators::TestCase
     assert_match(/already exists/, output)
     assert_file "app/assets/tailwind/layered_ui_overrides.css", /existing/
   end
+
+  test "regenerates over an existing file with --force" do
+    FileUtils.mkdir_p File.join(destination_root, "app/assets/tailwind")
+    File.write File.join(destination_root, "app/assets/tailwind/layered_ui_overrides.css"), "/* existing */"
+
+    Dir.chdir(destination_root) { run_generator ["--force"] }
+    assert_file "app/assets/tailwind/layered_ui_overrides.css" do |content|
+      refute_match(/existing/, content)
+      assert_match "--l-ui-hero-image", content
+      assert_match "--l-ui-tint-1-border", content
+    end
+  end
 end
