@@ -25,6 +25,9 @@ class PagesController < ApplicationController
   def hero
   end
 
+  def logo_block
+  end
+
   def tables
   end
 

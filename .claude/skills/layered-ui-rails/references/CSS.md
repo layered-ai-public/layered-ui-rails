@@ -103,6 +103,19 @@ The `__inner` picks up the fixed-header offset automatically under `l-ui-body--f
 
 A good-looking default background ships with the gem and is on by default, driven by the `--l-ui-hero-image` token (light/dark). Re-skin it by overriding `--l-ui-hero-image` in the overrides file (global) or inline on one section (per-hero); set it to `none` to remove it. For per-page art with proper light/dark `<img>` loading, add a `l-ui-hero__media` picture instead - it paints above the token background.
 
+## Logo block
+
+A responsive strip of brand or partner logos (a "trusted by" / "works with" row). Logos are normalised to a common height and flattened to one tone (black in light, white in dark) so a mismatched set reads as a tidy row. Wraps three-up on small screens and spreads to a single row from `md` up:
+
+```
+.l-ui-logo-block                  Strip container; wraps three-up on small screens, single row from md
+.l-ui-logo-block__item            Wrapper for one logo (give it role="listitem")
+.l-ui-logo-block__logo            The logo image; normalised height, flattened to the foreground tone
+.l-ui-logo-block__logo--wordmark  Taller variant for wide name lockups
+```
+
+Mark the container `role="list"` with an `aria-label`, each item `role="listitem"`, and keep meaningful `alt` text on every logo. Supply normal full-colour logos - the tone is applied with a CSS filter, so source colours are ignored.
+
 ## Surfaces
 
 Always combine the `l-ui-surface` base class with any modifiers (e.g. `l-ui-surface l-ui-surface--highlighted`):
