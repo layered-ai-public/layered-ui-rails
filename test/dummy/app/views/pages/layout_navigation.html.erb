@@ -10,7 +10,7 @@
 
 <p class="mt-4">The navigation is off-canvas by default and toggled via the header button on all screen sizes. Add <code>l-ui-body--always-show-navigation</code> to the body to pin it as a persistent sidebar on desktop.</p>
 
-<h2 class="mt-6">Example</h2>
+<h2 class="mt-6 l-ui-heading--section">Example</h2>
 
 <p class="mt-4">Use <code>l_ui_navigation_item</code> for links and <code>l_ui_navigation_section</code> to group them. A section that contains the active item opens automatically; <code>storage_key:</code> persists the user's open/closed preference. To expose the parent route of a section, add an "Overview" item.</p>
 
@@ -32,7 +32,7 @@
   &lt;% end %&gt;
 &lt;% end %&gt;</code></pre>
 
-<h2 class="mt-6">Always-show navigation</h2>
+<h2 class="mt-6 l-ui-heading--section">Always-show navigation</h2>
 
 <p class="mt-4">Pin the navigation open on desktop by registering the <code>l-ui-body--always-show-navigation</code> modifier with <code>l_ui_add_body_class</code>.</p>
 
@@ -42,6 +42,6 @@
 
 <p class="mt-4">For inline header links on landing pages, see the <%= link_to "header", layout_header_path %> page.</p>
 
-<h2 class="mt-6">Override</h2>
+<h2 class="mt-6 l-ui-heading--section">Override</h2>
 
 <p class="mt-4">For full control, override the partial by creating <code>app/views/layouts/layered_ui/_navigation.html.erb</code> in your application.</p>

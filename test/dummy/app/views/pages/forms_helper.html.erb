@@ -8,7 +8,7 @@
 
 <p class="mt-4">The <code>l_ui_form</code> helper renders a complete form from a record and a field configuration array. It handles labels, inputs, hints, validation errors, and the submit button.</p>
 
-<h2 class="mt-8">Basic form</h2>
+<h2 class="mt-8 l-ui-heading--section">Basic form</h2>
 
 <p class="mt-4">Pass a record, an array of field hashes, and a submission URL. Field types are inferred from the model's column types when <code>as:</code> is not specified.</p>
 
@@ -37,7 +37,7 @@
   </dialog>
 </div>
 
-<h2 class="mt-8">All field types</h2>
+<h2 class="mt-8 l-ui-heading--section">All field types</h2>
 
 <p class="mt-4">Use <code>as:</code> to explicitly set the field type. Supported types: <code>:string</code>, <code>:text</code>, <code>:email</code>, <code>:password</code>, <code>:number</code>, <code>:tel</code>, <code>:url</code>, <code>:search</code>, <code>:date</code>, <code>:datetime</code>, <code>:time</code>, <code>:month</code>, <code>:week</code>, <code>:color</code>, <code>:range</code>, <code>:file</code>, <code>:select</code>, <code>:checkbox</code>, and <code>:hidden</code>. The form is automatically rendered as <code>multipart</code> when any field uses <code>:file</code>.</p>
 
@@ -106,7 +106,7 @@
   </dialog>
 </div>
 
-<h2 class="mt-8">Options</h2>
+<h2 class="mt-8 l-ui-heading--section">Options</h2>
 
 <div class="l-ui-table-container mt-4">
   <table class="l-ui-table">
@@ -155,7 +155,7 @@
 
 <p class="mt-4">Need more control? Override the partial by creating <code>app/views/layered/ui/managed_resource/_form.html.erb</code> in your host app, or write the form directly with <code>form_with</code> and reuse <code>layered_ui/shared/form_errors</code>, <code>layered_ui/shared/label</code>, and <code>layered_ui/shared/field_error</code>.</p>
 
-<h2 class="mt-8">Field options</h2>
+<h2 class="mt-8 l-ui-heading--section">Field options</h2>
 
 <div class="l-ui-table-container mt-4">
   <table class="l-ui-table">

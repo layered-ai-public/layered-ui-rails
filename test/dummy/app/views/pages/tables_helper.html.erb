@@ -8,7 +8,7 @@
 
 <p class="mt-4">The <code>l_ui_table</code> helper renders a fully styled, accessible data table from a collection and column configuration. It handles header cells, row scoping, custom rendering, actions, and empty states.</p>
 
-<h2 class="mt-8">Basic table</h2>
+<h2 class="mt-8 l-ui-heading--section">Basic table</h2>
 
 <p class="mt-4">Pass a collection and an array of column hashes. The first column is automatically treated as the primary (<code>&lt;th scope="row"&gt;</code>) column.</p>
 
@@ -37,7 +37,7 @@
   </dialog>
 </div>
 
-<h2 class="mt-8">Custom cell rendering</h2>
+<h2 class="mt-8 l-ui-heading--section">Custom cell rendering</h2>
 
 <p class="mt-4">Use <code>render:</code> procs to customise how each cell is displayed. You can also set <code>label:</code> to override the column header text. For date/time columns, the <code>l_ui_format_datetime</code> helper formats values as "15 Apr 2026, 10:30".</p>
 
@@ -71,7 +71,7 @@
   </dialog>
 </div>
 
-<h2 class="mt-8">Complex cell rendering with partials</h2>
+<h2 class="mt-8 l-ui-heading--section">Complex cell rendering with partials</h2>
 
 <p class="mt-4">For cells with complex markup, call <code>render</code> inside the <code>render:</code> proc to delegate to a partial. This keeps your table call clean while allowing rich cell layouts.</p>
 
@@ -107,7 +107,7 @@
   </dialog>
 </div>
 
-<h2 class="mt-8">Actions column</h2>
+<h2 class="mt-8 l-ui-heading--section">Actions column</h2>
 
 <p class="mt-4">Pass an <code>actions:</code> proc to add a right-aligned actions column. The <code>actions_label:</code> option sets the header text (defaults to "Actions").</p>
 
@@ -138,7 +138,7 @@
   </dialog>
 </div>
 
-<h2 class="mt-8">Hash data</h2>
+<h2 class="mt-8 l-ui-heading--section">Hash data</h2>
 
 <p class="mt-4">Collections don't have to be ActiveRecord - arrays of hashes work too. Use <code>render:</code> procs to read hash keys (e.g. <code>r[:key]</code>) just as you would for object attributes.</p>
 
@@ -180,7 +180,7 @@
   </dialog>
 </div>
 
-<h2 class="mt-8">Empty state</h2>
+<h2 class="mt-8 l-ui-heading--section">Empty state</h2>
 
 <p class="mt-4">When the collection is empty, the table renders a single "No records found." row spanning all columns.</p>
 
@@ -209,7 +209,7 @@
   </dialog>
 </div>
 
-<h2 class="mt-8">Turbo-targetable rows</h2>
+<h2 class="mt-8 l-ui-heading--section">Turbo-targetable rows</h2>
 
 <p class="mt-4">Each <code>&lt;tr&gt;</code> is automatically given <code>id="<%= "#{dom_id(@users.first)}" if @users.any? %>"</code>-style ids (via <code>dom_id(record)</code>) when records respond to <code>to_key</code>, so individual rows can be replaced from anywhere in the app with <code>turbo_stream.replace dom_id(@user), ...</code>. Pass <code>row_id:</code> as a proc to override, or return <code>nil</code> to omit the id.</p>
 
@@ -246,7 +246,7 @@ turbo_stream.replace dom_id(@user),
   </dialog>
 </div>
 
-<h2 class="mt-8">Options</h2>
+<h2 class="mt-8 l-ui-heading--section">Options</h2>
 
 <div class="l-ui-table-container mt-4">
   <table class="l-ui-table">
@@ -303,7 +303,7 @@ turbo_stream.replace dom_id(@user),
   </table>
 </div>
 
-<h2 class="mt-8">Column options</h2>
+<h2 class="mt-8 l-ui-heading--section">Column options</h2>
 
 <div class="l-ui-table-container mt-4">
   <table class="l-ui-table">

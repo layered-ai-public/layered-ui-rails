@@ -8,7 +8,7 @@
 
 <p class="mt-4">Ransack is fully supported but entirely optional. The engine works without any search system.</p>
 
-<h2 class="mt-8">Installation</h2>
+<h2 class="mt-8 l-ui-heading--section">Installation</h2>
 
 <p class="mt-4">Add Ransack to your application:</p>
 <pre class="l-ui-surface mt-4"><code>bundle add ransack</code></pre>
@@ -24,7 +24,7 @@
   end
 end</code></pre>
 
-<h2 class="mt-8">Search and sort helpers</h2>
+<h2 class="mt-8 l-ui-heading--section">Search and sort helpers</h2>
 
 <p class="mt-4">The engine provides helpers that wrap Ransack with styled controls. If Ransack is not installed, both helpers degrade gracefully:</p>
 
@@ -55,7 +55,7 @@ end</code></pre>
   </table>
 </div>
 
-<h2 class="mt-8">Search and sort example</h2>
+<h2 class="mt-8 l-ui-heading--section">Search and sort example</h2>
 
 <p class="mt-4">Two independent collections on one page, each in a Turbo Frame. Searching or sorting one does not affect the other. The URL updates for back/forward navigation.</p>
 
@@ -108,7 +108,7 @@ end</code></pre>
   <%= l_ui_pagy(@posts_pagy) %>
 <% end %>
 
-<h2 class="mt-8">Usage</h2>
+<h2 class="mt-8 l-ui-heading--section">Usage</h2>
 
 <p class="mt-4">In your controller, use Ransack's <code>search_key</code> to namespace each collection:</p>
 
@@ -141,7 +141,7 @@ end</code></pre>
 
 <p class="mt-4">The <code>search_key</code> flows through automatically - <code>l_ui_search_form</code> reads it from the query object and passes it as <code>as:</code> to <code>search_form_for</code>. The clear button preserves other collections' params. <code>data-turbo-action="advance"</code> pushes state to the URL for back/forward navigation. The <code>rewriteLink</code> action merges current URL params into pagination links so other collections' page positions are preserved.</p>
 
-<h2 class="mt-8">Sort link options</h2>
+<h2 class="mt-8 l-ui-heading--section">Sort link options</h2>
 
 <pre class="l-ui-surface mt-4"><code>&lt;!-- Basic sort link --&gt;
 &lt;%= l_ui_sort_link(@q, :name) %&gt;

@@ -123,8 +123,7 @@
   }
 
   h2 {
-    @apply heading text-lg
-           border-b border-border pb-2;
+    @apply heading text-lg;
   }
 
   h3 {
@@ -164,6 +163,15 @@
     scrollbar-width: thin;
     scrollbar-color: color-mix(in oklch, var(--foreground-muted) 30%, transparent) transparent;
   }
+}
+
+/* Headings */
+
+/* Opt-in section divider for any heading. Headings carry no border by default so the level can be
+   chosen for document structure alone (e.g. an h2 inside a panel header or hero); add this where a
+   visual section rule is wanted. */
+.l-ui-heading--section {
+  @apply border-b border-border pb-2;
 }
 
 /* Theme */

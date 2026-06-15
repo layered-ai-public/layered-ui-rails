@@ -47,6 +47,16 @@ The page gutter (horizontal and bottom padding) is the `--l-ui-gutter` custom pr
 
 `.l-ui-page` is a flex column (`flex flex-1 flex-col`) and uses `overflow-x-clip` to hold its content to the available width: intrinsically wide content (tables, code blocks, long unbroken strings) is clipped rather than expanding the page or adding a horizontal page scrollbar. So make such content scroll internally (e.g. wrap a table in an `overflow-x-auto` element) instead of expecting the page to grow.
 
+## Typography
+
+Base elements (`h1`-`h4`, `p`, `ul`/`ol`, `code`, etc.) are styled via `@layer base` so the host app can override them. Headings set type scale and weight only - they carry **no** divider by default, so the heading level can be chosen for document structure alone (e.g. an `h2` inside a panel header or hero, without an unwanted rule).
+
+```
+.l-ui-heading--section            Opt-in bottom divider; add to any heading to separate a section from the content above it
+```
+
+Add `l-ui-heading--section` wherever a visual section rule is wanted (the section headings on the documentation pages use it). It applies to whichever heading element you already have, so it does not change the heading level.
+
 ## Buttons
 
 Always combine the `l-ui-button` base class with a colour modifier (e.g. `l-ui-button l-ui-button--primary`):
