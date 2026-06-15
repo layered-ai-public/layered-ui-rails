@@ -1,0 +1,186 @@
+<%= l_ui_title_bar(
+  title: "Hero",
+  breadcrumbs: [
+    ["Home", root_path]
+  ]
+) %>
+
+<p class="mt-4">
+  A full-bleed marketing hero for the top of a landing page. Pair the section with
+  <code>l-ui-bleed</code> to break out of the page gutter, and the body with
+  <code>l-ui-body--glass-header</code> and <code>l-ui-body--flush-top</code> so it sits flush
+  to the viewport top with optional background media showing through the glass header.
+</p>
+
+<h2 class="mt-8">Default hero</h2>
+
+<p class="mt-2">
+  The example below is shown inside a bordered box for the documentation. On a real page the
+  hero spans the full viewport width and tucks under the glass header.
+</p>
+
+<div class="mt-4 overflow-hidden rounded-lg border border-border">
+  <section class="l-ui-hero" aria-labelledby="hero-demo-heading">
+    <div class="l-ui-hero__inner">
+      <h1 id="hero-demo-heading" class="l-ui-hero__title">
+        <span class="l-ui-hero__title-accent">Build better,</span> run smarter.
+      </h1>
+
+      <p class="l-ui-hero__subtitle">
+        Open source enterprise-grade app components, and the AI-assisted platform that builds,
+        deploys, and runs them.
+      </p>
+
+      <div class="l-ui-hero__actions">
+        <%= link_to "Get started", "#", class: "l-ui-button l-ui-button--primary" %>
+        <%= link_to "Learn more", "#", class: "l-ui-button l-ui-button--outline" %>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-hero-default-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-hero-default-heading">Default hero</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;%# In the layout or view, pin the hero to the top behind the glass header %&gt;
+&lt;% l_ui_add_body_class "l-ui-body--glass-header", "l-ui-body--flush-top" %&gt;
+
+&lt;section class="l-ui-hero l-ui-bleed" aria-labelledby="hero-heading"&gt;
+  &lt;div class="l-ui-hero__inner"&gt;
+    &lt;h1 id="hero-heading" class="l-ui-hero__title"&gt;
+      &lt;span class="l-ui-hero__title-accent"&gt;Build better,&lt;/span&gt; run smarter.
+    &lt;/h1&gt;
+
+    &lt;p class="l-ui-hero__subtitle"&gt;
+      Open source enterprise-grade app components, and the AI-assisted
+      platform that builds, deploys, and runs them.
+    &lt;/p&gt;
+
+    &lt;div class="l-ui-hero__actions"&gt;
+      &lt;a href="#" class="l-ui-button l-ui-button--primary"&gt;Get started&lt;/a&gt;
+      &lt;a href="#" class="l-ui-button l-ui-button--outline"&gt;Learn more&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="mt-8">With background media</h2>
+
+<p class="mt-2">
+  Add a <code>l-ui-hero__media</code> picture behind the content for a decorative background
+  image. Provide a <code>--light</code> and <code>--dark</code> variant and the active theme's
+  image is shown. A token-driven scrim keeps the text legible and fades the media into the page
+  below. Toggle the theme to see the dark variant.
+</p>
+
+<div class="mt-4 overflow-hidden rounded-lg border border-border">
+  <section class="l-ui-hero" aria-labelledby="hero-media-heading">
+    <picture class="l-ui-hero__media l-ui-hero__media--light">
+      <%= image_tag "hero_wave_light.webp", class: "l-ui-hero__media-img", alt: "", aria: { hidden: true } %>
+    </picture>
+    <picture class="l-ui-hero__media l-ui-hero__media--dark">
+      <%= image_tag "hero_wave_dark.webp", class: "l-ui-hero__media-img", alt: "", aria: { hidden: true } %>
+    </picture>
+
+    <div class="l-ui-hero__inner">
+      <h1 id="hero-media-heading" class="l-ui-hero__title">
+        <span class="l-ui-hero__title-accent">Build better,</span> run smarter.
+      </h1>
+
+      <p class="l-ui-hero__subtitle">
+        Open source enterprise-grade app components, and the AI-assisted platform that builds,
+        deploys, and runs them.
+      </p>
+    </div>
+  </section>
+</div>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-hero-media-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-hero-media-heading">Hero with background media</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;section class="l-ui-hero l-ui-bleed" aria-labelledby="hero-heading"&gt;
+  &lt;picture class="l-ui-hero__media l-ui-hero__media--light"&gt;
+    &lt;img class="l-ui-hero__media-img" src="hero_wave_light.webp" alt="" aria-hidden="true"&gt;
+  &lt;/picture&gt;
+  &lt;picture class="l-ui-hero__media l-ui-hero__media--dark"&gt;
+    &lt;img class="l-ui-hero__media-img" src="hero_wave_dark.webp" alt="" aria-hidden="true"&gt;
+  &lt;/picture&gt;
+
+  &lt;div class="l-ui-hero__inner"&gt;
+    &lt;h1 id="hero-heading" class="l-ui-hero__title"&gt;
+      &lt;span class="l-ui-hero__title-accent"&gt;Build better,&lt;/span&gt; run smarter.
+    &lt;/h1&gt;
+    &lt;p class="l-ui-hero__subtitle"&gt;Your supporting copy here.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="mt-8">CSS classes</h2>
+
+<div class="l-ui-table-container mt-4">
+  <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Hero CSS classes</caption>
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell" scope="col">Class</th>
+        <th class="l-ui-table__header-cell" scope="col">Description</th>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-hero</code></th>
+        <td class="l-ui-table__cell">Full-bleed hero section (pair with <code>l-ui-bleed</code>)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-hero__inner</code></th>
+        <td class="l-ui-table__cell">Content column, capped at the contained width with the page gutter</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-hero__title</code></th>
+        <td class="l-ui-table__cell">Large, tight-tracked hero heading</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-hero__title-accent</code></th>
+        <td class="l-ui-table__cell">Gradient-clipped accent span for emphasising part of the title</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-hero__subtitle</code></th>
+        <td class="l-ui-table__cell">Supporting subtitle paragraph below the title</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-hero__actions</code></th>
+        <td class="l-ui-table__cell">Row of call-to-action buttons or links</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-hero__media</code></th>
+        <td class="l-ui-table__cell">Optional decorative background media layer</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-hero__media--light</code> / <code>--dark</code></th>
+        <td class="l-ui-table__cell">Theme-specific media; only the active theme's variant is shown</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-hero__media-img</code></th>
+        <td class="l-ui-table__cell">The image inside a media layer (covers and right-aligns)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

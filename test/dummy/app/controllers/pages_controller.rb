@@ -22,6 +22,9 @@ class PagesController < ApplicationController
   def surfaces
   end
 
+  def hero
+  end
+
   def tables
   end
 

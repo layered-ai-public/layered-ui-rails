@@ -73,6 +73,24 @@ Any button variant is automatically styled as disabled when the `disabled` HTML 
 
 For destructive actions use `l-ui-button--danger` (solid) or `l-ui-button--outline-danger` (bordered).
 
+## Hero
+
+Full-bleed marketing hero for the top of a landing page. Add `l-ui-bleed` to the section to break out of the page gutter, and pair the body with `l-ui-body--glass-header` + `l-ui-body--flush-top` so it sits flush to the viewport top with optional media showing through the glass header (see Page layout above):
+
+```
+.l-ui-hero                       Full-bleed hero section (pair with l-ui-bleed)
+.l-ui-hero__inner                Content column, capped at the contained width with the page gutter
+.l-ui-hero__title                Large, tight-tracked hero heading
+.l-ui-hero__title-accent         Gradient-clipped accent span for part of the title
+.l-ui-hero__subtitle             Supporting subtitle paragraph below the title
+.l-ui-hero__actions              Row of call-to-action buttons or links
+.l-ui-hero__media                Optional decorative background media layer
+.l-ui-hero__media--light/--dark  Theme-specific media; only the active theme's variant shows
+.l-ui-hero__media-img            Image inside a media layer (covers, right-aligned)
+```
+
+The `__inner` picks up the fixed-header offset automatically under `l-ui-body--flush-top`. A token-driven scrim over the media keeps text legible and fades the hero into the page background below.
+
 ## Surfaces
 
 Always combine the `l-ui-surface` base class with any modifiers (e.g. `l-ui-surface l-ui-surface--highlighted`):

@@ -505,6 +505,133 @@
   padding-inline: max(0px, calc((100% - var(--l-ui-contained-width)) / 2 + var(--l-ui-gutter)));
 }
 
+/* Hero */
+
+/* Full-bleed marketing hero. Pair the section with .l-ui-bleed, and (for a top-of-page hero)
+   the body with .l-ui-body--glass-header + .l-ui-body--flush-top so it sits flush to the
+   viewport top and the optional media shows through the glass header. */
+.l-ui-hero {
+  @apply relative isolate overflow-hidden
+         bg-background;
+}
+
+/* Optional decorative background media; sits behind the content and scrims. Provide a
+   --light and --dark variant and the active theme's is shown. */
+.l-ui-hero__media {
+  @apply absolute inset-0 z-[-3]
+         block w-full h-full
+         pointer-events-none;
+}
+
+.l-ui-hero__media-img {
+  @apply w-full h-full
+         object-cover object-right;
+}
+
+.l-ui-hero__media--dark {
+  @apply hidden;
+}
+
+.dark .l-ui-hero__media--light {
+  @apply hidden;
+}
+
+.dark .l-ui-hero__media--dark {
+  @apply block;
+}
+
+/* Left-to-right scrim keeps text legible over media; fades out so the media stays visible
+   on the right. Token-driven, so it adapts to the active theme. */
+.l-ui-hero::before {
+  content: "";
+  @apply absolute inset-0 z-[-2]
+         pointer-events-none;
+  background: linear-gradient(
+    100deg,
+    oklch(from var(--background) l c h / 0.85) 0%,
+    oklch(from var(--background) l c h / 0.6) 45%,
+    oklch(from var(--background) l c h / 0.15) 80%,
+    oklch(from var(--background) l c h / 0) 100%
+  );
+}
+
+/* Bottom fade blends the hero into the page background below it. */
+.l-ui-hero::after {
+  content: "";
+  @apply absolute inset-0 z-[-1]
+         pointer-events-none;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    oklch(from var(--background) l c h / 0.15) 40%,
+    oklch(from var(--background) l c h / 0.5) 75%,
+    var(--background) 100%
+  );
+}
+
+/* Content column, mirroring the contained page width and gutter. */
+.l-ui-hero__inner {
+  @apply w-full max-w-[var(--l-ui-contained-width)]
+         mx-auto
+         px-[var(--l-ui-gutter)] py-[clamp(2rem,4vw,3.5rem)]
+         text-foreground;
+}
+
+/* When the hero sits flush at the viewport top, push the content clear of the fixed header. */
+.l-ui-body--flush-top .l-ui-hero__inner {
+  @apply pt-[calc(var(--header-height)+clamp(2rem,4vw,3.5rem))];
+}
+
+.l-ui-hero__title {
+  @apply max-w-2xl
+         my-5
+         font-bold;
+  font-size: clamp(1.9rem, 6vw, 3.5rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+/* Gradient-clipped accent for emphasising part of the title. */
+.l-ui-hero__title-accent {
+  @apply inline-block
+         pb-[0.15em];
+  background: linear-gradient(
+    95deg,
+    oklch(0.55 0.14 195) 0%,
+    oklch(0.6 0.16 60) 50%,
+    oklch(0.55 0.2 25) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.dark .l-ui-hero__title-accent {
+  background: linear-gradient(
+    95deg,
+    oklch(0.82 0.11 195) 0%,
+    oklch(0.78 0.14 60) 50%,
+    oklch(0.68 0.18 25) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.l-ui-hero__subtitle {
+  @apply max-w-2xl
+         text-foreground-muted;
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  line-height: 1.55;
+}
+
+.l-ui-hero__actions {
+  @apply flex flex-wrap
+         max-w-2xl
+         gap-4
+         mt-7;
+}
+
 /* Header */
 
 /* The container owns the gutter (mirroring .l-ui-page), so .l-ui-header fills the gutter-inset

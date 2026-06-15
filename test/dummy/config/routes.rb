@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get "badges", to: "pages#badges"
   get "links", to: "pages#links"
   get "surfaces", to: "pages#surfaces"
+  get "hero", to: "pages#hero"
   get "tables", to: "pages#tables"
   get "tables_helper", to: "pages#tables_helper"
   get "pagination", to: "pages#pagination"
