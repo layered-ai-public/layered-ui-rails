@@ -192,7 +192,10 @@ Key components:
 |---|---|
 | Page layout | `.l-ui-page`, `--with-navigation`, `__vertically-centered`, `__narrow` (narrow ~384px column, md:max-w-sm), `__contained` (wide column capped at `--l-ui-contained-width`) |
 | Buttons | `.l-ui-button`, `--primary`, `--outline`, `--outline-danger`, `--full`, `--icon` |
+| Hero | `.l-ui-hero` (pair with `.l-ui-bleed`), `__inner`, `__title`, `__title-accent`, `__subtitle`, `__actions`, `__media`, `__media-img` |
 | Surfaces | `.l-ui-surface`, `--highlighted`, `--sm`, `--collapsible`, `--collapsible-highlighted` |
+| Cards | `.l-ui-card`, `--gradient`, `__eyebrow`, `__title`, `__icon`, `__body` |
+| Tints | `.l-ui-tint-1` … `.l-ui-tint-5` (shared decorative palette; sets the `--l-ui-tint-*` role variables) |
 | Forms | `.l-ui-form`, `.l-ui-form__group`, `.l-ui-form__field`, `.l-ui-label`, `.l-ui-select` |
 | Tables | `.l-ui-table`, `.l-ui-table__header`, `.l-ui-table__cell`, `--primary`, `--action`, `.l-ui-table__action`, `--danger` |
 | Badges | `.l-ui-badge`, `--rounded`, `--default`, `--success`, `--warning`, `--danger` |

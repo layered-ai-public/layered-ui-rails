@@ -79,6 +79,28 @@
     --warning-text: oklch(0.3625 0.0732 93.12);
     --error-bg: oklch(0.748 0.1306 20.64);
     --error-text: oklch(0.2248 0.0874 28.11);
+    /* Decorative tint palette (categorical colours, independent of --accent; consumed via the
+       .l-ui-tint-* role variables). Slot numbers are palette positions, not fixed hues. */
+    --l-ui-tint-1-border: oklch(0.6 0.1 195);
+    --l-ui-tint-1-foreground: oklch(0.45 0.1 195);
+    --l-ui-tint-1-from: oklch(0.95 0.04 195);
+    --l-ui-tint-1-to: oklch(0.88 0.07 195);
+    --l-ui-tint-2-border: oklch(0.55 0.14 145);
+    --l-ui-tint-2-foreground: oklch(0.45 0.14 145);
+    --l-ui-tint-2-from: oklch(0.95 0.05 145);
+    --l-ui-tint-2-to: oklch(0.88 0.09 145);
+    --l-ui-tint-3-border: oklch(0.65 0.14 65);
+    --l-ui-tint-3-foreground: oklch(0.5 0.14 60);
+    --l-ui-tint-3-from: oklch(0.95 0.05 65);
+    --l-ui-tint-3-to: oklch(0.88 0.09 65);
+    --l-ui-tint-4-border: oklch(0.6 0.16 25);
+    --l-ui-tint-4-foreground: oklch(0.5 0.18 25);
+    --l-ui-tint-4-from: oklch(0.95 0.05 25);
+    --l-ui-tint-4-to: oklch(0.88 0.09 25);
+    --l-ui-tint-5-border: oklch(0.6 0.15 290);
+    --l-ui-tint-5-foreground: oklch(0.45 0.17 290);
+    --l-ui-tint-5-from: oklch(0.95 0.05 290);
+    --l-ui-tint-5-to: oklch(0.88 0.09 290);
     /* Default hero background; override here, per-hero inline, or set to `none`. */
     --l-ui-hero-image: url('layered_ui/hero_background_light.webp');
     --header-height: 63px;
@@ -113,6 +135,27 @@
     --warning-text: oklch(0.9336 0.1 95.79);
     --error-bg: oklch(0.2248 0.0874 28.11);
     --error-text: oklch(0.748 0.1306 20.64);
+    /* Decorative tint palette (dark) */
+    --l-ui-tint-1-border: oklch(0.5 0.1 195);
+    --l-ui-tint-1-foreground: oklch(0.78 0.11 195);
+    --l-ui-tint-1-from: oklch(0.28 0.05 195);
+    --l-ui-tint-1-to: oklch(0.22 0.06 195);
+    --l-ui-tint-2-border: oklch(0.5 0.13 145);
+    --l-ui-tint-2-foreground: oklch(0.78 0.13 145);
+    --l-ui-tint-2-from: oklch(0.28 0.06 145);
+    --l-ui-tint-2-to: oklch(0.22 0.07 145);
+    --l-ui-tint-3-border: oklch(0.55 0.13 60);
+    --l-ui-tint-3-foreground: oklch(0.78 0.14 60);
+    --l-ui-tint-3-from: oklch(0.28 0.06 60);
+    --l-ui-tint-3-to: oklch(0.22 0.07 60);
+    --l-ui-tint-4-border: oklch(0.5 0.16 25);
+    --l-ui-tint-4-foreground: oklch(0.74 0.17 25);
+    --l-ui-tint-4-from: oklch(0.28 0.07 25);
+    --l-ui-tint-4-to: oklch(0.22 0.08 25);
+    --l-ui-tint-5-border: oklch(0.55 0.15 290);
+    --l-ui-tint-5-foreground: oklch(0.78 0.15 290);
+    --l-ui-tint-5-from: oklch(0.28 0.06 290);
+    --l-ui-tint-5-to: oklch(0.22 0.07 290);
     --l-ui-hero-image: url('layered_ui/hero_background_dark.webp');
   }
 
@@ -648,6 +691,106 @@
          max-w-2xl
          gap-4
          mt-7;
+}
+
+/* Tint palette */
+
+/* Decorative, control-agnostic colour slots. Each .l-ui-tint-N class selects one palette entry
+   (defined in @layer base, light + dark) and exposes it through four "current tint" role variables
+   that any control reads: --l-ui-tint-border, --l-ui-tint-foreground, --l-ui-tint-from,
+   --l-ui-tint-to. These are decorative and independent of the Tier-1 brand --accent; to tint a
+   control with the brand accent instead, point these variables at var(--accent) inline. Slot numbers
+   are palette positions, not fixed hues, so re-skinning a slot (via the --l-ui-tint-N-* tokens in
+   the overrides file) never makes a class name misleading. */
+.l-ui-tint-1 {
+  --l-ui-tint-border: var(--l-ui-tint-1-border);
+  --l-ui-tint-foreground: var(--l-ui-tint-1-foreground);
+  --l-ui-tint-from: var(--l-ui-tint-1-from);
+  --l-ui-tint-to: var(--l-ui-tint-1-to);
+}
+
+.l-ui-tint-2 {
+  --l-ui-tint-border: var(--l-ui-tint-2-border);
+  --l-ui-tint-foreground: var(--l-ui-tint-2-foreground);
+  --l-ui-tint-from: var(--l-ui-tint-2-from);
+  --l-ui-tint-to: var(--l-ui-tint-2-to);
+}
+
+.l-ui-tint-3 {
+  --l-ui-tint-border: var(--l-ui-tint-3-border);
+  --l-ui-tint-foreground: var(--l-ui-tint-3-foreground);
+  --l-ui-tint-from: var(--l-ui-tint-3-from);
+  --l-ui-tint-to: var(--l-ui-tint-3-to);
+}
+
+.l-ui-tint-4 {
+  --l-ui-tint-border: var(--l-ui-tint-4-border);
+  --l-ui-tint-foreground: var(--l-ui-tint-4-foreground);
+  --l-ui-tint-from: var(--l-ui-tint-4-from);
+  --l-ui-tint-to: var(--l-ui-tint-4-to);
+}
+
+.l-ui-tint-5 {
+  --l-ui-tint-border: var(--l-ui-tint-5-border);
+  --l-ui-tint-foreground: var(--l-ui-tint-5-foreground);
+  --l-ui-tint-from: var(--l-ui-tint-5-from);
+  --l-ui-tint-to: var(--l-ui-tint-5-to);
+}
+
+/* Card */
+
+/* A bordered or gradient-filled content card. The base card is bordered; add --gradient for the
+   tint fill. Colour comes from a separate, control-agnostic tint slot (l-ui-tint-1..5), so style and
+   colour compose independently:
+
+     <div class="l-ui-card l-ui-tint-1">                      bordered, tint 1
+     <div class="l-ui-card l-ui-card--gradient l-ui-tint-1">  gradient, tint 1
+
+   The card reads the shared --l-ui-tint-* role variables, falling back to the neutral --border and
+   --foreground tokens when no tint slot is present. Set the role variables (or point them at
+   var(--accent)) inline for a one-off colour. */
+.l-ui-card {
+  @apply p-4
+         rounded-sm;
+  background-color: var(--surface);
+  border: 1px solid var(--l-ui-tint-border, var(--border));
+}
+
+/* Tint fill; from/to come from the active tint slot (fall back to the plain surface with no slot). */
+.l-ui-card--gradient {
+  background: linear-gradient(
+    135deg,
+    var(--l-ui-tint-from, var(--surface)) 0%,
+    var(--l-ui-tint-to, var(--surface)) 100%
+  );
+}
+
+.l-ui-card__eyebrow {
+  @apply mt-0 mb-1.5
+         text-xs font-semibold uppercase tracking-[0.12em] text-foreground-muted;
+}
+
+.l-ui-card__title {
+  @apply inline-flex items-center gap-2
+         mt-0 mb-1.5
+         text-lg font-semibold tracking-[-0.01em];
+  color: var(--l-ui-tint-foreground, var(--foreground));
+}
+
+/* Painted from the tint foreground colour via a mask (matching the primary-button icon), so it
+   adapts per theme without an invert. The icon shape comes from --l-ui-icon-src, set at the call
+   site. */
+.l-ui-card__icon {
+  @apply inline-block shrink-0
+         w-5 h-5;
+  background-color: var(--l-ui-tint-foreground, var(--foreground));
+  -webkit-mask: var(--l-ui-icon-src) no-repeat center / contain;
+          mask: var(--l-ui-icon-src) no-repeat center / contain;
+}
+
+.l-ui-card__body {
+  @apply mt-0
+         text-sm leading-relaxed text-foreground-muted;
 }
 
 /* Logo block */

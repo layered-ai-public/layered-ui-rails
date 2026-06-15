@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get "links", to: "pages#links"
   get "surfaces", to: "pages#surfaces"
   get "hero", to: "pages#hero"
+  get "cards", to: "pages#cards"
   get "logo_block", to: "pages#logo_block"
   get "tables", to: "pages#tables"
   get "tables_helper", to: "pages#tables_helper"

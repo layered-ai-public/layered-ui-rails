@@ -1,0 +1,335 @@
+<%= l_ui_title_bar(
+  title: "Cards",
+  breadcrumbs: [
+    ["Home", root_path]
+  ]
+) %>
+
+<p class="mt-4">
+  A content card in two styles that share one colour system. The base <code>l-ui-card</code> is
+  bordered; add <code>l-ui-card--gradient</code> to paint a soft tint fill behind the same border.
+  Colour comes from a separate, reusable <strong>tint</strong> slot, so the style and colour axes
+  compose independently. Toggle the theme to see both adapt.
+</p>
+
+<p class="mt-2">
+  The tint slots (<code>l-ui-tint-1</code> to <code>l-ui-tint-5</code>) are a decorative palette
+  shared across components, <strong>independent of the brand <code>--accent</code></strong> (which
+  drives interactive things like primary buttons and active tabs). The slot numbers are
+  <strong>palette positions, not fixed hues</strong> - the gem ships sensible defaults (teal, green,
+  amber, rose, purple) and you re-skin any slot once in your overrides file without the class name
+  ever going stale. A card with no tint slot falls back to the neutral border and foreground colours.
+</p>
+
+<h2 class="mt-8 l-ui-heading--section">Bordered cards</h2>
+
+<p class="mt-2">
+  The default style: a tint-coloured border and title over the plain surface. Pair the title with
+  an optional <code>l-ui-card__icon</code> (painted in the tint colour) and a
+  <code>l-ui-card__body</code>.
+</p>
+
+<div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+  <div class="l-ui-card l-ui-tint-1">
+    <h3 class="l-ui-card__title">
+      <span class="l-ui-card__icon" style="--l-ui-icon-src: url('<%= asset_path "icon_agent.svg" %>')" aria-hidden="true"></span>
+      <span>Start</span>
+    </h3>
+    <p class="l-ui-card__body">Begin from a template or bring your existing codebase.</p>
+  </div>
+
+  <div class="l-ui-card l-ui-tint-2">
+    <h3 class="l-ui-card__title">
+      <span class="l-ui-card__icon" style="--l-ui-icon-src: url('<%= asset_path "icon_device.svg" %>')" aria-hidden="true"></span>
+      <span>Build</span>
+    </h3>
+    <p class="l-ui-card__body">Complete features with AI assistance and best practice as standard.</p>
+  </div>
+
+  <div class="l-ui-card l-ui-tint-3">
+    <h3 class="l-ui-card__title">
+      <span class="l-ui-card__icon" style="--l-ui-icon-src: url('<%= asset_path "icon_paint.svg" %>')" aria-hidden="true"></span>
+      <span>Deploy</span>
+    </h3>
+    <p class="l-ui-card__body">Review and ship to your own servers or cloud infrastructure.</p>
+  </div>
+
+  <div class="l-ui-card l-ui-tint-4">
+    <h3 class="l-ui-card__title">
+      <span class="l-ui-card__icon" style="--l-ui-icon-src: url('<%= asset_path "icon_lighthouse.svg" %>')" aria-hidden="true"></span>
+      <span>Run</span>
+    </h3>
+    <p class="l-ui-card__body">Run smoothly with autonomous monitoring, alerts, and updates.</p>
+  </div>
+</div>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-card-bordered-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-card-bordered-heading">Bordered cards</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;div class="l-ui-card l-ui-tint-1"&gt;
+  &lt;h3 class="l-ui-card__title"&gt;
+    &lt;span class="l-ui-card__icon" style="--l-ui-icon-src: url('icon.svg')" aria-hidden="true"&gt;&lt;/span&gt;
+    &lt;span&gt;Start&lt;/span&gt;
+  &lt;/h3&gt;
+  &lt;p class="l-ui-card__body"&gt;Begin from a template or bring your existing codebase.&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="mt-8 l-ui-heading--section">Gradient cards</h2>
+
+<p class="mt-2">
+  Add <code>l-ui-card--gradient</code> to paint a soft 135° tint fill behind the same border and
+  title. The fill colours come from the same tint slot, so only the extra modifier changes.
+</p>
+
+<div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+  <div class="l-ui-card l-ui-card--gradient l-ui-tint-1">
+    <h3 class="l-ui-card__title">
+      <span class="l-ui-card__icon" style="--l-ui-icon-src: url('<%= asset_path "icon_agent.svg" %>')" aria-hidden="true"></span>
+      <span>Start</span>
+    </h3>
+    <p class="l-ui-card__body">Begin from a template or bring your existing codebase.</p>
+  </div>
+
+  <div class="l-ui-card l-ui-card--gradient l-ui-tint-2">
+    <h3 class="l-ui-card__title">
+      <span class="l-ui-card__icon" style="--l-ui-icon-src: url('<%= asset_path "icon_device.svg" %>')" aria-hidden="true"></span>
+      <span>Build</span>
+    </h3>
+    <p class="l-ui-card__body">Complete features with AI assistance and best practice as standard.</p>
+  </div>
+
+  <div class="l-ui-card l-ui-card--gradient l-ui-tint-3">
+    <h3 class="l-ui-card__title">
+      <span class="l-ui-card__icon" style="--l-ui-icon-src: url('<%= asset_path "icon_paint.svg" %>')" aria-hidden="true"></span>
+      <span>Deploy</span>
+    </h3>
+    <p class="l-ui-card__body">Review and ship to your own servers or cloud infrastructure.</p>
+  </div>
+
+  <div class="l-ui-card l-ui-card--gradient l-ui-tint-4">
+    <h3 class="l-ui-card__title">
+      <span class="l-ui-card__icon" style="--l-ui-icon-src: url('<%= asset_path "icon_lighthouse.svg" %>')" aria-hidden="true"></span>
+      <span>Run</span>
+    </h3>
+    <p class="l-ui-card__body">Run smoothly with autonomous monitoring, alerts, and updates.</p>
+  </div>
+</div>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-card-gradient-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-card-gradient-heading">Gradient cards</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;div class="l-ui-card l-ui-card--gradient l-ui-tint-1"&gt;
+  &lt;h3 class="l-ui-card__title"&gt;Start&lt;/h3&gt;
+  &lt;p class="l-ui-card__body"&gt;Begin from a template or bring your existing codebase.&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="mt-8 l-ui-heading--section">Eyebrow</h2>
+
+<p class="mt-2">
+  Add a <code>l-ui-card__eyebrow</code> above the title for a small uppercase label - useful for
+  pricing tiers or categories.
+</p>
+
+<div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+  <div class="l-ui-card l-ui-tint-1">
+    <p class="l-ui-card__eyebrow">Free</p>
+    <h3 class="l-ui-card__title">Self-hosted</h3>
+    <p class="l-ui-card__body">Run it yourself on your own infrastructure.</p>
+  </div>
+
+  <div class="l-ui-card l-ui-tint-3">
+    <p class="l-ui-card__eyebrow">SaaS</p>
+    <h3 class="l-ui-card__title">Hosted</h3>
+    <p class="l-ui-card__body">We host and manage it for you.</p>
+  </div>
+
+  <div class="l-ui-card l-ui-tint-5">
+    <p class="l-ui-card__eyebrow">Managed</p>
+    <h3 class="l-ui-card__title">Your cloud</h3>
+    <p class="l-ui-card__body">Managed by us, running in your cloud account.</p>
+  </div>
+
+  <div class="l-ui-card l-ui-tint-4">
+    <p class="l-ui-card__eyebrow">Enterprise</p>
+    <h3 class="l-ui-card__title">Bespoke</h3>
+    <p class="l-ui-card__body">Tailored deployment, support, and SLAs.</p>
+  </div>
+</div>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-card-eyebrow-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-card-eyebrow-heading">Card with eyebrow</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;div class="l-ui-card l-ui-tint-1"&gt;
+  &lt;p class="l-ui-card__eyebrow"&gt;Free&lt;/p&gt;
+  &lt;h3 class="l-ui-card__title"&gt;Self-hosted&lt;/h3&gt;
+  &lt;p class="l-ui-card__body"&gt;Run it yourself on your own infrastructure.&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="mt-8 l-ui-heading--section">One-off custom colour</h2>
+
+<p class="mt-2">
+  For a colour outside the shipped palette, set the four <code>--l-ui-tint-*</code> role variables
+  yourself instead of adding a tint slot. The shipped slots carry separate light and dark values, so
+  a single set of values is <strong>theme-fixed</strong>: for full dark-mode support supply both, with
+  a <code>.dark</code> rule (or <code>prefers-color-scheme</code>), as the magenta card below does.
+  To re-skin a slot everywhere instead, override its <code>--l-ui-tint-N-*</code> tokens in your
+  overrides file. You can also reach the brand accent on demand by pointing the role variables at
+  <code>var(--accent)</code> - it already adapts to the theme, so no extra rule is needed.
+</p>
+
+<style>
+  .demo-tint-magenta {
+    --l-ui-tint-border: oklch(0.6 0.13 320);
+    --l-ui-tint-foreground: oklch(0.45 0.16 320);
+    --l-ui-tint-from: oklch(0.95 0.05 320);
+    --l-ui-tint-to: oklch(0.88 0.09 320);
+  }
+
+  .dark .demo-tint-magenta {
+    --l-ui-tint-border: oklch(0.55 0.15 320);
+    --l-ui-tint-foreground: oklch(0.78 0.15 320);
+    --l-ui-tint-from: oklch(0.28 0.06 320);
+    --l-ui-tint-to: oklch(0.22 0.07 320);
+  }
+</style>
+
+<div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+  <div class="l-ui-card l-ui-card--gradient demo-tint-magenta">
+    <h3 class="l-ui-card__title">Custom magenta</h3>
+    <p class="l-ui-card__body">Light and dark values keep the card readable in both themes.</p>
+  </div>
+
+  <div class="l-ui-card" style="--l-ui-tint-border: var(--accent); --l-ui-tint-foreground: var(--accent);">
+    <h3 class="l-ui-card__title">Brand accent</h3>
+    <p class="l-ui-card__body">Points the tint role variables at <code>var(--accent)</code> to use the brand colour.</p>
+  </div>
+</div>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-card-custom-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-card-custom-heading">One-off custom colour</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;%# Define light + dark values so the card adapts when the theme is toggled %&gt;
+&lt;style&gt;
+  .tint-magenta {
+    --l-ui-tint-border:     oklch(0.6 0.13 320);
+    --l-ui-tint-foreground: oklch(0.45 0.16 320);
+    --l-ui-tint-from:       oklch(0.95 0.05 320);
+    --l-ui-tint-to:         oklch(0.88 0.09 320);
+  }
+
+  .dark .tint-magenta {
+    --l-ui-tint-border:     oklch(0.55 0.15 320);
+    --l-ui-tint-foreground: oklch(0.78 0.15 320);
+    --l-ui-tint-from:       oklch(0.28 0.06 320);
+    --l-ui-tint-to:         oklch(0.22 0.07 320);
+  }
+&lt;/style&gt;
+
+&lt;div class="l-ui-card l-ui-card--gradient tint-magenta"&gt;
+  &lt;h3 class="l-ui-card__title"&gt;Custom magenta&lt;/h3&gt;
+  &lt;p class="l-ui-card__body"&gt;Your content here.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;%# A one-off light-only card can set the variables inline instead - just note %&gt;
+&lt;%# that inline values are theme-fixed and will not adapt in dark mode. %&gt;
+
+&lt;%# Or reuse the brand accent - it already adapts to the theme, no rule needed %&gt;
+&lt;div class="l-ui-card"
+     style="--l-ui-tint-border: var(--accent);
+            --l-ui-tint-foreground: var(--accent);"&gt;
+  &lt;h3 class="l-ui-card__title"&gt;Brand accent&lt;/h3&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="mt-8 l-ui-heading--section">CSS classes</h2>
+
+<div class="l-ui-table-container mt-4">
+  <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Card CSS classes</caption>
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell" scope="col">Class</th>
+        <th class="l-ui-table__header-cell" scope="col">Description</th>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-card</code></th>
+        <td class="l-ui-table__cell">Base card; bordered, on the surface background</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-card--gradient</code></th>
+        <td class="l-ui-table__cell">Adds the soft tint fill behind the border</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-tint-1</code> … <code>l-ui-tint-5</code></th>
+        <td class="l-ui-table__cell">Shared tint slot (defaults: teal, green, amber, rose, purple); usable on any control, not just cards</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-card__eyebrow</code></th>
+        <td class="l-ui-table__cell">Small uppercase label above the title</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-card__title</code></th>
+        <td class="l-ui-table__cell">Card heading, coloured by the active tint</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-card__icon</code></th>
+        <td class="l-ui-table__cell">Optional icon in the title, painted in the tint colour (set <code>--l-ui-icon-src</code>)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-card__body</code></th>
+        <td class="l-ui-table__cell">Body copy in the muted foreground colour</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p class="mt-4">
+  Each tint slot exposes four role variables that any control can read -
+  <code>--l-ui-tint-border</code>, <code>--l-ui-tint-foreground</code>, <code>--l-ui-tint-from</code>,
+  and <code>--l-ui-tint-to</code>. The shipped palette is defined by the <code>--l-ui-tint-N-*</code>
+  tokens (light and dark); override those in your overrides file to re-skin a slot everywhere, or set
+  the role variables inline for a single element. The slot numbers are palette positions, so changing
+  a slot's hue never makes a class name misleading. Because <code>l-ui-tint-*</code> only sets these
+  variables, the same class works on any control that reads them - not just cards.
+</p>
