@@ -23,7 +23,7 @@ module Layered
         def overrides_content
           <<~CSS
             /*
-             * layered-ui-rails color overrides
+             * layered-ui-rails color overrides (generated from v#{Layered::Ui::VERSION})
              *
              * Uncomment and edit any variable below to customise the UI.
              * This file is NOT overwritten by the install generator, so your
