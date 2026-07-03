@@ -322,6 +322,51 @@ The button does not need to be inside the helper's wrapper, and no `data-control
 
 Calling `dialog.showModal()` directly is not supported - it bypasses the `l-ui--modal` controller and skips scroll lock, focus restoration, open-count tracking, and the screen-reader announcement.
 
+## Popover
+
+```ruby
+l_ui_popover(id: nil, placement: :bottom, align: :start, container: {}, &block)
+```
+
+- `id` (String, optional) - DOM id for the popover element; defaults to an auto-generated id
+- `placement` (Symbol, optional) - `:top`, `:bottom` (default), `:left`, or `:right`. Flips automatically if it would overflow the viewport
+- `align` (Symbol, optional) - `:start` (default) flushes the popover's leading edge with the trigger's; `:end` flushes its trailing edge instead. For example, `placement: :bottom, align: :end` hangs the popover down and to the left of a trigger at the right end of a row
+- `container` (Hash, optional) - extra HTML attributes for the wrapping `<div>` (e.g. `class:`)
+- `&block` - the block's content is the popover body; call `p.trigger(**options, &block)` inside it to render the trigger button
+
+```erb
+<%= l_ui_popover(placement: :bottom) do |p| %>
+  <% p.trigger(class: "l-ui-button l-ui-button--outline") do %>
+    Options
+  <% end %>
+  <p>Popover content.</p>
+<% end %>
+```
+
+Renders the trigger `<button popovertarget="...">` and the `popover="auto"` element (`class="l-ui-popover"`), and wires the `l-ui--popover` Stimulus controller for placement. Showing, hiding, light-dismiss (outside click), and Escape-to-close are all handled natively by the browser via the `popover` attribute - no Stimulus action is needed to open or close it.
+
+If the trigger contains only an icon (no visible text), pass `aria-label:` to `p.trigger` so the button has an accessible name.
+
+For a list of actions (e.g. a "more" menu on a table row), wrap the items in a `<div class="l-ui-popover__menu">` and give each link/button `l-ui-popover__menu-item` (add `l-ui-popover__menu-item--danger` for destructive actions, and an `<hr class="l-ui-popover__menu-divider">` to separate groups of items):
+
+```erb
+<%= l_ui_table(@users, columns: [...],
+    actions: ->(r) {
+      l_ui_popover(align: :end) do |p|
+        p.trigger(class: "l-ui-button l-ui-button--outline l-ui-button--icon l-ui-button--small", "aria-label" => "Actions for #{r.name}") do
+          image_tag "layered_ui/icon_more.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true }
+        end
+        tag.div(class: "l-ui-popover__menu") do
+          safe_join([
+            link_to("Edit", edit_user_path(r), class: "l-ui-popover__menu-item"),
+            tag.hr(class: "l-ui-popover__menu-divider"),
+            button_to("Delete", user_path(r), method: :delete, class: "l-ui-popover__menu-item l-ui-popover__menu-item--danger")
+          ])
+        end
+      end
+    }) %>
+```
+
 ## Header
 
 ```ruby

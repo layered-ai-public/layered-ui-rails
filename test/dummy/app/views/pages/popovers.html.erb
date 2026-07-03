@@ -1,0 +1,259 @@
+<%= l_ui_title_bar(
+  title: "Popovers",
+  breadcrumbs: [
+    ["Home", root_path]
+  ]
+) %>
+
+<p class="mt-4">Floating panels anchored to a trigger button, built on the native HTML <code>popover</code> attribute. Showing, hiding, light-dismiss (outside click), and Escape-to-close are all handled by the browser; the <code>l-ui--popover</code> Stimulus controller only computes placement, flipping to the opposite side if it would overflow the viewport.</p>
+
+<h2 class="mt-8 l-ui-heading--section">CSS-classes example</h2>
+
+<p class="mt-4">Use the <code>l-ui-popover</code> class directly when you need full control over markup. Pair a trigger's <code>popovertarget</code> attribute with a <code>popover</code>-attribute element.</p>
+
+<div class="mt-4" data-controller="l-ui--popover">
+  <button type="button" class="l-ui-button l-ui-button--outline" popovertarget="popover-classes-example" data-l-ui--popover-target="trigger">Open popover</button>
+  <div id="popover-classes-example" popover="auto" class="l-ui-popover" data-l-ui--popover-target="popover">
+    <p>Body content. Dismiss by pressing <kbd>Esc</kbd> or clicking outside.</p>
+  </div>
+</div>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-popover-classes-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-popover-classes-heading">CSS-classes example</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;div data-controller="l-ui--popover"&gt;
+  &lt;button type="button" class="l-ui-button l-ui-button--outline"
+          popovertarget="my-popover"
+          data-l-ui--popover-target="trigger"&gt;
+    Open popover
+  &lt;/button&gt;
+  &lt;div id="my-popover" popover="auto" class="l-ui-popover"
+       data-l-ui--popover-target="popover"&gt;
+    Body content.
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="mt-8 l-ui-heading--section">Helper</h2>
+
+<p class="mt-4">The <code>l_ui_popover</code> helper renders the trigger, popover element, and Stimulus wiring for you. The block's content is the popover body. Use <code>&lt;%</code> (not <code>&lt;%=</code>) when calling <code>p.trigger</code> - the builder captures its content.</p>
+
+<%= l_ui_popover(container: { class: "mt-4" }) do |p| %>
+  <% p.trigger(class: "l-ui-button l-ui-button--outline") do %>
+    Open popover
+  <% end %>
+  <p>Rendered by <code>l_ui_popover</code>. Same markup, less boilerplate.</p>
+<% end %>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-popover-helper-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-popover-helper-heading">Helper example</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;%= l_ui_popover do |p| %&gt;
+  &lt;% p.trigger(class: "l-ui-button l-ui-button--outline") do %&gt;
+    Open popover
+  &lt;% end %&gt;
+  &lt;p&gt;Body content.&lt;/p&gt;
+&lt;% end %&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="mt-8 l-ui-heading--section">Placement</h2>
+
+<p class="mt-4">Pass <code>placement:</code> as <code>:top</code>, <code>:bottom</code> (default), <code>:left</code>, or <code>:right</code>. The popover flips to the opposite side automatically if it would overflow the viewport.</p>
+
+<div class="mt-4 flex flex-wrap gap-4">
+  <%= l_ui_popover(placement: :top) do |p| %>
+    <% p.trigger(class: "l-ui-button l-ui-button--outline") do %>Top<% end %>
+    <p>Placed above the trigger.</p>
+  <% end %>
+
+  <%= l_ui_popover(placement: :right) do |p| %>
+    <% p.trigger(class: "l-ui-button l-ui-button--outline") do %>Right<% end %>
+    <p>Placed to the right of the trigger.</p>
+  <% end %>
+
+  <%= l_ui_popover(placement: :bottom) do |p| %>
+    <% p.trigger(class: "l-ui-button l-ui-button--outline") do %>Bottom<% end %>
+    <p>Placed below the trigger.</p>
+  <% end %>
+
+  <%= l_ui_popover(placement: :left) do |p| %>
+    <% p.trigger(class: "l-ui-button l-ui-button--outline") do %>Left<% end %>
+    <p>Placed to the left of the trigger.</p>
+  <% end %>
+</div>
+
+<h2 class="mt-8 l-ui-heading--section">Alignment</h2>
+
+<p class="mt-4">Pass <code>align:</code> as <code>:start</code> (default) or <code>:end</code> to choose which edge of the popover flushes with the trigger on the cross axis. <code>align: :end</code> suits a trigger sitting at the end of a row: the popover hangs back over the trigger instead of overflowing past it.</p>
+
+<div class="mt-4 flex justify-end">
+  <%= l_ui_popover(align: :end) do |p| %>
+    <% p.trigger(class: "l-ui-button l-ui-button--outline") do %>End-aligned<% end %>
+    <p>Right edge flush with the trigger's right edge.</p>
+  <% end %>
+</div>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-popover-align-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-popover-align-heading">Alignment</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;%= l_ui_popover(align: :end) do |p| %&gt;
+  &lt;% p.trigger(class: "l-ui-button l-ui-button--outline") do %&gt;
+    End-aligned
+  &lt;% end %&gt;
+  &lt;p&gt;Right edge flush with the trigger's right edge.&lt;/p&gt;
+&lt;% end %&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="mt-8 l-ui-heading--section">Menu content</h2>
+
+<p class="mt-4">For a list of actions (e.g. a "more" menu on a table row), use <code>l-ui-popover__menu</code> to reset the popover's padding to a full-width list, and <code>l-ui-popover__menu-item</code> on each link or button. Add <code>l-ui-popover__menu-item--danger</code> for destructive actions, and an <code>&lt;hr class="l-ui-popover__menu-divider"&gt;</code> to separate groups of items. Give an icon-only trigger an <code>aria-label</code>. Pair with <code>align: :end</code> when the trigger sits at the end of a row.</p>
+
+<%= l_ui_popover(align: :end, container: { class: "mt-4" }) do |p| %>
+  <% p.trigger(class: "l-ui-button l-ui-button--outline l-ui-button--icon l-ui-button--small", "aria-label" => "More actions") do %>
+    <%= image_tag "layered_ui/icon_more.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+  <% end %>
+  <div class="l-ui-popover__menu">
+    <%= link_to "Edit", "#", class: "l-ui-popover__menu-item" %>
+    <%= link_to "Duplicate", "#", class: "l-ui-popover__menu-item" %>
+    <hr class="l-ui-popover__menu-divider">
+    <button type="button" class="l-ui-popover__menu-item l-ui-popover__menu-item--danger">Delete</button>
+  </div>
+<% end %>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-popover-menu-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-popover-menu-heading">Menu content</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;%= l_ui_popover(align: :end) do |p| %&gt;
+  &lt;% p.trigger(class: "l-ui-button l-ui-button--outline l-ui-button--icon l-ui-button--small",
+               "aria-label" =&gt; "More actions") do %&gt;
+    &lt;%= image_tag "layered_ui/icon_more.svg", alt: "",
+          class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %&gt;
+  &lt;% end %&gt;
+  &lt;div class="l-ui-popover__menu"&gt;
+    &lt;%= link_to "Edit", edit_path, class: "l-ui-popover__menu-item" %&gt;
+    &lt;%= link_to "Duplicate", duplicate_path, class: "l-ui-popover__menu-item" %&gt;
+    &lt;hr class="l-ui-popover__menu-divider"&gt;
+    &lt;button type="button" class="l-ui-popover__menu-item l-ui-popover__menu-item--danger"&gt;
+      Delete
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;% end %&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<p class="mt-4">See <%= link_to "Tables", tables_path %> for this pattern wired up as a row action menu.</p>
+
+<h2 class="mt-8 l-ui-heading--section">Helper options</h2>
+
+<div class="l-ui-table-container mt-4">
+  <table class="l-ui-table">
+    <caption class="l-ui-sr-only">l_ui_popover options</caption>
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell" scope="col">Option</th>
+        <th class="l-ui-table__header-cell" scope="col">Description</th>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>id:</code></th>
+        <td class="l-ui-table__cell">DOM id for the popover element; defaults to an auto-generated id</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>placement:</code></th>
+        <td class="l-ui-table__cell"><code>:top</code>, <code>:bottom</code> (default), <code>:left</code>, or <code>:right</code>. Flips automatically if it would overflow the viewport</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>align:</code></th>
+        <td class="l-ui-table__cell"><code>:start</code> (default) or <code>:end</code> - which edge of the popover flushes with the trigger on the cross axis</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>container:</code></th>
+        <td class="l-ui-table__cell">Extra HTML attributes for the wrapping <code>&lt;div&gt;</code> (e.g. <code>class:</code>)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>p.trigger(**opts)</code></th>
+        <td class="l-ui-table__cell">Renders the trigger <code>&lt;button&gt;</code>; <code>opts</code> are merged as HTML attributes</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row">block content</th>
+        <td class="l-ui-table__cell">The block's output (anything outside <code>p.trigger</code>) is rendered inside <code>l-ui-popover</code></td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row">icon-only triggers</th>
+        <td class="l-ui-table__cell">If the trigger contains only an icon (no visible text), pass <code>aria-label:</code> so it has an accessible name</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 class="mt-8 l-ui-heading--section">CSS classes</h2>
+
+<div class="l-ui-table-container mt-4">
+  <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Popover CSS classes</caption>
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell" scope="col">Class</th>
+        <th class="l-ui-table__header-cell" scope="col">Description</th>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-popover</code></th>
+        <td class="l-ui-table__cell">Applied to the <code>popover</code>-attribute element; positioned by the <code>l-ui--popover</code> Stimulus controller</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-popover__menu</code></th>
+        <td class="l-ui-table__cell">Full-width list wrapper for a menu of actions inside a popover</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-popover__menu-item</code></th>
+        <td class="l-ui-table__cell">Full-width action link or button inside <code>l-ui-popover__menu</code></td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-popover__menu-item--danger</code></th>
+        <td class="l-ui-table__cell">Danger styling for a destructive menu item</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-popover__menu-divider</code></th>
+        <td class="l-ui-table__cell">Horizontal rule separating groups of items in <code>l-ui-popover__menu</code> (apply to an <code>&lt;hr&gt;</code>)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

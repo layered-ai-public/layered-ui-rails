@@ -13,6 +13,7 @@ pin "layered_ui/controllers/l_ui/navigation_section_controller", to: "layered_ui
 pin "layered_ui/controllers/l_ui/panel_controller", to: "layered_ui/controllers/l_ui/panel_controller.js"
 pin "layered_ui/controllers/l_ui/panel_resize_controller", to: "layered_ui/controllers/l_ui/panel_resize_controller.js"
 pin "layered_ui/controllers/l_ui/panel_button_controller", to: "layered_ui/controllers/l_ui/panel_button_controller.js"
+pin "layered_ui/controllers/l_ui/popover_controller", to: "layered_ui/controllers/l_ui/popover_controller.js"
 pin "layered_ui/controllers/l_ui/search_form_controller", to: "layered_ui/controllers/l_ui/search_form_controller.js"
 pin "layered_ui/controllers/l_ui/tabs_controller", to: "layered_ui/controllers/l_ui/tabs_controller.js"
 pin "layered_ui/controllers/l_ui/theme_controller", to: "layered_ui/controllers/l_ui/theme_controller.js"

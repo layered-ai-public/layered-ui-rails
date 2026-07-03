@@ -93,6 +93,72 @@
   </dialog>
 </div>
 
+<h2 class="mt-8 l-ui-heading--section">Row actions as a popover menu</h2>
+
+<p class="mt-4">For several actions per row, pair the actions cell with <%= link_to "l_ui_popover", popovers_path %> instead of separate buttons. Use the <code>l-ui-popover__menu</code> and <code>l-ui-popover__menu-item</code> classes for the list, and give the icon-only trigger an <code>aria-label</code>.</p>
+
+<div class="l-ui-table-container mt-4">
+  <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Users with a popover action menu</caption>
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell" scope="col">Name</th>
+        <th class="l-ui-table__header-cell" scope="col">Email</th>
+        <th class="l-ui-table__header-cell l-ui-table__header-cell--action" scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <% @users.first(3).each do |user| %>
+        <tr>
+          <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><%= user.name %></th>
+          <td class="l-ui-table__cell"><%= user.email %></td>
+          <td class="l-ui-table__cell l-ui-table__cell--action">
+            <%= l_ui_popover(align: :end) do |p| %>
+              <% p.trigger(class: "l-ui-button l-ui-button--outline l-ui-button--icon l-ui-button--small", "aria-label" => "Actions for #{user.name}") do %>
+                <%= image_tag "layered_ui/icon_more.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+              <% end %>
+              <div class="l-ui-popover__menu">
+                <%= link_to "Edit", "#", class: "l-ui-popover__menu-item" %>
+                <hr class="l-ui-popover__menu-divider">
+                <button type="button" class="l-ui-popover__menu-item l-ui-popover__menu-item--danger">Delete</button>
+              </div>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-tables-popover-menu-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-tables-popover-menu-heading">Row actions as a popover menu</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;td class="l-ui-table__cell l-ui-table__cell--action"&gt;
+  &lt;%= l_ui_popover(align: :end) do |p| %&gt;
+    &lt;% p.trigger(class: "l-ui-button l-ui-button--outline l-ui-button--icon l-ui-button--small",
+                 "aria-label" =&gt; "Actions for #{user.name}") do %&gt;
+      &lt;%= image_tag "layered_ui/icon_more.svg", alt: "",
+            class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %&gt;
+    &lt;% end %&gt;
+    &lt;div class="l-ui-popover__menu"&gt;
+      &lt;%= link_to "Edit", edit_user_path(user), class: "l-ui-popover__menu-item" %&gt;
+      &lt;hr class="l-ui-popover__menu-divider"&gt;
+      &lt;%= button_to "Delete", user_path(user), method: :delete,
+            class: "l-ui-popover__menu-item l-ui-popover__menu-item--danger" %&gt;
+    &lt;/div&gt;
+  &lt;% end %&gt;
+&lt;/td&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
 <h2 class="mt-8 l-ui-heading--section">CSS classes</h2>
 
 <div class="l-ui-table-container mt-4">
@@ -156,6 +222,10 @@
       <tr>
         <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-table__sort-indicator</code></th>
         <td class="l-ui-table__cell">Sort direction indicator (▲/▼) shown next to the active sort link</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-popover__menu</code></th>
+        <td class="l-ui-table__cell">List of actions inside a popover (see <%= link_to "Popovers", popovers_path %>)</td>
       </tr>
     </tbody>
   </table>
