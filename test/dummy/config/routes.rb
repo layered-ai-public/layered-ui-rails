@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   get "layout_breadcrumbs", to: "pages#layout_breadcrumbs"
   get "tabs", to: "pages#tabs"
   get "modals", to: "pages#modals"
+  get "popovers", to: "pages#popovers"
   get "conversations", to: "pages#conversations"
   get "devise", to: "pages#devise"
   get "forms_helper", to: "pages#forms_helper"

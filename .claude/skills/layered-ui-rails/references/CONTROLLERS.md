@@ -106,6 +106,31 @@ Accessible tabbed interface with keyboard navigation.
 </div>
 ```
 
+## Popover (`l-ui--popover`)
+
+Positions a native `popover`-attribute element relative to its trigger, with auto-flip near viewport edges. Showing, hiding, light-dismiss (outside click), and Escape-to-close are all handled by the browser via the `popover` attribute - this controller only handles placement.
+
+**Targets:** `trigger`, `popover`
+**Values:** `placement` (String, default `"bottom"`; one of `"top"`, `"bottom"`, `"left"`, `"right"`), `align` (String, default `"start"`; `"start"` or `"end"` - which edge of the popover flushes with the trigger on the cross axis)
+
+```html
+<div data-controller="l-ui--popover">
+  <button type="button" popovertarget="my-popover"
+          data-l-ui--popover-target="trigger"
+          class="l-ui-button l-ui-button--outline">
+    Open popover
+  </button>
+  <div id="my-popover" popover="auto" class="l-ui-popover"
+       data-l-ui--popover-target="popover">
+    Content here.
+  </div>
+</div>
+```
+
+Features:
+- Repositions on open, and while open on window resize/scroll
+- Flips to the opposite side if the preferred placement would overflow the viewport
+
 ## Panel (`l-ui--panel`)
 
 Resizable side panel. Full-width overlay on mobile, docked sidebar on desktop.

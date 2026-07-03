@@ -1035,12 +1035,16 @@
          w-full min-h-[40px]
          gap-3 px-3
          text-sm font-medium text-foreground-muted
+         hover:bg-surface
          rounded-sm
          focus-ring
          transition-colors;
 }
 
-.l-ui-navigation__item--active {
+/* Repeats hover so the active background wins over the base item's
+   hover:bg-surface - equal specificity, but this rule comes later. */
+.l-ui-navigation__item--active,
+.l-ui-navigation__item--active:hover {
   @apply text-foreground
          bg-surface-highlighted;
 }
@@ -2240,6 +2244,45 @@ pre.l-ui-surface {
 .l-ui-modal__body {
   @apply flex-auto min-h-0 overflow-y-auto
          px-5 py-4;
+}
+
+/* Popover */
+
+.l-ui-popover {
+  @apply fixed inset-auto
+         max-w-xs
+         m-0 p-3
+         text-sm text-foreground
+         bg-background
+         border border-border rounded-sm;
+}
+
+/* A list of actions inside a popover (e.g. a table row's "more" menu).
+   Negative margin cancels l-ui-popover's own padding; px-1/py-1 restore a
+   small inset for the list itself. */
+.l-ui-popover__menu {
+  @apply flex flex-col
+         -m-3 px-1 py-1;
+}
+
+.l-ui-popover__menu-item {
+  @apply block w-full
+         px-3 py-2
+         text-sm text-left text-foreground
+         hover:bg-surface focus:bg-surface
+         rounded-sm
+         focus-ring
+         transition-colors
+         cursor-pointer;
+}
+
+.l-ui-popover__menu-item--danger {
+  @apply text-danger;
+}
+
+.l-ui-popover__menu-divider {
+  @apply my-1
+         border-t border-border;
 }
 
 /* Safari */

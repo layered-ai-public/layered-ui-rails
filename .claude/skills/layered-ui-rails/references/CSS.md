@@ -287,6 +287,16 @@ Always combine the base block with a modifier, e.g. `<span class="l-ui-badge l-u
 .l-ui-modal__body    Scrollable modal content
 ```
 
+## Popover
+
+```
+.l-ui-popover                    popover-attribute element; positioned by the l-ui--popover Stimulus controller
+.l-ui-popover__menu              Full-width list wrapper for a menu of actions inside a popover
+.l-ui-popover__menu-item         Full-width action link/button inside l-ui-popover__menu
+.l-ui-popover__menu-item--danger Danger styling for a destructive menu item
+.l-ui-popover__menu-divider      Horizontal rule separating groups of items (apply to an <hr>)
+```
+
 ## Breadcrumbs
 
 ```

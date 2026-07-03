@@ -76,6 +76,9 @@ class PagesController < ApplicationController
   def modals
   end
 
+  def popovers
+  end
+
   def conversations
   end
 

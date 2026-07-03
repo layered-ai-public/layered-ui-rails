@@ -181,6 +181,7 @@ Quick reference:
 | `l_ui_theme_toggle` | Default header theme toggle button |
 | `l_ui_authentication` | Default header login/register buttons (Devise) |
 | `l_ui_navigation_toggle` | Default header sidebar toggle button |
+| `l_ui_popover(id: nil, placement: :bottom, align: :start, container: {})` | Floating panel anchored to a trigger, built on the native `popover` attribute |
 
 ## CSS classes
 
@@ -202,6 +203,7 @@ Key components:
 | Notices | `.l-ui-notice` (base), `--success`, `--warning`, `--error` |
 | Tabs | `.l-ui-tabs`, `.l-ui-tabs__list`, `.l-ui-tabs__tab`, `--active` |
 | Modal | `.l-ui-modal`, `.l-ui-modal__header`, `.l-ui-modal__body` |
+| Popover | `.l-ui-popover` |
 
 ## Stimulus controllers
 
@@ -217,6 +219,7 @@ All controllers use the `l-ui--` namespace and are auto-registered via importmap
 | Panel resize | `l-ui--panel-resize` | Panel width drag handle |
 | Modal | `l-ui--modal` | Native `<dialog>` with focus trap |
 | Tabs | `l-ui--tabs` | Accessible tabbed interface |
+| Popover | `l-ui--popover` | Positions a native `popover`-attribute element relative to its trigger, with auto-flip |
 | Search form | `l-ui--search-form` | Multi-scope search with Turbo support and pagination param preservation |
 
 ## Theming

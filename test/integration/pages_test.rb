@@ -10,7 +10,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     buttons icons notices badges links surfaces forms containers
     utilities typography layout layout_metadata layout_navigation layout_panel
     layout_logos layout_icons layout_colors layout_breadcrumbs layout_header tabs
-    conversations devise integrations
+    popovers conversations devise integrations
   ].each do |page|
     test "#{page} page renders" do
       get "/#{page}"
@@ -138,6 +138,12 @@ class PagesTest < ActionDispatch::IntegrationTest
   test "tables page renders" do
     create_test_users
     get "/tables"
+    assert_response :success
+  end
+
+  test "tables_helper page renders" do
+    create_test_users
+    get "/tables_helper"
     assert_response :success
   end
 
