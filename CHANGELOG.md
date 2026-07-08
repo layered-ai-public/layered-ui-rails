@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.20.0] - 2026-07-08
+
+### Added
+
+- Popovers: floating panels anchored to a trigger button, built on the native HTML `popover` attribute. Showing, hiding, light-dismiss (outside click), and Escape-to-close are all handled by the browser; the new `l-ui--popover` Stimulus controller only computes placement, flipping to the opposite side if the preferred side would overflow the viewport. Use the `l_ui_popover` helper (options: `id:`, `placement:` of `:top`/`:bottom`/`:left`/`:right`, `align:` of `:start`/`:end`, `container:`) with `p.trigger` for the button, or wire the `l-ui-popover` class and controller targets by hand for full control over markup.
+- Popover menus: `l-ui-popover__menu`, `l-ui-popover__menu-item`, `l-ui-popover__menu-item--danger`, and `l-ui-popover__menu-divider` style a list of actions inside a popover - e.g. a "more" menu on a table row via `l_ui_table`'s `actions:` proc. Give an icon-only trigger an `aria-label` so it has an accessible name.
+- `icon_more.svg` (vertical ellipsis) added to the bundled icon set, for "more actions" popover triggers.
+
+### Changed
+
+- Navigation items now show a `surface` background on hover, matching the hover treatment of other menu rows. The active item keeps its highlighted background on hover.
+- The overrides generator now stamps the gem version it was generated from into the overrides file's header comment.
+
 ## [0.19.0] - 2026-06-15
 
 ### Added
