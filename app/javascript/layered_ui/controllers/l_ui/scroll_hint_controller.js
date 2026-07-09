@@ -7,8 +7,11 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["scroller"]
 
-  connect() {
+  initialize() {
     this.update = this.update.bind(this)
+  }
+
+  connect() {
     this.scrollerTarget.addEventListener("scroll", this.update, { passive: true })
 
     this.resizeObserver = new ResizeObserver(this.update)
