@@ -1739,6 +1739,20 @@ pre.l-ui-surface {
   @apply pr-0;
 }
 
+/* Floating actions column: pins the action cells to the right-hand edge of
+   the scroll container so row actions stay visible while the table scrolls
+   horizontally. The background is solid except for a short fade on the
+   leading edge (over the cell's leading padding), so content scrolling
+   underneath slides gently out of view, and the padding keeps a gap between
+   the actions and the last data column when scrolled fully to the right. */
+
+.l-ui-table--floating-actions th.l-ui-table__header-cell--action,
+.l-ui-table--floating-actions td.l-ui-table__cell--action {
+  @apply sticky right-0
+         pl-6 pr-2
+         bg-linear-to-r from-background/0 to-background to-[1.5rem];
+}
+
 /* Pagination */
 
 @utility pagination-base {

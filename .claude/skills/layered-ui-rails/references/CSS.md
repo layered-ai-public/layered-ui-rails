@@ -204,6 +204,7 @@ Always combine the `l-ui-surface` base class with any modifiers (e.g. `l-ui-surf
 
 ```
 .l-ui-table                        Table element
+.l-ui-table--floating-actions      Modifier: pins action cells to the right-hand edge of the scroll container during horizontal scrolling (sticky; solid background with a faded leading edge)
 .l-ui-table__header                <thead> row
 .l-ui-table__header-cell           <th> cell
 .l-ui-table__header-cell--action   Right-aligned action header

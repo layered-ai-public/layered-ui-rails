@@ -197,8 +197,8 @@ Returns a `<th>` element with sort link and ARIA sort attributes.
 
 ```ruby
 l_ui_table(records, columns:, caption: nil, actions: nil,
-           actions_label: "Actions", query: nil, url: nil,
-           turbo_frame: nil, row_id: nil)
+           actions_label: "Actions", floating_actions: false,
+           query: nil, url: nil, turbo_frame: nil, row_id: nil)
 ```
 
 - `records` (ActiveRecord::Relation or Array) - the collection to render
@@ -206,6 +206,7 @@ l_ui_table(records, columns:, caption: nil, actions: nil,
 - `caption` (String, optional) - visually hidden table caption for accessibility
 - `actions` (Proc, optional) - receives (record), returns action cell content
 - `actions_label` (String) - header text for the actions column, default "Actions"
+- `floating_actions` (Boolean) - pin the actions column to the right-hand edge of the scroll container while the table scrolls horizontally (adds `l-ui-table--floating-actions`), default false
 - `query` (Ransack::Search, optional) - enables sortable column headers
 - `url` (String, optional) - sort link URL (passed to `l_ui_sort_link`)
 - `turbo_frame` (String, optional) - turbo frame target for sort links
