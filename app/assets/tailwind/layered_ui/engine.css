@@ -1655,7 +1655,16 @@ pre.l-ui-surface {
 /* Tables */
 
 .l-ui-table-container {
-  @apply overflow-x-auto;
+  @apply overflow-x-auto
+         focus-ring;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+/* Scrolls focused cells clear of the pinned actions column (WCAG 2.4.11) */
+
+.l-ui-table-container:has(.l-ui-table--floating-actions) {
+  @apply scroll-pr-20;
 }
 
 .l-ui-table {
@@ -1737,6 +1746,50 @@ pre.l-ui-surface {
 .l-ui-table th:last-child,
 .l-ui-table td:last-child {
   @apply pr-0;
+}
+
+/* The 1.5rem fade-in must match the leading padding so the actions always
+   sit on solid background; z-10 lifts the cells above the scroll-hint fade */
+
+.l-ui-table--floating-actions th.l-ui-table__header-cell--action,
+.l-ui-table--floating-actions td.l-ui-table__cell--action {
+  @apply sticky right-0 z-10
+         pl-6 pr-2
+         bg-linear-to-r from-background/0 to-background to-[1.5rem];
+}
+
+/* Scroll hint */
+
+/* The --left/--right modifiers are toggled by the l-ui--scroll-hint
+   controller from the scroll position of the wrapped scroller */
+
+.l-ui-scroll-hint {
+  @apply relative;
+}
+
+.l-ui-scroll-hint::before,
+.l-ui-scroll-hint::after {
+  @apply absolute inset-y-0
+         w-8
+         opacity-0
+         transition-opacity
+         pointer-events-none;
+  content: "";
+}
+
+.l-ui-scroll-hint::before {
+  @apply left-0
+         bg-linear-to-r from-background to-background/0;
+}
+
+.l-ui-scroll-hint::after {
+  @apply right-0
+         bg-linear-to-l from-background to-background/0;
+}
+
+.l-ui-scroll-hint--left::before,
+.l-ui-scroll-hint--right::after {
+  @apply opacity-100;
 }
 
 /* Pagination */

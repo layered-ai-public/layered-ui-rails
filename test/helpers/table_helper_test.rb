@@ -22,6 +22,12 @@ class TableHelperTest < ActionView::TestCase
     assert_includes result, 'class="l-ui-table__body"'
   end
 
+  test "wraps the container in a scroll hint wired to the controller" do
+    result = build_table([mock_record("Alice")])
+    assert_includes result, '<div class="l-ui-scroll-hint" data-controller="l-ui--scroll-hint">'
+    assert_includes result, 'class="l-ui-table-container" data-l-ui--scroll-hint-target="scroller"'
+  end
+
   test "renders header cells with scope col" do
     result = build_table([mock_record("Alice")])
     assert_includes result, '<th class="l-ui-table__header-cell" scope="col">Name</th>'
@@ -158,6 +164,28 @@ class TableHelperTest < ActionView::TestCase
     result = build_table([mock_record("Alice")])
     assert_not_includes result, "Actions"
     assert_not_includes result, "l-ui-table__cell--action"
+  end
+
+  test "floating_actions adds the floating modifier class" do
+    result = l_ui_table([mock_record("Alice")],
+      columns: [{ attribute: :name, render: ->(r) { r.name } }],
+      actions: ->(r) { "Edit" },
+      floating_actions: true
+    )
+    assert_includes result, 'class="l-ui-table l-ui-table--floating-actions"'
+  end
+
+  test "floating_actions is ignored without an actions proc" do
+    result = l_ui_table([mock_record("Alice")],
+      columns: [{ attribute: :name, render: ->(r) { r.name } }],
+      floating_actions: true
+    )
+    assert_not_includes result, "l-ui-table--floating-actions"
+  end
+
+  test "actions column is not floating by default" do
+    result = build_table([mock_record("Alice")], actions: ->(r) { "Edit" })
+    assert_not_includes result, "l-ui-table--floating-actions"
   end
 
   test "calls actions proc with each record" do

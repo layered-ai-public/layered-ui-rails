@@ -202,3 +202,20 @@ When multiple search forms exist on one page (each with a different `scope` valu
   &lt;%= l_ui_pagy(@users_pagy) %&gt;
 &lt;% end %&gt;
 ```
+
+## Scroll hint (`l-ui--scroll-hint`)
+
+Fades the clipped edges of a horizontal scroller while more content is available in that direction, so it is obvious the region can be scrolled.
+
+**Targets:** `scroller` (the scrollable element)
+**Behaviour:** toggles `l-ui-scroll-hint--left`/`l-ui-scroll-hint--right` on the wrapper from the scroll position; updates on scroll and when the scroller or its content resizes. While the scroller overflows it is given `tabindex="0"` so keyboard users can scroll it (WCAG 2.1.1); the attribute is removed when it fits.
+
+`l_ui_table` wires this up automatically. For hand-written tables (or any other horizontal scroller), wrap the scrolling element:
+
+```html
+<div class="l-ui-scroll-hint" data-controller="l-ui--scroll-hint">
+  <div class="l-ui-table-container" data-l-ui--scroll-hint-target="scroller">
+    <table class="l-ui-table">...</table>
+  </div>
+</div>
+```

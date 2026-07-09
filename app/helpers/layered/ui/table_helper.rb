@@ -31,6 +31,14 @@ module Layered
       #   sortable:  (Boolean) Show sort link when query: is provided. Defaults to true.
       #   render:    (Proc)    Required. Receives (record), returns cell content.
       #
+      # Pass +floating_actions: true+ to pin the actions column to the
+      # right-hand edge of the scroll container, so row actions stay visible
+      # while the table scrolls horizontally.
+      #
+      # The table is wrapped in an +l-ui-scroll-hint+ element wired to the
+      # +l-ui--scroll-hint+ controller, which fades the clipped edge while
+      # more columns are available in that direction.
+      #
       # Pass +query:+ (a Ransack search object) and +turbo_frame:+ to enable
       # sortable column headers via +l_ui_sort_link+.
       #
@@ -38,7 +46,7 @@ module Layered
       # +to_key+ (i.e. ActiveRecord), so individual rows can be targeted by
       # Turbo Streams. Pass +row_id:+ as a proc to override (return +nil+ to
       # omit the id).
-      def l_ui_table(records, columns:, caption: nil, actions: nil, actions_label: "Actions", query: nil, url: nil, turbo_frame: nil, row_id: nil)
+      def l_ui_table(records, columns:, caption: nil, actions: nil, actions_label: "Actions", floating_actions: false, query: nil, url: nil, turbo_frame: nil, row_id: nil)
         columns = normalise_table_columns(columns)
         col_count = columns.size + (actions ? 1 : 0)
 
@@ -75,8 +83,11 @@ module Layered
         end
 
         caption_tag = caption ? tag.caption(caption, class: "l-ui-sr-only") : nil
-        table = tag.table(class: "l-ui-table") { safe_join([caption_tag, thead, tbody].compact) }
-        tag.div(table, class: "l-ui-table-container")
+        table_classes = ["l-ui-table"]
+        table_classes << "l-ui-table--floating-actions" if actions && floating_actions
+        table = tag.table(class: table_classes.join(" ")) { safe_join([caption_tag, thead, tbody].compact) }
+        container = tag.div(table, class: "l-ui-table-container", data: { "l-ui--scroll-hint-target" => "scroller" })
+        tag.div(container, class: "l-ui-scroll-hint", data: { controller: "l-ui--scroll-hint" })
       end
 
       private
