@@ -269,6 +269,20 @@ Always combine the base block with one variant modifier (e.g. `class="l-ui-notic
 
 Always combine the base block with a modifier, e.g. `<span class="l-ui-badge l-ui-badge--success">`.
 
+## Tags
+
+Interactive tag - e.g. an email recipient or an active filter. A badge is a static styled span; a tag is a container with separately interactive segments.
+
+```
+.l-ui-tag           Tag container (div); carries colour and shape but no padding - segments supply it
+.l-ui-tag--rounded  Pill shape (matching l-ui-badge--rounded); default is the subtle badge radius
+.l-ui-tag__text     Static label segment (span)
+.l-ui-tag__button   Interactive label segment (button or a); focus ring + pointer
+.l-ui-tag__remove   Trailing remove segment (button or a) holding a ✕ icon (e.g. l-ui-icon--xs); needs an aria-label
+```
+
+A tag takes the same subtle corner radius as a badge by default; add `l-ui-tag--rounded` for a pill. Segments must be direct children in label-then-remove order; when a remove segment follows, the label segment automatically drops its right padding so the remove owns the gap and every part of the tag stays clickable. Prefer the `l_ui_tag` helper (see HELPERS.md), which also wires an optional popover.
+
 ## Tabs
 
 ```

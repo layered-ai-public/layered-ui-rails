@@ -38,6 +38,7 @@ module Layered
           helper Layered::Ui::ModalHelper
           helper Layered::Ui::PopoverHelper
           helper Layered::Ui::RansackHelper
+          helper Layered::Ui::TagHelper
         end
       end
 
