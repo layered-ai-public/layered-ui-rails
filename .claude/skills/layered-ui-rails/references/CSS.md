@@ -218,6 +218,9 @@ Always combine the `l-ui-surface` base class with any modifiers (e.g. `l-ui-surf
 .l-ui-table__action                Action link/button (inside a __cell--action)
 .l-ui-table__action--danger        Danger modifier (combine with l-ui-table__action)
 .l-ui-table-container              Overflow wrapper for responsive tables
+.l-ui-scroll-hint                  Wrapper around a horizontal scroller (e.g. l-ui-table-container); fades the clipped edge while more content is available (paired with the l-ui--scroll-hint controller)
+.l-ui-scroll-hint--left            Fade visible on the left edge (toggled by the controller)
+.l-ui-scroll-hint--right           Fade visible on the right edge (toggled by the controller)
 ```
 
 WCAG 2.2 AA table pattern:

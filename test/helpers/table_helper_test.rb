@@ -22,6 +22,12 @@ class TableHelperTest < ActionView::TestCase
     assert_includes result, 'class="l-ui-table__body"'
   end
 
+  test "wraps the container in a scroll hint wired to the controller" do
+    result = build_table([mock_record("Alice")])
+    assert_includes result, '<div class="l-ui-scroll-hint" data-controller="l-ui--scroll-hint">'
+    assert_includes result, 'class="l-ui-table-container" data-l-ui--scroll-hint-target="scroller"'
+  end
+
   test "renders header cells with scope col" do
     result = build_table([mock_record("Alice")])
     assert_includes result, '<th class="l-ui-table__header-cell" scope="col">Name</th>'

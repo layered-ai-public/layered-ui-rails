@@ -212,6 +212,8 @@ l_ui_table(records, columns:, caption: nil, actions: nil,
 - `turbo_frame` (String, optional) - turbo frame target for sort links
 - `row_id` (Proc, optional) - receives (record), returns the `<tr>` id. Defaults to `dom_id(record)` for records that respond to `to_key` (ActiveRecord). Return `nil` to omit the id.
 
+The rendered table is wrapped in an `l-ui-scroll-hint` element wired to the `l-ui--scroll-hint` controller, which fades the clipped edge when the table overflows horizontally.
+
 Column options:
 - `attribute` (Symbol) - used for label generation and sort links
 - `label` (String, optional) - custom header text; defaults to humanised attribute

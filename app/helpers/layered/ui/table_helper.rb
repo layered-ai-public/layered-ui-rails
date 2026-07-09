@@ -35,6 +35,10 @@ module Layered
       # right-hand edge of the scroll container, so row actions stay visible
       # while the table scrolls horizontally.
       #
+      # The table is wrapped in an +l-ui-scroll-hint+ element wired to the
+      # +l-ui--scroll-hint+ controller, which fades the clipped edge while
+      # more columns are available in that direction.
+      #
       # Pass +query:+ (a Ransack search object) and +turbo_frame:+ to enable
       # sortable column headers via +l_ui_sort_link+.
       #
@@ -82,7 +86,8 @@ module Layered
         table_classes = ["l-ui-table"]
         table_classes << "l-ui-table--floating-actions" if actions && floating_actions
         table = tag.table(class: table_classes.join(" ")) { safe_join([caption_tag, thead, tbody].compact) }
-        tag.div(table, class: "l-ui-table-container")
+        container = tag.div(table, class: "l-ui-table-container", data: { "l-ui--scroll-hint-target" => "scroller" })
+        tag.div(container, class: "l-ui-scroll-hint", data: { controller: "l-ui--scroll-hint" })
       end
 
       private
