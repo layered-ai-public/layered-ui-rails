@@ -66,7 +66,7 @@
 <p class="mt-4">Icons that ship with the gem. Pass the bare name to the <code>icon:</code> argument on <code>l_ui_navigation_item</code> and <code>l_ui_navigation_section</code> (e.g. <code>icon: "globe"</code>), or reference the asset directly as <code>layered_ui/icon_NAME.svg</code>. A name with no matching asset raises <code>Propshaft::MissingAssetError</code>, so only pass a name listed here. To add your own, drop an SVG at <code>app/assets/images/layered_ui/icon_NAME.svg</code> in your app.</p>
 
 <div class="l-ui-spread mt-4">
-  <% %w[home globe mail github discord linkedin x youtube].each do |name| %>
+  <% %w[home globe mail close_circle github discord linkedin x youtube].each do |name| %>
     <div>
       <div class="flex h-8 items-center justify-center">
         <%= image_tag "layered_ui/icon_#{name}.svg", alt: "", class: "l-ui-icon l-ui-icon--md", aria: { hidden: true } %>

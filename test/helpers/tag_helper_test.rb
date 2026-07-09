@@ -68,7 +68,7 @@ class TagHelperTest < ActionView::TestCase
     assert_match(/<button[^>]*class="l-ui-tag__remove"[^>]*type="button"/, result)
     assert_includes result, 'aria-label="Remove Ruby"'
     assert_includes result, "<svg"
-    assert_includes result, 'class="l-ui-icon--xs"'
+    assert_includes result, 'class="l-ui-icon--sm"'
     assert_includes result, 'aria-hidden="true"'
   end
 

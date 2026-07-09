@@ -1905,7 +1905,7 @@ pre.l-ui-surface {
 
 .l-ui-tag__remove {
   @apply flex items-center
-         pl-1 pr-3
+         pl-1.5 pr-2
          rounded
          focus-ring
          cursor-pointer;

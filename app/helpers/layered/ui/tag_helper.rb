@@ -141,13 +141,15 @@ module Layered
         end
       end
 
+      # Filled x-circle, matching the bundled +icon_close_circle.svg+ asset.
+      # Rendered inline (rather than via image_tag) so it inherits the tag's
+      # muted +currentColor+; an <img>-loaded SVG cannot.
       def l_ui_tag_remove_icon
         tag.svg(
-          tag.path("stroke-linecap" => "round", "stroke-linejoin" => "round", "d" => "M6 18L18 6M6 6l12 12"),
-          class: "l-ui-icon--xs",
-          fill: "none",
-          stroke: "currentColor",
-          "stroke-width" => "2",
+          tag.path("fill-rule" => "evenodd", "clip-rule" => "evenodd",
+            "d" => "M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 0 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z"),
+          class: "l-ui-icon--sm",
+          fill: "currentColor",
           "viewBox" => "0 0 24 24",
           "aria-hidden" => "true"
         )
