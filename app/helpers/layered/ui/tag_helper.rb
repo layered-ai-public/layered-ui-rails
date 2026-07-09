@@ -84,12 +84,14 @@ module Layered
         end
 
         def button(**options, &block)
-          @segments << { kind: :button, content: @view.capture(&block), options: options }
+          content = block ? @view.capture(&block) : nil
+          @segments << { kind: :button, content: content, options: options }
           nil
         end
 
         def link(url, **options, &block)
-          @segments << { kind: :link, url: url, content: @view.capture(&block), options: options }
+          content = block ? @view.capture(&block) : nil
+          @segments << { kind: :link, url: url, content: content, options: options }
           nil
         end
 
