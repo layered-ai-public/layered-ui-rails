@@ -274,14 +274,16 @@ Always combine the base block with a modifier, e.g. `<span class="l-ui-badge l-u
 Interactive tag - e.g. an email recipient or an active filter. A badge is a static styled span; a tag is a container with separately interactive segments.
 
 ```
+.l-ui-tag-row       Canonical container for a row of tags plus any trailing actions (e.g. a filter bar); wrapping flex row with gap
 .l-ui-tag           Tag container (div); carries colour and shape but no padding - segments supply it
 .l-ui-tag--rounded  Pill shape (matching l-ui-badge--rounded); default is the subtle badge radius
 .l-ui-tag__text     Static label segment (span)
 .l-ui-tag__button   Interactive label segment (button or a); focus ring + pointer
+.l-ui-tag__label    Inner wrapper (span) around a text/button segment's content; truncates long labels with an ellipsis
 .l-ui-tag__remove   Trailing remove segment (button or a) holding a ✕ icon (e.g. l-ui-icon--xs); needs an aria-label
 ```
 
-A tag takes the same subtle corner radius as a badge by default; add `l-ui-tag--rounded` for a pill. Segments must be direct children in label-then-remove order; when a remove segment follows, the label segment automatically drops its right padding so the remove owns the gap and every part of the tag stays clickable. Prefer the `l_ui_tag` helper (see HELPERS.md), which also wires an optional popover.
+A tag takes the same subtle corner radius as a badge by default; add `l-ui-tag--rounded` for a pill. Segments must be direct children in label-then-remove order; when a remove segment follows, the label segment automatically drops its right padding so the remove owns the gap and every part of the tag stays clickable. A tag never grows past its container; wrap label content in `l-ui-tag__label` so it truncates with an ellipsis instead of overflowing. Prefer the `l_ui_tag` helper (see HELPERS.md), which renders the label wrapper and wires an optional popover.
 
 ## Tabs
 

@@ -111,7 +111,7 @@ Accessible tabbed interface with keyboard navigation.
 Positions a native `popover`-attribute element relative to its trigger, with auto-flip near viewport edges. Showing, hiding, light-dismiss (outside click), and Escape-to-close are all handled by the browser via the `popover` attribute - this controller only handles placement.
 
 **Targets:** `trigger`, `popover`
-**Values:** `placement` (String, default `"bottom"`; one of `"top"`, `"bottom"`, `"left"`, `"right"`), `align` (String, default `"start"`; `"start"` or `"end"` - which edge of the popover flushes with the trigger on the cross axis)
+**Values:** `placement` (String, default `"bottom"`; one of `"top"`, `"bottom"`, `"left"`, `"right"`), `align` (String, default `"start"`; `"start"` or `"end"` - which edge of the popover flushes with the trigger on the cross axis), `open` (Boolean, default `false`; when true the popover opens as soon as the controller connects, shown and positioned in the same task so it never paints unpositioned - e.g. re-opening a filter popover after a form submission re-renders the page)
 
 ```html
 <div data-controller="l-ui--popover">
@@ -130,6 +130,7 @@ Positions a native `popover`-attribute element relative to its trigger, with aut
 Features:
 - Repositions on open, and while open on window resize/scroll
 - Flips to the opposite side if the preferred placement would overflow the viewport
+- `data-l-ui--popover-open-value="true"` opens the popover on connect without a flash of unpositioned content
 
 ## Panel (`l-ui--panel`)
 

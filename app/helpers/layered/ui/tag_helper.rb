@@ -42,7 +42,7 @@ module Layered
       #   t.link(url, **options, &block)            Link segment, styled like a button segment.
       #   t.remove(url = nil, **options, &block)    Trailing remove segment: a link when +url+ is given, otherwise a
       #                                             button. Renders a ✕ icon unless the block supplies custom content.
-      #   t.popover(id: nil, placement: :bottom, align: :start, &block)
+      #   t.popover(id: nil, placement: :bottom, align: :start, open: false, &block)
       #                                             Attaches a popover to the tag; the block is the popover body.
       #                                             Options match +l_ui_popover+.
       def l_ui_tag(rounded: false, container: {}, &block)
@@ -59,6 +59,7 @@ module Layered
           container_data[:"l-ui--popover-target"] = "trigger"
           container_data[:"l-ui--popover-placement-value"] = builder.popover_placement
           container_data[:"l-ui--popover-align-value"] = builder.popover_align
+          container_data[:"l-ui--popover-open-value"] = true if builder.popover_open
           container_attrs[:data] = container_data
         end
 
@@ -70,7 +71,7 @@ module Layered
       end
 
       class TagBuilder
-        attr_reader :segments, :popover_id, :popover_placement, :popover_align, :popover_body
+        attr_reader :segments, :popover_id, :popover_placement, :popover_align, :popover_open, :popover_body
 
         def initialize(view)
           @view = view
@@ -101,10 +102,11 @@ module Layered
           nil
         end
 
-        def popover(id: nil, placement: :bottom, align: :start, &block)
+        def popover(id: nil, placement: :bottom, align: :start, open: false, &block)
           @popover_id = id || "l-ui-tag-popover-#{SecureRandom.hex(4)}"
           @popover_placement = placement
           @popover_align = align
+          @popover_open = open
           @popover_body = @view.capture(&block)
           nil
         end
@@ -122,15 +124,15 @@ module Layered
         case segment[:kind]
         when :text
           options[:class] = class_names("l-ui-tag__text", options[:class])
-          tag.span(segment[:content], **options)
+          tag.span(l_ui_tag_label(segment[:content]), **options)
         when :button
           options[:class] = class_names("l-ui-tag__button", options[:class])
           options[:type] ||= "button"
           options[:popovertarget] ||= builder.popover_id if builder.popover?
-          tag.button(segment[:content], **options)
+          tag.button(l_ui_tag_label(segment[:content]), **options)
         when :link
           options[:class] = class_names("l-ui-tag__button", options[:class])
-          link_to(segment[:content], segment[:url], options)
+          link_to(l_ui_tag_label(segment[:content]), segment[:url], options)
         when :remove
           options[:class] = class_names("l-ui-tag__remove", options[:class])
           content = segment[:content] || l_ui_tag_remove_icon
@@ -141,6 +143,13 @@ module Layered
             tag.button(content, **options)
           end
         end
+      end
+
+      # Wraps a label segment's content so long labels can truncate with an
+      # ellipsis - ellipsis has no effect on text sitting directly inside a
+      # flex container like the segment.
+      def l_ui_tag_label(content)
+        tag.span(content, class: "l-ui-tag__label")
       end
 
       # Filled x-circle, matching the bundled +icon_close_circle.svg+ asset.

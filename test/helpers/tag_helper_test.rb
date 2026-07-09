@@ -27,12 +27,12 @@ class TagHelperTest < ActionView::TestCase
     assert_includes result, '<div class="l-ui-tag l-ui-tag--rounded">'
   end
 
-  test "renders text segment as a span" do
+  test "renders text segment as a span with a label wrapper" do
     result = l_ui_tag do |t|
       t.text "Ruby"
     end
 
-    assert_includes result, '<span class="l-ui-tag__text">Ruby</span>'
+    assert_includes result, '<span class="l-ui-tag__text"><span class="l-ui-tag__label">Ruby</span></span>'
   end
 
   test "text segment accepts a block" do
@@ -40,7 +40,7 @@ class TagHelperTest < ActionView::TestCase
       t.text { concat "Rails" }
     end
 
-    assert_includes result, '<span class="l-ui-tag__text">Rails</span>'
+    assert_includes result, '<span class="l-ui-tag__text"><span class="l-ui-tag__label">Rails</span></span>'
   end
 
   test "renders button segment with type button" do
@@ -48,7 +48,7 @@ class TagHelperTest < ActionView::TestCase
       t.button { concat "Status: Active" }
     end
 
-    assert_includes result, '<button class="l-ui-tag__button" type="button">Status: Active</button>'
+    assert_includes result, '<button class="l-ui-tag__button" type="button"><span class="l-ui-tag__label">Status: Active</span></button>'
   end
 
   test "renders link segment styled as a button segment" do
@@ -56,7 +56,7 @@ class TagHelperTest < ActionView::TestCase
       t.link("/tags/ruby") { concat "Ruby" }
     end
 
-    assert_includes result, '<a class="l-ui-tag__button" href="/tags/ruby">Ruby</a>'
+    assert_includes result, '<a class="l-ui-tag__button" href="/tags/ruby"><span class="l-ui-tag__label">Ruby</span></a>'
   end
 
   test "renders remove segment as a button with the default icon when no url is given" do
@@ -130,6 +130,24 @@ class TagHelperTest < ActionView::TestCase
 
     assert_includes result, 'data-l-ui--popover-placement-value="top"'
     assert_includes result, 'data-l-ui--popover-align-value="end"'
+  end
+
+  test "popover is not open on connect by default" do
+    result = l_ui_tag do |t|
+      t.button { concat "Open" }
+      t.popover(id: "p1") { concat "Body" }
+    end
+
+    refute_includes result, "data-l-ui--popover-open-value"
+  end
+
+  test "popover honours open option" do
+    result = l_ui_tag do |t|
+      t.button { concat "Open" }
+      t.popover(id: "p1", open: true) { concat "Body" }
+    end
+
+    assert_includes result, 'data-l-ui--popover-open-value="true"'
   end
 
   test "popover element renders last with id, popover attribute, and target" do

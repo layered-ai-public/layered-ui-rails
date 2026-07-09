@@ -32,6 +32,24 @@ class PopoverHelperTest < ActionView::TestCase
     assert_includes result, 'data-l-ui--popover-align-value="end"'
   end
 
+  test "is not open on connect by default" do
+    result = l_ui_popover(id: "p1") do |p|
+      p.trigger { concat "Open" }
+      concat "Body"
+    end
+
+    refute_includes result, "data-l-ui--popover-open-value"
+  end
+
+  test "honours open option" do
+    result = l_ui_popover(id: "p1", open: true) do |p|
+      p.trigger { concat "Open" }
+      concat "Body"
+    end
+
+    assert_includes result, 'data-l-ui--popover-open-value="true"'
+  end
+
   test "renders trigger button wired to the popover via popovertarget" do
     result = l_ui_popover(id: "p1") do |p|
       p.trigger(class: "l-ui-button") { concat "Open" }

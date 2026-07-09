@@ -325,12 +325,13 @@ Calling `dialog.showModal()` directly is not supported - it bypasses the `l-ui--
 ## Popover
 
 ```ruby
-l_ui_popover(id: nil, placement: :bottom, align: :start, container: {}, &block)
+l_ui_popover(id: nil, placement: :bottom, align: :start, open: false, container: {}, &block)
 ```
 
 - `id` (String, optional) - DOM id for the popover element; defaults to an auto-generated id
 - `placement` (Symbol, optional) - `:top`, `:bottom` (default), `:left`, or `:right`. Flips automatically if it would overflow the viewport
 - `align` (Symbol, optional) - `:start` (default) flushes the popover's leading edge with the trigger's; `:end` flushes its trailing edge instead. For example, `placement: :bottom, align: :end` hangs the popover down and to the left of a trigger at the right end of a row
+- `open` (Boolean, optional) - when `true`, the popover opens as soon as its Stimulus controller connects, shown and positioned in the same task so it never paints unpositioned. Useful for re-opening a popover after a form submission re-renders the page (e.g. `open: params[:filtering].present?`). Defaults to `false`
 - `container` (Hash, optional) - extra HTML attributes for the wrapping `<div>` (e.g. `class:`)
 - `&block` - the block's content is the popover body; call `p.trigger(**options, &block)` inside it to render the trigger button
 
@@ -385,7 +386,9 @@ Builder methods:
 - `t.button(**opts, &block)` - button segment (`<button class="l-ui-tag__button">`); opens the tag's popover when one is declared
 - `t.link(url, **opts, &block)` - link segment, styled like a button segment
 - `t.remove(url = nil, **opts, &block)` - trailing remove segment (`l-ui-tag__remove`): a link when `url` is given, otherwise a button. Renders a ✕ icon unless the block supplies custom content. Pass `aria: { label: ... }` so it has an accessible name
-- `t.popover(id: nil, placement: :bottom, align: :start, &block)` - attaches a popover; the block is the popover body. Options match `l_ui_popover`
+- `t.popover(id: nil, placement: :bottom, align: :start, open: false, &block)` - attaches a popover; the block is the popover body. Options match `l_ui_popover`
+
+Text, button, and link segments wrap their content in `<span class="l-ui-tag__label">`, which truncates long labels with an ellipsis when the tag is squeezed (the tag itself never grows past its container).
 
 ```erb
 <%= l_ui_tag do |t| %>
