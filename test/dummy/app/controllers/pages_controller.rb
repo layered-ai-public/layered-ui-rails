@@ -16,6 +16,9 @@ class PagesController < ApplicationController
   def badges
   end
 
+  def tags
+  end
+
   def links
   end
 

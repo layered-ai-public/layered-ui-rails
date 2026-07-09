@@ -7,7 +7,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   end
 
   %w[
-    buttons icons notices badges links surfaces forms containers
+    buttons icons notices badges tags links surfaces forms containers
     utilities typography layout layout_metadata layout_navigation layout_panel
     layout_logos layout_icons layout_colors layout_breadcrumbs layout_header tabs
     popovers conversations devise integrations

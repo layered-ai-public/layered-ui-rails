@@ -182,6 +182,7 @@ Quick reference:
 | `l_ui_authentication` | Default header login/register buttons (Devise) |
 | `l_ui_navigation_toggle` | Default header sidebar toggle button |
 | `l_ui_popover(id: nil, placement: :bottom, align: :start, container: {})` | Floating panel anchored to a trigger, built on the native `popover` attribute |
+| `l_ui_tag(rounded: false, container: {})` | Interactive tag built from segments (`t.text`, `t.button`, `t.link`, `t.remove`) with an optional attached popover (`t.popover`); `rounded: true` for a pill shape |
 
 ## CSS classes
 
@@ -200,6 +201,7 @@ Key components:
 | Forms | `.l-ui-form`, `.l-ui-form__group`, `.l-ui-form__field`, `.l-ui-label`, `.l-ui-select` |
 | Tables | `.l-ui-table`, `.l-ui-table__header`, `.l-ui-table__cell`, `--primary`, `--action`, `.l-ui-table__action`, `--danger` |
 | Badges | `.l-ui-badge`, `--rounded`, `--default`, `--success`, `--warning`, `--danger` |
+| Tags | `.l-ui-tag`, `--rounded`, `__text`, `__button`, `__remove` |
 | Notices | `.l-ui-notice` (base), `--success`, `--warning`, `--error` |
 | Tabs | `.l-ui-tabs`, `.l-ui-tabs__list`, `.l-ui-tabs__tab`, `--active` |
 | Modal | `.l-ui-modal`, `.l-ui-modal__header`, `.l-ui-modal__body` |

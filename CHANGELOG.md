@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- Tags: interactive tags (`l-ui-tag`), such as email recipients or active filters. Visually related to badges but a distinct control: a badge is a static styled span, while a tag is a container whose segments - `l-ui-tag__text` (static label), `l-ui-tag__button` (button or link label), and `l-ui-tag__remove` (trailing ✕ link or button) - are separately interactive, each carrying its share of the tag's padding so every part is a hit target. Takes the same subtle corner radius as a badge by default, with `l-ui-tag--rounded` for a pill shape (matching `l-ui-badge--rounded`). The `l_ui_tag` helper builds the tag from builder calls (`t.text`, `t.button`, `t.link`, `t.remove`, `t.popover`) and takes a `rounded:` option; declaring `t.popover` makes the whole tag the popover's placement target and wires button segments to open it via `popovertarget`. The default `t.remove` control is a filled x-circle.
+- `icon_close_circle.svg` (a filled circle with a cross knocked out) added to the bundled icon set, used by the tag remove control and available as a general-purpose icon.
+
 ## [0.20.0] - 2026-07-08
 
 ### Added

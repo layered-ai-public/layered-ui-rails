@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get "icons", to: "pages#icons"
   get "notices", to: "pages#notices"
   get "badges", to: "pages#badges"
+  get "tags", to: "pages#tags"
   get "links", to: "pages#links"
   get "surfaces", to: "pages#surfaces"
   get "hero", to: "pages#hero"

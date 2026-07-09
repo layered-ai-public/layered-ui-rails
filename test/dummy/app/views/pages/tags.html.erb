@@ -1,0 +1,259 @@
+<%= l_ui_title_bar(
+  title: "Tags",
+  breadcrumbs: [
+    ["Home", root_path]
+  ]
+) %>
+
+<p class="mt-4">An interactive tag: a small control representing a discrete value, such as an email recipient or an active filter. A tag is visually related to a <%= link_to "badge", badges_path %> but is a distinct control: a badge is a static styled span, while a tag is a container whose segments (label, remove) are separately interactive. The container carries no padding of its own - each segment supplies its share, so every part of the tag is a hit target.</p>
+
+<p class="mt-4">A tag takes the same subtle corner radius as a badge by default; pass <code>rounded: true</code> (or add <code>l-ui-tag--rounded</code>) for a pill shape, matching <code>l-ui-badge--rounded</code>.</p>
+
+<h2 class="mt-8 l-ui-heading--section">Tags with remove</h2>
+
+<p class="mt-4">The <code>l_ui_tag</code> helper builds the tag from segments declared in order. <code>t.text</code> renders a static label; <code>t.remove</code> renders a trailing ✕ as a link (when given a URL) or a button. Use <code>&lt;%</code> (not <code>&lt;%=</code>) when calling builder methods - the builder captures their content. Give the remove segment an <code>aria-label</code> so it has an accessible name.</p>
+
+<div class="mt-4 flex flex-wrap gap-2">
+  <%= l_ui_tag do |t| %>
+    <% t.text "alice@example.com" %>
+    <% t.remove "#", aria: { label: "Remove alice@example.com" } %>
+  <% end %>
+
+  <%= l_ui_tag do |t| %>
+    <% t.text "bob@example.com" %>
+    <% t.remove "#", aria: { label: "Remove bob@example.com" } %>
+  <% end %>
+
+  <%= l_ui_tag do |t| %>
+    <% t.text "No remove" %>
+  <% end %>
+</div>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-tags-remove-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-tags-remove-heading">Tags with remove</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;%= l_ui_tag do |t| %&gt;
+  &lt;% t.text "alice@example.com" %&gt;
+  &lt;% t.remove recipient_path, aria: { label: "Remove alice@example.com" } %&gt;
+&lt;% end %&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="mt-8 l-ui-heading--section">Rounded tags</h2>
+
+<p class="mt-4">Pass <code>rounded: true</code> for a pill shape. The segments' focus rings follow the tag's shape automatically.</p>
+
+<div class="mt-4 flex flex-wrap gap-2">
+  <%= l_ui_tag(rounded: true) do |t| %>
+    <% t.text "alice@example.com" %>
+    <% t.remove "#", aria: { label: "Remove alice@example.com" } %>
+  <% end %>
+
+  <%= l_ui_tag(rounded: true) do |t| %>
+    <% t.text "Rounded" %>
+  <% end %>
+</div>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-tags-rounded-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-tags-rounded-heading">Rounded tags</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;%= l_ui_tag(rounded: true) do |t| %&gt;
+  &lt;% t.text "alice@example.com" %&gt;
+  &lt;% t.remove recipient_path, aria: { label: "Remove alice@example.com" } %&gt;
+&lt;% end %&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="mt-8 l-ui-heading--section">Tags with a popover</h2>
+
+<p class="mt-4">A tag may carry a popover - e.g. a filter tag whose label opens its controls. Declare the label with <code>t.button</code> and the popover with <code>t.popover</code> (options match <code>l_ui_popover</code>). The whole tag becomes the placement target, so the popover aligns with the tag rather than the segment inside it, and button segments open it via <code>popovertarget</code>.</p>
+
+<div class="mt-4 flex flex-wrap gap-2">
+  <%= l_ui_tag do |t| %>
+    <% t.button(aria: { label: "Edit status filter" }) do %>
+      Status: Active
+    <% end %>
+    <% t.remove "#", aria: { label: "Remove status filter" } %>
+    <% t.popover do %>
+      <div class="l-ui-popover__menu">
+        <button type="button" class="l-ui-popover__menu-item">Active</button>
+        <button type="button" class="l-ui-popover__menu-item">Archived</button>
+        <button type="button" class="l-ui-popover__menu-item">All</button>
+      </div>
+    <% end %>
+  <% end %>
+
+  <%= l_ui_tag do |t| %>
+    <% t.button(aria: { label: "Edit author filter" }) do %>
+      Author
+    <% end %>
+    <% t.popover do %>
+      <p>Filter controls go here - a form, a menu, or any other content.</p>
+    <% end %>
+  <% end %>
+</div>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-tags-popover-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-tags-popover-heading">Tags with a popover</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;%= l_ui_tag do |t| %&gt;
+  &lt;% t.button(aria: { label: "Edit status filter" }) do %&gt;
+    Status: Active
+  &lt;% end %&gt;
+  &lt;% t.remove remove_filter_path, aria: { label: "Remove status filter" } %&gt;
+  &lt;% t.popover do %&gt;
+    &lt;div class="l-ui-popover__menu"&gt;
+      &lt;button type="button" class="l-ui-popover__menu-item"&gt;Active&lt;/button&gt;
+      &lt;button type="button" class="l-ui-popover__menu-item"&gt;Archived&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;% end %&gt;
+&lt;% end %&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="mt-8 l-ui-heading--section">CSS-classes example</h2>
+
+<p class="mt-4">Use the classes directly when you need full control over markup. Segments must be direct children of <code>l-ui-tag</code>, label before remove; when a remove segment follows, the label segment automatically gives up its right padding so the remove owns the gap.</p>
+
+<div class="mt-4 flex flex-wrap gap-2">
+  <div class="l-ui-tag">
+    <span class="l-ui-tag__text">carol@example.com</span>
+    <button type="button" class="l-ui-tag__remove" aria-label="Remove carol@example.com">
+      <svg class="l-ui-icon--sm" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 0 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="l-ui-tag">
+    <a href="#" class="l-ui-tag__button">Ruby</a>
+  </div>
+</div>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-tags-classes-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-tags-classes-heading">CSS-classes example</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;div class="l-ui-tag"&gt;
+  &lt;span class="l-ui-tag__text"&gt;carol@example.com&lt;/span&gt;
+  &lt;button type="button" class="l-ui-tag__remove"
+          aria-label="Remove carol@example.com"&gt;
+    &lt;svg class="l-ui-icon--sm" fill="currentColor"
+         viewBox="0 0 24 24" aria-hidden="true"&gt;
+      &lt;path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 0 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" /&gt;
+    &lt;/svg&gt;
+  &lt;/button&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="mt-8 l-ui-heading--section">Helper options</h2>
+
+<div class="l-ui-table-container mt-4">
+  <table class="l-ui-table">
+    <caption class="l-ui-sr-only">l_ui_tag options</caption>
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell" scope="col">Option</th>
+        <th class="l-ui-table__header-cell" scope="col">Description</th>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>rounded:</code></th>
+        <td class="l-ui-table__cell">Pill shape (matching <code>l-ui-badge--rounded</code>); defaults to <code>false</code> for the subtle badge shape</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>container:</code></th>
+        <td class="l-ui-table__cell">Extra HTML attributes for the wrapping <code>&lt;div&gt;</code> (e.g. <code>class:</code>)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>t.text(content, **opts)</code></th>
+        <td class="l-ui-table__cell">Static label segment (<code>&lt;span&gt;</code>); pass content as the first argument or a block</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>t.button(**opts)</code></th>
+        <td class="l-ui-table__cell">Button segment; opens the tag's popover when one is declared</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>t.link(url, **opts)</code></th>
+        <td class="l-ui-table__cell">Link segment, styled like a button segment</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>t.remove(url = nil, **opts)</code></th>
+        <td class="l-ui-table__cell">Trailing remove segment: a link when <code>url</code> is given, otherwise a button. Renders a ✕ icon unless a block supplies custom content. Pass <code>aria: { label: ... }</code> for an accessible name</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>t.popover(**opts)</code></th>
+        <td class="l-ui-table__cell">Attaches a popover to the tag; the block is the popover body. Options (<code>id:</code>, <code>placement:</code>, <code>align:</code>) match <code>l_ui_popover</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 class="mt-8 l-ui-heading--section">CSS classes</h2>
+
+<div class="l-ui-table-container mt-4">
+  <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Tag CSS classes</caption>
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell" scope="col">Class</th>
+        <th class="l-ui-table__header-cell" scope="col">Description</th>
+      </tr>
+    </thead>
+    <tbody class="l-ui-table__body">
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-tag</code></th>
+        <td class="l-ui-table__cell">Tag container; carries the tag's colour and shape but no padding</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-tag--rounded</code></th>
+        <td class="l-ui-table__cell">Modifier for a pill shape (matching <code>l-ui-badge--rounded</code>)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-tag__text</code></th>
+        <td class="l-ui-table__cell">Static label segment (apply to a <code>&lt;span&gt;</code>)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-tag__button</code></th>
+        <td class="l-ui-table__cell">Interactive label segment (apply to a <code>&lt;button&gt;</code> or <code>&lt;a&gt;</code>)</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-tag__remove</code></th>
+        <td class="l-ui-table__cell">Trailing remove segment (apply to a <code>&lt;button&gt;</code> or <code>&lt;a&gt;</code>); pair with an icon such as <code>l-ui-icon--sm</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

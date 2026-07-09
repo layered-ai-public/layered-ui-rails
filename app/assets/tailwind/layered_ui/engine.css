@@ -1855,6 +1855,62 @@ pre.l-ui-surface {
          bg-error-bg;
 }
 
+/* Tags */
+
+/* An interactive tag - e.g. an email recipient or an active filter. Related
+   to the badge visually, but a distinct control: a badge is a static styled
+   span, while a tag is a container with interactive segments. The container
+   carries no padding of its own - each segment supplies its share, so every
+   part of the tag is a hit target. */
+
+.l-ui-tag {
+  @apply inline-flex items-stretch
+         min-h-[32px]
+         text-xs font-medium
+         text-foreground-muted
+         bg-surface-highlighted
+         rounded;
+}
+
+/* Pill shape, matching l-ui-badge--rounded. */
+.l-ui-tag--rounded {
+  @apply !rounded-full;
+}
+
+.l-ui-tag__text {
+  @apply flex items-center
+         gap-1 px-3;
+}
+
+.l-ui-tag__button {
+  @apply flex items-center
+         gap-1 px-3
+         rounded
+         focus-ring
+         cursor-pointer;
+}
+
+/* Segment focus rings follow the tag's shape. */
+.l-ui-tag--rounded .l-ui-tag__button,
+.l-ui-tag--rounded .l-ui-tag__remove {
+  @apply !rounded-full;
+}
+
+/* When a remove segment follows, it owns the gap between the label and the
+   ✕ (its left padding), so the label segment gives up its right padding. */
+.l-ui-tag__text:has(+ .l-ui-tag__remove),
+.l-ui-tag__button:has(+ .l-ui-tag__remove) {
+  @apply pr-0;
+}
+
+.l-ui-tag__remove {
+  @apply flex items-center
+         pl-1.5 pr-2
+         rounded
+         focus-ring
+         cursor-pointer;
+}
+
 /* Panel */
 
 .l-ui-panel__button {

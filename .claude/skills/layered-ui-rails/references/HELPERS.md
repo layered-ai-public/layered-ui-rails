@@ -367,6 +367,41 @@ For a list of actions (e.g. a "more" menu on a table row), wrap the items in a `
     }) %>
 ```
 
+## Tag
+
+```ruby
+l_ui_tag(rounded: false, container: {}, &block)
+```
+
+Renders an interactive tag (`class="l-ui-tag"`) - e.g. an email recipient or an active filter. Visually related to `l-ui-badge` but a distinct control: a badge is a static styled span, while a tag is a container whose segments (label, remove) are separately interactive.
+
+- `rounded` (Boolean, optional) - pill shape (matching `l-ui-badge--rounded`); defaults to `false` for the subtle badge radius
+- `container` (Hash, optional) - extra HTML attributes for the wrapping `<div>` (e.g. `class:`)
+- `&block` - declare segments on the builder; they render in call order. Use `<%` (not `<%=`) - segment content is captured by the builder
+
+Builder methods:
+
+- `t.text(content = nil, **opts, &block)` - static label segment (`<span class="l-ui-tag__text">`)
+- `t.button(**opts, &block)` - button segment (`<button class="l-ui-tag__button">`); opens the tag's popover when one is declared
+- `t.link(url, **opts, &block)` - link segment, styled like a button segment
+- `t.remove(url = nil, **opts, &block)` - trailing remove segment (`l-ui-tag__remove`): a link when `url` is given, otherwise a button. Renders a ✕ icon unless the block supplies custom content. Pass `aria: { label: ... }` so it has an accessible name
+- `t.popover(id: nil, placement: :bottom, align: :start, &block)` - attaches a popover; the block is the popover body. Options match `l_ui_popover`
+
+```erb
+<%= l_ui_tag do |t| %>
+  <% t.button(aria: { label: "Edit status filter" }) do %>
+    Status: Active
+  <% end %>
+  <% t.remove remove_filter_path, aria: { label: "Remove status filter" },
+       data: { turbo_frame: "results" } %>
+  <% t.popover do %>
+    <p>Filter controls.</p>
+  <% end %>
+<% end %>
+```
+
+When a popover is declared, the tag container itself becomes the `l-ui--popover` controller root and placement target - the popover aligns with the whole tag rather than the label button inside it - and button segments are wired to open it via `popovertarget`. A tag without a popover renders no Stimulus wiring.
+
 ## Header
 
 ```ruby
