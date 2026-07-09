@@ -1661,8 +1661,7 @@ pre.l-ui-surface {
   scrollbar-color: var(--color-border) transparent;
 }
 
-/* Scroll focused cells clear of the pinned actions column, so tabbing to a
-   link in the last data column never lands it underneath (WCAG 2.4.11) */
+/* Scrolls focused cells clear of the pinned actions column (WCAG 2.4.11) */
 
 .l-ui-table-container:has(.l-ui-table--floating-actions) {
   @apply scroll-pr-20;
@@ -1749,12 +1748,8 @@ pre.l-ui-surface {
   @apply pr-0;
 }
 
-/* Floating actions column: pins the action cells to the right-hand edge of
-   the scroll container so row actions stay visible while the table scrolls
-   horizontally. The background is solid except for a short fade on the
-   leading edge (over the cell's leading padding), so content scrolling
-   underneath slides gently out of view, and the padding keeps a gap between
-   the actions and the last data column when scrolled fully to the right. */
+/* The 1.5rem fade-in must match the leading padding so the actions always
+   sit on solid background; z-10 lifts the cells above the scroll-hint fade */
 
 .l-ui-table--floating-actions th.l-ui-table__header-cell--action,
 .l-ui-table--floating-actions td.l-ui-table__cell--action {
@@ -1765,11 +1760,8 @@ pre.l-ui-surface {
 
 /* Scroll hint */
 
-/* Wrapper for a horizontal scroller (e.g. l-ui-table-container) that fades
-   the clipped edge while more content is available in that direction, so it
-   is obvious the region can be scrolled. The l-ui--scroll-hint controller
-   toggles the --left/--right modifiers from the scroll position. Floating
-   action cells sit above the fade (z-10), so they stay crisp. */
+/* The --left/--right modifiers are toggled by the l-ui--scroll-hint
+   controller from the scroll position of the wrapped scroller */
 
 .l-ui-scroll-hint {
   @apply relative;

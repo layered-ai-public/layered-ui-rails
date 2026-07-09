@@ -1,9 +1,9 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Fades the clipped edges of a horizontal scroller (e.g. a wide table)
-// while more content is available in that direction, making it obvious
-// the region can be scrolled. Attach to an l-ui-scroll-hint wrapper with
-// the scrollable element as the scroller target.
+// Fades the clipped edges of a horizontal scroller while more content is
+// available in that direction, by toggling the l-ui-scroll-hint--left/--right
+// modifiers on its wrapper. Also makes the scroller keyboard-focusable while
+// it overflows, so the region stays keyboard-scrollable.
 export default class extends Controller {
   static targets = ["scroller"]
 
@@ -11,8 +11,6 @@ export default class extends Controller {
     this.update = this.update.bind(this)
     this.scrollerTarget.addEventListener("scroll", this.update, { passive: true })
 
-    // Watch both the scroller and its content, so the hints stay correct
-    // when the viewport or the table itself changes size
     this.resizeObserver = new ResizeObserver(this.update)
     this.resizeObserver.observe(this.scrollerTarget)
     if (this.scrollerTarget.firstElementChild) {
