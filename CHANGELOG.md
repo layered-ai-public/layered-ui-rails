@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.22.0] - 2026-07-10
+
+### Added
+
+- Floating table actions: pass `floating_actions: true` to `l_ui_table` (or add `l-ui-table--floating-actions` to a hand-written table) to pin the actions column to the right-hand edge of the scroll container, so row actions stay visible while the table scrolls horizontally. The pinned cells sit on a solid background with a faded leading edge, and the container gains scroll padding so focused cells scroll clear of the pinned column.
+- Scroll hint: the new `l-ui--scroll-hint` Stimulus controller and `l-ui-scroll-hint` wrapper fade the clipped edges of a horizontal scroller while more content is available in that direction. While the scroller overflows it is made keyboard-focusable so the region stays keyboard-scrollable. `l_ui_table` wraps every table in a scroll hint automatically; wrap hand-written tables (or any other horizontal scroller) yourself.
+- Popover `open:` option: `l_ui_popover(open: true)` (and `t.popover(open: true)` on a tag) opens the popover as soon as its Stimulus controller connects, shown and positioned in the same task so it never paints unpositioned - useful for re-opening a filter popover after a form submission re-renders the page.
+- `l-ui-tag-row`: the canonical container for a row of tags plus any trailing actions (e.g. a filter bar) - a wrapping flex row with a gap, so tags move onto new lines on narrow screens instead of overflowing.
+- Tag truncation: a tag never grows past its container, and label segments wrap their content in the new `l-ui-tag__label` so long labels truncate with an ellipsis instead of overflowing. The `l_ui_tag` helper renders the wrapper automatically; add it yourself in hand-written markup.
+
 ## [0.21.0] - 2026-07-09
 
 ### Added
