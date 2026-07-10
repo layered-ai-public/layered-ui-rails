@@ -1229,7 +1229,7 @@
   @apply flex items-center justify-center
          min-h-[44px]
          gap-2 px-4
-         text-sm font-medium whitespace-nowrap
+         text-sm font-medium
          rounded-sm
          focus-ring
          transition-colors
@@ -1866,6 +1866,14 @@ pre.l-ui-surface {
 .l-ui-tag-row {
   @apply flex flex-wrap items-center
          gap-2;
+}
+
+/* The row wraps whole items onto new lines, so a squeezed trailing action
+   should move down rather than wrap its label mid-text. Scoped here because
+   elsewhere (e.g. a full-width button in a narrow panel) nowrap would force
+   horizontal overflow instead of wrapping. */
+.l-ui-tag-row .l-ui-button {
+  @apply whitespace-nowrap;
 }
 
 .l-ui-tag {
