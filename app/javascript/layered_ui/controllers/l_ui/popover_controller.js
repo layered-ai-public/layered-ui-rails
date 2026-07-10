@@ -9,7 +9,8 @@ export default class extends Controller {
   static targets = ["trigger", "popover"]
   static values = {
     placement: { type: String, default: "bottom" },
-    align: { type: String, default: "start" }
+    align: { type: String, default: "start" },
+    open: { type: Boolean, default: false }
   }
 
   static GAP = 8
@@ -24,6 +25,16 @@ export default class extends Controller {
       }
     }
     element.addEventListener("toggle", this._toggleHandler)
+
+    // Open on connect when requested (e.g. re-opening a filter popover after
+    // a form submission re-renders the page). showPopover() and position()
+    // must run back-to-back in the same task: the native toggle event is
+    // dispatched asynchronously, so relying on the listener alone would paint
+    // the popover unpositioned at the viewport origin for one frame.
+    if (this.openValue && !element.matches(":popover-open")) {
+      element.showPopover()
+      this.position()
+    }
   }
 
   popoverTargetDisconnected(element) {

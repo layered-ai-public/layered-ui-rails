@@ -1916,9 +1916,22 @@ pre.l-ui-surface {
    carries no padding of its own - each segment supplies its share, so every
    part of the tag is a hit target. */
 
+.l-ui-tag-row {
+  @apply flex flex-wrap items-center
+         gap-2;
+}
+
+/* The row wraps whole items onto new lines, so a squeezed trailing action
+   should move down rather than wrap its label mid-text. Scoped here because
+   elsewhere (e.g. a full-width button in a narrow panel) nowrap would force
+   horizontal overflow instead of wrapping. */
+.l-ui-tag-row .l-ui-button {
+  @apply whitespace-nowrap;
+}
+
 .l-ui-tag {
   @apply inline-flex items-stretch
-         min-h-[32px]
+         max-w-full min-h-[32px]
          text-xs font-medium
          text-foreground-muted
          bg-surface-highlighted
@@ -1932,15 +1945,24 @@ pre.l-ui-surface {
 
 .l-ui-tag__text {
   @apply flex items-center
+         min-w-0
          gap-1 px-3;
 }
 
 .l-ui-tag__button {
   @apply flex items-center
+         min-w-0
          gap-1 px-3
          rounded
          focus-ring
          cursor-pointer;
+}
+
+/* This wrapper exists so long labels can truncate: ellipsis has no effect on
+   text sitting directly inside a flex container like the segment. */
+.l-ui-tag__label {
+  @apply overflow-hidden
+         text-ellipsis whitespace-nowrap;
 }
 
 /* Segment focus rings follow the tag's shape. */
