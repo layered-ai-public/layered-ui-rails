@@ -180,6 +180,17 @@ For per-request icons, set instance variables - the engine renders `<link>` and 
 
 > **Security:** Rails HTML-escapes URL values, so XSS via attribute injection is mitigated. However, if values are tenant-controlled, validate that they are legitimate URLs - reject `javascript:` schemes and ensure values point to expected origins.
 
+## Authentication
+
+The engine reads the signed-in user through `l_ui_current_user`, which delegates to your app's `current_user` helper by default. If your app uses a different helper (e.g. a Devise `Member` model, or Rails' built-in authentication generator with a custom name), configure it in an initializer:
+
+```ruby
+# config/initializers/layered_ui.rb
+Layered::Ui.current_user_method = :current_member
+```
+
+Apps without authentication need no configuration - the user section of the navigation simply doesn't render. The sidebar shows the user's `name` and `email` when the model responds to those methods. Only one method is supported, so apps with multiple Devise scopes should pick the one to display.
+
 ## Documentation
 
 An online version of the documentation is available at **[layered-ui-rails.layered.ai](https://layered-ui-rails.layered.ai)**.
