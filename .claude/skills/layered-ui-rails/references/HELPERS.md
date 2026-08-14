@@ -430,16 +430,20 @@ Use these when overriding the header actions group with `:l_ui_header_actions` t
 ## Authentication
 
 ```ruby
-l_ui_user_signed_in?   # Returns true if current user is present
-l_ui_current_user      # Returns the current user object
-l_ui_devise_installed? # Returns true if Devise is loaded
+l_ui_user_signed_in?      # Returns true if current user is present
+l_ui_current_user         # Returns the current user object
+l_ui_devise_installed?    # Returns true if Devise is loaded
+l_ui_new_registration_path # Devise registration path for the configured scope, or nil
+l_ui_new_session_path      # Devise sign-in path for the configured scope, or nil
+l_ui_destroy_session_path  # Devise sign-out path for the configured scope, or nil
 ```
 
-Configure the current user method:
+Configure the current user method, and the Devise scope used to build the login/register/logout paths (`new_registration_path`, `new_session_path`, `destroy_session_path`):
 
 ```ruby
 # config/initializers/layered_ui.rb
 Layered::Ui.current_user_method = :current_member
+Layered::Ui.devise_scope = :member
 ```
 
 ## Shared partials

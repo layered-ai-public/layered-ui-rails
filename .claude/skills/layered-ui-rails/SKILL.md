@@ -252,7 +252,7 @@ The panel toggle button uses an inline SVG that inherits `currentColor`. Recolor
 
 ## Optional integrations
 
-- **Devise** - auto-detected. Provides styled auth views, header login/register buttons, sidebar user info and logout. Setup: `bundle add devise`, run `devise:install` and `devise User` generators, add `devise_for :users` to routes. Configure `Layered::Ui.current_user_method` if not using `:current_user`. Helpers: `l_ui_devise_installed?`, `l_ui_user_signed_in?`.
+- **Devise** - auto-detected. Provides styled auth views, header login/register buttons, sidebar user info and logout. Setup: `bundle add devise`, run `devise:install` and `devise User` generators, add `devise_for :users` to routes. Configure `Layered::Ui.current_user_method` if not using `:current_user`, and `Layered::Ui.devise_scope` if the Devise mapping isn't `:user`. Helpers: `l_ui_devise_installed?`, `l_ui_user_signed_in?`.
 - **Pagy** - auto-detected. Use `l_ui_pagy(@pagy)` for styled pagination.
 - **Ransack** - auto-detected. Use `l_ui_search_form` and `l_ui_sort_link` for styled search and sortable tables.
 
@@ -261,6 +261,7 @@ The panel toggle button uses an inline SVG that inherits `currentColor`. Recolor
 ```ruby
 # config/initializers/layered_ui.rb
 Layered::Ui.current_user_method = :current_member  # default: :current_user
+Layered::Ui.devise_scope = :member                 # default: :user
 ```
 
 ## Common issues

@@ -210,6 +210,13 @@ The engine reads the signed-in user through `l_ui_current_user`, which delegates
 Layered::Ui.current_user_method = :current_member
 ```
 
+If your Devise mapping isn't `:user` (e.g. `devise_for :members`), also set the scope so the header and sidebar link to the right registration, session, and logout paths:
+
+```ruby
+# config/initializers/layered_ui.rb
+Layered::Ui.devise_scope = :member
+```
+
 Apps without authentication need no configuration - the user section of the navigation simply doesn't render. The sidebar shows the user's `name` and `email` when the model responds to those methods. Only one method is supported, so apps with multiple Devise scopes should pick the one to display.
 
 ## Documentation
