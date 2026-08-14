@@ -31,6 +31,27 @@ An open source, Rails 8+ engine that provides WCAG 2.2 AA compliant design token
   </tr>
 </table>
 
+## Quick start
+
+The fastest way to get going is [layered-foundation-rails](https://github.com/layered-ai-public/layered-foundation-rails) - an accessible Rails starter app with `layered-ui-rails` pre-installed and configured. It also includes additional skills and scripts to get you on your way.
+
+Clone the complete starter app:
+
+```bash
+git clone https://github.com/layered-ai-public/layered-foundation-rails.git myapp
+cd myapp
+bin/rails layered:foundation:setup
+```
+
+Or apply it as a Rails template:
+
+```bash
+rails new myapp --css tailwind \
+  -m https://raw.githubusercontent.com/layered-ai-public/layered-foundation-rails/main/template.rb
+```
+
+Adding `layered-ui-rails` to an existing app? See [Installation](#installation).
+
 ## Features
 
 - **Dark/light theme** - system preference detection with localStorage persistence and manual toggle

@@ -1,30 +1,38 @@
 <h2 class="mt-6 l-ui-heading--section">Features</h2>
 <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-  <div class="l-ui-card l-ui-tint-1">
+  <div class="l-ui-card l-ui-card--gradient l-ui-tint-1">
+    <h3 class="l-ui-card__title">
+      <span class="l-ui-card__icon" style="--l-ui-icon-src: url('<%= asset_path "icon_agent.svg" %>')" aria-hidden="true"></span>
+      <span>Agent skill</span>
+    </h3>
+    <p class="l-ui-card__body">Bundled agent skill teaches AI agents to install, configure, and build with <code>layered-ui-rails</code>.</p>
+  </div>
+
+  <div class="l-ui-card l-ui-card--gradient l-ui-tint-2">
+    <h3 class="l-ui-card__title">
+      <span class="l-ui-card__icon" style="--l-ui-icon-src: url('<%= asset_path "icon_wind.svg" %>')" aria-hidden="true"></span>
+      <span>It's just Tailwind</span>
+    </h3>
+    <p class="l-ui-card__body">Everything is plain Tailwind CSS with design tokens under the hood - customise or extend it however you want.</p>
+  </div>
+
+  <div class="l-ui-card l-ui-card--gradient l-ui-tint-3">
     <h3 class="l-ui-card__title">
       <span class="l-ui-card__icon" style="--l-ui-icon-src: url('<%= asset_path "icon_minimal.svg" %>')" aria-hidden="true"></span>
-      <span>Minimal style</span>
+      <span>Minimal style with dark/light theme</span>
     </h3>
-    <p class="l-ui-card__body">Monochrome out of the box and fully extensible - override colours, typography, and components to suit your project.</p>
+    <p class="l-ui-card__body">Monochrome out of the box, in dark and light themes with system preference detection, localStorage persistence, and a manual toggle.</p>
   </div>
 
-  <div class="l-ui-card l-ui-tint-2">
-    <h3 class="l-ui-card__title">
-      <span class="l-ui-card__icon" style="--l-ui-icon-src: url('<%= asset_path "icon_moon.svg" %>')" aria-hidden="true"></span>
-      <span>Dark/light theme</span>
-    </h3>
-    <p class="l-ui-card__body">System preference detection with localStorage persistence and manual toggle.</p>
-  </div>
-
-  <div class="l-ui-card l-ui-tint-3">
+  <div class="l-ui-card l-ui-card--gradient l-ui-tint-4">
     <h3 class="l-ui-card__title">
       <span class="l-ui-card__icon" style="--l-ui-icon-src: url('<%= asset_path "icon_paint.svg" %>')" aria-hidden="true"></span>
-      <span>Customisable logo and icons</span>
+      <span>Customisable branding</span>
     </h3>
-    <p class="l-ui-card__body">Override the default logos and icons to match your brand.</p>
+    <p class="l-ui-card__body">Easily override the default logos, icons, colours, and typography to match your brand.</p>
   </div>
 
-  <div class="l-ui-card l-ui-tint-4">
+  <div class="l-ui-card l-ui-card--gradient l-ui-tint-5">
     <h3 class="l-ui-card__title">
       <span class="l-ui-card__icon" style="--l-ui-icon-src: url('<%= asset_path "icon_device.svg" %>')" aria-hidden="true"></span>
       <span>Responsive layout</span>
@@ -32,7 +40,7 @@
     <p class="l-ui-card__body">Tested thoroughly across form factors, from mobile to ultrawide.</p>
   </div>
 
-  <div class="l-ui-card l-ui-tint-5">
+  <div class="l-ui-card l-ui-card--gradient l-ui-tint-1">
     <h3 class="l-ui-card__title">
       <span class="l-ui-card__icon" style="--l-ui-icon-src: url('<%= asset_path "icon_eye.svg" %>')" aria-hidden="true"></span>
       <span>WCAG 2.2 AA accessible</span>
@@ -40,7 +48,7 @@
     <p class="l-ui-card__body">Skip links, focus indicators, ARIA attributes, and 4.5:1 contrast ratios. Read the <%= link_to "latest accessibility audits", "https://github.com/layered-ai-public/layered-ui-rails/blob/main/audits/accessibility", target: "_blank", rel: "noopener noreferrer" %>.</p>
   </div>
 
-  <div class="l-ui-card l-ui-tint-1">
+  <div class="l-ui-card l-ui-card--gradient l-ui-tint-2">
     <h3 class="l-ui-card__title">
       <span class="l-ui-card__icon" style="--l-ui-icon-src: url('<%= asset_path "icon_lighthouse.svg" %>')" aria-hidden="true"></span>
       <span>Google Lighthouse optimised</span>
@@ -48,19 +56,11 @@
     <p class="l-ui-card__body"><code>layered-ui-rails</code> scores a <%= link_to "perfect 100", image_path("lighthouse.webp"), target: "_blank" %> across all four Google Lighthouse categories - performance, accessibility, best practices, and SEO.</p>
   </div>
 
-  <div class="l-ui-card l-ui-tint-2">
+  <div class="l-ui-card l-ui-card--gradient l-ui-tint-3">
     <h3 class="l-ui-card__title">
       <span class="l-ui-card__icon" style="--l-ui-icon-src: url('<%= asset_path "icon_puzzle.svg" %>')" aria-hidden="true"></span>
       <span>Optional integrations</span>
     </h3>
     <p class="l-ui-card__body"><%= link_to "Devise", devise_path %> authentication, <%= link_to "Pagy", pagy_path %> pagination, and <%= link_to "Ransack", ransack_path %> search and sort with styled controls.</p>
-  </div>
-
-  <div class="l-ui-card l-ui-tint-3">
-    <h3 class="l-ui-card__title">
-      <span class="l-ui-card__icon" style="--l-ui-icon-src: url('<%= asset_path "icon_agent.svg" %>')" aria-hidden="true"></span>
-      <span>Agent skill</span>
-    </h3>
-    <p class="l-ui-card__body">Bundled agent skill teaches AI agents to install, configure, and build with <code>layered-ui-rails</code>.</p>
   </div>
 </div>
