@@ -31,6 +31,27 @@ An open source, Rails 8+ engine that provides WCAG 2.2 AA compliant design token
   </tr>
 </table>
 
+## Quick start
+
+The fastest way to get going is [layered-foundation-rails](https://github.com/layered-ai-public/layered-foundation-rails) - an accessible Rails starter app with `layered-ui-rails` pre-installed and configured. It also includes additional skills and scripts to get you on your way.
+
+Clone the complete starter app:
+
+```bash
+git clone https://github.com/layered-ai-public/layered-foundation-rails.git myapp
+cd myapp
+bin/rails layered:foundation:setup
+```
+
+Or apply it as a Rails template:
+
+```bash
+rails new myapp --css tailwind \
+  -m https://raw.githubusercontent.com/layered-ai-public/layered-foundation-rails/main/template.rb
+```
+
+Adding `layered-ui-rails` to an existing app? See [Installation](#installation).
+
 ## Features
 
 - **Dark/light theme** - system preference detection with localStorage persistence and manual toggle
@@ -179,6 +200,17 @@ For per-request icons, set instance variables - the engine renders `<link>` and 
 ```
 
 > **Security:** Rails HTML-escapes URL values, so XSS via attribute injection is mitigated. However, if values are tenant-controlled, validate that they are legitimate URLs - reject `javascript:` schemes and ensure values point to expected origins.
+
+## Authentication
+
+The engine reads the signed-in user through `l_ui_current_user`, which delegates to your app's `current_user` helper by default. If your app uses a different helper (e.g. a Devise `Member` model, or Rails' built-in authentication generator with a custom name), configure it in an initializer:
+
+```ruby
+# config/initializers/layered_ui.rb
+Layered::Ui.current_user_method = :current_member
+```
+
+Apps without authentication need no configuration - the user section of the navigation simply doesn't render. The sidebar shows the user's `name` and `email` when the model responds to those methods. Only one method is supported, so apps with multiple Devise scopes should pick the one to display.
 
 ## Documentation
 
