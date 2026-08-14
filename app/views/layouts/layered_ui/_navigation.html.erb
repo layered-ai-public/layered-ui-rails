@@ -20,9 +20,9 @@
               </div>
             <% end %>
           </div>
-          <% if l_ui_user_signed_in? && respond_to?(:destroy_user_session_path) %>
+          <% if l_ui_destroy_session_path %>
             <div class="l-ui-mt-4">
-              <%= button_to "Logout", main_app.destroy_user_session_path, method: :delete, class: "l-ui-button l-ui-button--outline-danger l-ui-button--full" %>
+              <%= button_to "Logout", l_ui_destroy_session_path, method: :delete, class: "l-ui-button l-ui-button--outline-danger l-ui-button--full" %>
             </div>
           <% end %>
         </div>
