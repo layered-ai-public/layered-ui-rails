@@ -43,6 +43,10 @@ class PagesController < ApplicationController
   def forms
   end
 
+  def combobox
+    @recipients = User.order(:name).pluck(:email, :id)
+  end
+
   def containers
   end
 

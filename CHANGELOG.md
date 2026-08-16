@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- Combobox: a token select (`l-ui-combobox`) - a text input with type-ahead filtering whose selections become removable tags, in the style of an email recipient field. Built on the ARIA combobox pattern (a `role="combobox"` input owning a `role="listbox"` popup, with the highlight following `aria-activedescendant` so focus stays in the input), with no third-party select library. The `l_ui_combobox` helper renders the whole control and its ARIA wiring; the new `l-ui--combobox` Stimulus controller drives filtering, selection, creation and reordering. Options: `collection:`, `form:`, `selected:`, `multiple:`, `create:`, `create_name:`, `reorder:`, `label:`, `hint:`, `placeholder:`, `required:`, `disabled:`, `id:` and `container:`.
+- Combobox single select: `multiple: false` renders a one-of-many control - the parameter loses its `[]` suffix, choosing an option replaces the current token, and the listbox closes on selection.
+- Combobox creation: `create: true` offers a term that matches no option as a new token. New values post under their own parameter (`create_name:`, which is then required), so the server never has to guess whether a submitted value is an existing record's ID or a free-text label. On redisplay, any `selected:` value outside the collection is rendered as a created token.
+- Combobox reordering: `reorder: true` gives each token a pair of move controls and makes tokens draggable with a mouse, with parameters posted in the displayed order. The move buttons are the accessible path (dragging alone would fail WCAG 2.2 SC 2.5.7, and they are the only route on a touch screen).
+
 ## [0.22.0] - 2026-07-10
 
 ### Added

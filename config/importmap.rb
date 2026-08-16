@@ -7,6 +7,7 @@ pin "layered_ui/utilities/scroll_lock", to: "layered_ui/utilities/scroll_lock.js
 pin "layered_ui/utilities/storage", to: "layered_ui/utilities/storage.js"
 
 # Controllers
+pin "layered_ui/controllers/l_ui/combobox_controller", to: "layered_ui/controllers/l_ui/combobox_controller.js"
 pin "layered_ui/controllers/l_ui/modal_controller", to: "layered_ui/controllers/l_ui/modal_controller.js"
 pin "layered_ui/controllers/l_ui/navigation_controller", to: "layered_ui/controllers/l_ui/navigation_controller.js"
 pin "layered_ui/controllers/l_ui/navigation_section_controller", to: "layered_ui/controllers/l_ui/navigation_section_controller.js"

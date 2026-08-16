@@ -57,7 +57,7 @@ Adding `layered-ui-rails` to an existing app? See [Installation](#installation).
 - **Dark/light theme** - system preference detection with localStorage persistence and manual toggle
 - **Responsive layout** - header, sidebar navigation, main content area, and optional resizable panel
 - **WCAG 2.2 AA compliant** - skip links, focus indicators, ARIA attributes, and 4.5:1 contrast ratios
-- **Components** - buttons, forms, surfaces, tables, tabs, notices, badges, tags, conversations, modals, popovers, and pagination
+- **Components** - buttons, forms, comboboxes, surfaces, tables, tabs, notices, badges, tags, conversations, modals, popovers, and pagination
 - **Optional integrations** - Devise authentication and Pagy pagination with styled views
 - **Customisable branding** - Override the default logos and icons and colors
 - **Google Lighthouse** - `layered-ui-rails` scores a [perfect 100](https://github.com/layered-ai-public/layered-ui-rails/raw/refs/heads/main/test/dummy/app/assets/images/lighthouse.webp) across all four Google Lighthouse categories - performance, accessibility, best practices, and SEO
