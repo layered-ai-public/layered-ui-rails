@@ -90,7 +90,8 @@ module Layered
         container_attrs[:class] = class_names("l-ui-combobox", container_attrs[:class])
         container_attrs[:data] = l_ui_combobox_data(container_attrs[:data],
                                                     multiple: multiple, create: create, reorder: reorder,
-                                                    value_name: value_name, create_value_name: create_value_name)
+                                                    disabled: disabled, value_name: value_name,
+                                                    create_value_name: create_value_name)
 
         tag.div(**container_attrs) do
           safe_join([
@@ -155,7 +156,7 @@ module Layered
         multiple ? "#{base}[]" : base
       end
 
-      def l_ui_combobox_data(data, multiple:, create:, reorder:, value_name:, create_value_name:)
+      def l_ui_combobox_data(data, multiple:, create:, reorder:, disabled:, value_name:, create_value_name:)
         data = (data || {}).deep_dup
         existing_controller = data.delete(:controller) || data.delete("controller")
 
@@ -163,6 +164,7 @@ module Layered
         data[:"l-ui--combobox-multiple-value"] = multiple
         data[:"l-ui--combobox-create-value"] = create
         data[:"l-ui--combobox-reorder-value"] = reorder
+        data[:"l-ui--combobox-disabled-value"] = disabled
         data[:"l-ui--combobox-name-value"] = value_name
         data[:"l-ui--combobox-create-name-value"] = create_value_name if create_value_name
         data
@@ -234,14 +236,20 @@ module Layered
       # A token reuses the tag component's segments so it matches the tags used
       # elsewhere, and adds the hidden input carrying its value.
       def l_ui_combobox_token(token, reorder:, disabled:)
-        tag.li(class: "l-ui-combobox__token l-ui-tag",
-               draggable: (true if reorder && !disabled),
+        draggable = reorder && !disabled
+
+        tag.li(class: class_names("l-ui-combobox__token", "l-ui-tag",
+                                  "l-ui-combobox__token--draggable" => draggable),
+               draggable: (true if draggable),
                data: {
                  "l-ui--combobox-target" => "token",
                  value: token[:value],
                  new: token[:new].to_s
                }) do
           parts = []
+          # Decorative: it advertises the drag, but the move buttons are what
+          # actually carry reordering for the keyboard and for touch.
+          parts << tag.span(l_ui_combobox_grip_icon, class: "l-ui-combobox__grip", aria: { hidden: true }) if draggable
           parts << tag.span(tag.span(token[:label], class: "l-ui-tag__label"),
                             class: "l-ui-tag__text")
           parts.concat(l_ui_combobox_move_controls(token, disabled: disabled)) if reorder
@@ -325,6 +333,19 @@ module Layered
         parts << "Enter also adds a value that is not in the list." if create
         parts << "Backspace on the empty input removes the last selection." if multiple
         parts.join(" ")
+      end
+
+      # The two-column dot grid conventionally used for a drag handle.
+      def l_ui_combobox_grip_icon
+        dots = [[9, 5], [15, 5], [9, 12], [15, 12], [9, 19], [15, 19]]
+
+        tag.svg(
+          safe_join(dots.map { |cx, cy| tag.circle(cx: cx, cy: cy, r: 1.6) }),
+          class: "l-ui-icon--xs",
+          fill: "currentColor",
+          "viewBox" => "0 0 24 24",
+          "aria-hidden" => "true"
+        )
       end
 
       # The tick inside a selected option's badge. Drawn with a stroke rather

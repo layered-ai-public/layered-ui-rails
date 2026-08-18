@@ -137,7 +137,7 @@ Features:
 Drives the token select rendered by `l_ui_combobox`: type-ahead filtering, selections held as tokens with their own hidden inputs, optional creation of values outside the collection, and optional reordering.
 
 **Targets:** `control`, `tokens`, `token`, `input`, `listbox`, `option`, `empty`, `template`, `status`
-**Values:** `multiple` (Boolean, default `true`), `create` (Boolean, default `false`), `reorder` (Boolean, default `false`), `name` (String - parameter existing values post under), `createName` (String - parameter created values post under)
+**Values:** `multiple` (Boolean, default `true`), `create` (Boolean, default `false`), `reorder` (Boolean, default `false`), `disabled` (Boolean, default `false`), `name` (String - parameter existing values post under), `createName` (String - parameter created values post under)
 **Actions:** `focusInput`, `open`, `close`, `blur`, `filter`, `keydown`, `selectOption`, `removeToken`, `moveTokenEarlier`, `moveTokenLater`, `dragstart`, `dragover`, `drop`, `dragend`
 
 Features:
@@ -145,8 +145,8 @@ Features:
 - Down/Up/Home/End move the highlight, Enter chooses, Escape closes then clears, Backspace on the empty input removes the last token
 - Choosing an already-selected option removes it again (multi select); single select replaces the token and closes
 - In create mode, a term matching no option is offered as `Add "term"` and posts under `createName`
-- Reorder mode disables the dead-end move control on the first and last token and moves focus so it is never lost
-- Dragging is a pointer enhancement only - the move buttons are the accessible path, as WCAG 2.2 SC 2.5.7 requires
+- Reorder mode disables the dead-end move control on the first and last token and moves focus so it is never lost; a disabled combobox is left alone, so its controls stay disabled
+- Dragging is a pointer enhancement only, advertised by a decorative grip handle - the move buttons are the accessible path, as WCAG 2.2 SC 2.5.7 requires
 - Selections, filter counts, and moves are announced through a local `role="status"` region
 
 Use the `l_ui_combobox` helper (see HELPERS.md) rather than writing the markup by hand.

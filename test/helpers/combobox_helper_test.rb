@@ -130,7 +130,35 @@ class ComboboxHelperTest < ActionView::TestCase
 
     assert_includes result, 'data-l-ui--combobox-reorder-value="false"'
     refute_includes result, "l-ui-combobox__move"
+    refute_includes result, "l-ui-combobox__grip"
     refute_includes result, "draggable"
+  end
+
+  test "a draggable token carries a decorative grip handle" do
+    result = l_ui_combobox("post[tag_ids]", collection: COLLECTION, selected: [1], reorder: true)
+
+    assert_includes result, "l-ui-combobox__token--draggable"
+    assert_includes result, '<span class="l-ui-combobox__grip" aria-hidden="true">'
+  end
+
+  test "a disabled token is neither draggable nor gripped" do
+    result = l_ui_combobox("post[tag_ids]", collection: COLLECTION, selected: [1],
+                           reorder: true, disabled: true)
+
+    refute_includes result, "l-ui-combobox__token--draggable"
+    refute_includes result, "l-ui-combobox__grip"
+    refute_includes result, 'draggable="true"'
+  end
+
+  test "the disabled state is exposed to the controller" do
+    result = l_ui_combobox("post[tag_ids]", collection: COLLECTION, selected: [1],
+                           reorder: true, disabled: true)
+
+    assert_includes result, 'data-l-ui--combobox-disabled-value="true"'
+
+    enabled = l_ui_combobox("post[tag_ids]", collection: COLLECTION, selected: [1], reorder: true)
+
+    assert_includes enabled, 'data-l-ui--combobox-disabled-value="false"'
   end
 
   test "reorder: true adds move controls and drag wiring" do

@@ -299,7 +299,9 @@ Token select: a text input with type-ahead filtering whose selections become tag
 .l-ui-combobox__control--disabled Dimmed, non-interactive control
 .l-ui-combobox__tokens            <ul> of tokens inside the control (collapses when empty)
 .l-ui-combobox__token             A selection (<li>); combine with l-ui-tag, whose segments it reuses
+.l-ui-combobox__token--draggable  A token that can be dragged (reorder mode, not disabled); takes cursor-grab
 .l-ui-combobox__token--dragging   Applied to the token being dragged
+.l-ui-combobox__grip              Decorative drag handle at a draggable token's leading edge (aria-hidden)
 .l-ui-combobox__move              Move-earlier / move-later control inside a token (reorder mode)
 .l-ui-combobox__input             The combobox text input; borderless, grows to fill the control, and carries a token's min-height so the control doesn't grow as the first token lands
 .l-ui-combobox__listbox           Absolutely positioned option list (role="listbox"); toggled with the hidden attribute

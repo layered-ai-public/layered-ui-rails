@@ -122,7 +122,7 @@ tags += Array(params[:post][:new_tag_names]).map { |name| Tag.find_or_create_by!
 
 <h2 class="mt-8 l-ui-heading--section">Reordering tokens</h2>
 
-<p class="mt-4">With <code>reorder: true</code> each token gains a pair of move controls, and tokens can also be dragged with a mouse. Parameters post in the order shown, so the field can express a ranking. The move buttons are not decoration: dragging on its own would fail WCAG 2.2 SC 2.5.7, which requires a single-pointer alternative - and they are the only way to reorder on a touch screen. Reordering is off by default, since most fields treat their selections as a set.</p>
+<p class="mt-4">With <code>reorder: true</code> each token gains a pair of move controls plus a grip handle, and tokens can be dragged with a mouse. The grip is decorative (<code>aria-hidden</code>) - it exists so the drag is discoverable rather than hidden, and the token takes a grab cursor to match. Parameters post in the order shown, so the field can express a ranking. The move buttons are not decoration: dragging on its own would fail WCAG 2.2 SC 2.5.7, which requires a single-pointer alternative - and they are the only way to reorder on a touch screen. Reordering is off by default, since most fields treat their selections as a set.</p>
 
 <div class="l-ui-form mt-4">
   <%= l_ui_combobox("survey[choice_ids]",

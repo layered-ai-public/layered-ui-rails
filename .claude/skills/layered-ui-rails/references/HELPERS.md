@@ -426,7 +426,7 @@ Renders a token select (`class="l-ui-combobox"`): a text input with type-ahead f
 - `multiple` (Boolean, default `true`) - multi select; `false` drops the `[]` suffix, replaces the token on choice, and closes the list
 - `create` (Boolean, default `false`) - allow values outside the collection; requires `create_name:`
 - `create_name` (String or Symbol) - parameter created values post under, keeping record IDs and free text unambiguous server-side
-- `reorder` (Boolean, default `false`) - move controls plus mouse dragging; parameters post in the displayed order
+- `reorder` (Boolean, default `false`) - move controls plus mouse dragging (each token gains a decorative grip handle advertising the drag); parameters post in the displayed order
 - `label`, `hint`, `placeholder`, `required`, `disabled`, `id`, `container` - as for a normal field
 
 ```erb

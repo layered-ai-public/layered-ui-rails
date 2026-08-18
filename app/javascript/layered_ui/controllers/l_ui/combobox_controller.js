@@ -21,6 +21,7 @@ export default class extends Controller {
     multiple: { type: Boolean, default: true },
     create: { type: Boolean, default: false },
     reorder: { type: Boolean, default: false },
+    disabled: { type: Boolean, default: false },
     name: String,
     createName: String
   }
@@ -316,9 +317,10 @@ export default class extends Controller {
   }
 
   // Only the first token's "earlier" control and the last token's "later"
-  // control are dead ends, so those are the ones disabled.
+  // control are dead ends, so those are the ones disabled. A disabled combobox
+  // is left alone, so its controls stay disabled.
   _refreshMoveControls() {
-    if (!this.reorderValue) return
+    if (!this.reorderValue || this.disabledValue) return
 
     const tokens = this.tokenTargets
     tokens.forEach((token, index) => {

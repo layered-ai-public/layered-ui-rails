@@ -2052,8 +2052,27 @@ pre.l-ui-surface {
   @apply cursor-default;
 }
 
+/* The grab cursor covers the label; the controls inside keep their own
+   pointer, so each part of the token still reads as what it does. */
+.l-ui-combobox__token--draggable {
+  @apply cursor-grab;
+}
+
 .l-ui-combobox__token--dragging {
-  @apply opacity-50;
+  @apply opacity-50
+         cursor-grabbing;
+}
+
+/* Decorative drag handle. Sits at the leading edge, where the convention puts
+   it, and takes the label segment's left padding so the token doesn't widen. */
+.l-ui-combobox__grip {
+  @apply flex shrink-0 items-center
+         pl-2
+         text-foreground-muted;
+}
+
+.l-ui-combobox__grip + .l-ui-tag__text {
+  @apply pl-1.5;
 }
 
 .l-ui-combobox__move {
