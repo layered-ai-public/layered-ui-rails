@@ -13,7 +13,8 @@ import { Controller } from "@hotwired/stimulus"
 // With `url` set, the options are fetched from that endpoint as the user types
 // instead of being filtered in the browser, and each response replaces the
 // list - cloned from the option <template> so remote options are built from the
-// same markup as server-rendered ones.
+// same markup as server-rendered ones. Further pages are appended as the user
+// reaches the end of the list, by pointer and by keyboard alike.
 //
 // Each selection carries its own hidden input, so the control submits with a
 // normal form post. Values that exist in the collection post under `name`;
@@ -22,6 +23,11 @@ import { Controller } from "@hotwired/stimulus"
 // Long enough that a typed word is one request rather than one per letter,
 // short enough that the list still feels like it is keeping up.
 const SEARCH_DEBOUNCE = 200
+
+// How close to the foot of the list counts as reaching the end, in pixels.
+// Roughly an option's height, so the next page is on its way before the last
+// option is fully in view.
+const LOAD_MORE_MARGIN = 64
 
 export default class extends Controller {
   static targets = [
@@ -48,9 +54,16 @@ export default class extends Controller {
     this._searchTimer = null
     this._request = null
     this._loading = false
+    this._loadingMore = false
     // The term the list currently shows results for; null until the first
     // response, which is how a remote combobox knows it has nothing yet.
     this._loadedTerm = null
+    this._page = 0
+    this._pages = 0
+    this._count = 0
+    // Option ids run on across pages, so appending a page can never reuse an
+    // id that aria-activedescendant might still be pointing at.
+    this._optionSequence = 0
     this._refreshMoveControls()
   }
 
@@ -94,6 +107,18 @@ export default class extends Controller {
 
   blur() {
     this.close()
+  }
+
+  // Reaching the foot of a remote list asks for the next page. The keyboard
+  // path is in _moveActive, so neither pointer nor keyboard is capped at the
+  // first page.
+  scrolled() {
+    if (!this._hasMore) return
+
+    const list = this.listboxTarget
+    if (list.scrollHeight - list.scrollTop - list.clientHeight > LOAD_MORE_MARGIN) return
+
+    this._loadMore()
   }
 
   filter() {
@@ -148,6 +173,9 @@ export default class extends Controller {
         event.preventDefault()
         const visible = this._visibleOptions()
         this._setActive(visible[visible.length - 1] || null)
+        // The end of a partly loaded list is not the end of the matches, so the
+        // next page is fetched and left for the arrow keys to walk into.
+        if (this._hasMore) this._loadMore()
         break
       }
       case "Enter": {
@@ -471,6 +499,15 @@ export default class extends Controller {
       return
     }
 
+    // The option after the last one of a partly loaded list is one that has not
+    // been fetched yet, so it is fetched rather than wrapping round to the top.
+    // The create option is exempt: it belongs to the term, not to the results.
+    const active = options[current]
+    if (offset > 0 && current === options.length - 1 && active !== this._createOption && this._hasMore) {
+      this._loadMore({ highlightFirstNew: true })
+      return
+    }
+
     this._setActive(options[(current + offset + options.length) % options.length])
   }
 
@@ -511,8 +548,11 @@ export default class extends Controller {
     if (this._belowThreshold) {
       this._abort()
       this._loading = false
+      this._loadingMore = false
       this._loadedTerm = null
-      this._replaceOptions([])
+      this._page = 0
+      this._pages = 0
+      this._renderOptions([], { replace: true })
       const characters = this.minCharsValue === 1 ? "character" : "characters"
       this._setNotice(`Type ${this.minCharsValue} ${characters} to search.`)
       return
@@ -525,34 +565,28 @@ export default class extends Controller {
     }
   }
 
-  async _search(term) {
-    this._abort()
+  // Whether the loaded list stops short of the matches the server has.
+  get _hasMore() {
+    return this.isRemote && this._page > 0 && this._page < this._pages
+  }
 
-    const request = new AbortController()
-    this._request = request
+  async _search(term) {
     this._loading = true
-    this._setNotice("Searching…")
+    this._loadingMore = false
+    this._refreshNotice()
     this._filterOptions()
 
     try {
-      const url = new URL(this.urlValue, window.location.href)
-      url.searchParams.set("term", term)
-
-      const response = await fetch(url, {
-        signal: request.signal,
-        headers: { Accept: "application/json" }
-      })
-      if (!response.ok) throw new Error(`${response.status} ${response.statusText}`)
-
-      const payload = await response.json()
+      const { payload, current } = await this._fetchPage(term, 1)
       // A response that lost its race with a later one is not the answer to
       // what is now in the input, so it is dropped rather than rendered.
-      if (request !== this._request) return
+      if (!current) return
 
       this._loading = false
       this._loadedTerm = term
-      this._replaceOptions(payload.options || [])
-      this._noticeForResults(payload)
+      this._takePageFrom(payload)
+      this._renderOptions(payload.options, { replace: true })
+      this._refreshNotice()
       this._filterOptions()
 
       const count = this.optionTargets.length
@@ -568,18 +602,85 @@ export default class extends Controller {
     }
   }
 
+  // Appends the page after the loaded one. Guarded so a scroll event, an arrow
+  // key and the End key cannot each start their own fetch of the same page.
+  async _loadMore({ highlightFirstNew = false } = {}) {
+    if (!this._hasMore || this._loading || this._loadingMore) return
+
+    const term = this._loadedTerm
+    const page = this._page + 1
+
+    this._loadingMore = true
+    this._refreshNotice()
+
+    try {
+      const { payload, current } = await this._fetchPage(term, page)
+      if (!current || this._loadedTerm !== term) return
+
+      this._loadingMore = false
+      this._takePageFrom(payload, page)
+      const added = this._renderOptions(payload.options, { replace: false })
+      this._refreshNotice()
+      this._filterOptions()
+
+      if (highlightFirstNew && added[0]) this._setActive(added[0])
+      this._announce(
+        `${added.length} more ${added.length === 1 ? "option" : "options"} loaded, ` +
+          `${this.optionTargets.length} of ${this._count}`
+      )
+    } catch (error) {
+      if (error.name === "AbortError") return
+
+      this._loadingMore = false
+      this._setNotice("More options could not be loaded.")
+      this._announce("More options could not be loaded.")
+    }
+  }
+
+  // Every request goes through here, so starting one always abandons the one
+  // before it - a fresh search abandons a page fetch as readily as the reverse.
+  async _fetchPage(term, page) {
+    this._abort()
+
+    const request = new AbortController()
+    this._request = request
+
+    const url = new URL(this.urlValue, window.location.href)
+    url.searchParams.set("term", term)
+    if (page > 1) url.searchParams.set("page", page)
+
+    const response = await fetch(url, {
+      signal: request.signal,
+      headers: { Accept: "application/json" }
+    })
+    if (!response.ok) throw new Error(`${response.status} ${response.statusText}`)
+
+    const payload = await response.json()
+    return { payload, current: request === this._request }
+  }
+
+  _takePageFrom(payload, fallbackPage = 1) {
+    this._page = Number(payload.page) || fallbackPage
+    this._pages = Number(payload.pages) || this._page
+    this._count = Number(payload.count) || 0
+  }
+
   _abort() {
     this._request?.abort()
     this._request = null
   }
 
-  // Each response replaces the list wholesale: the server decides what matches,
-  // and options are cloned from the template so they match server-rendered ones.
-  _replaceOptions(options) {
-    this.optionTargets.forEach((option) => option.remove())
-    this._setActive(null)
+  // Options are cloned from the template so fetched ones match server-rendered
+  // ones exactly. Returns the elements added, so a caller can highlight them.
+  _renderOptions(options, { replace }) {
+    if (replace) {
+      this.optionTargets.forEach((option) => option.remove())
+      this._setActive(null)
+      this._optionSequence = 0
+      this.listboxTarget.scrollTop = 0
+    }
 
-    if (!this.hasOptionTemplateTarget) return
+    if (!this.hasOptionTemplateTarget) return []
 
     const selected = new Set(
       this.tokenTargets
@@ -588,34 +689,44 @@ export default class extends Controller {
     )
 
     const fragment = document.createDocumentFragment()
-
-    options.forEach((option, index) => {
+    const added = (Array.isArray(options) ? options : []).map((option) => {
       const value = String(option.value)
       const label = String(option.label)
       const element = this.optionTemplateTarget.content.firstElementChild.cloneNode(true)
 
-      element.id = `${this.listboxTarget.id}-option-${index}`
+      element.id = `${this.listboxTarget.id}-option-${this._optionSequence++}`
       element.dataset.value = value
       element.dataset.label = label
       element.setAttribute("aria-selected", String(selected.has(value)))
       element.querySelector(".l-ui-combobox__option-label").textContent = label
 
       fragment.appendChild(element)
+      return element
     })
 
-    this.listboxTarget.insertBefore(fragment, this.listboxTarget.firstElementChild)
+    // Before the empty row and the notice, which are not options.
+    this.listboxTarget.insertBefore(fragment, this._firstNonOption())
+    return added
   }
 
-  // Only the first page is ever shown: paging a listbox with the keyboard is a
-  // pattern of its own, and narrowing the term is the quicker way there anyway.
-  _noticeForResults({ count, pages }) {
-    const shown = this.optionTargets.length
+  _firstNonOption() {
+    return (
+      this.listboxTarget.querySelector(
+        ":scope > :not(.l-ui-combobox__option), :scope > .l-ui-combobox__option--create"
+      ) || null
+    )
+  }
 
-    if (pages > 1 && count > shown) {
-      this._setNotice(`Showing ${shown} of ${count} matches. Keep typing to narrow the list.`)
-    } else {
-      this._setNotice(null)
-    }
+  // The notice is the list's progress line as well as its status line: while
+  // pages remain it says how far in the list has got, since a list that grows
+  // as it is scrolled otherwise gives no sense of how much there is.
+  _refreshNotice() {
+    if (this._loading) return this._setNotice("Searching…")
+    if (this._loadingMore) return this._setNotice("Loading more…")
+    if (this._belowThreshold) return
+
+    const shown = this.optionTargets.length
+    this._setNotice(this._hasMore ? `Showing ${shown} of ${this._count} matches.` : null)
   }
 
   _setNotice(message) {

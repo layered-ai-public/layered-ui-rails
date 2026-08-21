@@ -294,10 +294,23 @@ class ComboboxHelperTest < ActionView::TestCase
     assert_match(/\[label, value\] pair/, error.message)
   end
 
-  test "instructions describe searching rather than filtering for a remote combobox" do
+  test "instructions describe searching, and the paging, for a remote combobox" do
     result = l_ui_combobox("post[tag_ids]", url: "/tags/options", id: "tags")
 
     assert_includes result, "Type to search for options."
+    assert_includes result, "More options load as you reach the end of the list."
+  end
+
+  test "a remote listbox loads the next page when it is scrolled to its foot" do
+    result = l_ui_combobox("post[tag_ids]", url: "/tags/options")
+
+    assert_includes result, 'data-action="scroll-&gt;l-ui--combobox#scrolled"'
+  end
+
+  test "a local listbox has nothing to load, so it is not wired to scroll" do
+    result = l_ui_combobox("post[tag_ids]", collection: COLLECTION)
+
+    refute_includes result, "#scrolled"
   end
 
   test "container attributes are merged and the controller is preserved" do

@@ -449,7 +449,7 @@ Each selection carries its own hidden input, so the control submits with an ordi
 
 ### Remote options
 
-With `url:`, options are fetched from that endpoint as the user types (debounced, with overtaken responses discarded) instead of being rendered up front and filtered in the browser. Only the first page of matches is shown; a presentational note under the options (`class="l-ui-combobox__notice"`) says how many were left out, and also carries the searching and failure messages. Remote selections must be passed as `["Label", value]` pairs, since the browser has no collection to look a label up in.
+With `url:`, options are fetched from that endpoint as the user types (debounced, with overtaken responses discarded) instead of being rendered up front and filtered in the browser. Matches load a page at a time, the next page appended as the end of the list is reached - by scrolling to its foot or by pressing Down on its last option, so the keyboard is not capped at the first page. A presentational note under the options (`class="l-ui-combobox__notice"`) says how far into the matches the list has got, and also carries the searching, loading and failure messages. Remote selections must be passed as `["Label", value]` pairs, since the browser has no collection to look a label up in.
 
 ```ruby
 Layered::Ui::ComboboxOptions   # Controller concern building the JSON the endpoint answers with

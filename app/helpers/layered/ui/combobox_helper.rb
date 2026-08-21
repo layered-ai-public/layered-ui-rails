@@ -63,6 +63,10 @@ module Layered
       # collection, a selected value cannot be looked up for its label, so pass
       # remote selections as +[label, value]+ pairs.
       #
+      # Further pages are appended as the user reaches the end of the list -
+      # by scrolling to its foot, or by pressing Down on its last option, so
+      # the keyboard is not capped at the first page.
+      #
       # == Reordering
       #
       # With +reorder: true+ each token gains a pair of move controls and can
@@ -126,7 +130,7 @@ module Layered
             l_ui_combobox_control(id, tokens,
                                   value_name: value_name, placeholder: placeholder, hint: hint,
                                   reorder: reorder, disabled: disabled, required: required),
-            l_ui_combobox_listbox(id, options, tokens, multiple: multiple),
+            l_ui_combobox_listbox(id, options, tokens, multiple: multiple, url: url),
             l_ui_combobox_template(reorder: reorder, disabled: disabled),
             (l_ui_combobox_option_template if url),
             tag.span(l_ui_combobox_instructions(multiple: multiple, create: create, url: url),
@@ -333,7 +337,7 @@ module Layered
         ]
       end
 
-      def l_ui_combobox_listbox(id, options, tokens, multiple:)
+      def l_ui_combobox_listbox(id, options, tokens, multiple:, url: nil)
         selected_values = tokens.map { |token| token[:value] }
 
         tag.ul(id: "#{id}-listbox",
@@ -341,7 +345,11 @@ module Layered
                role: "listbox",
                hidden: true,
                aria: { multiselectable: ("true" if multiple) }.compact,
-               data: { "l-ui--combobox-target" => "listbox" }) do
+               data: {
+                 "l-ui--combobox-target" => "listbox",
+                 # Scrolling to the foot of a remote list loads the next page.
+                 action: ("scroll->l-ui--combobox#scrolled" if url)
+               }.compact) do
           items = options.each_with_index.map do |(label, value), index|
             l_ui_combobox_option(label, value,
                                  id: "#{id}-option-#{index}",
@@ -405,7 +413,8 @@ module Layered
       def l_ui_combobox_instructions(multiple:, create:, url: nil)
         parts = [
           if url
-            "Type to search for options. Use the up and down arrow keys to browse them and Enter to choose."
+            "Type to search for options. Use the up and down arrow keys to browse them and Enter to choose. " \
+              "More options load as you reach the end of the list."
           else
             "Type to filter the options. Use the up and down arrow keys to browse them and Enter to choose."
           end

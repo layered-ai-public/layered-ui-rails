@@ -138,7 +138,7 @@ Drives the token select rendered by `l_ui_combobox`: type-ahead filtering, selec
 
 **Targets:** `control`, `tokens`, `token`, `input`, `listbox`, `option`, `empty`, `notice`, `template`, `optionTemplate`, `status`
 **Values:** `multiple` (Boolean, default `true`), `create` (Boolean, default `false`), `reorder` (Boolean, default `false`), `disabled` (Boolean, default `false`), `name` (String - parameter existing values post under), `createName` (String - parameter created values post under), `url` (String - endpoint searched as the user types; empty means filter in the browser), `minChars` (Number, default `0` - characters needed before a remote search runs)
-**Actions:** `focusInput`, `open`, `close`, `blur`, `filter`, `keydown`, `selectOption`, `removeToken`, `moveTokenEarlier`, `moveTokenLater`, `dragstart`, `dragover`, `drop`, `dragend`
+**Actions:** `focusInput`, `open`, `close`, `blur`, `scrolled`, `filter`, `keydown`, `selectOption`, `removeToken`, `moveTokenEarlier`, `moveTokenLater`, `dragstart`, `dragover`, `drop`, `dragend`
 
 Features:
 - Focus never leaves the input while the list is browsed; the highlight follows `aria-activedescendant`
@@ -150,7 +150,8 @@ Features:
 - Dragging is a pointer enhancement only, advertised by a decorative grip handle - the move buttons are the accessible path, as WCAG 2.2 SC 2.5.7 requires
 - Selections, filter counts, and moves are announced through a local `role="status"` region
 - With `url` set, each keystroke schedules a debounced fetch of `url?term=...`; the previous request is aborted and an overtaken response is dropped, so the list always answers what is currently typed. Responses replace the options wholesale, cloned from the `optionTemplate`, and the browser does no filtering of its own
-- The `notice` row carries the list's own messages: searching, a failed request, the character threshold, and how many matches were left out of the first page
+- Further pages are appended as the end of a remote list is reached - within `LOAD_MORE_MARGIN` of its foot (the `scrolled` action, bound to the listbox), or on Down/End at the last option, so the keyboard is not capped at the first page. Down loads instead of wrapping while pages remain, and highlights the first newly loaded option; option ids run on across pages so `aria-activedescendant` can never point at a reused id
+- The `notice` row carries the list's own messages: searching, loading more, a failed request, the character threshold, and how far into the matches the list has got. Each appended page is announced through the status region
 
 Use the `l_ui_combobox` helper (see HELPERS.md) rather than writing the markup by hand.
 
