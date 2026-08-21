@@ -24,6 +24,10 @@ import { Controller } from "@hotwired/stimulus"
 // short enough that the list still feels like it is keeping up.
 const SEARCH_DEBOUNCE = 200
 
+// A request that answers sooner than this needs no spinner: showing one would
+// be a flicker rather than an answer to "is anything happening?".
+const SPINNER_DELAY = 150
+
 // How close to the foot of the list counts as reaching the end, in pixels.
 // Roughly an option's height, so the next page is on its way before the last
 // option is fully in view.
@@ -32,7 +36,7 @@ const LOAD_MORE_MARGIN = 64
 export default class extends Controller {
   static targets = [
     "control", "tokens", "token", "input", "listbox", "option", "empty",
-    "notice", "template", "optionTemplate", "status"
+    "notice", "noticeText", "busy", "moreSpinner", "template", "optionTemplate", "status"
   ]
 
   static values = {
@@ -52,6 +56,8 @@ export default class extends Controller {
     this._dragOrigin = null
     this._dropped = false
     this._searchTimer = null
+    this._busyTimer = null
+    this._notice = ""
     this._request = null
     this._loading = false
     this._loadingMore = false
@@ -69,6 +75,7 @@ export default class extends Controller {
 
   disconnect() {
     clearTimeout(this._searchTimer)
+    clearTimeout(this._busyTimer)
     this._abort()
   }
 
@@ -547,6 +554,7 @@ export default class extends Controller {
     // says what it is waiting for instead of showing stale results.
     if (this._belowThreshold) {
       this._abort()
+      this._stopBusy()
       this._loading = false
       this._loadingMore = false
       this._loadedTerm = null
@@ -573,6 +581,7 @@ export default class extends Controller {
   async _search(term) {
     this._loading = true
     this._loadingMore = false
+    this._startBusy("search")
     this._refreshNotice()
     this._filterOptions()
 
@@ -583,6 +592,7 @@ export default class extends Controller {
       if (!current) return
 
       this._loading = false
+      this._stopBusy()
       this._loadedTerm = term
       this._takePageFrom(payload)
       this._renderOptions(payload.options, { replace: true })
@@ -596,6 +606,7 @@ export default class extends Controller {
       if (error.name === "AbortError") return
 
       this._loading = false
+      this._stopBusy()
       this._setNotice("The options could not be loaded.")
       this._filterOptions()
       this._announce("The options could not be loaded.")
@@ -611,13 +622,14 @@ export default class extends Controller {
     const page = this._page + 1
 
     this._loadingMore = true
-    this._refreshNotice()
+    this._startBusy("more")
 
     try {
       const { payload, current } = await this._fetchPage(term, page)
       if (!current || this._loadedTerm !== term) return
 
       this._loadingMore = false
+      this._stopBusy()
       this._takePageFrom(payload, page)
       const added = this._renderOptions(payload.options, { replace: false })
       this._refreshNotice()
@@ -632,6 +644,7 @@ export default class extends Controller {
       if (error.name === "AbortError") return
 
       this._loadingMore = false
+      this._stopBusy()
       this._setNotice("More options could not be loaded.")
       this._announce("More options could not be loaded.")
     }
@@ -717,23 +730,52 @@ export default class extends Controller {
     )
   }
 
-  // The notice is the list's progress line as well as its status line: while
-  // pages remain it says how far in the list has got, since a list that grows
-  // as it is scrolled otherwise gives no sense of how much there is.
+  // The notice carries only what stays worth reading: while pages remain, how
+  // far into the matches the list has got, since a list that grows as it is
+  // scrolled otherwise gives no sense of how much there is. A request in flight
+  // is left to the spinner.
   _refreshNotice() {
-    if (this._loading) return this._setNotice("Searching…")
-    if (this._loadingMore) return this._setNotice("Loading more…")
     if (this._belowThreshold) return
 
     const shown = this.optionTargets.length
     this._setNotice(this._hasMore ? `Showing ${shown} of ${this._count} matches.` : null)
   }
 
+  // The spinner waits out SPINNER_DELAY, so only a request slow enough to be
+  // worth reporting ever shows one. aria-busy is set at once, since it costs
+  // nothing and says the same thing to a screen reader.
+  _startBusy(kind) {
+    clearTimeout(this._busyTimer)
+    this.listboxTarget.setAttribute("aria-busy", "true")
+    this._busyTimer = setTimeout(() => this._setBusy(kind), SPINNER_DELAY)
+  }
+
+  _stopBusy() {
+    clearTimeout(this._busyTimer)
+    this.listboxTarget.removeAttribute("aria-busy")
+    this._setBusy(null)
+  }
+
+  _setBusy(kind) {
+    if (this.hasBusyTarget) this.busyTarget.hidden = kind !== "search"
+    if (this.hasMoreSpinnerTarget) this.moreSpinnerTarget.hidden = kind !== "more"
+    this._refreshNoticeRow()
+  }
+
   _setNotice(message) {
+    this._notice = message || ""
+    this._refreshNoticeRow()
+  }
+
+  // The row earns its place with a message, or with a spinner standing in for
+  // the page on its way.
+  _refreshNoticeRow() {
     if (!this.hasNoticeTarget) return
 
-    this.noticeTarget.textContent = message || ""
-    this.noticeTarget.hidden = !message
+    const spinning = this.hasMoreSpinnerTarget && !this.moreSpinnerTarget.hidden
+
+    if (this.hasNoticeTextTarget) this.noticeTextTarget.textContent = this._notice
+    this.noticeTarget.hidden = this._notice === "" && !spinning
   }
 
   _announce(message) {

@@ -301,6 +301,27 @@ class ComboboxHelperTest < ActionView::TestCase
     assert_includes result, "More options load as you reach the end of the list."
   end
 
+  test "a remote combobox renders a spinner in the control and one in the notice" do
+    result = l_ui_combobox("post[tag_ids]", url: "/tags/options")
+
+    assert_includes result, 'class="l-ui-combobox__busy" hidden="hidden" aria-hidden="true"'
+    assert_includes result, 'data-l-ui--combobox-target="busy"'
+    assert_includes result, 'data-l-ui--combobox-target="moreSpinner"'
+    assert_includes result, 'class="l-ui-combobox__spinner"'
+  end
+
+  test "a local combobox waits for nothing, so it renders no spinner" do
+    result = l_ui_combobox("post[tag_ids]", collection: COLLECTION)
+
+    refute_includes result, "l-ui-combobox__spinner"
+  end
+
+  test "the notice row keeps its text in its own element, clear of the spinner" do
+    result = l_ui_combobox("post[tag_ids]", url: "/tags/options")
+
+    assert_includes result, 'data-l-ui--combobox-target="noticeText"'
+  end
+
   test "a remote listbox loads the next page when it is scrolled to its foot" do
     result = l_ui_combobox("post[tag_ids]", url: "/tags/options")
 

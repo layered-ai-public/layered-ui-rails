@@ -2156,15 +2156,40 @@ pre.l-ui-surface {
          text-sm font-inter text-foreground-muted;
 }
 
+/* Stands in for a "searching" message: a request in flight is a state, and a
+   message that comes and goes within a keystroke cannot be read. The ring keeps
+   its shape without the animation, so it still reads as busy where motion is
+   turned down. */
+.l-ui-combobox__spinner {
+  @apply block shrink-0
+         w-4 h-4
+         border-2 border-border border-t-foreground-muted rounded-full
+         animate-spin
+         motion-reduce:animate-none;
+}
+
+/* Sits at the trailing edge of the control, where a search field puts its
+   progress. */
+.l-ui-combobox__busy {
+  @apply flex shrink-0 items-center
+         pr-1.5;
+}
+
 /* What the list has to say about itself - a search in flight, a failure, or a
    truncated result set. Sticks to the foot of the scrolling list, since a note
    saying the results were cut short is no use below the fold, and is set apart
    from the options above it because it is not something that can be chosen. */
 .l-ui-combobox__notice {
-  @apply sticky bottom-0
-         px-3 py-2
+  @apply sticky bottom-0 flex items-center
+         gap-2 px-3 py-2
          text-xs font-inter text-foreground-muted
          bg-background;
+}
+
+/* Smaller than the control's, so a page being fetched reads as a detail of the
+   list rather than competing with it. */
+.l-ui-combobox__notice .l-ui-combobox__spinner {
+  @apply w-3 h-3;
 }
 
 /* The list's own bottom padding would sit below the sticky notice, leaving a gap

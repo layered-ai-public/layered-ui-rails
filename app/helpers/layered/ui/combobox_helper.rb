@@ -129,7 +129,7 @@ module Layered
             (tag.p(hint, id: "#{id}-hint", class: "l-ui-form__hint") if hint),
             l_ui_combobox_control(id, tokens,
                                   value_name: value_name, placeholder: placeholder, hint: hint,
-                                  reorder: reorder, disabled: disabled, required: required),
+                                  reorder: reorder, disabled: disabled, required: required, url: url),
             l_ui_combobox_listbox(id, options, tokens, multiple: multiple, url: url),
             l_ui_combobox_template(reorder: reorder, disabled: disabled),
             (l_ui_combobox_option_template if url),
@@ -243,7 +243,7 @@ module Layered
         end
       end
 
-      def l_ui_combobox_control(id, tokens, value_name:, placeholder:, hint:, reorder:, disabled:, required:)
+      def l_ui_combobox_control(id, tokens, value_name:, placeholder:, hint:, reorder:, disabled:, required:, url: nil)
         described_by = [("#{id}-hint" if hint), "#{id}-instructions"].compact.join(" ")
 
         tag.div(class: class_names("l-ui-combobox__control", "l-ui-combobox__control--disabled" => disabled),
@@ -284,8 +284,9 @@ module Layered
                         "focus->l-ui--combobox#open " \
                         "blur->l-ui--combobox#blur"
               }
-            )
-          ])
+            ),
+            (l_ui_combobox_busy if url)
+          ].compact)
         end
       end
 
@@ -362,13 +363,19 @@ module Layered
                           hidden: true,
                           data: { "l-ui--combobox-target" => "empty" })
           # Carries whatever the list has to say about itself rather than about
-          # an option - that a search is running, that it failed, or that the
-          # results were truncated - so it is presentational, never a choice.
-          items << tag.li("",
-                          class: "l-ui-combobox__notice",
+          # an option - how far into the matches it has got, or that they could
+          # not be loaded - so it is presentational, never a choice. The spinner
+          # beside it covers a page being fetched, which is a state rather than
+          # a message.
+          items << tag.li(class: "l-ui-combobox__notice",
                           role: "presentation",
                           hidden: true,
-                          data: { "l-ui--combobox-target" => "notice" })
+                          data: { "l-ui--combobox-target" => "notice" }) do
+            safe_join([
+              tag.span("", data: { "l-ui--combobox-target" => "noticeText" }),
+              (l_ui_combobox_spinner(target: "moreSpinner") if url)
+            ].compact)
+          end
           safe_join(items)
         end
       end
@@ -400,6 +407,26 @@ module Layered
         tag.template(data: { "l-ui--combobox-target" => "template" }) do
           l_ui_combobox_token({ label: "", value: "", new: false, name: "" }, reorder: reorder, disabled: disabled)
         end
+      end
+
+      # Shown in place of a "searching" message: a request in flight is a state,
+      # and a message that appears and vanishes within a keystroke is unreadable.
+      # It is aria-hidden because the listbox carries aria-busy for the same
+      # state, and the results are announced when they arrive.
+      def l_ui_combobox_busy
+        tag.span(l_ui_combobox_spinner,
+                 class: "l-ui-combobox__busy",
+                 hidden: true,
+                 aria: { hidden: true },
+                 data: { "l-ui--combobox-target" => "busy" })
+      end
+
+      def l_ui_combobox_spinner(target: nil)
+        tag.span("",
+                 class: "l-ui-combobox__spinner",
+                 hidden: (true if target),
+                 aria: { hidden: true },
+                 data: ({ "l-ui--combobox-target" => target } if target))
       end
 
       # The blank option the controller clones for each fetched option, so
