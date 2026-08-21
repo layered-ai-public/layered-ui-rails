@@ -143,6 +143,7 @@ Drives the token select rendered by `l_ui_combobox`: type-ahead filtering, selec
 Features:
 - Focus never leaves the input while the list is browsed; the highlight follows `aria-activedescendant`
 - Down/Up/Home/End move the highlight, Enter chooses, Escape closes then clears, Backspace on the empty input removes the last token
+- With nothing highlighted, Down enters the list at the first option and Up at the last, matching the ARIA combobox pattern; the highlight wraps at either end
 - Choosing an already-selected option removes it again (multi select); single select replaces the token and closes
 - In create mode, a term matching no option is offered as `Add "term"` and posts under `createName`
 - Reorder mode disables the dead-end move control on the first and last token and moves focus so it is never lost; a disabled combobox is left alone, so its controls stay disabled

@@ -217,7 +217,7 @@ tags += Array(params[:post][:new_tag_names]).map { |name| Tag.find_or_create_by!
     <tbody class="l-ui-table__body">
       <tr>
         <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row">Down / Up</th>
-        <td class="l-ui-table__cell">Open the list, then move the highlight through the visible options</td>
+        <td class="l-ui-table__cell">Open the list, entering it from the first (Down) or last (Up) visible option, then move the highlight through the options, wrapping at each end</td>
       </tr>
       <tr>
         <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row">Home / End</th>

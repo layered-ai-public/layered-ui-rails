@@ -85,10 +85,13 @@ export default class extends Controller {
         this.isOpen ? this._moveActive(1) : this.open()
         if (!this._activeId) this._setActive(this._visibleOptions()[0] || null)
         break
-      case "ArrowUp":
+      case "ArrowUp": {
         event.preventDefault()
-        if (this.isOpen) this._moveActive(-1)
+        this.isOpen ? this._moveActive(-1) : this.open()
+        const visible = this._visibleOptions()
+        if (!this._activeId) this._setActive(visible[visible.length - 1] || null)
         break
+      }
       case "Home":
         if (!this.isOpen) return
         event.preventDefault()
@@ -402,9 +405,15 @@ export default class extends Controller {
     const options = this._visibleOptions()
     if (options.length === 0) return
 
+    // With nothing highlighted yet, each arrow enters the list from its own
+    // end: Down lands on the first option, Up on the last.
     const current = options.indexOf(this._activeOption())
-    const next = current === -1 ? 0 : (current + offset + options.length) % options.length
-    this._setActive(options[next])
+    if (current === -1) {
+      this._setActive(offset < 0 ? options[options.length - 1] : options[0])
+      return
+    }
+
+    this._setActive(options[(current + offset + options.length) % options.length])
   }
 
   _setActive(option) {
