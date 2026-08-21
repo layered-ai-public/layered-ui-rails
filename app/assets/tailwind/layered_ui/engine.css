@@ -1986,6 +1986,176 @@ pre.l-ui-surface {
          cursor-pointer;
 }
 
+/* Combobox */
+
+/* A token select: a text input with type-ahead filtering whose selections
+   become tags. The control is styled to read as a single form field, so it
+   borrows the field's border, radius and metrics while laying its tokens and
+   input out as a wrapping flex row. */
+
+.l-ui-combobox {
+  @apply relative
+         w-full;
+}
+
+/* The listbox and its filtered-out options are hidden with the `hidden`
+   attribute rather than a class, so their `display` must not be set by the
+   rules below - these components sit outside `@layer`, which would otherwise
+   beat Preflight's `[hidden]` rule. */
+.l-ui-combobox [hidden] {
+  display: none !important;
+}
+
+.l-ui-combobox__control {
+  @apply flex flex-wrap items-center
+         w-full min-h-[44px]
+         mt-2 p-1.5 gap-1.5
+         /* text-base at mobile; text-sm at md+ */
+         text-base font-inter text-foreground
+         bg-background
+         border border-border-control rounded-sm
+         cursor-text;
+
+  @media (min-width: 768px) {
+    @apply text-sm;
+  }
+}
+
+/* Focus lives on the input inside the control, so the ring is drawn on the
+   control to match the outline of a plain form field. */
+.l-ui-combobox__control:focus-within {
+  @apply ring-2 ring-ring ring-offset-2 ring-offset-background outline-none;
+}
+
+.field_with_errors .l-ui-combobox__control {
+  @apply bg-error-bg/10
+         border-2 border-danger;
+}
+
+.l-ui-combobox__control--disabled {
+  @apply opacity-60
+         cursor-default;
+}
+
+.l-ui-combobox__tokens {
+  @apply flex flex-wrap items-center
+         gap-1.5;
+}
+
+/* Without this the control's gap would leave a blank inset before the input
+   while nothing is selected. */
+.l-ui-combobox__tokens:empty {
+  @apply hidden;
+}
+
+.l-ui-combobox__token {
+  @apply cursor-default;
+}
+
+/* The grab cursor covers the label; the controls inside keep their own
+   pointer, so each part of the token still reads as what it does. */
+.l-ui-combobox__token--draggable {
+  @apply cursor-grab;
+}
+
+.l-ui-combobox__token--dragging {
+  @apply opacity-50
+         cursor-grabbing;
+}
+
+/* Decorative drag handle. Sits at the leading edge, where the convention puts
+   it, and takes the label segment's left padding so the token doesn't widen. */
+.l-ui-combobox__grip {
+  @apply flex shrink-0 items-center
+         pl-2
+         text-foreground-muted;
+}
+
+.l-ui-combobox__grip + .l-ui-tag__text {
+  @apply pl-1.5;
+}
+
+.l-ui-combobox__move {
+  @apply px-1;
+}
+
+.l-ui-combobox__move:disabled {
+  @apply opacity-40
+         cursor-default;
+}
+
+/* The min-height matches a token's (l-ui-tag), so the control is the same
+   height whether or not anything is selected - without it the shorter line box
+   of an empty input makes the field grow as the first token lands. */
+.l-ui-combobox__input {
+  @apply flex-1
+         min-w-[8rem] min-h-8
+         px-1.5 py-1
+         text-inherit
+         bg-transparent
+         border-0
+         outline-none;
+}
+
+.l-ui-combobox__listbox {
+  @apply absolute right-0 left-0 z-30
+         max-h-64
+         mt-1 p-1
+         overflow-y-auto
+         bg-background
+         border border-border rounded-sm
+         shadow-lg;
+}
+
+.l-ui-combobox__option {
+  @apply flex items-center justify-between
+         gap-2 px-3 py-2.5
+         text-sm font-inter text-foreground
+         hover:bg-surface
+         rounded-sm
+         transition-colors
+         cursor-pointer;
+}
+
+/* The highlighted option follows aria-activedescendant, not DOM focus, which
+   stays in the input while the list is browsed. It takes the stronger of the
+   two surfaces so a keyboard highlight stays legible under a stray pointer. */
+.l-ui-combobox__option--active {
+  @apply bg-surface-highlighted;
+}
+
+/* Reserved rather than removed, so options don't shift as they are chosen.
+   The accent pair is used both ways round, so the tick keeps its contrast in
+   either theme. */
+.l-ui-combobox__option-check {
+  @apply flex shrink-0 items-center justify-center
+         w-5 h-5
+         text-accent-foreground
+         bg-accent
+         rounded-full
+         invisible;
+}
+
+/* Sized well inside the circle so the tick has room to breathe. It is drawn as
+   a stroked path rather than a filled one, so the weight stays readable at
+   this size - see the stroke-width on the icon itself. */
+.l-ui-combobox__option-check-icon {
+  @apply w-2.5 h-2.5;
+}
+
+.l-ui-combobox__option[aria-selected="true"] .l-ui-combobox__option-check {
+  @apply visible;
+}
+
+.l-ui-combobox__option--create {
+  @apply font-medium;
+}
+
+.l-ui-combobox__empty {
+  @apply px-3 py-2.5
+         text-sm font-inter text-foreground-muted;
+}
+
 /* Panel */
 
 .l-ui-panel__button {

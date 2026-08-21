@@ -408,6 +408,43 @@ Text, button, and link segments wrap their content in `<span class="l-ui-tag__la
 
 When a popover is declared, the tag container itself becomes the `l-ui--popover` controller root and placement target - the popover aligns with the whole tag rather than the label button inside it - and button segments are wired to open it via `popovertarget`. A tag without a popover renders no Stimulus wiring.
 
+## Combobox
+
+```ruby
+l_ui_combobox(name, collection:, form: nil, selected: nil, multiple: true,
+              create: false, create_name: nil, reorder: false, id: nil,
+              label: nil, hint: nil, placeholder: nil, required: false,
+              disabled: false, container: {})
+```
+
+Renders a token select (`class="l-ui-combobox"`): a text input with type-ahead filtering whose selections become removable tags, in the style of an email recipient field. Built on the ARIA combobox pattern - no third-party select library.
+
+- `name` (String or Symbol) - the parameter, e.g. `"post[tag_ids]"`. A Symbol is resolved against `form:`
+- `collection` (Array, required) - `["Label", value]` pairs, `{ label:, value: }` hashes, or plain strings
+- `form` (FormBuilder, optional) - derives parameter names from the builder for Symbol names
+- `selected` (Array or value, optional) - selected values. A value outside `collection` renders as a created token (requires `create:`)
+- `multiple` (Boolean, default `true`) - multi select; `false` drops the `[]` suffix, replaces the token on choice, and closes the list
+- `create` (Boolean, default `false`) - allow values outside the collection; requires `create_name:`
+- `create_name` (String or Symbol) - parameter created values post under, keeping record IDs and free text unambiguous server-side
+- `reorder` (Boolean, default `false`) - move controls plus mouse dragging (each token gains a decorative grip handle advertising the drag); parameters post in the displayed order
+- `label`, `hint`, `placeholder`, `required`, `disabled`, `id`, `container` - as for a normal field
+
+```erb
+<%= form_with model: @post do |f| %>
+  <%= l_ui_combobox(:tag_ids, form: f,
+        label: "Tags",
+        collection: Tag.pluck(:name, :id),
+        selected: @post.tag_ids,
+        create: true,
+        create_name: :new_tag_names) %>
+<% end %>
+
+<%# post[tag_ids][]       => ["", "7"]  %>
+<%# post[new_tag_names][] => ["urgent"] %>
+```
+
+Each selection carries its own hidden input, so the control submits with an ordinary form post, and a blank value is always posted first - clearing every token submits an empty collection instead of omitting the parameter and leaving the association untouched. Selections are announced through a local `role="status"` region, and the keyboard help is bound to the input with `aria-describedby`. Reordering exposes move buttons as well as dragging, since WCAG 2.2 SC 2.5.7 requires a single-pointer alternative to a drag.
+
 ## Header
 
 ```ruby

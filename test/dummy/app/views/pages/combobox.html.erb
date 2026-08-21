@@ -1,0 +1,244 @@
+<%= l_ui_title_bar(
+  title: "Combobox",
+  breadcrumbs: [
+    ["Home", root_path]
+  ]
+) %>
+
+<p class="mt-4">A token select: a text input with type-ahead filtering whose selections become removable <%= link_to "tags", tags_path %>, in the style of an email recipient field. It is built on the ARIA combobox pattern - the input carries <code>role="combobox"</code> and points at the highlighted option with <code>aria-activedescendant</code>, so focus stays in the input while the list is browsed - and needs no third-party select library.</p>
+
+<p class="mt-4">Each selection carries its own hidden input, so the control submits with an ordinary form post. A blank value is always posted first, so clearing every token submits an empty collection rather than omitting the parameter and leaving the association untouched.</p>
+
+<h2 class="mt-8 l-ui-heading--section">Multi select</h2>
+
+<p class="mt-4">The default. Type to filter, choose with Enter or a click, and remove a token with its ✕ or by pressing Backspace on the empty input. Choosing an option that is already selected removes it again.</p>
+
+<div class="l-ui-form mt-4">
+  <%= l_ui_combobox("message[recipient_ids]",
+        label: "Recipients",
+        collection: @recipients,
+        selected: @recipients.first(2).map(&:last),
+        placeholder: "Add a recipient",
+        hint: "Search by email address.") %>
+</div>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-combobox-multi-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-combobox-multi-heading">Multi select</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;%= l_ui_combobox("message[recipient_ids]",
+      label: "Recipients",
+      collection: User.pluck(:email, :id),
+      selected: @message.recipient_ids,
+      placeholder: "Add a recipient",
+      hint: "Search by email address.") %&gt;
+
+# message[recipient_ids][] => ["", "3", "7"]</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="mt-8 l-ui-heading--section">Single select</h2>
+
+<p class="mt-4">Pass <code>multiple: false</code> for a one-of-many control. The parameter loses its <code>[]</code> suffix, choosing an option replaces the current token, and the listbox closes on selection. Use it where a <code>&lt;select&gt;</code> would be unwieldy because the list is long.</p>
+
+<div class="l-ui-form mt-4">
+  <%= l_ui_combobox("message[owner_id]",
+        label: "Owner",
+        collection: @recipients,
+        multiple: false,
+        placeholder: "Choose an owner") %>
+</div>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-combobox-single-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-combobox-single-heading">Single select</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;%= l_ui_combobox("message[owner_id]",
+      label: "Owner",
+      collection: User.pluck(:email, :id),
+      multiple: false,
+      placeholder: "Choose an owner") %&gt;
+
+# message[owner_id] => "7"</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="mt-8 l-ui-heading--section">Creating new values</h2>
+
+<p class="mt-4">With <code>create: true</code>, a term that matches no option is offered as a new token. New values post under their own parameter (<code>create_name:</code>, which is then required), so the server never has to guess whether a submitted value is an existing record's ID or a free-text label. On redisplay, pass previously created values in <code>selected:</code> alongside the existing ones - any selected value that is not in the collection is rendered as a new token.</p>
+
+<div class="l-ui-form mt-4">
+  <%= l_ui_combobox("post[tag_ids]",
+        label: "Tags",
+        collection: [["Announcement", "1"], ["Release", "2"], ["Tutorial", "3"]],
+        selected: ["1", "backstage"],
+        create: true,
+        create_name: "post[new_tag_names]",
+        placeholder: "Add a tag",
+        hint: "Type a tag that doesn't exist yet to add it.") %>
+</div>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-combobox-create-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-combobox-create-heading">Creating new values</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;%= l_ui_combobox(:tag_ids, form: f,
+      label: "Tags",
+      collection: Tag.pluck(:name, :id),
+      selected: @post.tag_ids + @post.new_tag_names.to_a,
+      create: true,
+      create_name: :new_tag_names) %&gt;
+
+# post[tag_ids][]       => ["", "1"]
+# post[new_tag_names][] => ["backstage"]
+
+# app/controllers/posts_controller.rb
+tags  = Tag.where(id: params[:post][:tag_ids])
+tags += Array(params[:post][:new_tag_names]).map { |name| Tag.find_or_create_by!(name:) }
+@post.tags = tags</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="mt-8 l-ui-heading--section">Reordering tokens</h2>
+
+<p class="mt-4">With <code>reorder: true</code> each token gains a pair of move controls plus a grip handle, and tokens can be dragged with a mouse. The grip is decorative (<code>aria-hidden</code>) - it exists so the drag is discoverable rather than hidden, and the token takes a grab cursor to match. Parameters post in the order shown, so the field can express a ranking. The move buttons are not decoration: dragging on its own would fail WCAG 2.2 SC 2.5.7, which requires a single-pointer alternative - and they are the only way to reorder on a touch screen. Reordering is off by default, since most fields treat their selections as a set.</p>
+
+<div class="l-ui-form mt-4">
+  <%= l_ui_combobox("survey[choice_ids]",
+        label: "Preferences, most wanted first",
+        collection: [["Dark mode", "1"], ["Offline support", "2"], ["Keyboard shortcuts", "3"], ["Export to CSV", "4"]],
+        selected: %w[1 2 3],
+        reorder: true,
+        placeholder: "Add a preference") %>
+</div>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-combobox-reorder-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-combobox-reorder-heading">Reordering tokens</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;%= l_ui_combobox("survey[choice_ids]",
+      label: "Preferences, most wanted first",
+      collection: Choice.pluck(:name, :id),
+      selected: @survey.choice_ids,
+      reorder: true) %&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="mt-8 l-ui-heading--section">Inside a form builder</h2>
+
+<p class="mt-4">Pass the attribute as a Symbol with <code>form:</code> and the parameter names are derived from the builder, exactly as they would be for a built-in field helper.</p>
+
+<div class="mt-4">
+  <%= form_with url: "#", method: :post, scope: :post, class: "l-ui-form" do |f| %>
+    <%= l_ui_combobox(:tag_ids, form: f,
+          label: "Tags",
+          collection: [["Announcement", "1"], ["Release", "2"], ["Tutorial", "3"]],
+          placeholder: "Add a tag") %>
+
+    <div class="l-ui-form__actions">
+      <button type="submit" class="l-ui-button l-ui-button--primary">Save</button>
+    </div>
+  <% end %>
+</div>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-combobox-builder-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-combobox-builder-heading">Inside a form builder</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;%= form_with model: @post do |f| %&gt;
+  &lt;%= l_ui_combobox(:tag_ids, form: f,
+        label: "Tags",
+        collection: Tag.pluck(:name, :id),
+        selected: @post.tag_ids) %&gt;
+&lt;% end %&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="mt-8 l-ui-heading--section">Disabled</h2>
+
+<p class="mt-4">Pass <code>disabled: true</code> to disable the input and every token control. The selections still post, so a disabled combobox does not silently clear the field.</p>
+
+<div class="l-ui-form mt-4">
+  <%= l_ui_combobox("message[recipient_ids]",
+        label: "Recipients",
+        collection: @recipients,
+        selected: @recipients.first(1).map(&:last),
+        disabled: true) %>
+</div>
+
+<h2 class="mt-8 l-ui-heading--section">Keyboard</h2>
+
+<div class="l-ui-table-container mt-4">
+  <table class="l-ui-table">
+    <caption class="l-ui-sr-only">Combobox keyboard interactions</caption>
+
+    <thead class="l-ui-table__header">
+      <tr>
+        <th class="l-ui-table__header-cell" scope="col">Key</th>
+        <th class="l-ui-table__header-cell" scope="col">Action</th>
+      </tr>
+    </thead>
+
+    <tbody class="l-ui-table__body">
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row">Down / Up</th>
+        <td class="l-ui-table__cell">Open the list, entering it from the first (Down) or last (Up) visible option, then move the highlight through the options, wrapping at each end</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row">Home / End</th>
+        <td class="l-ui-table__cell">Highlight the first or last visible option</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row">Enter</th>
+        <td class="l-ui-table__cell">Choose the highlighted option, or add it as a new value in create mode. With nothing highlighted, Enter is left to the form</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row">Escape</th>
+        <td class="l-ui-table__cell">Close the list, or clear the typed term when it is already closed</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row">Backspace</th>
+        <td class="l-ui-table__cell">Remove the last token when the input is empty</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row">Tab</th>
+        <td class="l-ui-table__cell">Close the list and move on to the next control</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
