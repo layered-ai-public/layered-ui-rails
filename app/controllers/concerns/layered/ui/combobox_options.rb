@@ -51,8 +51,12 @@ module Layered
       #   limit:      (Integer)     Options per page (default 20).
       def l_ui_combobox_options(scope, label:, value: :id, search: nil, predicate: :cont,
                                 combinator: :or, term: nil, page: nil, limit: DEFAULT_LIMIT)
+        # Both come off the query string, where a parameter can arrive as any
+        # shape Rack can parse - +?page[]=1+ hands over an Array - so each is
+        # read through to_s. A page that makes no sense is the first page, as a
+        # missing one is, rather than an exception from the coercion.
         term = (term.nil? ? l_ui_combobox_request_param(:term) : term).to_s.strip
-        page = (page.nil? ? l_ui_combobox_request_param(:page) : page).to_i
+        page = (page.nil? ? l_ui_combobox_request_param(:page) : page).to_s.to_i
         page = 1 if page < 1
 
         matches = term.empty? ? scope.all : l_ui_combobox_matches(scope, search || [label], term, predicate, combinator)

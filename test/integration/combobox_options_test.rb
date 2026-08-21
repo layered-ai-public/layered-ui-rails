@@ -55,4 +55,22 @@ class ComboboxOptionsEndpointTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_empty response.parsed_body["options"]
   end
+
+  # A query string can carry any shape Rack can parse, so the endpoint sees
+  # more than the browser's own widget ever sends it.
+  test "a page that is not a scalar is the first page rather than a 500" do
+    ["/combobox_options?page[]=1", "/combobox_options?page[x]=1"].each do |path|
+      get path
+
+      assert_response :success, "#{path} did not answer"
+      assert_equal 1, response.parsed_body["page"]
+    end
+  end
+
+  test "a term that is not a scalar matches nothing rather than a 500" do
+    get "/combobox_options?term[]=Ada"
+
+    assert_response :success
+    assert_empty response.parsed_body["options"]
+  end
 end
