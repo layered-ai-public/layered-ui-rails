@@ -429,6 +429,7 @@ Renders a token select (`class="l-ui-combobox"`): a text input with type-ahead f
 - `reorder` (Boolean, default `false`) - move controls plus mouse dragging (each token gains a decorative grip handle advertising the drag); parameters post in the displayed order
 - `url` (String, optional) - endpoint searched as the user types; options come from it rather than from `collection:`
 - `min_chars` (Integer, default `0`) - characters needed before a remote search runs; `0` searches as soon as the field is focused
+- `text` (Hash, optional) - wording for every string the control shows, merged over `Layered::Ui::ComboboxHelper::COMBOBOX_TEXT`: `empty:` ("No matches"), `create:` ("Add “%{term}”"), `min_chars:` ("Type %{count} characters to search."), `progress:` ("Showing %{shown} of %{count} matches."), `error:`, `more_error:`. Placeholders use Rails' `%{name}` syntax; `progress: nil` drops the progress line; an unknown key raises
 - `label`, `hint`, `placeholder`, `required`, `disabled`, `id`, `container` - as for a normal field
 
 ```erb

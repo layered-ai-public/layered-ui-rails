@@ -137,7 +137,7 @@ Features:
 Drives the token select rendered by `l_ui_combobox`: type-ahead filtering, selections held as tokens with their own hidden inputs, optional creation of values outside the collection, optional reordering, and optional remote options.
 
 **Targets:** `control`, `tokens`, `token`, `input`, `listbox`, `option`, `empty`, `notice`, `noticeText`, `busy`, `moreSpinner`, `template`, `optionTemplate`, `status`
-**Values:** `multiple` (Boolean, default `true`), `create` (Boolean, default `false`), `reorder` (Boolean, default `false`), `disabled` (Boolean, default `false`), `name` (String - parameter existing values post under), `createName` (String - parameter created values post under), `url` (String - endpoint searched as the user types; empty means filter in the browser), `minChars` (Number, default `0` - characters needed before a remote search runs)
+**Values:** `multiple` (Boolean, default `true`), `create` (Boolean, default `false`), `reorder` (Boolean, default `false`), `disabled` (Boolean, default `false`), `name` (String - parameter existing values post under), `createName` (String - parameter created values post under), `url` (String - endpoint searched as the user types; empty means filter in the browser), `minChars` (Number, default `0` - characters needed before a remote search runs), `text` (Object - the wording for the messages built here, from the helper's `text:` option; `%{name}` placeholders are substituted at use, and a key the caller emptied is left unsaid)
 **Actions:** `focusInput`, `open`, `close`, `blur`, `scrolled`, `filter`, `keydown`, `selectOption`, `removeToken`, `moveTokenEarlier`, `moveTokenLater`, `dragstart`, `dragover`, `drop`, `dragend`
 
 Features:

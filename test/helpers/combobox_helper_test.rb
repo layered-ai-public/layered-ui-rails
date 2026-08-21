@@ -334,6 +334,69 @@ class ComboboxHelperTest < ActionView::TestCase
     refute_includes result, "#scrolled"
   end
 
+  # -- wording --
+
+  def combobox_text(result)
+    JSON.parse(CGI.unescapeHTML(result[/data-l-ui--combobox-text-value="([^"]*)"/, 1]))
+  end
+
+  test "the strings the controller builds travel to it as one value" do
+    text = combobox_text(l_ui_combobox("post[tag_ids]", collection: COLLECTION))
+
+    assert_equal "Add “%{term}”", text["create"]
+    assert_equal "Showing %{shown} of %{count} matches.", text["progress"]
+    assert_equal "The options could not be loaded.", text["error"]
+    assert_equal "More options could not be loaded.", text["moreError"]
+  end
+
+  test "text: rewords the strings rendered here" do
+    result = l_ui_combobox("post[tag_ids]", collection: COLLECTION, text: { empty: "Nobody by that name" })
+
+    assert_includes result, ">Nobody by that name</li>"
+    refute_includes result, "No matches"
+  end
+
+  test "text: rewords the strings the controller builds" do
+    result = l_ui_combobox("post[tag_ids]", url: "/tags/options",
+                           text: { progress: "%{shown} of %{count}", create: "Create %{term}" })
+    text = combobox_text(result)
+
+    assert_equal "%{shown} of %{count}", text["progress"]
+    assert_equal "Create %{term}", text["create"]
+    # Untouched keys keep their default.
+    assert_equal "The options could not be loaded.", text["error"]
+  end
+
+  test "progress: nil drops the progress line" do
+    text = combobox_text(l_ui_combobox("post[tag_ids]", url: "/tags/options", text: { progress: nil }))
+
+    refute_includes text.keys, "progress"
+  end
+
+  test "the character threshold is counted and interpolated here" do
+    one = combobox_text(l_ui_combobox("f[a]", url: "/o", min_chars: 1))
+    several = combobox_text(l_ui_combobox("f[a]", url: "/o", min_chars: 3))
+
+    assert_equal "Type 1 character to search.", one["minChars"]
+    assert_equal "Type 3 characters to search.", several["minChars"]
+  end
+
+  test "a custom threshold message is interpolated with the threshold" do
+    text = combobox_text(l_ui_combobox("f[a]", url: "/o", min_chars: 2,
+                                       text: { min_chars: "At least %{count}, please" }))
+
+    assert_equal "At least 2, please", text["minChars"]
+  end
+
+  test "an unknown text key is an error rather than a message nobody sees" do
+    error = assert_raises(ArgumentError) do
+      l_ui_combobox("f[a]", collection: COLLECTION, text: { progres: "typo" })
+    end
+
+    assert_match(/unknown text: :progres/, error.message)
+    assert_match(/Known keys/, error.message)
+  end
+
   test "container attributes are merged and the controller is preserved" do
     result = l_ui_combobox("post[tag_ids]", collection: COLLECTION,
                            container: { class: "mt-8", data: { controller: "custom" } })

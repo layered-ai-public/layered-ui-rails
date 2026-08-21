@@ -1,6 +1,18 @@
 module Layered
   module Ui
     module ComboboxHelper
+      # Every string the control can show, so a host app can reword or translate
+      # it at the call site. Placeholders use Rails' own +%{name}+ syntax; the
+      # ones whose values are only known in the browser are substituted there.
+      # +:min_chars+ has no entry: its default is built from the threshold, so
+      # it can be counted properly.
+      COMBOBOX_TEXT = {
+        empty: "No matches",
+        create: "Add “%{term}”",
+        progress: "Showing %{shown} of %{count} matches.",
+        error: "The options could not be loaded.",
+        more_error: "More options could not be loaded."
+      }.freeze
       # Renders a token select: a text input with type-ahead filtering whose
       # selections become removable tokens, in the style of an email recipient
       # field. Built on the ARIA combobox pattern (an +input+ with
@@ -65,7 +77,17 @@ module Layered
       #
       # Further pages are appended as the user reaches the end of the list -
       # by scrolling to its foot, or by pressing Down on its last option, so
-      # the keyboard is not capped at the first page.
+      # the keyboard is not capped at the first page. A request in flight shows
+      # a spinner rather than a message, after a delay, so a quick answer never
+      # flashes one.
+      #
+      # == Wording
+      #
+      # Every string the control can show is in +text:+, so it can be reworded
+      # or translated where it is used:
+      #
+      #   <%= l_ui_combobox(:author_id, form: f, url: options_users_path,
+      #         text: { empty: "Personne", progress: "%{shown} sur %{count}" }) %>
       #
       # == Reordering
       #
@@ -85,6 +107,10 @@ module Layered
       #   create_name: (String)  Parameter name new values post under.
       #   reorder:     (Boolean) Show move controls and allow dragging tokens (default false).
       #   min_chars:   (Integer) Characters needed before a remote search runs (default 0, i.e. search on focus).
+      #   text:        (Hash)    Wording for the strings the control shows, merged over COMBOBOX_TEXT:
+      #                          +:empty+, +:create+ (+%{term}+), +:min_chars+ (+%{count}+), +:progress+
+      #                          (+%{shown}+, +%{count}+), +:error+ and +:more_error+. +progress: nil+ drops
+      #                          the progress line.
       #   label:       (String)  Renders an +l-ui-label+ bound to the input.
       #   hint:        (String)  Renders an +l-ui-form__hint+ referenced by the input.
       #   placeholder: (String)  Input placeholder. Defaults to nothing.
@@ -93,7 +119,7 @@ module Layered
       #   container:   (Hash)    Extra HTML attributes for the wrapping <div>.
       def l_ui_combobox(name, collection: nil, form: nil, selected: nil, multiple: true,
                         create: false, create_name: nil, reorder: false, url: nil,
-                        min_chars: 0, id: nil, label: nil, hint: nil, placeholder: nil,
+                        min_chars: 0, text: {}, id: nil, label: nil, hint: nil, placeholder: nil,
                         required: false, disabled: false, container: {})
         if collection.nil? && url.nil?
           raise ArgumentError,
@@ -106,6 +132,8 @@ module Layered
                 "l_ui_combobox requires create_name: when create: is set, so new values post " \
                 "under their own parameter (e.g. create_name: :new_tag_names)"
         end
+
+        text = l_ui_combobox_text(text, min_chars: min_chars)
 
         id ||= "l-ui-combobox-#{SecureRandom.hex(4)}"
         options = l_ui_combobox_option_pairs(collection)
@@ -121,7 +149,7 @@ module Layered
                                                     multiple: multiple, create: create, reorder: reorder,
                                                     disabled: disabled, value_name: value_name,
                                                     create_value_name: create_value_name,
-                                                    url: url, min_chars: min_chars)
+                                                    url: url, min_chars: min_chars, text: text)
 
         tag.div(**container_attrs) do
           safe_join([
@@ -130,7 +158,7 @@ module Layered
             l_ui_combobox_control(id, tokens,
                                   value_name: value_name, placeholder: placeholder, hint: hint,
                                   reorder: reorder, disabled: disabled, required: required, url: url),
-            l_ui_combobox_listbox(id, options, tokens, multiple: multiple, url: url),
+            l_ui_combobox_listbox(id, options, tokens, multiple: multiple, url: url, text: text),
             l_ui_combobox_template(reorder: reorder, disabled: disabled),
             (l_ui_combobox_option_template if url),
             tag.span(l_ui_combobox_instructions(multiple: multiple, create: create, url: url),
@@ -200,13 +228,47 @@ module Layered
         end
       end
 
+      # Merges the caller's wording over the defaults. An unknown key is a typo
+      # rather than a message nobody will ever see, so it is an error.
+      def l_ui_combobox_text(text, min_chars:)
+        text = (text || {}).symbolize_keys
+        unknown = text.keys - (COMBOBOX_TEXT.keys + [:min_chars])
+
+        if unknown.any?
+          raise ArgumentError,
+                "l_ui_combobox was given unknown text: #{unknown.map(&:inspect).join(', ')}. " \
+                "Known keys: #{(COMBOBOX_TEXT.keys + [:min_chars]).map(&:inspect).join(', ')}."
+        end
+
+        resolved = COMBOBOX_TEXT.merge(text)
+        resolved[:min_chars] = l_ui_combobox_min_chars_text(resolved[:min_chars], min_chars)
+        resolved
+      end
+
+      # The threshold is known here, so its message is counted and interpolated
+      # server-side rather than left to the browser to get right.
+      def l_ui_combobox_min_chars_text(template, min_chars)
+        template ||= "Type %{count} #{'character'.pluralize(min_chars)} to search."
+        format(template.gsub("%{count}", "%<count>s"), count: min_chars)
+      end
+
+      # Only the messages the controller has to build itself travel to the
+      # browser; the rest are rendered here. Keys are camelCased on the way, so
+      # they read as they would in any other Stimulus value.
+      def l_ui_combobox_text_value(text)
+        text.slice(:create, :min_chars, :progress, :error, :more_error)
+            .transform_keys { |key| key.to_s.camelize(:lower) }
+            .compact
+            .to_json
+      end
+
       def l_ui_combobox_param(name, form, multiple:)
         base = form && name.is_a?(Symbol) ? form.field_name(name) : name.to_s
         multiple ? "#{base}[]" : base
       end
 
       def l_ui_combobox_data(data, multiple:, create:, reorder:, disabled:, value_name:, create_value_name:,
-                             url: nil, min_chars: 0)
+                             url: nil, min_chars: 0, text: COMBOBOX_TEXT)
         data = (data || {}).deep_dup
         existing_controller = data.delete(:controller) || data.delete("controller")
 
@@ -222,6 +284,8 @@ module Layered
           data[:"l-ui--combobox-url-value"] = url
           data[:"l-ui--combobox-min-chars-value"] = min_chars
         end
+
+        data[:"l-ui--combobox-text-value"] = l_ui_combobox_text_value(text)
 
         data
       end
@@ -338,7 +402,7 @@ module Layered
         ]
       end
 
-      def l_ui_combobox_listbox(id, options, tokens, multiple:, url: nil)
+      def l_ui_combobox_listbox(id, options, tokens, multiple:, url: nil, text: COMBOBOX_TEXT)
         selected_values = tokens.map { |token| token[:value] }
 
         tag.ul(id: "#{id}-listbox",
@@ -357,7 +421,7 @@ module Layered
                                  selected: selected_values.include?(value))
           end
 
-          items << tag.li("No matches",
+          items << tag.li(text[:empty],
                           class: "l-ui-combobox__empty",
                           role: "presentation",
                           hidden: true,

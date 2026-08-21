@@ -47,7 +47,9 @@ export default class extends Controller {
     name: String,
     createName: String,
     url: String,
-    minChars: { type: Number, default: 0 }
+    minChars: { type: Number, default: 0 },
+    // Wording for the messages built here, from the helper's `text:` option.
+    text: Object
   }
 
   connect() {
@@ -475,7 +477,7 @@ export default class extends Controller {
     const raw = this.inputTarget.value.trim()
     this._createOption.dataset.value = raw
     this._createOption.dataset.label = raw
-    this._createOption.textContent = `Add “${raw}”`
+    this._createOption.textContent = this._text("create", { term: raw })
     // Before the empty row and the notice, which both talk about the list
     // rather than offering something to choose.
     this.listboxTarget.insertBefore(
@@ -561,8 +563,7 @@ export default class extends Controller {
       this._page = 0
       this._pages = 0
       this._renderOptions([], { replace: true })
-      const characters = this.minCharsValue === 1 ? "character" : "characters"
-      this._setNotice(`Type ${this.minCharsValue} ${characters} to search.`)
+      this._setNotice(this._text("minChars"))
       return
     }
 
@@ -607,9 +608,10 @@ export default class extends Controller {
 
       this._loading = false
       this._stopBusy()
-      this._setNotice("The options could not be loaded.")
+      const message = this._text("error")
+      this._setNotice(message)
       this._filterOptions()
-      this._announce("The options could not be loaded.")
+      this._announce(message)
     }
   }
 
@@ -645,8 +647,9 @@ export default class extends Controller {
 
       this._loadingMore = false
       this._stopBusy()
-      this._setNotice("More options could not be loaded.")
-      this._announce("More options could not be loaded.")
+      const message = this._text("moreError")
+      this._setNotice(message)
+      this._announce(message)
     }
   }
 
@@ -737,8 +740,23 @@ export default class extends Controller {
   _refreshNotice() {
     if (this._belowThreshold) return
 
-    const shown = this.optionTargets.length
-    this._setNotice(this._hasMore ? `Showing ${shown} of ${this._count} matches.` : null)
+    this._setNotice(
+      this._hasMore
+        ? this._text("progress", { shown: this.optionTargets.length, count: this._count })
+        : null
+    )
+  }
+
+  // Resolves one of the helper's strings, substituting Rails-style %{name}
+  // placeholders. A string the caller has emptied is left unsaid.
+  _text(key, replacements = {}) {
+    const template = this.textValue[key]
+    if (!template) return null
+
+    return Object.entries(replacements).reduce(
+      (text, [name, value]) => text.replaceAll(`%{${name}}`, value),
+      template
+    )
   }
 
   // The spinner waits out SPINNER_DELAY, so only a request slow enough to be
