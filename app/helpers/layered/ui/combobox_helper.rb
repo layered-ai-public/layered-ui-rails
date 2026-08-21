@@ -246,10 +246,12 @@ module Layered
       end
 
       # The threshold is known here, so its message is counted and interpolated
-      # server-side rather than left to the browser to get right.
+      # server-side rather than left to the browser to get right. Substituted
+      # rather than formatted, so a literal % in the wording stays a percent
+      # sign instead of becoming a format directive.
       def l_ui_combobox_min_chars_text(template, min_chars)
         template ||= "Type %{count} #{'character'.pluralize(min_chars)} to search."
-        format(template.gsub("%{count}", "%<count>s"), count: min_chars)
+        template.gsub("%{count}", min_chars.to_s)
       end
 
       # Only the messages the controller has to build itself travel to the

@@ -16,6 +16,12 @@ class User < ApplicationRecord
   # Callbacks
   after_create :confirm
 
+  # A label that is a method rather than a column, as a combobox endpoint may
+  # be given.
+  def display_name
+    name.to_s.upcase
+  end
+
   # Ransack
   def self.ransackable_attributes(_auth_object = nil)
     %w[name email created_at]

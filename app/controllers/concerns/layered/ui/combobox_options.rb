@@ -99,11 +99,15 @@ module Layered
 
       # An unordered relation would return arbitrary - and between pages,
       # overlapping - rows, so fall back to the label, or the primary key when
-      # the label is computed.
+      # the label is not something the database can order by - a callable, or a
+      # method on the model rather than one of its columns.
       def l_ui_combobox_ordered(matches, label)
         return matches unless matches.respond_to?(:order_values) && matches.order_values.empty?
 
-        matches.order(label.is_a?(Symbol) ? label : matches.primary_key)
+        model = matches.respond_to?(:klass) ? matches.klass : matches
+        column = label.is_a?(Symbol) && model.column_names.include?(label.to_s)
+
+        matches.order(column ? label : matches.primary_key)
       end
 
       def l_ui_combobox_page(matches, page, limit)

@@ -114,7 +114,19 @@ export default class extends Controller {
     return !this.listboxTarget.hidden
   }
 
+  // A search the user has left behind has nothing left to say, so it is
+  // abandoned rather than allowed to land on a closed listbox: it would spin
+  // beside a field nobody is in, point aria-activedescendant at an option that
+  // cannot be seen, and announce a count after focus had moved on.
   blur() {
+    if (this.isRemote) {
+      clearTimeout(this._searchTimer)
+      this._abort()
+      this._stopBusy()
+      this._loading = false
+      this._loadingMore = false
+    }
+
     this.close()
   }
 

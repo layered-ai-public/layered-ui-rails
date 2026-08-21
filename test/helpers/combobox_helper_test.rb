@@ -388,6 +388,13 @@ class ComboboxHelperTest < ActionView::TestCase
     assert_equal "At least 2, please", text["minChars"]
   end
 
+  test "a literal percent in the threshold message stays a percent sign" do
+    text = combobox_text(l_ui_combobox("f[a]", url: "/o", min_chars: 2,
+                                       text: { min_chars: "Type %{count} letters (100% of the time)" }))
+
+    assert_equal "Type 2 letters (100% of the time)", text["minChars"]
+  end
+
   test "an unknown text key is an error rather than a message nobody sees" do
     error = assert_raises(ArgumentError) do
       l_ui_combobox("f[a]", collection: COLLECTION, text: { progres: "typo" })

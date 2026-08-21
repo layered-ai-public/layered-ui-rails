@@ -94,6 +94,13 @@ class ComboboxOptionsPayloadTest < ActiveSupport::TestCase
     assert_equal ["Ada Lovelace"], payload[:options].map { |option| option[:label] }
   end
 
+  test "a label that is a method rather than a column is ordered by the primary key" do
+    payload = Endpoint.new.l_ui_combobox_options(User.where(id: @users), label: :display_name, limit: 2)
+
+    assert_equal ["ADA LOVELACE", "ALAN TURING"], payload[:options].map { |option| option[:label] }
+    assert_equal 3, payload[:count]
+  end
+
   test "a scope's own order is left alone" do
     payload = Endpoint.new.l_ui_combobox_options(
       User.where(id: @users).order(name: :desc), label: :name, limit: 1
