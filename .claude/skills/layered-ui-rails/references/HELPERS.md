@@ -413,7 +413,7 @@ When a popover is declared, the tag container itself becomes the `l-ui--popover`
 ```ruby
 l_ui_combobox(name, collection: nil, form: nil, selected: nil, multiple: true,
               create: false, create_name: nil, reorder: false, url: nil,
-              min_chars: 0, id: nil, label: nil, hint: nil, placeholder: nil,
+              min_chars: 0, text: {}, id: nil, label: nil, hint: nil, placeholder: nil,
               required: false, disabled: false, container: {})
 ```
 
