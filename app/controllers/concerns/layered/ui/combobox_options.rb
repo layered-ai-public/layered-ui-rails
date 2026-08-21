@@ -31,7 +31,8 @@ module Layered
       # Options:
       #   label:      (Symbol/Proc) Attribute, or callable taking the record, used for the option's label.
       #   value:      (Symbol/Proc) Attribute, or callable, used for the option's value. Defaults to +:id+.
-      #   search:     (Array)       Attributes the term is matched against. Defaults to +label+.
+      #   search:     (Array)       Attributes the term is matched against. Defaults to +label+, so it is
+      #                            required when +label+ is a callable.
       #   predicate:  (Symbol)      Ransack predicate for the match (default +:cont+; +:i_cont+ ignores case).
       #   combinator: (Symbol)      How the search attributes combine, +:or+ (default) or +:and+.
       #   term:       (String)      The term to search for. Defaults to +params[:term]+.
@@ -69,13 +70,48 @@ module Layered
       end
 
       def l_ui_combobox_matches(scope, fields, term, predicate, combinator)
-        fields = Array(fields).map(&:to_s)
+        fields = l_ui_combobox_search_fields(fields)
 
         if scope.respond_to?(:ransack)
-          scope.ransack("#{fields.join("_#{combinator}_")}_#{predicate}" => term).result(distinct: true)
+          l_ui_combobox_ransack(scope, fields, term, predicate, combinator)
         else
           l_ui_combobox_like(scope, fields, term)
         end
+      end
+
+      # A callable makes a good label but not a good search attribute: the
+      # searching is the database's to do, so there is nothing to build a
+      # predicate from. Caught here rather than left to the backend, which
+      # answers a key it cannot parse with an error from its own internals.
+      def l_ui_combobox_search_fields(fields)
+        fields = Array(fields)
+        unusable = fields.reject { |field| field.is_a?(Symbol) || field.is_a?(String) }
+
+        if unusable.any?
+          raise ArgumentError,
+                "l_ui_combobox_options cannot search a #{unusable.first.class}: pass search: with the " \
+                "attributes the term should be matched against, since a computed label gives it nothing " \
+                "to search on."
+        end
+
+        fields.map(&:to_s)
+      end
+
+      # Ransack answers a condition it does not recognise by dropping it rather
+      # than raising, and a search with no conditions left is the whole scope -
+      # so every term would match everything, quietly. One unrecognised
+      # attribute takes the whole condition with it, valid attributes included,
+      # so this is said out loud, as the LIKE fallback says it.
+      def l_ui_combobox_ransack(scope, fields, term, predicate, combinator)
+        search = scope.ransack("#{fields.join("_#{combinator}_")}_#{predicate}" => term)
+        return search.result(distinct: true) if search.conditions.any?
+
+        model = scope.respond_to?(:klass) ? scope.klass : scope
+        raise ArgumentError,
+              "l_ui_combobox_options cannot search #{fields.join(', ')} on #{model.name} with the " \
+              "#{predicate} predicate: Ransack does not recognise that condition and drops it, which " \
+              "would leave every term matching everything. Check the model's ransackable_attributes, " \
+              "and its ransackable_associations for an attribute across an association."
       end
 
       # The fallback for apps without Ransack. Only the model's own columns can

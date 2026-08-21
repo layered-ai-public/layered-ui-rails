@@ -109,6 +109,38 @@ class ComboboxOptionsPayloadTest < ActiveSupport::TestCase
     assert_equal ["Grace Hopper"], payload[:options].map { |option| option[:label] }
   end
 
+  test "an attribute Ransack does not recognise is an error rather than every term matching" do
+    error = assert_raises(ArgumentError) do
+      Endpoint.new.send(:l_ui_combobox_ransack, User.all, %w[name display_name], "Ada", :cont, :or)
+    end
+
+    assert_match(/cannot search name, display_name on User/, error.message)
+    assert_match(/ransackable_attributes/, error.message)
+  end
+
+  test "a recognised attribute searches as it did" do
+    matches = Endpoint.new.send(:l_ui_combobox_ransack, User.where(id: @users), %w[name email], "Hopper",
+                                :cont, :or)
+
+    assert_equal ["Grace Hopper"], matches.map(&:name)
+  end
+
+  test "a callable label cannot be searched on, so search: is required" do
+    error = assert_raises(ArgumentError) do
+      Endpoint.new(term: "Ada").l_ui_combobox_options(User.where(id: @users), label: ->(user) { user.name })
+    end
+
+    assert_match(/pass search:/, error.message)
+  end
+
+  test "a callable label is fine once search: says what to match on" do
+    payload = Endpoint.new(term: "Ada").l_ui_combobox_options(
+      User.where(id: @users), label: ->(user) { user.name.upcase }, search: [:name]
+    )
+
+    assert_equal ["ADA LOVELACE"], payload[:options].map { |option| option[:label] }
+  end
+
   test "the LIKE fallback matches any of the given columns" do
     matches = Endpoint.new.send(:l_ui_combobox_like, User.where(id: @users), %w[name email], "Hopper")
 
