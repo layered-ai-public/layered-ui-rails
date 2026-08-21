@@ -147,6 +147,44 @@ class ComboboxOptionsPayloadTest < ActiveSupport::TestCase
     assert_equal ["Grace Hopper"], matches.map(&:name)
   end
 
+  # Whether a plain LIKE ignores case is the database's business (SQLite says
+  # yes, PostgreSQL no), so it is the SQL that says i_cont was honoured: both
+  # sides lowered, as Ransack's own i_cont lowers them.
+  test "the LIKE fallback ignores case for i_cont, as Ransack's does" do
+    matches = Endpoint.new.send(:l_ui_combobox_like, User.where(id: @users), %w[name], "hOPPer", :i_cont)
+
+    assert_equal ["Grace Hopper"], matches.map(&:name)
+    assert_match(/LOWER\("users"\."name"\) LIKE/, matches.to_sql)
+    assert_match(/'%hopper%'/, matches.to_sql)
+  end
+
+  test "the LIKE fallback combines the attributes the combinator asks for" do
+    ada = @users.first
+    both = Endpoint.new.send(:l_ui_combobox_like, User.where(id: @users), %w[name email], ada.email, :cont, :and)
+    either = Endpoint.new.send(:l_ui_combobox_like, User.where(id: @users), %w[name email], ada.email, :cont, :or)
+
+    # The email matches only the email column, so requiring both finds nobody.
+    assert_empty both.to_a
+    assert_equal ["Ada Lovelace"], either.map(&:name)
+  end
+
+  test "the LIKE fallback rejects a predicate it cannot build" do
+    error = assert_raises(ArgumentError) do
+      Endpoint.new.send(:l_ui_combobox_like, User.all, %w[name], "Ada", :start)
+    end
+
+    assert_match(/cannot search with the start predicate without Ransack/, error.message)
+    assert_match(/:cont and :i_cont/, error.message)
+  end
+
+  test "a combinator that is neither :or nor :and is an error" do
+    error = assert_raises(ArgumentError) do
+      Endpoint.new(term: "Ada").l_ui_combobox_options(User.where(id: @users), label: :name, combinator: :nor)
+    end
+
+    assert_match(/combinator: :nor/, error.message)
+  end
+
   test "the LIKE fallback rejects attributes that are not columns" do
     error = assert_raises(ArgumentError) do
       Endpoint.new.send(:l_ui_combobox_like, User.all, %w[posts_title], "Rails")

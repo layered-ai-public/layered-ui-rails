@@ -463,8 +463,8 @@ l_ui_combobox_options(scope, label:, value: :id, search: nil, predicate: :cont,
 - `label` (Symbol or Proc) - attribute, or callable taking the record, used for the option's label
 - `value` (Symbol or Proc, default `:id`) - attribute, or callable, used for the option's value
 - `search` (Array, defaults to `label`) - attributes the term is matched against; required when `label:` is a callable, since a computed label gives the database nothing to search on. An attribute neither backend can search raises rather than quietly matching everything
-- `predicate` (Symbol, default `:cont`) - Ransack predicate for the match; `:i_cont` ignores case
-- `combinator` (Symbol, default `:or`) - how the search attributes combine, `:or` or `:and`
+- `predicate` (Symbol, default `:cont`) - Ransack predicate for the match; `:i_cont` ignores case. Without Ransack only `:cont` and `:i_cont` can be built, and any other raises rather than quietly matching on something else
+- `combinator` (Symbol, default `:or`) - how the search attributes combine, `:or` or `:and`; honoured on both paths, and anything else raises
 - `term`, `page` - default to `params[:term]` and `params[:page]`
 - `limit` (Integer, default 20) - options per page
 

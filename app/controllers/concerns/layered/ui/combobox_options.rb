@@ -28,12 +28,23 @@ module Layered
     module ComboboxOptions
       DEFAULT_LIMIT = 20
 
+      # The predicates the Ransack-less fallback can build for itself, mapping a
+      # quoted column onto its condition. Ransack has many more, so the rest are
+      # an error rather than a query quietly matching on something else.
+      # +i_cont+ lowers both sides, as Ransack's own does, rather than reaching
+      # for an ILIKE only PostgreSQL has.
+      LIKE_PREDICATES = {
+        cont: ->(column) { "#{column} LIKE :term" },
+        i_cont: ->(column) { "LOWER(#{column}) LIKE :term" }
+      }.freeze
+
       # Options:
       #   label:      (Symbol/Proc) Attribute, or callable taking the record, used for the option's label.
       #   value:      (Symbol/Proc) Attribute, or callable, used for the option's value. Defaults to +:id+.
       #   search:     (Array)       Attributes the term is matched against. Defaults to +label+, so it is
       #                            required when +label+ is a callable.
       #   predicate:  (Symbol)      Ransack predicate for the match (default +:cont+; +:i_cont+ ignores case).
+      #                            Without Ransack only +:cont+ and +:i_cont+ can be built; any other raises.
       #   combinator: (Symbol)      How the search attributes combine, +:or+ (default) or +:and+.
       #   term:       (String)      The term to search for. Defaults to +params[:term]+.
       #   page:       (Integer)     The page to return. Defaults to +params[:page]+.
@@ -71,12 +82,24 @@ module Layered
 
       def l_ui_combobox_matches(scope, fields, term, predicate, combinator)
         fields = l_ui_combobox_search_fields(fields)
+        combinator = l_ui_combobox_combinator(combinator)
 
         if scope.respond_to?(:ransack)
           l_ui_combobox_ransack(scope, fields, term, predicate, combinator)
         else
-          l_ui_combobox_like(scope, fields, term)
+          l_ui_combobox_like(scope, fields, term, predicate, combinator)
         end
+      end
+
+      # Ransack answers a combinator it does not know by dropping the whole
+      # condition, and the fallback would read anything but +:and+ as +:or+, so
+      # neither backend would say what had happened.
+      def l_ui_combobox_combinator(combinator)
+        return combinator.to_s.to_sym if %w[or and].include?(combinator.to_s)
+
+        raise ArgumentError,
+              "l_ui_combobox_options was given combinator: #{combinator.inspect}. It says how the search " \
+              "attributes combine, and is :or (the default) or :and."
       end
 
       # A callable makes a good label but not a good search attribute: the
@@ -116,8 +139,9 @@ module Layered
 
       # The fallback for apps without Ransack. Only the model's own columns can
       # be matched this way, so an association attribute is an error rather
-      # than a query that silently finds nothing.
-      def l_ui_combobox_like(scope, fields, term)
+      # than a query that silently finds nothing - and so is a predicate it
+      # cannot build, rather than one it ignores.
+      def l_ui_combobox_like(scope, fields, term, predicate = :cont, combinator = :or)
         model = scope.respond_to?(:klass) ? scope.klass : scope
         unknown = fields - model.column_names
         if unknown.any?
@@ -126,10 +150,19 @@ module Layered
                 "columns of the table. Add the ransack gem to search attributes across associations."
         end
 
-        condition = fields.map do |field|
-          "#{model.quoted_table_name}.#{model.connection.quote_column_name(field)} LIKE :term"
-        end.join(" OR ")
+        matcher = LIKE_PREDICATES[predicate.to_s.to_sym]
+        unless matcher
+          raise ArgumentError,
+                "l_ui_combobox_options cannot search with the #{predicate} predicate without Ransack: on " \
+                "its own it builds #{LIKE_PREDICATES.keys.map(&:inspect).join(' and ')}. Add the ransack " \
+                "gem for the rest of its predicates."
+        end
 
+        condition = fields.map do |field|
+          matcher.call("#{model.quoted_table_name}.#{model.connection.quote_column_name(field)}")
+        end.join(combinator.to_s == "and" ? " AND " : " OR ")
+
+        term = term.downcase if predicate.to_s == "i_cont"
         scope.where(condition, term: "%#{term}%")
       end
 
