@@ -10,12 +10,34 @@ import { Controller } from "@hotwired/stimulus"
 // focus therefore only moves for the token controls, which are ordinary
 // buttons.
 //
+// With `url` set, the options are fetched from that endpoint as the user types
+// instead of being filtered in the browser, and each response replaces the
+// list - cloned from the option <template> so remote options are built from the
+// same markup as server-rendered ones. Further pages are appended as the user
+// reaches the end of the list, by pointer and by keyboard alike.
+//
 // Each selection carries its own hidden input, so the control submits with a
 // normal form post. Values that exist in the collection post under `name`;
 // created values post under `createName`, keeping record IDs and free text
 // unambiguous server-side.
+// Long enough that a typed word is one request rather than one per letter,
+// short enough that the list still feels like it is keeping up.
+const SEARCH_DEBOUNCE = 200
+
+// A request that answers sooner than this needs no spinner: showing one would
+// be a flicker rather than an answer to "is anything happening?".
+const SPINNER_DELAY = 150
+
+// How close to the foot of the list counts as reaching the end, in pixels.
+// Roughly an option's height, so the next page is on its way before the last
+// option is fully in view.
+const LOAD_MORE_MARGIN = 64
+
 export default class extends Controller {
-  static targets = ["control", "tokens", "token", "input", "listbox", "option", "empty", "template", "status"]
+  static targets = [
+    "control", "tokens", "token", "input", "listbox", "option", "empty",
+    "notice", "noticeText", "busy", "moreSpinner", "template", "optionTemplate", "status"
+  ]
 
   static values = {
     multiple: { type: Boolean, default: true },
@@ -23,7 +45,11 @@ export default class extends Controller {
     reorder: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
     name: String,
-    createName: String
+    createName: String,
+    url: String,
+    minChars: { type: Number, default: 0 },
+    // Wording for the messages built here, from the helper's `text:` option.
+    text: Object
   }
 
   connect() {
@@ -31,7 +57,32 @@ export default class extends Controller {
     this._dragging = null
     this._dragOrigin = null
     this._dropped = false
+    this._searchTimer = null
+    this._busyTimer = null
+    this._notice = ""
+    this._request = null
+    this._loading = false
+    this._loadingMore = false
+    // The term the list currently shows results for; null until the first
+    // response, which is how a remote combobox knows it has nothing yet.
+    this._loadedTerm = null
+    this._page = 0
+    this._pages = 0
+    this._count = 0
+    // Option ids run on across pages, so appending a page can never reuse an
+    // id that aria-activedescendant might still be pointing at.
+    this._optionSequence = 0
     this._refreshMoveControls()
+  }
+
+  disconnect() {
+    clearTimeout(this._searchTimer)
+    clearTimeout(this._busyTimer)
+    this._abort()
+  }
+
+  get isRemote() {
+    return this.urlValue !== ""
   }
 
   // Clicking anywhere in the control (the padding around the tokens, say)
@@ -42,6 +93,12 @@ export default class extends Controller {
   }
 
   open() {
+    // Includes the case of the term being cleared after a selection, where the
+    // list has to go back to the unfiltered first page.
+    if (this.isRemote && this._loadedTerm !== this._term) {
+      this._scheduleSearch({ immediate: this._loadedTerm === null })
+    }
+
     this._filterOptions()
     this.listboxTarget.hidden = false
     this.inputTarget.setAttribute("aria-expanded", "true")
@@ -57,11 +114,46 @@ export default class extends Controller {
     return !this.listboxTarget.hidden
   }
 
+  // A search the user has left behind has nothing left to say, so it is
+  // abandoned rather than allowed to land on a closed listbox: it would spin
+  // beside a field nobody is in, point aria-activedescendant at an option that
+  // cannot be seen, and announce a count after focus had moved on.
   blur() {
+    if (this.isRemote) {
+      clearTimeout(this._searchTimer)
+      this._abort()
+      this._stopBusy()
+      this._loading = false
+      this._loadingMore = false
+    }
+
     this.close()
   }
 
+  // Reaching the foot of a remote list asks for the next page. The keyboard
+  // path is in _moveActive, so neither pointer nor keyboard is capped at the
+  // first page.
+  scrolled() {
+    if (!this._hasMore) return
+
+    const list = this.listboxTarget
+    if (list.scrollHeight - list.scrollTop - list.clientHeight > LOAD_MORE_MARGIN) return
+
+    this._loadMore()
+  }
+
   filter() {
+    // The highlight and the announcement wait for the response, since there is
+    // nothing yet to say how many options the term has.
+    if (this.isRemote) {
+      this._scheduleSearch()
+      this._filterOptions()
+      this.listboxTarget.hidden = false
+      this.inputTarget.setAttribute("aria-expanded", "true")
+      this._setActive(null)
+      return
+    }
+
     this.open()
 
     const visible = this._visibleOptions()
@@ -102,6 +194,9 @@ export default class extends Controller {
         event.preventDefault()
         const visible = this._visibleOptions()
         this._setActive(visible[visible.length - 1] || null)
+        // The end of a partly loaded list is not the end of the matches, so the
+        // next page is fetched and left for the arrow keys to walk into.
+        if (this._hasMore) this._loadMore()
         break
       }
       case "Enter": {
@@ -351,14 +446,21 @@ export default class extends Controller {
   _filterOptions() {
     const term = this.inputTarget.value.trim().toLowerCase()
 
-    this.optionTargets.forEach((option) => {
-      option.hidden = term !== "" && !option.dataset.label.toLowerCase().includes(term)
-    })
+    // A remote list is already the answer for the term, so filtering it again
+    // in the browser would only hide options the server chose to return.
+    if (!this.isRemote) {
+      this.optionTargets.forEach((option) => {
+        option.hidden = term !== "" && !option.dataset.label.toLowerCase().includes(term)
+      })
+    }
 
     this._refreshCreateOption(term)
 
+    // "No matches" is a result, so it is only shown once the list has one: not
+    // while a search is in flight, and not before the term is long enough for
+    // one to have run.
     if (this.hasEmptyTarget) {
-      this.emptyTarget.hidden = this._visibleOptions().length > 0
+      this.emptyTarget.hidden = this._visibleOptions().length > 0 || this._loading || this._belowThreshold
     }
   }
 
@@ -387,8 +489,13 @@ export default class extends Controller {
     const raw = this.inputTarget.value.trim()
     this._createOption.dataset.value = raw
     this._createOption.dataset.label = raw
-    this._createOption.textContent = `Add “${raw}”`
-    this.listboxTarget.appendChild(this._createOption)
+    this._createOption.textContent = this._text("create", { term: raw })
+    // Before the empty row and the notice, which both talk about the list
+    // rather than offering something to choose.
+    this.listboxTarget.insertBefore(
+      this._createOption,
+      this.hasEmptyTarget ? this.emptyTarget : null
+    )
   }
 
   _visibleOptions() {
@@ -413,6 +520,15 @@ export default class extends Controller {
       return
     }
 
+    // The option after the last one of a partly loaded list is one that has not
+    // been fetched yet, so it is fetched rather than wrapping round to the top.
+    // The create option is exempt: it belongs to the term, not to the results.
+    const active = options[current]
+    if (offset > 0 && current === options.length - 1 && active !== this._createOption && this._hasMore) {
+      this._loadMore({ highlightFirstNew: true })
+      return
+    }
+
     this._setActive(options[(current + offset + options.length) % options.length])
   }
 
@@ -431,6 +547,265 @@ export default class extends Controller {
     this._activeId = option.id
     this.inputTarget.setAttribute("aria-activedescendant", option.id)
     option.scrollIntoView({ block: "nearest" })
+  }
+
+  // Remote options
+
+  get _term() {
+    return this.inputTarget.value.trim()
+  }
+
+  get _belowThreshold() {
+    return this.isRemote && this._term.length < this.minCharsValue
+  }
+
+  _scheduleSearch({ immediate = false } = {}) {
+    clearTimeout(this._searchTimer)
+
+    const term = this._term
+
+    // Below the threshold there is nothing worth asking the server, so the list
+    // says what it is waiting for instead of showing stale results.
+    if (this._belowThreshold) {
+      this._abort()
+      this._stopBusy()
+      this._loading = false
+      this._loadingMore = false
+      this._loadedTerm = null
+      this._page = 0
+      this._pages = 0
+      this._renderOptions([], { replace: true })
+      this._setNotice(this._text("minChars"))
+      return
+    }
+
+    if (immediate) {
+      this._search(term)
+    } else {
+      this._searchTimer = setTimeout(() => this._search(term), SEARCH_DEBOUNCE)
+    }
+  }
+
+  // Whether the loaded list stops short of the matches the server has.
+  get _hasMore() {
+    return this.isRemote && this._page > 0 && this._page < this._pages
+  }
+
+  async _search(term) {
+    this._loading = true
+    this._loadingMore = false
+    this._startBusy("search")
+    this._refreshNotice()
+    this._filterOptions()
+
+    try {
+      const { payload, current } = await this._fetchPage(term, 1)
+      // A response that lost its race with a later one is not the answer to
+      // what is now in the input, so it is dropped rather than rendered.
+      if (!current) return
+
+      this._loading = false
+      this._stopBusy()
+      this._loadedTerm = term
+      this._takePageFrom(payload)
+      this._renderOptions(payload.options, { replace: true })
+      this._refreshNotice()
+      this._filterOptions()
+
+      const count = this.optionTargets.length
+      if (term !== "") this._setActive(this._visibleOptions()[0] || null)
+      this._announce(`${count} ${count === 1 ? "option" : "options"} available`)
+    } catch (error) {
+      if (error.name === "AbortError") return
+
+      this._loading = false
+      this._stopBusy()
+      const message = this._text("error")
+      this._setNotice(message)
+      this._filterOptions()
+      this._announce(message)
+    }
+  }
+
+  // Appends the page after the loaded one. Guarded so a scroll event, an arrow
+  // key and the End key cannot each start their own fetch of the same page.
+  async _loadMore({ highlightFirstNew = false } = {}) {
+    if (!this._hasMore || this._loading || this._loadingMore) return
+
+    const term = this._loadedTerm
+    const page = this._page + 1
+
+    this._loadingMore = true
+    this._startBusy("more")
+
+    try {
+      const { payload, current } = await this._fetchPage(term, page)
+      if (!current || this._loadedTerm !== term) return
+
+      this._loadingMore = false
+      this._stopBusy()
+      this._takePageFrom(payload, page)
+      const added = this._renderOptions(payload.options, { replace: false })
+      this._refreshNotice()
+      this._filterOptions()
+
+      if (highlightFirstNew && added[0]) this._setActive(added[0])
+      this._announce(
+        `${added.length} more ${added.length === 1 ? "option" : "options"} loaded, ` +
+          `${this.optionTargets.length} of ${this._count}`
+      )
+    } catch (error) {
+      if (error.name === "AbortError") return
+
+      this._loadingMore = false
+      this._stopBusy()
+      const message = this._text("moreError")
+      this._setNotice(message)
+      this._announce(message)
+    }
+  }
+
+  // Every request goes through here, so starting one always abandons the one
+  // before it - a fresh search abandons a page fetch as readily as the reverse.
+  async _fetchPage(term, page) {
+    this._abort()
+
+    const request = new AbortController()
+    this._request = request
+
+    const url = new URL(this.urlValue, window.location.href)
+    url.searchParams.set("term", term)
+    if (page > 1) url.searchParams.set("page", page)
+
+    const response = await fetch(url, {
+      signal: request.signal,
+      headers: { Accept: "application/json" }
+    })
+    if (!response.ok) throw new Error(`${response.status} ${response.statusText}`)
+
+    const payload = await response.json()
+    return { payload, current: request === this._request }
+  }
+
+  _takePageFrom(payload, fallbackPage = 1) {
+    this._page = Number(payload.page) || fallbackPage
+    this._pages = Number(payload.pages) || this._page
+    this._count = Number(payload.count) || 0
+  }
+
+  _abort() {
+    this._request?.abort()
+    this._request = null
+  }
+
+  // Options are cloned from the template so fetched ones match server-rendered
+  // ones exactly. Returns the elements added, so a caller can highlight them.
+  _renderOptions(options, { replace }) {
+    if (replace) {
+      this.optionTargets.forEach((option) => option.remove())
+      this._setActive(null)
+      this._optionSequence = 0
+      this.listboxTarget.scrollTop = 0
+    }
+
+    if (!this.hasOptionTemplateTarget) return []
+
+    const selected = new Set(
+      this.tokenTargets
+        .filter((token) => token.dataset.new !== "true")
+        .map((token) => token.dataset.value)
+    )
+
+    const fragment = document.createDocumentFragment()
+    const added = (Array.isArray(options) ? options : []).map((option) => {
+      const value = String(option.value)
+      const label = String(option.label)
+      const element = this.optionTemplateTarget.content.firstElementChild.cloneNode(true)
+
+      element.id = `${this.listboxTarget.id}-option-${this._optionSequence++}`
+      element.dataset.value = value
+      element.dataset.label = label
+      element.setAttribute("aria-selected", String(selected.has(value)))
+      element.querySelector(".l-ui-combobox__option-label").textContent = label
+
+      fragment.appendChild(element)
+      return element
+    })
+
+    // Before the empty row and the notice, which are not options.
+    this.listboxTarget.insertBefore(fragment, this._firstNonOption())
+    return added
+  }
+
+  _firstNonOption() {
+    return (
+      this.listboxTarget.querySelector(
+        ":scope > :not(.l-ui-combobox__option), :scope > .l-ui-combobox__option--create"
+      ) || null
+    )
+  }
+
+  // The notice carries only what stays worth reading: while pages remain, how
+  // far into the matches the list has got, since a list that grows as it is
+  // scrolled otherwise gives no sense of how much there is. A request in flight
+  // is left to the spinner.
+  _refreshNotice() {
+    if (this._belowThreshold) return
+
+    this._setNotice(
+      this._hasMore
+        ? this._text("progress", { shown: this.optionTargets.length, count: this._count })
+        : null
+    )
+  }
+
+  // Resolves one of the helper's strings, substituting Rails-style %{name}
+  // placeholders. A string the caller has emptied is left unsaid.
+  _text(key, replacements = {}) {
+    const template = this.textValue[key]
+    if (!template) return null
+
+    return Object.entries(replacements).reduce(
+      (text, [name, value]) => text.replaceAll(`%{${name}}`, value),
+      template
+    )
+  }
+
+  // The spinner waits out SPINNER_DELAY, so only a request slow enough to be
+  // worth reporting ever shows one. aria-busy is set at once, since it costs
+  // nothing and says the same thing to a screen reader.
+  _startBusy(kind) {
+    clearTimeout(this._busyTimer)
+    this.listboxTarget.setAttribute("aria-busy", "true")
+    this._busyTimer = setTimeout(() => this._setBusy(kind), SPINNER_DELAY)
+  }
+
+  _stopBusy() {
+    clearTimeout(this._busyTimer)
+    this.listboxTarget.removeAttribute("aria-busy")
+    this._setBusy(null)
+  }
+
+  _setBusy(kind) {
+    if (this.hasBusyTarget) this.busyTarget.hidden = kind !== "search"
+    if (this.hasMoreSpinnerTarget) this.moreSpinnerTarget.hidden = kind !== "more"
+    this._refreshNoticeRow()
+  }
+
+  _setNotice(message) {
+    this._notice = message || ""
+    this._refreshNoticeRow()
+  }
+
+  // The row earns its place with a message, or with a spinner standing in for
+  // the page on its way.
+  _refreshNoticeRow() {
+    if (!this.hasNoticeTarget) return
+
+    const spinning = this.hasMoreSpinnerTarget && !this.moreSpinnerTarget.hidden
+
+    if (this.hasNoticeTextTarget) this.noticeTextTarget.textContent = this._notice
+    this.noticeTarget.hidden = this._notice === "" && !spinning
   }
 
   _announce(message) {

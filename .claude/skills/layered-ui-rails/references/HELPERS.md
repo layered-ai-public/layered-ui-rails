@@ -411,22 +411,25 @@ When a popover is declared, the tag container itself becomes the `l-ui--popover`
 ## Combobox
 
 ```ruby
-l_ui_combobox(name, collection:, form: nil, selected: nil, multiple: true,
-              create: false, create_name: nil, reorder: false, id: nil,
-              label: nil, hint: nil, placeholder: nil, required: false,
-              disabled: false, container: {})
+l_ui_combobox(name, collection: nil, form: nil, selected: nil, multiple: true,
+              create: false, create_name: nil, reorder: false, url: nil,
+              min_chars: 0, text: {}, id: nil, label: nil, hint: nil, placeholder: nil,
+              required: false, disabled: false, container: {})
 ```
 
 Renders a token select (`class="l-ui-combobox"`): a text input with type-ahead filtering whose selections become removable tags, in the style of an email recipient field. Built on the ARIA combobox pattern - no third-party select library.
 
 - `name` (String or Symbol) - the parameter, e.g. `"post[tag_ids]"`. A Symbol is resolved against `form:`
-- `collection` (Array, required) - `["Label", value]` pairs, `{ label:, value: }` hashes, or plain strings
+- `collection` (Array) - `["Label", value]` pairs, `{ label:, value: }` hashes, or plain strings. Required unless `url:` is given
 - `form` (FormBuilder, optional) - derives parameter names from the builder for Symbol names
-- `selected` (Array or value, optional) - selected values. A value outside `collection` renders as a created token (requires `create:`)
+- `selected` (Array or value, optional) - selected values, or `["Label", value]` pairs / `{ label:, value: }` hashes where the label is not in `collection` (the only form a remote selection can take). A value with no label renders as a created token (requires `create:`)
 - `multiple` (Boolean, default `true`) - multi select; `false` drops the `[]` suffix, replaces the token on choice, and closes the list
 - `create` (Boolean, default `false`) - allow values outside the collection; requires `create_name:`
 - `create_name` (String or Symbol) - parameter created values post under, keeping record IDs and free text unambiguous server-side
 - `reorder` (Boolean, default `false`) - move controls plus mouse dragging (each token gains a decorative grip handle advertising the drag); parameters post in the displayed order
+- `url` (String, optional) - endpoint searched as the user types; options come from it rather than from `collection:`
+- `min_chars` (Integer, default `0`) - characters needed before a remote search runs; `0` searches as soon as the field is focused
+- `text` (Hash, optional) - wording for every string the control shows, merged over `Layered::Ui::ComboboxHelper::COMBOBOX_TEXT`: `empty:` ("No matches"), `create:` ("Add “%{term}”"), `min_chars:` ("Type %{count} characters to search."), `progress:` ("Showing %{shown} of %{count} matches."), `error:`, `more_error:`. Placeholders use Rails' `%{name}` syntax; `progress: nil` drops the progress line; an unknown key raises
 - `label`, `hint`, `placeholder`, `required`, `disabled`, `id`, `container` - as for a normal field
 
 ```erb
@@ -444,6 +447,47 @@ Renders a token select (`class="l-ui-combobox"`): a text input with type-ahead f
 ```
 
 Each selection carries its own hidden input, so the control submits with an ordinary form post, and a blank value is always posted first - clearing every token submits an empty collection instead of omitting the parameter and leaving the association untouched. Selections are announced through a local `role="status"` region, and the keyboard help is bound to the input with `aria-describedby`. Reordering exposes move buttons as well as dragging, since WCAG 2.2 SC 2.5.7 requires a single-pointer alternative to a drag.
+
+### Remote options
+
+With `url:`, options are fetched from that endpoint as the user types (debounced, with overtaken responses discarded) instead of being rendered up front and filtered in the browser. Matches load a page at a time, the next page appended as the end of the list is reached - by scrolling to its foot or by pressing Down on its last option, so the keyboard is not capped at the first page. A presentational note under the options (`class="l-ui-combobox__notice"`) says how far into the matches the list has got, or that they could not be loaded; a request in flight shows a spinner instead (trailing the field while searching, beside the note while a page loads), after a short delay so a quick answer never flashes one. Remote selections must be passed as `["Label", value]` pairs, since the browser has no collection to look a label up in.
+
+```ruby
+Layered::Ui::ComboboxOptions   # Controller concern building the JSON the endpoint answers with
+
+l_ui_combobox_options(scope, label:, value: :id, search: nil, predicate: :cont,
+                      combinator: :or, term: nil, page: nil, limit: 20)
+```
+
+- `scope` (Relation or model class) - what the user is allowed to see; the endpoint stays an ordinary action in the host app, authorised as any index is
+- `label` (Symbol or Proc) - attribute, or callable taking the record, used for the option's label
+- `value` (Symbol or Proc, default `:id`) - attribute, or callable, used for the option's value
+- `search` (Array, defaults to `label`) - attributes the term is matched against; required when `label:` is a callable, since a computed label gives the database nothing to search on. An attribute neither backend can search raises rather than quietly matching everything
+- `predicate` (Symbol, default `:cont`) - Ransack predicate for the match; `:i_cont` ignores case. Without Ransack only `:cont` and `:i_cont` can be built, and any other raises rather than quietly matching on something else
+- `combinator` (Symbol, default `:or`) - how the search attributes combine, `:or` or `:and`; honoured on both paths, and anything else raises
+- `term`, `page` - default to `params[:term]` and `params[:page]`
+- `limit` (Integer, default 20) - options per page
+
+Ransack builds the predicate when it is available (so association attributes work) and Pagy takes the page; there is a plain `LIKE` plus `limit`/`offset` fallback, so neither gem is required. An unordered scope is ordered by the label so pages do not overlap.
+
+```erb
+<%= l_ui_combobox(:author_id, form: f, multiple: false,
+      url: options_users_path, min_chars: 2,
+      selected: [[@post.author.name, @post.author_id]]) %>
+```
+
+```ruby
+class UsersController < ApplicationController
+  include Layered::Ui::ComboboxOptions
+
+  def options
+    render json: l_ui_combobox_options(policy_scope(User), label: :name, search: [:name, :email])
+  end
+end
+
+# GET /users/options?term=ali&page=1
+# { "options": [{ "label": "Alice Johnson", "value": "2" }], "page": 1, "pages": 1, "count": 1 }
+```
 
 ## Header
 

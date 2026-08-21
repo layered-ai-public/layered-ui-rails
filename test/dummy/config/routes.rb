@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get "pagination", to: "pages#pagination"
   get "forms", to: "pages#forms"
   get "combobox", to: "pages#combobox"
+  get "combobox_options", to: "pages#combobox_options"
   get "containers", to: "pages#containers"
   get "utilities", to: "pages#utilities"
   get "typography", to: "pages#typography"

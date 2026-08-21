@@ -311,6 +311,9 @@ Token select: a text input with type-ahead filtering whose selections become tag
 .l-ui-combobox__option-check      Accent-filled circle holding the tick, shown on options with aria-selected="true"; reserved space so options don't shift
 .l-ui-combobox__option-check-icon The tick itself; sized well inside the circle and drawn with a stroke so its weight holds up at that size
 .l-ui-combobox__empty             "No matches" message
+.l-ui-combobox__spinner           Busy ring shown while a remote request is in flight; keeps its shape without the animation under prefers-reduced-motion
+.l-ui-combobox__busy              Wrapper holding the spinner at the control's trailing edge (hidden until a search is slow enough to report)
+.l-ui-combobox__notice            Presentational row for what the list has to say about itself - a remote search in flight, a failed one, or a truncated result set. Sticks to the foot of the scrolling list and is ruled off from the options above it; the listbox drops its bottom padding while the notice shows, so nothing scrolls through the gap
 ```
 
 The listbox and filtered-out options are hidden with the `hidden` attribute, so `.l-ui-combobox [hidden] { display: none !important }` restores Preflight's rule (these components sit outside `@layer`, which would otherwise beat it). Prefer the `l_ui_combobox` helper (see HELPERS.md), which renders the whole structure with its ARIA wiring.

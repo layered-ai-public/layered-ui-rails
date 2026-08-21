@@ -134,11 +134,11 @@ Features:
 
 ## Combobox (`l-ui--combobox`)
 
-Drives the token select rendered by `l_ui_combobox`: type-ahead filtering, selections held as tokens with their own hidden inputs, optional creation of values outside the collection, and optional reordering.
+Drives the token select rendered by `l_ui_combobox`: type-ahead filtering, selections held as tokens with their own hidden inputs, optional creation of values outside the collection, optional reordering, and optional remote options.
 
-**Targets:** `control`, `tokens`, `token`, `input`, `listbox`, `option`, `empty`, `template`, `status`
-**Values:** `multiple` (Boolean, default `true`), `create` (Boolean, default `false`), `reorder` (Boolean, default `false`), `disabled` (Boolean, default `false`), `name` (String - parameter existing values post under), `createName` (String - parameter created values post under)
-**Actions:** `focusInput`, `open`, `close`, `blur`, `filter`, `keydown`, `selectOption`, `removeToken`, `moveTokenEarlier`, `moveTokenLater`, `dragstart`, `dragover`, `drop`, `dragend`
+**Targets:** `control`, `tokens`, `token`, `input`, `listbox`, `option`, `empty`, `notice`, `noticeText`, `busy`, `moreSpinner`, `template`, `optionTemplate`, `status`
+**Values:** `multiple` (Boolean, default `true`), `create` (Boolean, default `false`), `reorder` (Boolean, default `false`), `disabled` (Boolean, default `false`), `name` (String - parameter existing values post under), `createName` (String - parameter created values post under), `url` (String - endpoint searched as the user types; empty means filter in the browser), `minChars` (Number, default `0` - characters needed before a remote search runs), `text` (Object - the wording for the messages built here, from the helper's `text:` option; `%{name}` placeholders are substituted at use, and a key the caller emptied is left unsaid)
+**Actions:** `focusInput`, `open`, `close`, `blur`, `scrolled`, `filter`, `keydown`, `selectOption`, `removeToken`, `moveTokenEarlier`, `moveTokenLater`, `dragstart`, `dragover`, `drop`, `dragend`
 
 Features:
 - Focus never leaves the input while the list is browsed; the highlight follows `aria-activedescendant`
@@ -149,6 +149,10 @@ Features:
 - Reorder mode disables the dead-end move control on the first and last token and moves focus so it is never lost; a disabled combobox is left alone, so its controls stay disabled
 - Dragging is a pointer enhancement only, advertised by a decorative grip handle - the move buttons are the accessible path, as WCAG 2.2 SC 2.5.7 requires
 - Selections, filter counts, and moves are announced through a local `role="status"` region
+- With `url` set, each keystroke schedules a debounced fetch of `url?term=...`; the previous request is aborted and an overtaken response is dropped, so the list always answers what is currently typed. Leaving the field abandons a search in flight, so nothing spins beside a closed listbox and nothing is announced after focus has moved on. Responses replace the options wholesale, cloned from the `optionTemplate`, and the browser does no filtering of its own
+- Further pages are appended as the end of a remote list is reached - within `LOAD_MORE_MARGIN` of its foot (the `scrolled` action, bound to the listbox), or on Down/End at the last option, so the keyboard is not capped at the first page. Down loads instead of wrapping while pages remain, and highlights the first newly loaded option; option ids run on across pages so `aria-activedescendant` can never point at a reused id
+- The `notice` row carries only durable messages: how far into the matches the list has got, a failed request, and the character threshold. Each appended page is announced through the status region
+- A request in flight shows a spinner rather than a message - `busy` (trailing the input) while searching, `moreSpinner` (in the notice row) while a page loads - after `SPINNER_DELAY`, so a fast response never flashes one. `aria-busy` goes on the listbox immediately, since it costs nothing and says the same thing to a screen reader
 
 Use the `l_ui_combobox` helper (see HELPERS.md) rather than writing the markup by hand.
 

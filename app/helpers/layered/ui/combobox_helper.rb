@@ -1,6 +1,18 @@
 module Layered
   module Ui
     module ComboboxHelper
+      # Every string the control can show, so a host app can reword or translate
+      # it at the call site. Placeholders use Rails' own +%{name}+ syntax; the
+      # ones whose values are only known in the browser are substituted there.
+      # +:min_chars+ has no entry: its default is built from the threshold, so
+      # it can be counted properly.
+      COMBOBOX_TEXT = {
+        empty: "No matches",
+        create: "Add “%{term}”",
+        progress: "Showing %{shown} of %{count} matches.",
+        error: "The options could not be loaded.",
+        more_error: "More options could not be loaded."
+      }.freeze
       # Renders a token select: a text input with type-ahead filtering whose
       # selections become removable tokens, in the style of an email recipient
       # field. Built on the ARIA combobox pattern (an +input+ with
@@ -47,6 +59,36 @@ module Layered
       # the existing ones: any selected value absent from +collection+ is
       # rendered as a new token.
       #
+      # == Remote options
+      #
+      # Pass +url:+ and the options are fetched from that endpoint as the user
+      # types, instead of being filtered in the browser - for collections too
+      # large to render up front. The endpoint is sent +term+ and +page+ and
+      # answers with JSON; +Layered::Ui::ComboboxOptions+ builds that payload:
+      #
+      #   <%= l_ui_combobox(:author_id, form: f, multiple: false,
+      #         url: options_users_path, min_chars: 2,
+      #         selected: [[@post.author.name, @post.author_id]]) %>
+      #
+      # +collection:+ is then optional (any options given are shown until the
+      # first response arrives). Because the browser holds no copy of the
+      # collection, a selected value cannot be looked up for its label, so pass
+      # remote selections as +[label, value]+ pairs.
+      #
+      # Further pages are appended as the user reaches the end of the list -
+      # by scrolling to its foot, or by pressing Down on its last option, so
+      # the keyboard is not capped at the first page. A request in flight shows
+      # a spinner rather than a message, after a delay, so a quick answer never
+      # flashes one.
+      #
+      # == Wording
+      #
+      # Every string the control can show is in +text:+, so it can be reworded
+      # or translated where it is used:
+      #
+      #   <%= l_ui_combobox(:author_id, form: f, url: options_users_path,
+      #         text: { empty: "Personne", progress: "%{shown} sur %{count}" }) %>
+      #
       # == Reordering
       #
       # With +reorder: true+ each token gains a pair of move controls and can
@@ -56,34 +98,49 @@ module Layered
       #
       # Options:
       #   collection:  (Array)   Options as ["Label", value] pairs, {label:, value:} hashes, or plain strings.
+      #   url:         (String)  Endpoint searched as the user types. Options come from it rather than +collection:+.
       #   form:        (Builder) Form builder used to derive parameter names from Symbol names.
-      #   selected:    (Array)   Selected values (or a single value). Values outside +collection+ become new tokens.
+      #   selected:    (Array)   Selected values, or ["Label", value] pairs / {label:, value:} hashes where the
+      #                          label cannot be looked up in +collection+. Values outside it become new tokens.
       #   multiple:    (Boolean) Multi-select with many tokens (default), or single select.
       #   create:      (Boolean) Allow adding values that are not in the collection. Requires +create_name:+.
       #   create_name: (String)  Parameter name new values post under.
       #   reorder:     (Boolean) Show move controls and allow dragging tokens (default false).
+      #   min_chars:   (Integer) Characters needed before a remote search runs (default 0, i.e. search on focus).
+      #   text:        (Hash)    Wording for the strings the control shows, merged over COMBOBOX_TEXT:
+      #                          +:empty+, +:create+ (+%{term}+), +:min_chars+ (+%{count}+), +:progress+
+      #                          (+%{shown}+, +%{count}+), +:error+ and +:more_error+. +progress: nil+ drops
+      #                          the progress line.
       #   label:       (String)  Renders an +l-ui-label+ bound to the input.
       #   hint:        (String)  Renders an +l-ui-form__hint+ referenced by the input.
       #   placeholder: (String)  Input placeholder. Defaults to nothing.
       #   required:    (Boolean) Marks the label and input as required.
       #   disabled:    (Boolean) Disables the input and every token control.
       #   container:   (Hash)    Extra HTML attributes for the wrapping <div>.
-      def l_ui_combobox(name, collection:, form: nil, selected: nil, multiple: true,
-                        create: false, create_name: nil, reorder: false, id: nil,
-                        label: nil, hint: nil, placeholder: nil, required: false,
-                        disabled: false, container: {})
+      def l_ui_combobox(name, collection: nil, form: nil, selected: nil, multiple: true,
+                        create: false, create_name: nil, reorder: false, url: nil,
+                        min_chars: 0, text: {}, id: nil, label: nil, hint: nil, placeholder: nil,
+                        required: false, disabled: false, container: {})
+        if collection.nil? && url.nil?
+          raise ArgumentError,
+                "l_ui_combobox requires collection: (options filtered in the browser) or url: " \
+                "(options fetched from an endpoint as the user types)"
+        end
+
         if create && create_name.nil?
           raise ArgumentError,
                 "l_ui_combobox requires create_name: when create: is set, so new values post " \
                 "under their own parameter (e.g. create_name: :new_tag_names)"
         end
 
+        text = l_ui_combobox_text(text, min_chars: min_chars)
+
         id ||= "l-ui-combobox-#{SecureRandom.hex(4)}"
         options = l_ui_combobox_option_pairs(collection)
         value_name = l_ui_combobox_param(name, form, multiple: multiple)
         create_value_name = create ? l_ui_combobox_param(create_name, form, multiple: multiple) : nil
 
-        tokens = l_ui_combobox_tokens(selected, options, multiple: multiple, create: create,
+        tokens = l_ui_combobox_tokens(selected, options, multiple: multiple, create: create, url: url,
                                                          value_name: value_name, create_value_name: create_value_name)
 
         container_attrs = container.deep_dup
@@ -91,7 +148,8 @@ module Layered
         container_attrs[:data] = l_ui_combobox_data(container_attrs[:data],
                                                     multiple: multiple, create: create, reorder: reorder,
                                                     disabled: disabled, value_name: value_name,
-                                                    create_value_name: create_value_name)
+                                                    create_value_name: create_value_name,
+                                                    url: url, min_chars: min_chars, text: text)
 
         tag.div(**container_attrs) do
           safe_join([
@@ -99,10 +157,11 @@ module Layered
             (tag.p(hint, id: "#{id}-hint", class: "l-ui-form__hint") if hint),
             l_ui_combobox_control(id, tokens,
                                   value_name: value_name, placeholder: placeholder, hint: hint,
-                                  reorder: reorder, disabled: disabled, required: required),
-            l_ui_combobox_listbox(id, options, tokens, multiple: multiple),
+                                  reorder: reorder, disabled: disabled, required: required, url: url),
+            l_ui_combobox_listbox(id, options, tokens, multiple: multiple, url: url, text: text),
             l_ui_combobox_template(reorder: reorder, disabled: disabled),
-            tag.span(l_ui_combobox_instructions(multiple: multiple, create: create),
+            (l_ui_combobox_option_template if url),
+            tag.span(l_ui_combobox_instructions(multiple: multiple, create: create, url: url),
                      id: "#{id}-instructions", class: "l-ui-sr-only"),
             tag.div("", class: "l-ui-sr-only", role: "status", aria: { live: "polite" },
                         data: { "l-ui--combobox-target" => "status" })
@@ -126,20 +185,28 @@ module Layered
         end
       end
 
-      # Pairs each selected value with its option label. A value with no
-      # matching option is a created value, so it carries its own label and is
-      # flagged so it posts under the create parameter.
-      def l_ui_combobox_tokens(selected, options, multiple:, create:, value_name:, create_value_name:)
-        values = Array.wrap(selected).map(&:to_s).reject(&:empty?)
-        values = values.first(1) unless multiple
+      # Pairs each selected value with its option label, which comes either with
+      # the selection (as a pair or hash, the only option for a remote
+      # collection) or from the matching option. A value with no label at all
+      # is a created value, so it carries its own and is flagged so it posts
+      # under the create parameter.
+      def l_ui_combobox_tokens(selected, options, multiple:, create:, url:, value_name:, create_value_name:)
+        entries = Array.wrap(selected).reject { |entry| entry.nil? || entry.to_s.empty? }
+        entries = entries.first(1) unless multiple
 
-        values.map do |value|
-          label = options.detect { |_, option_value| option_value == value }&.first
+        entries.map do |entry|
+          given_label, value = l_ui_combobox_selection(entry)
+          next if value.empty?
+
+          label = given_label || options.detect { |_, option_value| option_value == value }&.first
 
           if label.nil? && !create
             raise ArgumentError,
                   "l_ui_combobox was given selected value #{value.inspect}, which is not in the " \
-                  "collection. Pass create: true (with create_name:) to allow values outside it."
+                  "collection. " +
+                  (url ? "Pass it as a [label, value] pair, since a remote collection cannot be " \
+                         "searched for its label. " : "") +
+                  "Pass create: true (with create_name:) to allow values outside it."
           end
 
           {
@@ -148,7 +215,53 @@ module Layered
             new: label.nil?,
             name: label.nil? ? create_value_name : value_name
           }
+        end.compact
+      end
+
+      # A selection is either a bare value or a labelled ["Label", value] pair
+      # or {label:, value:} hash. Returns [label or nil, value].
+      def l_ui_combobox_selection(entry)
+        case entry
+        when Hash then [entry[:label]&.to_s, entry[:value].to_s]
+        when Array then [entry.first&.to_s, entry.last.to_s]
+        else [nil, entry.to_s]
         end
+      end
+
+      # Merges the caller's wording over the defaults. An unknown key is a typo
+      # rather than a message nobody will ever see, so it is an error.
+      def l_ui_combobox_text(text, min_chars:)
+        text = (text || {}).symbolize_keys
+        unknown = text.keys - (COMBOBOX_TEXT.keys + [:min_chars])
+
+        if unknown.any?
+          raise ArgumentError,
+                "l_ui_combobox was given unknown text: #{unknown.map(&:inspect).join(', ')}. " \
+                "Known keys: #{(COMBOBOX_TEXT.keys + [:min_chars]).map(&:inspect).join(', ')}."
+        end
+
+        resolved = COMBOBOX_TEXT.merge(text)
+        resolved[:min_chars] = l_ui_combobox_min_chars_text(resolved[:min_chars], min_chars)
+        resolved
+      end
+
+      # The threshold is known here, so its message is counted and interpolated
+      # server-side rather than left to the browser to get right. Substituted
+      # rather than formatted, so a literal % in the wording stays a percent
+      # sign instead of becoming a format directive.
+      def l_ui_combobox_min_chars_text(template, min_chars)
+        template ||= "Type %{count} #{'character'.pluralize(min_chars)} to search."
+        template.gsub("%{count}", min_chars.to_s)
+      end
+
+      # Only the messages the controller has to build itself travel to the
+      # browser; the rest are rendered here. Keys are camelCased on the way, so
+      # they read as they would in any other Stimulus value.
+      def l_ui_combobox_text_value(text)
+        text.slice(:create, :min_chars, :progress, :error, :more_error)
+            .transform_keys { |key| key.to_s.camelize(:lower) }
+            .compact
+            .to_json
       end
 
       def l_ui_combobox_param(name, form, multiple:)
@@ -156,7 +269,8 @@ module Layered
         multiple ? "#{base}[]" : base
       end
 
-      def l_ui_combobox_data(data, multiple:, create:, reorder:, disabled:, value_name:, create_value_name:)
+      def l_ui_combobox_data(data, multiple:, create:, reorder:, disabled:, value_name:, create_value_name:,
+                             url: nil, min_chars: 0, text: COMBOBOX_TEXT)
         data = (data || {}).deep_dup
         existing_controller = data.delete(:controller) || data.delete("controller")
 
@@ -167,6 +281,14 @@ module Layered
         data[:"l-ui--combobox-disabled-value"] = disabled
         data[:"l-ui--combobox-name-value"] = value_name
         data[:"l-ui--combobox-create-name-value"] = create_value_name if create_value_name
+
+        if url
+          data[:"l-ui--combobox-url-value"] = url
+          data[:"l-ui--combobox-min-chars-value"] = min_chars
+        end
+
+        data[:"l-ui--combobox-text-value"] = l_ui_combobox_text_value(text)
+
         data
       end
 
@@ -187,7 +309,7 @@ module Layered
         end
       end
 
-      def l_ui_combobox_control(id, tokens, value_name:, placeholder:, hint:, reorder:, disabled:, required:)
+      def l_ui_combobox_control(id, tokens, value_name:, placeholder:, hint:, reorder:, disabled:, required:, url: nil)
         described_by = [("#{id}-hint" if hint), "#{id}-instructions"].compact.join(" ")
 
         tag.div(class: class_names("l-ui-combobox__control", "l-ui-combobox__control--disabled" => disabled),
@@ -228,8 +350,9 @@ module Layered
                         "focus->l-ui--combobox#open " \
                         "blur->l-ui--combobox#blur"
               }
-            )
-          ])
+            ),
+            (l_ui_combobox_busy if url)
+          ].compact)
         end
       end
 
@@ -281,7 +404,7 @@ module Layered
         ]
       end
 
-      def l_ui_combobox_listbox(id, options, tokens, multiple:)
+      def l_ui_combobox_listbox(id, options, tokens, multiple:, url: nil, text: COMBOBOX_TEXT)
         selected_values = tokens.map { |token| token[:value] }
 
         tag.ul(id: "#{id}-listbox",
@@ -289,28 +412,52 @@ module Layered
                role: "listbox",
                hidden: true,
                aria: { multiselectable: ("true" if multiple) }.compact,
-               data: { "l-ui--combobox-target" => "listbox" }) do
+               data: {
+                 "l-ui--combobox-target" => "listbox",
+                 # Scrolling to the foot of a remote list loads the next page.
+                 action: ("scroll->l-ui--combobox#scrolled" if url)
+               }.compact) do
           items = options.each_with_index.map do |(label, value), index|
-            tag.li(l_ui_combobox_option_content(label),
-                   id: "#{id}-option-#{index}",
-                   class: "l-ui-combobox__option",
-                   role: "option",
-                   aria: { selected: selected_values.include?(value).to_s },
-                   data: {
-                     "l-ui--combobox-target" => "option",
-                     value: value,
-                     label: label,
-                     action: "mousedown->l-ui--combobox#selectOption"
-                   })
+            l_ui_combobox_option(label, value,
+                                 id: "#{id}-option-#{index}",
+                                 selected: selected_values.include?(value))
           end
 
-          items << tag.li("No matches",
+          items << tag.li(text[:empty],
                           class: "l-ui-combobox__empty",
                           role: "presentation",
                           hidden: true,
                           data: { "l-ui--combobox-target" => "empty" })
+          # Carries whatever the list has to say about itself rather than about
+          # an option - how far into the matches it has got, or that they could
+          # not be loaded - so it is presentational, never a choice. The spinner
+          # beside it covers a page being fetched, which is a state rather than
+          # a message.
+          items << tag.li(class: "l-ui-combobox__notice",
+                          role: "presentation",
+                          hidden: true,
+                          data: { "l-ui--combobox-target" => "notice" }) do
+            safe_join([
+              tag.span("", data: { "l-ui--combobox-target" => "noticeText" }),
+              (l_ui_combobox_spinner(target: "moreSpinner") if url)
+            ].compact)
+          end
           safe_join(items)
         end
+      end
+
+      def l_ui_combobox_option(label, value, id: nil, selected: false)
+        tag.li(l_ui_combobox_option_content(label),
+               id: id,
+               class: "l-ui-combobox__option",
+               role: "option",
+               aria: { selected: selected.to_s },
+               data: {
+                 "l-ui--combobox-target" => "option",
+                 value: value,
+                 label: label,
+                 action: "mousedown->l-ui--combobox#selectOption"
+               })
       end
 
       def l_ui_combobox_option_content(label)
@@ -328,8 +475,43 @@ module Layered
         end
       end
 
-      def l_ui_combobox_instructions(multiple:, create:)
-        parts = ["Type to filter the options. Use the up and down arrow keys to browse them and Enter to choose."]
+      # Shown in place of a "searching" message: a request in flight is a state,
+      # and a message that appears and vanishes within a keystroke is unreadable.
+      # It is aria-hidden because the listbox carries aria-busy for the same
+      # state, and the results are announced when they arrive.
+      def l_ui_combobox_busy
+        tag.span(l_ui_combobox_spinner,
+                 class: "l-ui-combobox__busy",
+                 hidden: true,
+                 aria: { hidden: true },
+                 data: { "l-ui--combobox-target" => "busy" })
+      end
+
+      def l_ui_combobox_spinner(target: nil)
+        tag.span("",
+                 class: "l-ui-combobox__spinner",
+                 hidden: (true if target),
+                 aria: { hidden: true },
+                 data: ({ "l-ui--combobox-target" => target } if target))
+      end
+
+      # The blank option the controller clones for each fetched option, so
+      # remote options match locally rendered ones exactly.
+      def l_ui_combobox_option_template
+        tag.template(data: { "l-ui--combobox-target" => "optionTemplate" }) do
+          l_ui_combobox_option("", "")
+        end
+      end
+
+      def l_ui_combobox_instructions(multiple:, create:, url: nil)
+        parts = [
+          if url
+            "Type to search for options. Use the up and down arrow keys to browse them and Enter to choose. " \
+              "More options load as you reach the end of the list."
+          else
+            "Type to filter the options. Use the up and down arrow keys to browse them and Enter to choose."
+          end
+        ]
         parts << "Enter also adds a value that is not in the list." if create
         parts << "Backspace on the empty input removes the last selection." if multiple
         parts.join(" ")
