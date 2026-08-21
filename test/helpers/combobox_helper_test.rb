@@ -219,6 +219,87 @@ class ComboboxHelperTest < ActionView::TestCase
     assert_includes result, '<template data-l-ui--combobox-target="template">'
   end
 
+  test "renders a presentational notice row for what the list has to say" do
+    result = l_ui_combobox("post[tag_ids]", collection: COLLECTION)
+
+    assert_includes result, '<li class="l-ui-combobox__notice" role="presentation" hidden'
+    assert_includes result, 'data-l-ui--combobox-target="notice"'
+  end
+
+  test "collection: or url: is required" do
+    error = assert_raises(ArgumentError) { l_ui_combobox("post[tag_ids]") }
+
+    assert_match(/requires collection: .* or url:/, error.message)
+  end
+
+  # -- remote options --
+
+  test "url: is passed to the controller with the character threshold" do
+    result = l_ui_combobox("post[tag_ids]", url: "/tags/options", min_chars: 2)
+
+    assert_includes result, 'data-l-ui--combobox-url-value="/tags/options"'
+    assert_includes result, 'data-l-ui--combobox-min-chars-value="2"'
+  end
+
+  test "url: renders an option template the controller clones fetched options from" do
+    result = l_ui_combobox("post[tag_ids]", url: "/tags/options")
+
+    assert_includes result, '<template data-l-ui--combobox-target="optionTemplate">'
+    assert_includes result, 'class="l-ui-combobox__option" role="option" aria-selected="false"'
+  end
+
+  test "a local combobox renders no option template" do
+    result = l_ui_combobox("post[tag_ids]", collection: COLLECTION)
+
+    refute_includes result, "optionTemplate"
+  end
+
+  test "url: makes the collection optional and renders an empty listbox" do
+    result = l_ui_combobox("post[tag_ids]", url: "/tags/options", id: "tags")
+
+    # The first row of the listbox is the empty-state row, so it holds no
+    # options - only the template the fetched ones are cloned from.
+    assert_match %r{<ul id="tags-listbox"[^>]*><li class="l-ui-combobox__empty"}, result
+  end
+
+  test "url: still shows any collection given alongside it" do
+    result = l_ui_combobox("post[tag_ids]", url: "/tags/options", collection: COLLECTION)
+
+    assert_includes result, 'data-label="Ruby"'
+  end
+
+  test "selected accepts [label, value] pairs and hashes" do
+    pairs = l_ui_combobox("post[tag_ids]", url: "/tags/options", selected: [["Ruby", 1]])
+    hashes = l_ui_combobox("post[tag_ids]", url: "/tags/options", selected: [{ label: "Ruby", value: 1 }])
+
+    [pairs, hashes].each do |result|
+      assert_includes result, ">Ruby</span>"
+      assert_includes result, 'data-value="1"'
+      assert_includes result, 'data-new="false"'
+      assert_includes result, '<input type="hidden" name="post[tag_ids][]" value="1"'
+    end
+  end
+
+  test "a labelled selection is preferred over the matching option's label" do
+    result = l_ui_combobox("post[tag_ids]", collection: COLLECTION, selected: [["Ruby on Rails", "2"]])
+
+    assert_includes result, ">Ruby on Rails</span>"
+  end
+
+  test "an unlabelled remote selection explains that a pair is needed" do
+    error = assert_raises(ArgumentError) do
+      l_ui_combobox("post[tag_ids]", url: "/tags/options", selected: ["7"])
+    end
+
+    assert_match(/\[label, value\] pair/, error.message)
+  end
+
+  test "instructions describe searching rather than filtering for a remote combobox" do
+    result = l_ui_combobox("post[tag_ids]", url: "/tags/options", id: "tags")
+
+    assert_includes result, "Type to search for options."
+  end
+
   test "container attributes are merged and the controller is preserved" do
     result = l_ui_combobox("post[tag_ids]", collection: COLLECTION,
                            container: { class: "mt-8", data: { controller: "custom" } })

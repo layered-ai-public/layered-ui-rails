@@ -134,10 +134,10 @@ Features:
 
 ## Combobox (`l-ui--combobox`)
 
-Drives the token select rendered by `l_ui_combobox`: type-ahead filtering, selections held as tokens with their own hidden inputs, optional creation of values outside the collection, and optional reordering.
+Drives the token select rendered by `l_ui_combobox`: type-ahead filtering, selections held as tokens with their own hidden inputs, optional creation of values outside the collection, optional reordering, and optional remote options.
 
-**Targets:** `control`, `tokens`, `token`, `input`, `listbox`, `option`, `empty`, `template`, `status`
-**Values:** `multiple` (Boolean, default `true`), `create` (Boolean, default `false`), `reorder` (Boolean, default `false`), `disabled` (Boolean, default `false`), `name` (String - parameter existing values post under), `createName` (String - parameter created values post under)
+**Targets:** `control`, `tokens`, `token`, `input`, `listbox`, `option`, `empty`, `notice`, `template`, `optionTemplate`, `status`
+**Values:** `multiple` (Boolean, default `true`), `create` (Boolean, default `false`), `reorder` (Boolean, default `false`), `disabled` (Boolean, default `false`), `name` (String - parameter existing values post under), `createName` (String - parameter created values post under), `url` (String - endpoint searched as the user types; empty means filter in the browser), `minChars` (Number, default `0` - characters needed before a remote search runs)
 **Actions:** `focusInput`, `open`, `close`, `blur`, `filter`, `keydown`, `selectOption`, `removeToken`, `moveTokenEarlier`, `moveTokenLater`, `dragstart`, `dragover`, `drop`, `dragend`
 
 Features:
@@ -149,6 +149,8 @@ Features:
 - Reorder mode disables the dead-end move control on the first and last token and moves focus so it is never lost; a disabled combobox is left alone, so its controls stay disabled
 - Dragging is a pointer enhancement only, advertised by a decorative grip handle - the move buttons are the accessible path, as WCAG 2.2 SC 2.5.7 requires
 - Selections, filter counts, and moves are announced through a local `role="status"` region
+- With `url` set, each keystroke schedules a debounced fetch of `url?term=...`; the previous request is aborted and an overtaken response is dropped, so the list always answers what is currently typed. Responses replace the options wholesale, cloned from the `optionTemplate`, and the browser does no filtering of its own
+- The `notice` row carries the list's own messages: searching, a failed request, the character threshold, and how many matches were left out of the first page
 
 Use the `l_ui_combobox` helper (see HELPERS.md) rather than writing the markup by hand.
 

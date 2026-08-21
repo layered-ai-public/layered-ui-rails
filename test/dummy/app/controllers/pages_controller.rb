@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  include Layered::Ui::ComboboxOptions
+
   before_action :load_users, only: [:tables, :pagination, :tables_helper, :forms_helper]
 
   def home
@@ -45,6 +47,16 @@ class PagesController < ApplicationController
 
   def combobox
     @recipients = User.order(:name).pluck(:email, :id)
+    # A remote combobox's selections carry their own labels, since there is no
+    # collection on the page to look them up in.
+    owner = User.order(:name).first
+    @owner_selection = owner ? [[owner.name, owner.id]] : nil
+  end
+
+  # The endpoint the remote combobox example searches. Ransack and Pagy are
+  # both present here, so this is the whole action.
+  def combobox_options
+    render json: l_ui_combobox_options(User.all, label: :name, search: [:name, :email], limit: 8)
   end
 
   def containers

@@ -10,12 +10,24 @@ import { Controller } from "@hotwired/stimulus"
 // focus therefore only moves for the token controls, which are ordinary
 // buttons.
 //
+// With `url` set, the options are fetched from that endpoint as the user types
+// instead of being filtered in the browser, and each response replaces the
+// list - cloned from the option <template> so remote options are built from the
+// same markup as server-rendered ones.
+//
 // Each selection carries its own hidden input, so the control submits with a
 // normal form post. Values that exist in the collection post under `name`;
 // created values post under `createName`, keeping record IDs and free text
 // unambiguous server-side.
+// Long enough that a typed word is one request rather than one per letter,
+// short enough that the list still feels like it is keeping up.
+const SEARCH_DEBOUNCE = 200
+
 export default class extends Controller {
-  static targets = ["control", "tokens", "token", "input", "listbox", "option", "empty", "template", "status"]
+  static targets = [
+    "control", "tokens", "token", "input", "listbox", "option", "empty",
+    "notice", "template", "optionTemplate", "status"
+  ]
 
   static values = {
     multiple: { type: Boolean, default: true },
@@ -23,7 +35,9 @@ export default class extends Controller {
     reorder: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
     name: String,
-    createName: String
+    createName: String,
+    url: String,
+    minChars: { type: Number, default: 0 }
   }
 
   connect() {
@@ -31,7 +45,22 @@ export default class extends Controller {
     this._dragging = null
     this._dragOrigin = null
     this._dropped = false
+    this._searchTimer = null
+    this._request = null
+    this._loading = false
+    // The term the list currently shows results for; null until the first
+    // response, which is how a remote combobox knows it has nothing yet.
+    this._loadedTerm = null
     this._refreshMoveControls()
+  }
+
+  disconnect() {
+    clearTimeout(this._searchTimer)
+    this._abort()
+  }
+
+  get isRemote() {
+    return this.urlValue !== ""
   }
 
   // Clicking anywhere in the control (the padding around the tokens, say)
@@ -42,6 +71,12 @@ export default class extends Controller {
   }
 
   open() {
+    // Includes the case of the term being cleared after a selection, where the
+    // list has to go back to the unfiltered first page.
+    if (this.isRemote && this._loadedTerm !== this._term) {
+      this._scheduleSearch({ immediate: this._loadedTerm === null })
+    }
+
     this._filterOptions()
     this.listboxTarget.hidden = false
     this.inputTarget.setAttribute("aria-expanded", "true")
@@ -62,6 +97,17 @@ export default class extends Controller {
   }
 
   filter() {
+    // The highlight and the announcement wait for the response, since there is
+    // nothing yet to say how many options the term has.
+    if (this.isRemote) {
+      this._scheduleSearch()
+      this._filterOptions()
+      this.listboxTarget.hidden = false
+      this.inputTarget.setAttribute("aria-expanded", "true")
+      this._setActive(null)
+      return
+    }
+
     this.open()
 
     const visible = this._visibleOptions()
@@ -351,14 +397,21 @@ export default class extends Controller {
   _filterOptions() {
     const term = this.inputTarget.value.trim().toLowerCase()
 
-    this.optionTargets.forEach((option) => {
-      option.hidden = term !== "" && !option.dataset.label.toLowerCase().includes(term)
-    })
+    // A remote list is already the answer for the term, so filtering it again
+    // in the browser would only hide options the server chose to return.
+    if (!this.isRemote) {
+      this.optionTargets.forEach((option) => {
+        option.hidden = term !== "" && !option.dataset.label.toLowerCase().includes(term)
+      })
+    }
 
     this._refreshCreateOption(term)
 
+    // "No matches" is a result, so it is only shown once the list has one: not
+    // while a search is in flight, and not before the term is long enough for
+    // one to have run.
     if (this.hasEmptyTarget) {
-      this.emptyTarget.hidden = this._visibleOptions().length > 0
+      this.emptyTarget.hidden = this._visibleOptions().length > 0 || this._loading || this._belowThreshold
     }
   }
 
@@ -388,7 +441,12 @@ export default class extends Controller {
     this._createOption.dataset.value = raw
     this._createOption.dataset.label = raw
     this._createOption.textContent = `Add “${raw}”`
-    this.listboxTarget.appendChild(this._createOption)
+    // Before the empty row and the notice, which both talk about the list
+    // rather than offering something to choose.
+    this.listboxTarget.insertBefore(
+      this._createOption,
+      this.hasEmptyTarget ? this.emptyTarget : null
+    )
   }
 
   _visibleOptions() {
@@ -431,6 +489,140 @@ export default class extends Controller {
     this._activeId = option.id
     this.inputTarget.setAttribute("aria-activedescendant", option.id)
     option.scrollIntoView({ block: "nearest" })
+  }
+
+  // Remote options
+
+  get _term() {
+    return this.inputTarget.value.trim()
+  }
+
+  get _belowThreshold() {
+    return this.isRemote && this._term.length < this.minCharsValue
+  }
+
+  _scheduleSearch({ immediate = false } = {}) {
+    clearTimeout(this._searchTimer)
+
+    const term = this._term
+
+    // Below the threshold there is nothing worth asking the server, so the list
+    // says what it is waiting for instead of showing stale results.
+    if (this._belowThreshold) {
+      this._abort()
+      this._loading = false
+      this._loadedTerm = null
+      this._replaceOptions([])
+      const characters = this.minCharsValue === 1 ? "character" : "characters"
+      this._setNotice(`Type ${this.minCharsValue} ${characters} to search.`)
+      return
+    }
+
+    if (immediate) {
+      this._search(term)
+    } else {
+      this._searchTimer = setTimeout(() => this._search(term), SEARCH_DEBOUNCE)
+    }
+  }
+
+  async _search(term) {
+    this._abort()
+
+    const request = new AbortController()
+    this._request = request
+    this._loading = true
+    this._setNotice("Searching…")
+    this._filterOptions()
+
+    try {
+      const url = new URL(this.urlValue, window.location.href)
+      url.searchParams.set("term", term)
+
+      const response = await fetch(url, {
+        signal: request.signal,
+        headers: { Accept: "application/json" }
+      })
+      if (!response.ok) throw new Error(`${response.status} ${response.statusText}`)
+
+      const payload = await response.json()
+      // A response that lost its race with a later one is not the answer to
+      // what is now in the input, so it is dropped rather than rendered.
+      if (request !== this._request) return
+
+      this._loading = false
+      this._loadedTerm = term
+      this._replaceOptions(payload.options || [])
+      this._noticeForResults(payload)
+      this._filterOptions()
+
+      const count = this.optionTargets.length
+      if (term !== "") this._setActive(this._visibleOptions()[0] || null)
+      this._announce(`${count} ${count === 1 ? "option" : "options"} available`)
+    } catch (error) {
+      if (error.name === "AbortError") return
+
+      this._loading = false
+      this._setNotice("The options could not be loaded.")
+      this._filterOptions()
+      this._announce("The options could not be loaded.")
+    }
+  }
+
+  _abort() {
+    this._request?.abort()
+    this._request = null
+  }
+
+  // Each response replaces the list wholesale: the server decides what matches,
+  // and options are cloned from the template so they match server-rendered ones.
+  _replaceOptions(options) {
+    this.optionTargets.forEach((option) => option.remove())
+    this._setActive(null)
+
+    if (!this.hasOptionTemplateTarget) return
+
+    const selected = new Set(
+      this.tokenTargets
+        .filter((token) => token.dataset.new !== "true")
+        .map((token) => token.dataset.value)
+    )
+
+    const fragment = document.createDocumentFragment()
+
+    options.forEach((option, index) => {
+      const value = String(option.value)
+      const label = String(option.label)
+      const element = this.optionTemplateTarget.content.firstElementChild.cloneNode(true)
+
+      element.id = `${this.listboxTarget.id}-option-${index}`
+      element.dataset.value = value
+      element.dataset.label = label
+      element.setAttribute("aria-selected", String(selected.has(value)))
+      element.querySelector(".l-ui-combobox__option-label").textContent = label
+
+      fragment.appendChild(element)
+    })
+
+    this.listboxTarget.insertBefore(fragment, this.listboxTarget.firstElementChild)
+  }
+
+  // Only the first page is ever shown: paging a listbox with the keyboard is a
+  // pattern of its own, and narrowing the term is the quicker way there anyway.
+  _noticeForResults({ count, pages }) {
+    const shown = this.optionTargets.length
+
+    if (pages > 1 && count > shown) {
+      this._setNotice(`Showing ${shown} of ${count} matches. Keep typing to narrow the list.`)
+    } else {
+      this._setNotice(null)
+    }
+  }
+
+  _setNotice(message) {
+    if (!this.hasNoticeTarget) return
+
+    this.noticeTarget.textContent = message || ""
+    this.noticeTarget.hidden = !message
   }
 
   _announce(message) {

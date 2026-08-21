@@ -77,6 +77,75 @@
   </dialog>
 </div>
 
+<h2 class="mt-8 l-ui-heading--section">Remote options</h2>
+
+<p class="mt-4">Pass <code>url:</code> and the options are fetched from that endpoint as the user types, rather than being rendered up front and filtered in the browser - for collections too large to send with the page. Requests are debounced, and a response that has been overtaken by a later one is discarded, so the list always answers what is currently typed. <code>min_chars:</code> sets how much has to be typed before the first search runs; it defaults to <code>0</code>, which searches as soon as the field is focused.</p>
+
+<p class="mt-4">The endpoint is sent <code>term</code> and <code>page</code> and answers with JSON. Include <code>Layered::Ui::ComboboxOptions</code> in the controller and <code>l_ui_combobox_options</code> builds that payload: it searches with Ransack and pages with Pagy when they are available, and falls back to a plain <code>LIKE</code> with <code>limit</code>/<code>offset</code> when they are not, so neither gem is required. Only the first page of matches is ever shown - narrowing the term is quicker than paging a listbox - and a note under the options says how many matches were left out. The endpoint stays an ordinary action in your own app, so it is scoped and authorised exactly as any other index is.</p>
+
+<p class="mt-4">Because the browser holds no copy of the collection, a selected value cannot be looked up for its label, so pass remote selections as <code>[label, value]</code> pairs, as the owner field below does.</p>
+
+<div class="l-ui-form mt-4">
+  <%= l_ui_combobox("message[recipient_ids]",
+        label: "Recipients",
+        url: combobox_options_path,
+        min_chars: 2,
+        placeholder: "Search for a person",
+        hint: "Search by name or email address. There are #{User.count} people to choose from.") %>
+
+  <div class="mt-4">
+    <%= l_ui_combobox("message[owner_id]",
+          label: "Owner",
+          url: combobox_options_path,
+          multiple: false,
+          selected: @owner_selection,
+          placeholder: "Search for a person") %>
+  </div>
+</div>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-combobox-remote-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-combobox-remote-heading">Remote options</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;%= l_ui_combobox(:recipient_ids, form: f,
+      label: "Recipients",
+      url: options_users_path,
+      min_chars: 2,
+      placeholder: "Search for a person") %&gt;
+
+&lt;%= l_ui_combobox(:owner_id, form: f,
+      label: "Owner",
+      url: options_users_path,
+      multiple: false,
+      selected: [[@message.owner.name, @message.owner_id]]) %&gt;
+
+# config/routes.rb
+resources :users do
+  get "options", on: :collection
+end
+
+# app/controllers/users_controller.rb
+class UsersController &lt; ApplicationController
+  include Layered::Ui::ComboboxOptions
+
+  def options
+    render json: l_ui_combobox_options(User.all, label: :name, search: [:name, :email])
+  end
+end
+
+# GET /users/options?term=ali
+{ "options": [{ "label": "Alice Johnson", "value": "2" }],
+  "page": 1, "pages": 1, "count": 1 }</code></pre>
+    </div>
+  </dialog>
+</div>
+
 <h2 class="mt-8 l-ui-heading--section">Creating new values</h2>
 
 <p class="mt-4">With <code>create: true</code>, a term that matches no option is offered as a new token. New values post under their own parameter (<code>create_name:</code>, which is then required), so the server never has to guess whether a submitted value is an existing record's ID or a free-text label. On redisplay, pass previously created values in <code>selected:</code> alongside the existing ones - any selected value that is not in the collection is rendered as a new token.</p>

@@ -2156,6 +2156,30 @@ pre.l-ui-surface {
          text-sm font-inter text-foreground-muted;
 }
 
+/* What the list has to say about itself - a search in flight, a failure, or a
+   truncated result set. Sticks to the foot of the scrolling list, since a note
+   saying the results were cut short is no use below the fold, and is set apart
+   from the options above it because it is not something that can be chosen. */
+.l-ui-combobox__notice {
+  @apply sticky bottom-0
+         px-3 py-2
+         text-xs font-inter text-foreground-muted
+         bg-background;
+}
+
+/* The list's own bottom padding would sit below the sticky notice, leaving a gap
+   for the options to scroll through, so it is dropped while the notice is
+   showing - the notice brings its own padding. */
+.l-ui-combobox__listbox:has(.l-ui-combobox__notice:not([hidden])) {
+  @apply pb-0;
+}
+
+/* The rule only earns its place once there is a list above it to separate. */
+.l-ui-combobox__option ~ .l-ui-combobox__notice {
+  @apply mt-1 pt-2
+         border-t border-border;
+}
+
 /* Panel */
 
 .l-ui-panel__button {
