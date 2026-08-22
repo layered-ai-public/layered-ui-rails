@@ -59,6 +59,17 @@ module Layered
                                :collection, :placeholder, :prompt, :include_blank)
 
         if as == :combobox
+          unusable = {
+            prompt: "Use placeholder: instead, which a combobox shows until something is selected.",
+            include_blank: "A combobox with no selection is already blank, so there is nothing to set."
+          }
+          unusable.each do |key, advice|
+            next unless config.key?(key)
+
+            raise ArgumentError,
+                  "Field :#{attribute} is a :combobox and cannot take :#{key}. #{advice}"
+          end
+
           allowed = ComboboxHelper::COMBOBOX_OPTIONS + [:class]
           unknown = extras.keys - allowed
           if unknown.any?

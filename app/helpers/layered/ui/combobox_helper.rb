@@ -215,10 +215,12 @@ module Layered
           if label.nil? && !create
             raise ArgumentError,
                   "l_ui_combobox was given selected value #{value.inspect}, which is not in the " \
-                  "collection. " +
-                  (url ? "Pass it as a [label, value] pair, since a remote collection cannot be " \
-                         "searched for its label. " : "") +
-                  "Pass create: true (with create_name:) to allow values outside it."
+                  "collection. Pass it with its label, e.g. selected: [[\"Label\", " \
+                  "#{value.inspect}]] - " +
+                  (url ? "a remote collection cannot be searched for its label. " :
+                         "a scoped or paginated collection will not contain a value the record " \
+                         "already has. ") +
+                  "Or pass create: true (with create_name:) to allow values outside the collection."
           end
 
           {

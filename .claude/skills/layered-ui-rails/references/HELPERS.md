@@ -262,11 +262,15 @@ Field options:
 - `required` (Boolean, optional) - marks field as required; default false
 - `hint` (String, optional) - help text below the field
 - `collection` (Array, optional) - required for `:select`; for `:combobox` either this or `url:` is required; e.g. `[['Label', value], ...]`
-- `url` (String, optional) - for `:combobox` fields; endpoint searched as the user types instead of filtering `collection:` in the browser. A remote collection cannot be searched for the label of a value the record already has, so on an edit form pass `selected:` with labels, e.g. `selected: [[@post.user.name, @post.user_id]]`; a set value with no `selected:` raises
 - `include_blank` (Boolean or String, optional) - for `:select` fields; defaults to `true`. Pass a string to use as the blank option's label, or `false` to omit it. Suppressed when `prompt:` is set
 - `prompt` (String, optional) - for `:select` fields; prompt text shown as the first option, only selectable when no value is set
 - `placeholder` (String, optional) - input placeholder text
-- any other key passes through to the underlying field helper as an HTML attribute. `:combobox` is the exception: it takes only `l_ui_combobox`'s own options - `multiple:`, `create:`, `create_name:`, `reorder:`, `min_chars:`, `text:`, `selected:`, `disabled:`, `describedby:`, `container:`, `id:`, `url:` - and any other key raises, since the control has no single element to hang an attribute on; put extra HTML attributes on `container:` instead. A `:combobox` field renders its own label and hint, defaults `selected:` to the record's current value, and adds the field's error element to its `aria-describedby` (ahead of any `describedby:` given)
+- any other key passes through to the underlying field helper as an HTML attribute (`:combobox` excepted - see below)
+
+A `:combobox` field renders its own label and hint, adds the field's error element to its `aria-describedby`, and defaults `selected:` to the record's current value. Two rules follow from that:
+
+- It takes only `l_ui_combobox`'s own options - `url:`, `multiple:`, `create:`, `create_name:`, `reorder:`, `min_chars:`, `text:`, `selected:`, `disabled:`, `describedby:`, `container:`, `id:`. Every other key raises, `prompt:` and `include_blank:` included; extra HTML attributes go on `container:`.
+- Pass `selected: [[@post.user.name, @post.user_id]]` whenever the record's value might not be in the options - a `url:` collection never holds it, and nor does a scoped, paginated or filtered `collection:`. Without it, the field raises on an edit form.
 
 ```erb
 <%= l_ui_form(@post,

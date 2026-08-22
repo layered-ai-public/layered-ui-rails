@@ -110,7 +110,9 @@
 
 <p class="mt-4">Use <code>as: :combobox</code> for a token select with type-ahead filtering. The field renders its own label and hint, and the current value of the attribute is selected by default. Every <code>l_ui_combobox</code> option - <code>multiple:</code>, <code>create:</code>, <code>create_name:</code>, <code>reorder:</code>, <code>url:</code>, <code>min_chars:</code>, <code>text:</code>, <code>selected:</code> - passes straight through from the field hash. Options come either from <code>collection:</code>, filtered in the browser, or from <code>url:</code>, fetched from an endpoint as the user types.</p>
 
-<p class="mt-4">A remote collection cannot be searched for the label of a value the record already has, so an edit form passes its current selection with labels: <code>selected: [[@post.user.name, @post.user_id]]</code>. A field with <code>url:</code> and a value already set, but no <code>selected:</code>, raises.</p>
+<p class="mt-4">Because the record's value is selected by default, an edit form needs <code>selected: [[@post.user.name, @post.user_id]]</code> whenever that value might not be among the options - a <code>url:</code> collection cannot be searched for the label of a value already set, and a <code>collection:</code> that is scoped, paginated or filtered may not contain it. Pass the selection with its label rather than widening the collection; without it, the field raises.</p>
+
+<p class="mt-4">A combobox has no blank option, so <code>prompt:</code> and <code>include_blank:</code> raise rather than being quietly dropped when an <code>as: :select</code> field becomes <code>as: :combobox</code>. Use <code>placeholder:</code> for the text shown until something is selected.</p>
 
 <%= l_ui_form(@post, fields: [
       { attribute: :title, required: true },

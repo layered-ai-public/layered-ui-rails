@@ -370,6 +370,26 @@ class FormHelperTest < ActionView::TestCase
     assert_includes error.message, "container:"
   end
 
+  test "combobox field raises for a select-only prompt" do
+    error = assert_raises(ArgumentError) do
+      l_ui_normalise_field(Post.new, {
+        attribute: :user_id, as: :combobox, collection: [["Ada", 1]], prompt: "Choose an author"
+      })
+    end
+    assert_includes error.message, ":prompt"
+    assert_includes error.message, "placeholder:"
+  end
+
+  test "combobox field raises for a select-only include_blank" do
+    error = assert_raises(ArgumentError) do
+      l_ui_normalise_field(Post.new, {
+        attribute: :user_id, as: :combobox, collection: [["Ada", 1]], include_blank: false
+      })
+    end
+    assert_includes error.message, ":include_blank"
+    assert_includes error.message, "already blank"
+  end
+
   # -- type validation --
 
   test "raises ArgumentError for unsupported field type" do
