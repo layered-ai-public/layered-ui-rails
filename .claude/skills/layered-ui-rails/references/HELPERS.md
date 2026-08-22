@@ -267,7 +267,7 @@ Field options:
 - `placeholder` (String, optional) - input placeholder text
 - any other key passes through to the underlying field helper as an HTML attribute (`:combobox` excepted - see below)
 
-A `:combobox` field renders its own label and hint, adds the field's error element to its `aria-describedby`, and defaults `selected:` to the record's current value. Two rules follow from that:
+A `:combobox` field renders its own label and hint, adds the field's error element to its `aria-describedby`, and defaults `selected:` to the record's current value. That, and its keyword-only signature, give three rules:
 
 - It takes only `l_ui_combobox`'s own options - `url:`, `multiple:`, `create:`, `create_name:`, `reorder:`, `min_chars:`, `text:`, `selected:`, `disabled:`, `describedby:`, `container:`, `id:`. Every other key raises, `prompt:` and `include_blank:` included; extra HTML attributes go on `container:`.
 - `multiple:` is inferred from the attribute rather than defaulting to `l_ui_combobox`'s `true`: an `_ids` attribute, an array column, or one already holding an array is multiple; anything else is single, so a scalar attribute posts a scalar rather than an array Active Record would cast to `nil`. Pass `multiple:` explicitly to override.
