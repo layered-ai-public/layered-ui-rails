@@ -344,6 +344,31 @@ class FormHelperTest < ActionView::TestCase
     assert_includes rendered, "Grace"
   end
 
+  test "combobox field is single by default, so a scalar attribute posts a scalar" do
+    result = render_field({
+      attribute: :user_id, as: :combobox, collection: [["Ada", 1], ["Grace", 2]]
+    })
+    assert_includes result, 'name="post[user_id]"'
+    assert_not_includes result, 'name="post[user_id][]"'
+    assert_includes result, 'data-l-ui--combobox-multiple-value="false"'
+  end
+
+  test "combobox field on an _ids attribute is multiple" do
+    result = render_field({
+      attribute: :tag_ids, as: :combobox, collection: [["Ada", 1], ["Grace", 2]]
+    })
+    assert_includes result, 'name="post[tag_ids][]"'
+    assert_includes result, 'data-l-ui--combobox-multiple-value="true"'
+  end
+
+  test "combobox field honours an explicit multiple over the inferred one" do
+    result = render_field({
+      attribute: :user_id, as: :combobox, multiple: true, collection: [["Ada", 1]]
+    })
+    assert_includes result, 'name="post[user_id][]"'
+    assert_includes result, 'data-l-ui--combobox-multiple-value="true"'
+  end
+
   test "combobox field passes remote options through" do
     result = render_field({
       attribute: :user_id, as: :combobox, url: "/options/users", min_chars: 2

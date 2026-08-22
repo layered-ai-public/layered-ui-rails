@@ -270,6 +270,7 @@ Field options:
 A `:combobox` field renders its own label and hint, adds the field's error element to its `aria-describedby`, and defaults `selected:` to the record's current value. Two rules follow from that:
 
 - It takes only `l_ui_combobox`'s own options - `url:`, `multiple:`, `create:`, `create_name:`, `reorder:`, `min_chars:`, `text:`, `selected:`, `disabled:`, `describedby:`, `container:`, `id:`. Every other key raises, `prompt:` and `include_blank:` included; extra HTML attributes go on `container:`.
+- `multiple:` is inferred from the attribute rather than defaulting to `l_ui_combobox`'s `true`: an `_ids` attribute, or one already holding an array, is multiple; anything else is single, so a scalar attribute posts a scalar rather than an array Active Record would cast to `nil`. Pass `multiple:` explicitly to override.
 - Pass `selected: [[@post.user.name, @post.user_id]]` whenever the record's value might not be in the options - a `url:` collection never holds it, and nor does a scoped, paginated or filtered `collection:`. Without it, the field raises on an edit form.
 
 ```erb
@@ -280,7 +281,7 @@ A `:combobox` field renders its own label and hint, adds the field's error eleme
     { attribute: :category, as: :select, collection: Category.pluck(:name, :id) },
     { attribute: :published, as: :checkbox },
     { attribute: :tag_ids, as: :combobox, collection: Tag.pluck(:name, :id) },
-    { attribute: :author_id, as: :combobox, multiple: false, url: options_users_path },
+    { attribute: :author_id, as: :combobox, url: options_users_path },
   ],
   url: posts_path) %>
 ```

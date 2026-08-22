@@ -70,6 +70,8 @@ module Layered
                   "Field :#{attribute} is a :combobox and cannot take :#{key}. #{advice}"
           end
 
+          extras[:multiple] = l_ui_field_multiple?(record, attribute) unless config.key?(:multiple)
+
           allowed = ComboboxHelper::COMBOBOX_OPTIONS + [:class]
           unknown = extras.keys - allowed
           if unknown.any?
@@ -119,6 +121,17 @@ module Layered
       end
 
       private
+
+      # Whether a :combobox field holds several values. +l_ui_combobox+ defaults
+      # to a multiple select, but a form field is more often a single scalar
+      # attribute, which would silently cast an array of values to nil. So a
+      # field is multiple only when the attribute is plainly a collection: an
+      # +_ids+ association writer, or an attribute already holding an array.
+      def l_ui_field_multiple?(record, attribute)
+        return true if attribute.to_s.end_with?("_ids")
+
+        l_ui_field_value(record, attribute).is_a?(Array)
+      end
 
       def l_ui_field_type_for(model_class, attribute)
         return :string unless model_class.respond_to?(:columns_hash)
