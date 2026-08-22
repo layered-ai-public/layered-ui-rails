@@ -352,6 +352,24 @@ class FormHelperTest < ActionView::TestCase
     assert_includes result, 'data-l-ui--combobox-min-chars-value="2"'
   end
 
+  test "combobox field keeps the error element alongside a given describedby" do
+    result = render_field({
+      attribute: :user_id, as: :combobox, collection: [["Ada", 1]],
+      describedby: "extra-note"
+    })
+    assert_match(/aria-describedby="[^"]*post_user_id_error[^"]*extra-note/, result)
+  end
+
+  test "combobox field raises for an option it cannot take" do
+    error = assert_raises(ArgumentError) do
+      l_ui_normalise_field(Post.new, {
+        attribute: :user_id, as: :combobox, collection: [["Ada", 1]], autofocus: true
+      })
+    end
+    assert_includes error.message, ":autofocus"
+    assert_includes error.message, "container:"
+  end
+
   # -- type validation --
 
   test "raises ArgumentError for unsupported field type" do

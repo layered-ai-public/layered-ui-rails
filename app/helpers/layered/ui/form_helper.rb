@@ -58,6 +58,18 @@ module Layered
         extras = config.except(:attribute, :as, :label, :required, :hint,
                                :collection, :placeholder, :prompt, :include_blank)
 
+        if as == :combobox
+          allowed = ComboboxHelper::COMBOBOX_OPTIONS + [:class]
+          unknown = extras.keys - allowed
+          if unknown.any?
+            raise ArgumentError,
+                  "Field :#{attribute} is a :combobox and cannot take " \
+                  "#{unknown.map { |key| ":#{key}" }.join(', ')}. Unlike the other field types, a " \
+                  "combobox takes only its own options (#{allowed.map { |key| ":#{key}" }.join(', ')}); " \
+                  "extra HTML attributes belong on container:"
+          end
+        end
+
         {
           attribute: attribute,
           as: as,

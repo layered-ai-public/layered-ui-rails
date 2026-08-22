@@ -13,6 +13,15 @@ module Layered
         error: "The options could not be loaded.",
         more_error: "More options could not be loaded."
       }.freeze
+
+      # The keywords +l_ui_combobox+ accepts. Its signature is keyword-only, so
+      # a :combobox field config can only carry these (unlike the other field
+      # types, whose extras become HTML attributes on the input).
+      COMBOBOX_OPTIONS = %i[
+        collection url form selected multiple create create_name reorder
+        min_chars text id label hint placeholder required disabled
+        describedby container
+      ].freeze
       # Renders a token select: a text input with type-ahead filtering whose
       # selections become removable tokens, in the style of an email recipient
       # field. Built on the ARIA combobox pattern (an +input+ with

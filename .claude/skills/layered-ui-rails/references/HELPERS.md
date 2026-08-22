@@ -266,7 +266,7 @@ Field options:
 - `include_blank` (Boolean or String, optional) - for `:select` fields; defaults to `true`. Pass a string to use as the blank option's label, or `false` to omit it. Suppressed when `prompt:` is set
 - `prompt` (String, optional) - for `:select` fields; prompt text shown as the first option, only selectable when no value is set
 - `placeholder` (String, optional) - input placeholder text
-- any other key passes through to the underlying field helper. For `:combobox` that means every `l_ui_combobox` option - `multiple:`, `create:`, `create_name:`, `reorder:`, `min_chars:`, `text:`, `selected:`, `disabled:`, `container:`. A `:combobox` field renders its own label and hint, defaults `selected:` to the record's current value, and has the field's error element added to its `aria-describedby`
+- any other key passes through to the underlying field helper as an HTML attribute. `:combobox` is the exception: it takes only `l_ui_combobox`'s own options - `multiple:`, `create:`, `create_name:`, `reorder:`, `min_chars:`, `text:`, `selected:`, `disabled:`, `describedby:`, `container:`, `id:`, `url:` - and any other key raises, since the control has no single element to hang an attribute on; put extra HTML attributes on `container:` instead. A `:combobox` field renders its own label and hint, defaults `selected:` to the record's current value, and adds the field's error element to its `aria-describedby` (ahead of any `describedby:` given)
 
 ```erb
 <%= l_ui_form(@post,
