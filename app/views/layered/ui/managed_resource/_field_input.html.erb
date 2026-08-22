@@ -7,9 +7,8 @@
   base_opts[:required] = true if config[:required]
 
   unless config[:as] == :hidden
-    describedby = [l_ui_field_error_id(record, attribute)]
-    describedby.unshift(l_ui_field_hint_id(record, attribute)) if config[:hint]
-    base_opts["aria-describedby"] = describedby.join(" ")
+    base_opts["aria-describedby"] =
+      l_ui_field_describedby(record, attribute, hint: config[:hint].present?)
   end
 
   field_class = ->(base) { token_list(base, extra_class) }

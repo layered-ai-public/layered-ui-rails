@@ -2,18 +2,18 @@
   <div class="l-ui-page__narrow">
     <h1>Login</h1>
 
-    <%= form_with(model: resource, as: resource_name, url: session_path(resource_name), class: 'l-ui-form l-ui-mt-3') do |f| %>
+    <%= form_with(model: resource, scope: resource_name, url: session_path(resource_name), class: 'l-ui-form l-ui-mt-3') do |f| %>
       <%= render 'layered_ui/shared/form_errors', item: resource %>
 
       <div class="l-ui-form__group">
         <%= render 'layered_ui/shared/label', form: f, field: :email, required: true %>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "l-ui-form__field", "aria-describedby": "#{resource_name}_email_error" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "l-ui-form__field", aria: { describedby: l_ui_field_describedby(resource, :email) } %>
         <%= render 'layered_ui/shared/field_error', object: resource, field: :email %>
       </div>
 
       <div class="l-ui-form__group">
         <%= render 'layered_ui/shared/label', form: f, field: :password, required: true %>
-        <%= f.password_field :password, autocomplete: "current-password", class: "l-ui-form__field", "aria-describedby": "#{resource_name}_password_error" %>
+        <%= f.password_field :password, autocomplete: "current-password", class: "l-ui-form__field", aria: { describedby: l_ui_field_describedby(resource, :password) } %>
         <%= render 'layered_ui/shared/field_error', object: resource, field: :password %>
       </div>
 

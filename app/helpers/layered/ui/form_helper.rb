@@ -65,6 +65,15 @@ module Layered
         "#{record.model_name.param_key}_#{attribute}_hint"
       end
 
+      # Space-joined ids for a field's aria-describedby: its hint (when the field
+      # has one) followed by its error message, which is always rendered.
+      def l_ui_field_describedby(record, attribute, hint: false)
+        ids = []
+        ids << l_ui_field_hint_id(record, attribute) if hint
+        ids << l_ui_field_error_id(record, attribute)
+        ids.join(" ")
+      end
+
       private
 
       def l_ui_field_type_for(model_class, attribute)

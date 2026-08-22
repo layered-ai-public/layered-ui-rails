@@ -1,6 +1,7 @@
 <% l_ui_add_body_class "l-ui-body--always-show-navigation" %>
 
-<% unless devise_controller? %>
+<%# The settings screen is a Devise view, but it is part of the signed-in app, so it keeps the primary navigation. %>
+<% unless devise_controller? && !l_ui_settings_screen? %>
   <% content_for :l_ui_navigation_items do %>
     <%= l_ui_navigation_section do %>
       <%= l_ui_navigation_item "Home", root_path, icon: "home" %>

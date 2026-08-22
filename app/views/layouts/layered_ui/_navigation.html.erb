@@ -7,23 +7,31 @@
 
       <% if l_ui_user_signed_in? %>
         <div class="l-ui-navigation__user">
-          <div class="l-ui-navigation__user-name-and-email">
-            <% if l_ui_current_user.respond_to?(:name) %>
-              <div class="l-ui-navigation__user-name">
-                <%= l_ui_current_user.name %>
-              </div>
-            <% end %>
+          <% if l_ui_edit_registration_path || l_ui_destroy_session_path %>
+            <%= l_ui_popover(placement: :top, align: :end, container: { class: "l-ui-navigation__user-popover" }) do |p| %>
+              <% p.trigger(class: "l-ui-button l-ui-navigation__user-button") do %>
+                <%= render "layouts/layered_ui/user_name_and_email" %>
 
-            <% if l_ui_current_user.respond_to?(:email) %>
-              <div class="l-ui-navigation__user-email">
-                <%= l_ui_current_user.email %>
+                <span class="l-ui-sr-only">Account menu</span>
+                <span class="l-ui-navigation__user-chevron" aria-hidden="true"></span>
+              <% end %>
+
+              <div class="l-ui-popover__menu">
+                <% if l_ui_edit_registration_path %>
+                  <%= link_to "Settings", l_ui_edit_registration_path, class: "l-ui-popover__menu-item" %>
+                <% end %>
+
+                <% if l_ui_edit_registration_path && l_ui_destroy_session_path %>
+                  <hr class="l-ui-popover__menu-divider">
+                <% end %>
+
+                <% if l_ui_destroy_session_path %>
+                  <%= button_to "Logout", l_ui_destroy_session_path, method: :delete, class: "l-ui-popover__menu-item l-ui-popover__menu-item--danger" %>
+                <% end %>
               </div>
             <% end %>
-          </div>
-          <% if l_ui_destroy_session_path %>
-            <div class="l-ui-mt-4">
-              <%= button_to "Logout", l_ui_destroy_session_path, method: :delete, class: "l-ui-button l-ui-button--outline-danger l-ui-button--full" %>
-            </div>
+          <% else %>
+            <%= render "layouts/layered_ui/user_name_and_email" %>
           <% end %>
         </div>
       <% end %>

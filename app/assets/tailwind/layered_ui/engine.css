@@ -105,6 +105,7 @@
     --l-ui-hero-image: url('layered_ui/hero_background_light.webp');
     --header-height: 63px;
     --l-ui-gutter: 1rem;
+    --l-ui-navigation-width: 256px;
     --l-ui-contained-width: 80rem;
   }
 
@@ -322,6 +323,10 @@
   @apply !mb-0;
 }
 
+.l-ui-mb-4 {
+  @apply !mb-4;
+}
+
 /* List */
 
 .l-ui-list {
@@ -518,7 +523,7 @@
 }
 
 .l-ui-body--always-show-navigation .l-ui-page--with-navigation {
-  @apply md:ml-[256px];
+  @apply md:ml-[var(--l-ui-navigation-width)];
 }
 
 /* Zero the page's top gutter so the first section sits flush at the viewport top, behind the
@@ -990,7 +995,7 @@
 .l-ui-navigation-container {
   @apply fixed top-[calc(var(--header-height)+1px)] left-0 bottom-0
          z-50
-         w-[256px]
+         w-[var(--l-ui-navigation-width)]
          bg-background
          md:border-r md:border-border
          -translate-x-full
@@ -1162,9 +1167,34 @@
          p-4;
 }
 
+/* Fill the sidebar's inner column: the navigation width less the gutters on
+   .l-ui-navigation__user, so the menu lines up with the name, email, and trigger.
+   max-w-none overrides .l-ui-popover's own max-w-xs. */
+.l-ui-navigation__user-popover .l-ui-popover {
+  @apply w-[calc(var(--l-ui-navigation-width)-var(--l-ui-gutter)*2)] max-w-none;
+}
+
+/* Points up: the menu opens above the trigger, which sits at the foot of the sidebar. */
+.l-ui-navigation__user-chevron {
+  @apply inline-block
+         w-3 h-3
+         rotate-180;
+
+  background-color: currentColor;
+  -webkit-mask-image: url('layered_ui/icon_chevron_down.svg');
+  mask-image: url('layered_ui/icon_chevron_down.svg');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
 .l-ui-navigation__user-name-and-email {
-  @apply flex flex-col
-         gap-1;
+  @apply flex flex-1 flex-col min-w-0
+         gap-1
+         break-words;
 }
 
 .l-ui-navigation__user-name {
@@ -1269,6 +1299,18 @@
 
 .l-ui-body--always-show-navigation .l-ui-button--navigation-toggle {
   @apply md:hidden;
+}
+
+/* The whole navigation user block is the account menu trigger: pair with
+   .l-ui-button. Name and email on the left, chevron on the right. Drops the
+   button's own padding so its contents sit flush with .l-ui-navigation__user's
+   gutter, which is where the popover's borders land. Defined here rather than
+   with the other navigation classes so it follows .l-ui-button in the cascade. */
+.l-ui-navigation__user-button {
+  @apply w-full h-auto justify-between
+         gap-2 p-0
+         text-left
+         rounded-sm;
 }
 
 .l-ui-button--icon {

@@ -1,0 +1,15 @@
+<%# Spans throughout: this also renders inside the account menu trigger button, %>
+<%# whose content model only allows phrasing content. %>
+<span class="l-ui-navigation__user-name-and-email">
+  <% if l_ui_current_user.respond_to?(:name) %>
+    <span class="l-ui-navigation__user-name">
+      <%= l_ui_current_user.name %>
+    </span>
+  <% end %>
+
+  <% if l_ui_current_user.respond_to?(:email) %>
+    <span class="l-ui-navigation__user-email">
+      <%= l_ui_current_user.email %>
+    </span>
+  <% end %>
+</span>

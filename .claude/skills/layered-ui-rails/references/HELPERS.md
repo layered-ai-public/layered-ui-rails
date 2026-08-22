@@ -283,6 +283,7 @@ Field options:
 l_ui_normalise_field(record, config)  # Normalise a raw field config into canonical form
 l_ui_field_error_id(record, attribute)  # Error element ID for aria-describedby
 l_ui_field_hint_id(record, attribute)   # Hint element ID for aria-describedby
+l_ui_field_describedby(record, attribute, hint: false)  # Space-joined hint + error IDs for aria-describedby
 ```
 
 ## Modal
@@ -514,12 +515,14 @@ Use these when overriding the header actions group with `:l_ui_header_actions` t
 l_ui_user_signed_in?      # Returns true if current user is present
 l_ui_current_user         # Returns the current user object
 l_ui_devise_installed?    # Returns true if Devise is loaded
+l_ui_settings_screen?     # Returns true on the Settings screen (Devise registrations#edit)
 l_ui_new_registration_path # Devise registration path for the configured scope, or nil
+l_ui_edit_registration_path # Devise account settings path for the configured scope, or nil
 l_ui_new_session_path      # Devise sign-in path for the configured scope, or nil
 l_ui_destroy_session_path  # Devise sign-out path for the configured scope, or nil
 ```
 
-Configure the current user method, and the Devise scope used to build the login/register/logout paths (`new_registration_path`, `new_session_path`, `destroy_session_path`):
+Configure the current user method, and the Devise scope used to build the login/register/settings/logout paths (`new_registration_path`, `edit_registration_path`, `new_session_path`, `destroy_session_path`):
 
 ```ruby
 # config/initializers/layered_ui.rb
