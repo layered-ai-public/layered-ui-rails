@@ -43,13 +43,21 @@ module Layered
         end
       end
 
+      # The engine's views are prepended so they beat views shipped by other
+      # engines (Devise's own, in particular, which would otherwise win or lose
+      # on engine load order alone). The host application's app/views is then
+      # prepended back on top, so an application can still eject any engine view
+      # by copying it to the matching path - the ordering Rails gives you by
+      # default, which a bare prepend would take away.
       initializer "layered-ui-rails.view_paths" do
         ActiveSupport.on_load(:action_controller) do
           prepend_view_path Engine.root.join("app/views")
+          prepend_view_path Rails.root.join("app/views")
         end
 
         ActiveSupport.on_load(:action_mailer) do
           prepend_view_path Engine.root.join("app/views")
+          prepend_view_path Rails.root.join("app/views")
         end
       end
     end

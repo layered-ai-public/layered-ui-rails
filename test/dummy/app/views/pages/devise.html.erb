@@ -71,6 +71,17 @@ end</code></pre>
   devise_parameter_sanitizer.permit(:account_update, keys: [:name])
 end</code></pre>
 
+<h2 class="mt-8 l-ui-heading--section">Ejecting a view</h2>
+
+<p class="mt-4">Every view the engine provides can be replaced by copying it to the same path in your application. Application views resolve before engine views, so <code>app/views/devise/registrations/edit.html.erb</code> takes over the Settings screen and nothing else changes.</p>
+
+<p class="mt-4">Locate the original to copy:</p>
+<pre class="l-ui-surface mt-4"><code>bundle info layered-ui-rails --path</code></pre>
+
+<p class="mt-4">An ejected view lives in your application rather than the engine, so it may use plain Tailwind utilities alongside the <code>l-ui-*</code> classes - your Tailwind build scans it.</p>
+
+<p class="mt-4">One caveat: <code>bin/rails generate devise:views</code> copies Devise's own unstyled views into <code>app/views/devise/</code>, which replaces <em>every</em> styled view provided here, not just the one you meant to change. Eject the individual views you need instead.</p>
+
 <h2 class="mt-8 l-ui-heading--section">Helper methods</h2>
 
 <p class="mt-4">These helpers allow your views to work with or without Devise:</p>

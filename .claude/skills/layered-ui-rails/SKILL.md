@@ -250,6 +250,14 @@ Place files in `app/assets/images/layered_ui/` to replace engine defaults:
 
 The panel toggle button uses an inline SVG that inherits `currentColor`. Recolor it by overriding the `--button-primary-icon` Tier 2 token, or replace the image by setting both `@l_ui_panel_icon_light_url` and `@l_ui_panel_icon_dark_url` (per-request).
 
+## Ejecting a view
+
+Any engine view can be replaced by copying it to the same path in the host application - `app/views/devise/registrations/edit.html.erb` overrides the Settings screen, `app/views/layouts/layered_ui/_navigation.html.erb` the sidebar, and so on. Application views resolve before engine views, so no configuration is needed.
+
+Find the original to copy with `bundle info layered-ui-rails --path`. Unlike engine views, an ejected view lives in the host application, so it may use plain Tailwind utilities alongside the `l-ui-*` classes - the host's Tailwind build scans it.
+
+Note that `bin/rails generate devise:views` copies Devise's own unstyled views into `app/views/devise/`, which overrides *every* styled view the engine provides, not just the one being changed. Eject the individual views instead.
+
 ## Optional integrations
 
 - **Devise** - auto-detected. Provides styled auth views (including an account settings screen at `registrations#edit`), header login/register buttons, and sidebar user info with a Settings/Logout menu. Setup: `bundle add devise`, run `devise:install` and `devise User` generators, add `devise_for :users` to routes. Configure `Layered::Ui.current_user_method` if not using `:current_user`, and `Layered::Ui.devise_scope` if the Devise mapping isn't `:user`. Helpers: `l_ui_devise_installed?`, `l_ui_user_signed_in?`.
