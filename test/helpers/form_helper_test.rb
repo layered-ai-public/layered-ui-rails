@@ -2,6 +2,7 @@ require "test_helper"
 
 class FormHelperTest < ActionView::TestCase
   include Layered::Ui::FormHelper
+  include Layered::Ui::ComboboxHelper
 
   # -- type auto-detection (via normalise) --
 
@@ -265,6 +266,92 @@ class FormHelperTest < ActionView::TestCase
     assert_includes result, 'enctype="multipart/form-data"'
   end
 
+  # -- combobox --
+
+  test "renders combobox field with static collection" do
+    result = render_field({
+      attribute: :user_id, as: :combobox, label: "Author", multiple: false,
+      collection: [["Ada", 1], ["Grace", 2]]
+    })
+    assert_includes result, "l-ui-combobox"
+    assert_includes result, 'role="combobox"'
+    assert_includes result, 'name="post[user_id]"'
+    assert_includes result, "Grace"
+  end
+
+  test "combobox field renders its own label rather than the shared one" do
+    result = render_field({
+      attribute: :user_id, as: :combobox, label: "Author",
+      collection: [["Ada", 1]]
+    })
+    assert_equal 1, result.scan("Author").size
+    assert_includes result, 'class="l-ui-label"'
+  end
+
+  test "combobox field describes the error element" do
+    result = render_field({
+      attribute: :user_id, as: :combobox, collection: [["Ada", 1]]
+    })
+    assert_includes result, "post_user_id_error"
+    assert_match(/aria-describedby="[^"]*post_user_id_error/, result)
+  end
+
+  test "combobox field renders its hint once, bound to the input" do
+    result = render_field({
+      attribute: :user_id, as: :combobox, hint: "Start typing a name",
+      collection: [["Ada", 1]]
+    })
+    assert_equal 1, result.scan("Start typing a name").size
+    assert_includes result, "l-ui-form__hint"
+  end
+
+  test "combobox field selects the record's current value" do
+    record = Post.new(user_id: 2)
+    config = l_ui_normalise_field(record, {
+      attribute: :user_id, as: :combobox, multiple: false,
+      collection: [["Ada", 1], ["Grace", 2]]
+    })
+    builder = ActionView::Helpers::FormBuilder.new(
+      record.model_name.param_key, record, self, {}
+    )
+    render partial: "layered/ui/managed_resource/field",
+           locals: { form: builder, record: record, config: config }
+    assert_includes rendered, "l-ui-combobox__token"
+    assert_includes rendered, "Grace"
+  end
+
+  test "remote combobox field raises when the record has a value and no selection" do
+    error = assert_raises(ArgumentError) do
+      l_ui_normalise_field(Post.new(user_id: 2), {
+        attribute: :user_id, as: :combobox, multiple: false, url: "/options/users"
+      })
+    end
+    assert_includes error.message, ":selected"
+  end
+
+  test "remote combobox field renders a labelled selection for an existing value" do
+    record = Post.new(user_id: 2)
+    config = l_ui_normalise_field(record, {
+      attribute: :user_id, as: :combobox, multiple: false, url: "/options/users",
+      selected: [["Grace", 2]]
+    })
+    builder = ActionView::Helpers::FormBuilder.new(
+      record.model_name.param_key, record, self, {}
+    )
+    render partial: "layered/ui/managed_resource/field",
+           locals: { form: builder, record: record, config: config }
+    assert_includes rendered, "l-ui-combobox__token"
+    assert_includes rendered, "Grace"
+  end
+
+  test "combobox field passes remote options through" do
+    result = render_field({
+      attribute: :user_id, as: :combobox, url: "/options/users", min_chars: 2
+    })
+    assert_includes result, 'data-l-ui--combobox-url-value="/options/users"'
+    assert_includes result, 'data-l-ui--combobox-min-chars-value="2"'
+  end
+
   # -- type validation --
 
   test "raises ArgumentError for unsupported field type" do
@@ -281,6 +368,15 @@ class FormHelperTest < ActionView::TestCase
     end
     assert_includes error.message, ":select"
     assert_includes error.message, ":collection"
+  end
+
+  test "raises ArgumentError for combobox without collection or url" do
+    error = assert_raises(ArgumentError) do
+      l_ui_normalise_field(Post.new, { attribute: :user_id, as: :combobox })
+    end
+    assert_includes error.message, ":combobox"
+    assert_includes error.message, ":collection"
+    assert_includes error.message, ":url"
   end
 
   private

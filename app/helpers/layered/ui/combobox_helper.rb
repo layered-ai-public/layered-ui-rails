@@ -116,11 +116,13 @@ module Layered
       #   placeholder: (String)  Input placeholder. Defaults to nothing.
       #   required:    (Boolean) Marks the label and input as required.
       #   disabled:    (Boolean) Disables the input and every token control.
+      #   describedby: (String)  Extra element ids appended to the input's +aria-describedby+, for text
+      #                          rendered outside the control (a validation message, say).
       #   container:   (Hash)    Extra HTML attributes for the wrapping <div>.
       def l_ui_combobox(name, collection: nil, form: nil, selected: nil, multiple: true,
                         create: false, create_name: nil, reorder: false, url: nil,
                         min_chars: 0, text: {}, id: nil, label: nil, hint: nil, placeholder: nil,
-                        required: false, disabled: false, container: {})
+                        required: false, disabled: false, describedby: nil, container: {})
         if collection.nil? && url.nil?
           raise ArgumentError,
                 "l_ui_combobox requires collection: (options filtered in the browser) or url: " \
@@ -157,7 +159,8 @@ module Layered
             (tag.p(hint, id: "#{id}-hint", class: "l-ui-form__hint") if hint),
             l_ui_combobox_control(id, tokens,
                                   value_name: value_name, placeholder: placeholder, hint: hint,
-                                  reorder: reorder, disabled: disabled, required: required, url: url),
+                                  reorder: reorder, disabled: disabled, required: required, url: url,
+                                  describedby: describedby),
             l_ui_combobox_listbox(id, options, tokens, multiple: multiple, url: url, text: text),
             l_ui_combobox_template(reorder: reorder, disabled: disabled),
             (l_ui_combobox_option_template if url),
@@ -309,8 +312,9 @@ module Layered
         end
       end
 
-      def l_ui_combobox_control(id, tokens, value_name:, placeholder:, hint:, reorder:, disabled:, required:, url: nil)
-        described_by = [("#{id}-hint" if hint), "#{id}-instructions"].compact.join(" ")
+      def l_ui_combobox_control(id, tokens, value_name:, placeholder:, hint:, reorder:, disabled:, required:,
+                                url: nil, describedby: nil)
+        described_by = [("#{id}-hint" if hint), "#{id}-instructions", describedby.presence].compact.join(" ")
 
         tag.div(class: class_names("l-ui-combobox__control", "l-ui-combobox__control--disabled" => disabled),
                 data: { "l-ui--combobox-target" => "control", action: "click->l-ui--combobox#focusInput" }) do

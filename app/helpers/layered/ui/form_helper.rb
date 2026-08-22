@@ -5,7 +5,7 @@ module Layered
         string text email password number tel url search
         date datetime time month week
         color range file
-        select checkbox hidden
+        select checkbox hidden combobox
       ].freeze
 
       # Renders a complete form with all fields, error summary,
@@ -38,6 +38,21 @@ module Layered
                 "Provide collection: [['Label', value], ...] or collection: -> { Model.pluck(:name, :id) }"
         end
 
+        if as == :combobox && config[:collection].nil? && config[:url].nil?
+          raise ArgumentError,
+                "Field :#{attribute} is declared as :combobox but has no :collection or :url. " \
+                "Provide collection: [['Label', value], ...] to filter in the browser, " \
+                "or url: to fetch options from an endpoint as the user types"
+        end
+
+        if as == :combobox && config[:url] && !config.key?(:selected) &&
+           l_ui_field_value(record, attribute).present?
+          raise ArgumentError,
+                "Field :#{attribute} is a remote :combobox with a value already set, but no :selected. " \
+                "A remote collection cannot be searched for the label of an existing value, " \
+                "so pass it with its label, e.g. selected: [[record.user.name, record.user_id]]"
+        end
+
         label = config[:label] || attribute.to_s.humanize
 
         extras = config.except(:attribute, :as, :label, :required, :hint,
@@ -55,6 +70,12 @@ module Layered
           include_blank: config[:include_blank],
           extras: extras
         }
+      end
+
+      # The record's current value for a field, used as the default selection
+      # for a :combobox field when +selected:+ is not given.
+      def l_ui_field_value(record, attribute)
+        record.public_send(attribute) if record.respond_to?(attribute)
       end
 
       def l_ui_field_error_id(record, attribute)
