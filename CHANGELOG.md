@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.25.0] - 2026-08-23
+
+### Added
+
+- `:combobox` as a form field type: a field declared `as: :combobox` renders through `l_ui_combobox`, so a form gets type-ahead filtering and token selections without dropping out to the helper by hand. The field renders its own label and hint, defaults its selection to the record's current value, and takes the field's error element into the input's `aria-describedby`. Whether the control is multiple is inferred from the attribute - an `_ids` writer, or an array column - so the same declaration posts the same shape on a new record and on an edit; pass `multiple:` to override it.
+- Field options are checked as the field is normalised, so a key the combobox cannot take names itself instead of raising "unknown keyword" mid-render. `:prompt` and `:include_blank` (carried over from `as: :select`) raise too, pointing at `placeholder:` and noting that a combobox with no selection is already blank. A remote (`url:`) field cannot look up the label of a value the record already holds, so that case raises with a pointer to `selected:`.
+
 ## [0.24.0] - 2026-08-22
 
 ### Added
