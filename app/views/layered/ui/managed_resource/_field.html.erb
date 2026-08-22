@@ -2,7 +2,7 @@
   <%= render "layered/ui/managed_resource/field_input", form: form, record: record, config: config %>
 <% else %>
   <div class="l-ui-form__group">
-    <% unless config[:as] == :checkbox %>
+    <% unless config[:as] == :checkbox || config[:as] == :combobox %>
       <%= render "layered_ui/shared/label",
                  form: form, field: config[:attribute],
                  required: config[:required], name: config[:label] %>
@@ -10,7 +10,7 @@
 
     <%= render "layered/ui/managed_resource/field_input", form: form, record: record, config: config %>
 
-    <% if config[:hint] %>
+    <% if config[:hint] && config[:as] != :combobox %>
       <p class="l-ui-form__hint" id="<%= l_ui_field_hint_id(record, config[:attribute]) %>">
         <%= config[:hint] %>
       </p>

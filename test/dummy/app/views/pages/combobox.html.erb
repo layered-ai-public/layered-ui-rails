@@ -7,6 +7,8 @@
 
 <p class="mt-4">A token select: a text input with type-ahead filtering whose selections become removable <%= link_to "tags", tags_path %>, in the style of an email recipient field. It is built on the ARIA combobox pattern - the input carries <code>role="combobox"</code> and points at the highlighted option with <code>aria-activedescendant</code>, so focus stays in the input while the list is browsed - and needs no third-party select library.</p>
 
+<p class="mt-4">It is also a field type in <%= link_to "the form helper", forms_helper_path %>: <code>{ attribute: :tag_ids, as: :combobox, collection: ... }</code> renders the same control inside <code>l_ui_form</code>, with every option below passing straight through from the field hash.</p>
+
 <p class="mt-4">Each selection carries its own hidden input, so the control submits with an ordinary form post. A blank value is always posted first, so clearing every token submits an empty collection rather than omitting the parameter and leaving the association untouched.</p>
 
 <h2 class="mt-8 l-ui-heading--section">Multi select</h2>

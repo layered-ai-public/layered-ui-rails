@@ -5,7 +5,7 @@ module Layered
         string text email password number tel url search
         date datetime time month week
         color range file
-        select checkbox hidden
+        select checkbox hidden combobox
       ].freeze
 
       # Renders a complete form with all fields, error summary,
@@ -38,10 +38,50 @@ module Layered
                 "Provide collection: [['Label', value], ...] or collection: -> { Model.pluck(:name, :id) }"
         end
 
+        if as == :combobox && config[:collection].nil? && config[:url].nil?
+          raise ArgumentError,
+                "Field :#{attribute} is declared as :combobox but has no :collection or :url. " \
+                "Provide collection: [['Label', value], ...] to filter in the browser, " \
+                "or url: to fetch options from an endpoint as the user types"
+        end
+
+        if as == :combobox && config[:url] && !config.key?(:selected) &&
+           l_ui_field_value(record, attribute).present?
+          raise ArgumentError,
+                "Field :#{attribute} is a remote :combobox with a value already set, but no :selected. " \
+                "A remote collection cannot be searched for the label of an existing value, " \
+                "so pass it with its label, e.g. selected: [[record.user.name, record.user_id]]"
+        end
+
         label = config[:label] || attribute.to_s.humanize
 
         extras = config.except(:attribute, :as, :label, :required, :hint,
                                :collection, :placeholder, :prompt, :include_blank)
+
+        if as == :combobox
+          unusable = {
+            prompt: "Use placeholder: instead, which a combobox shows until something is selected.",
+            include_blank: "A combobox with no selection is already blank, so there is nothing to set."
+          }
+          unusable.each do |key, advice|
+            next unless config.key?(key)
+
+            raise ArgumentError,
+                  "Field :#{attribute} is a :combobox and cannot take :#{key}. #{advice}"
+          end
+
+          extras[:multiple] = l_ui_field_multiple?(record, attribute) unless config.key?(:multiple)
+
+          allowed = ComboboxHelper::COMBOBOX_OPTIONS + [:class]
+          unknown = extras.keys - allowed
+          if unknown.any?
+            raise ArgumentError,
+                  "Field :#{attribute} is a :combobox and cannot take " \
+                  "#{unknown.map { |key| ":#{key}" }.join(', ')}. Unlike the other field types, a " \
+                  "combobox takes only its own options (#{allowed.map { |key| ":#{key}" }.join(', ')}); " \
+                  "extra HTML attributes belong on container:"
+          end
+        end
 
         {
           attribute: attribute,
@@ -55,6 +95,12 @@ module Layered
           include_blank: config[:include_blank],
           extras: extras
         }
+      end
+
+      # The record's current value for a field, used as the default selection
+      # for a :combobox field when +selected:+ is not given.
+      def l_ui_field_value(record, attribute)
+        record.public_send(attribute) if record.respond_to?(attribute)
       end
 
       def l_ui_field_error_id(record, attribute)
@@ -75,6 +121,30 @@ module Layered
       end
 
       private
+
+      # Whether a :combobox field holds several values. +l_ui_combobox+ defaults
+      # to a multiple select, but a form field is more often a single scalar
+      # attribute, which would silently cast an array of values to nil. So a
+      # field is multiple only when the attribute is plainly a collection: an
+      # +_ids+ association writer, an array column, or an attribute already
+      # holding an array. The column is asked before the value, so an array
+      # column with no default stays multiple on a new record, where its value
+      # is nil rather than an empty array.
+      def l_ui_field_multiple?(record, attribute)
+        return true if attribute.to_s.end_with?("_ids")
+        return true if l_ui_field_array_column?(record.class, attribute)
+
+        l_ui_field_value(record, attribute).is_a?(Array)
+      end
+
+      # Array columns are a PostgreSQL feature, so the flag is only carried by
+      # some adapters' columns.
+      def l_ui_field_array_column?(model_class, attribute)
+        return false unless model_class.respond_to?(:columns_hash)
+
+        column = model_class.columns_hash[attribute.to_s]
+        column.respond_to?(:array?) && column.array?
+      end
 
       def l_ui_field_type_for(model_class, attribute)
         return :string unless model_class.respond_to?(:columns_hash)

@@ -13,6 +13,15 @@ module Layered
         error: "The options could not be loaded.",
         more_error: "More options could not be loaded."
       }.freeze
+
+      # The keywords +l_ui_combobox+ accepts. Its signature is keyword-only, so
+      # a :combobox field config can only carry these (unlike the other field
+      # types, whose extras become HTML attributes on the input).
+      COMBOBOX_OPTIONS = %i[
+        collection url form selected multiple create create_name reorder
+        min_chars text id label hint placeholder required disabled
+        describedby container
+      ].freeze
       # Renders a token select: a text input with type-ahead filtering whose
       # selections become removable tokens, in the style of an email recipient
       # field. Built on the ARIA combobox pattern (an +input+ with
@@ -116,11 +125,13 @@ module Layered
       #   placeholder: (String)  Input placeholder. Defaults to nothing.
       #   required:    (Boolean) Marks the label and input as required.
       #   disabled:    (Boolean) Disables the input and every token control.
+      #   describedby: (String)  Extra element ids appended to the input's +aria-describedby+, for text
+      #                          rendered outside the control (a validation message, say).
       #   container:   (Hash)    Extra HTML attributes for the wrapping <div>.
       def l_ui_combobox(name, collection: nil, form: nil, selected: nil, multiple: true,
                         create: false, create_name: nil, reorder: false, url: nil,
                         min_chars: 0, text: {}, id: nil, label: nil, hint: nil, placeholder: nil,
-                        required: false, disabled: false, container: {})
+                        required: false, disabled: false, describedby: nil, container: {})
         if collection.nil? && url.nil?
           raise ArgumentError,
                 "l_ui_combobox requires collection: (options filtered in the browser) or url: " \
@@ -157,7 +168,8 @@ module Layered
             (tag.p(hint, id: "#{id}-hint", class: "l-ui-form__hint") if hint),
             l_ui_combobox_control(id, tokens,
                                   value_name: value_name, placeholder: placeholder, hint: hint,
-                                  reorder: reorder, disabled: disabled, required: required, url: url),
+                                  reorder: reorder, disabled: disabled, required: required, url: url,
+                                  describedby: describedby),
             l_ui_combobox_listbox(id, options, tokens, multiple: multiple, url: url, text: text),
             l_ui_combobox_template(reorder: reorder, disabled: disabled),
             (l_ui_combobox_option_template if url),
@@ -203,10 +215,12 @@ module Layered
           if label.nil? && !create
             raise ArgumentError,
                   "l_ui_combobox was given selected value #{value.inspect}, which is not in the " \
-                  "collection. " +
-                  (url ? "Pass it as a [label, value] pair, since a remote collection cannot be " \
-                         "searched for its label. " : "") +
-                  "Pass create: true (with create_name:) to allow values outside it."
+                  "collection. Pass it with its label, e.g. selected: [[\"Label\", " \
+                  "#{value.inspect}]] - " +
+                  (url ? "a remote collection cannot be searched for its label. " :
+                         "a scoped or paginated collection will not contain a value the record " \
+                         "already has. ") +
+                  "Or pass create: true (with create_name:) to allow values outside the collection."
           end
 
           {
@@ -309,8 +323,9 @@ module Layered
         end
       end
 
-      def l_ui_combobox_control(id, tokens, value_name:, placeholder:, hint:, reorder:, disabled:, required:, url: nil)
-        described_by = [("#{id}-hint" if hint), "#{id}-instructions"].compact.join(" ")
+      def l_ui_combobox_control(id, tokens, value_name:, placeholder:, hint:, reorder:, disabled:, required:,
+                                url: nil, describedby: nil)
+        described_by = [("#{id}-hint" if hint), "#{id}-instructions", describedby.presence].compact.join(" ")
 
         tag.div(class: class_names("l-ui-combobox__control", "l-ui-combobox__control--disabled" => disabled),
                 data: { "l-ui--combobox-target" => "control", action: "click->l-ui--combobox#focusInput" }) do

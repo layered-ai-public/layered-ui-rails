@@ -257,14 +257,21 @@ Renders a complete form with all fields, error summary, and submit button via th
 
 Field options:
 - `attribute` (Symbol) - model attribute
-- `as` (Symbol, optional) - field type; auto-detected from column type. Supported: `:string`, `:text`, `:email`, `:password`, `:number`, `:tel`, `:url`, `:search`, `:date`, `:datetime`, `:time`, `:month`, `:week`, `:color`, `:range`, `:file`, `:select`, `:checkbox`, `:hidden`. Forms automatically become `multipart` when any field is `:file`.
+- `as` (Symbol, optional) - field type; auto-detected from column type. Supported: `:string`, `:text`, `:email`, `:password`, `:number`, `:tel`, `:url`, `:search`, `:date`, `:datetime`, `:time`, `:month`, `:week`, `:color`, `:range`, `:file`, `:select`, `:combobox`, `:checkbox`, `:hidden`. Forms automatically become `multipart` when any field is `:file`.
 - `label` (String, optional) - custom label text; defaults to humanised attribute
 - `required` (Boolean, optional) - marks field as required; default false
 - `hint` (String, optional) - help text below the field
-- `collection` (Array, optional) - required for `:select` type; e.g. `[['Label', value], ...]`
+- `collection` (Array, optional) - required for `:select`; for `:combobox` either this or `url:` is required; e.g. `[['Label', value], ...]`
 - `include_blank` (Boolean or String, optional) - for `:select` fields; defaults to `true`. Pass a string to use as the blank option's label, or `false` to omit it. Suppressed when `prompt:` is set
 - `prompt` (String, optional) - for `:select` fields; prompt text shown as the first option, only selectable when no value is set
 - `placeholder` (String, optional) - input placeholder text
+- any other key passes through to the underlying field helper as an HTML attribute (`:combobox` excepted - see below)
+
+A `:combobox` field renders its own label and hint, adds the field's error element to its `aria-describedby`, and defaults `selected:` to the record's current value. That, and its keyword-only signature, give three rules:
+
+- It takes only `l_ui_combobox`'s own options - `url:`, `multiple:`, `create:`, `create_name:`, `reorder:`, `min_chars:`, `text:`, `selected:`, `disabled:`, `describedby:`, `container:`, `id:`. Every other key raises, `prompt:` and `include_blank:` included; extra HTML attributes go on `container:`.
+- `multiple:` is inferred from the attribute rather than defaulting to `l_ui_combobox`'s `true`: an `_ids` attribute, an array column, or one already holding an array is multiple; anything else is single, so a scalar attribute posts a scalar rather than an array Active Record would cast to `nil`. Pass `multiple:` explicitly to override.
+- Pass `selected: [[@post.user.name, @post.user_id]]` whenever the record's value might not be in the options - a `url:` collection never holds it, and nor does a scoped, paginated or filtered `collection:`. Without it, the field raises on an edit form.
 
 ```erb
 <%= l_ui_form(@post,
@@ -273,6 +280,8 @@ Field options:
     { attribute: :body, as: :text },
     { attribute: :category, as: :select, collection: Category.pluck(:name, :id) },
     { attribute: :published, as: :checkbox },
+    { attribute: :tag_ids, as: :combobox, collection: Tag.pluck(:name, :id) },
+    { attribute: :author_id, as: :combobox, url: options_users_path },
   ],
   url: posts_path) %>
 ```
@@ -284,6 +293,7 @@ l_ui_normalise_field(record, config)  # Normalise a raw field config into canoni
 l_ui_field_error_id(record, attribute)  # Error element ID for aria-describedby
 l_ui_field_hint_id(record, attribute)   # Hint element ID for aria-describedby
 l_ui_field_describedby(record, attribute, hint: false)  # Space-joined hint + error IDs for aria-describedby
+l_ui_field_value(record, attribute)     # Record's current value; default :combobox selection
 ```
 
 ## Modal
@@ -415,7 +425,7 @@ When a popover is declared, the tag container itself becomes the `l-ui--popover`
 l_ui_combobox(name, collection: nil, form: nil, selected: nil, multiple: true,
               create: false, create_name: nil, reorder: false, url: nil,
               min_chars: 0, text: {}, id: nil, label: nil, hint: nil, placeholder: nil,
-              required: false, disabled: false, container: {})
+              required: false, disabled: false, describedby: nil, container: {})
 ```
 
 Renders a token select (`class="l-ui-combobox"`): a text input with type-ahead filtering whose selections become removable tags, in the style of an email recipient field. Built on the ARIA combobox pattern - no third-party select library.
@@ -431,7 +441,10 @@ Renders a token select (`class="l-ui-combobox"`): a text input with type-ahead f
 - `url` (String, optional) - endpoint searched as the user types; options come from it rather than from `collection:`
 - `min_chars` (Integer, default `0`) - characters needed before a remote search runs; `0` searches as soon as the field is focused
 - `text` (Hash, optional) - wording for every string the control shows, merged over `Layered::Ui::ComboboxHelper::COMBOBOX_TEXT`: `empty:` ("No matches"), `create:` ("Add “%{term}”"), `min_chars:` ("Type %{count} characters to search."), `progress:` ("Showing %{shown} of %{count} matches."), `error:`, `more_error:`. Placeholders use Rails' `%{name}` syntax; `progress: nil` drops the progress line; an unknown key raises
+- `describedby` (String, optional) - extra element ids appended to the input's `aria-describedby`, for text rendered outside the control (a validation message, say)
 - `label`, `hint`, `placeholder`, `required`, `disabled`, `id`, `container` - as for a normal field
+
+Also available as a field type in `l_ui_form`: `{ attribute: :tag_ids, as: :combobox, collection: ... }`.
 
 ```erb
 <%= form_with model: @post do |f| %>

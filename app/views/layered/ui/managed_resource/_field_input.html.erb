@@ -35,6 +35,22 @@
     <%= form.select(attribute, choices, select_options,
                     class: field_class.call("l-ui-select"), **base_opts, **extras) %>
   </div>
+<% elsif config[:as] == :combobox %>
+  <%
+    collection = config[:collection]
+    choices = collection.respond_to?(:call) ? collection.call : collection
+    combobox_opts = extras
+    selected = combobox_opts.key?(:selected) ? combobox_opts.delete(:selected) : l_ui_field_value(record, attribute)
+    container = (combobox_opts.delete(:container) || {}).dup
+    container[:class] = token_list(container[:class], extra_class) if extra_class
+    describedby = [l_ui_field_error_id(record, attribute),
+                   combobox_opts.delete(:describedby).presence].compact.join(" ")
+  %>
+  <%= l_ui_combobox(attribute, form: form, collection: choices, selected: selected,
+                    label: config[:label], hint: config[:hint],
+                    placeholder: config[:placeholder], required: config[:required],
+                    describedby: describedby,
+                    container: container, **combobox_opts) %>
 <% elsif config[:as] == :checkbox %>
   <div class="l-ui-checkbox-container">
     <%= form.check_box(attribute, class: field_class.call("l-ui-checkbox"), **base_opts, **extras) %>

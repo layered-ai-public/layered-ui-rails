@@ -123,6 +123,8 @@ class ComboboxHelperTest < ActionView::TestCase
     end
 
     assert_match(/not in the collection/, error.message)
+    assert_includes error.message, 'selected: [["Label", "urgent"]]'
+    assert_includes error.message, "scoped or paginated"
   end
 
   test "reorder is off by default" do
@@ -291,7 +293,8 @@ class ComboboxHelperTest < ActionView::TestCase
       l_ui_combobox("post[tag_ids]", url: "/tags/options", selected: ["7"])
     end
 
-    assert_match(/\[label, value\] pair/, error.message)
+    assert_includes error.message, 'selected: [["Label", "7"]]'
+    assert_includes error.message, "remote collection cannot be searched"
   end
 
   test "instructions describe searching, and the paging, for a remote combobox" do

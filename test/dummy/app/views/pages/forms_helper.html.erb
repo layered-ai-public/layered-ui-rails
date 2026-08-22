@@ -39,7 +39,7 @@
 
 <h2 class="mt-8 l-ui-heading--section">All field types</h2>
 
-<p class="mt-4">Use <code>as:</code> to explicitly set the field type. Supported types: <code>:string</code>, <code>:text</code>, <code>:email</code>, <code>:password</code>, <code>:number</code>, <code>:tel</code>, <code>:url</code>, <code>:search</code>, <code>:date</code>, <code>:datetime</code>, <code>:time</code>, <code>:month</code>, <code>:week</code>, <code>:color</code>, <code>:range</code>, <code>:file</code>, <code>:select</code>, <code>:checkbox</code>, and <code>:hidden</code>. The form is automatically rendered as <code>multipart</code> when any field uses <code>:file</code>.</p>
+<p class="mt-4">Use <code>as:</code> to explicitly set the field type. Supported types: <code>:string</code>, <code>:text</code>, <code>:email</code>, <code>:password</code>, <code>:number</code>, <code>:tel</code>, <code>:url</code>, <code>:search</code>, <code>:date</code>, <code>:datetime</code>, <code>:time</code>, <code>:month</code>, <code>:week</code>, <code>:color</code>, <code>:range</code>, <code>:file</code>, <code>:select</code>, <code>:combobox</code>, <code>:checkbox</code>, and <code>:hidden</code>. The form is automatically rendered as <code>multipart</code> when any field uses <code>:file</code>.</p>
 
 <%= l_ui_form(@post, fields: [
       { attribute: :title, as: :string, required: true, placeholder: "Enter a title" },
@@ -100,6 +100,52 @@
       { attribute: :avatar, as: :file },
       { attribute: :accepted, as: :checkbox },
       { attribute: :secret_id, as: :hidden },
+    ],
+    url: posts_path) %&gt;</code></pre>
+    </div>
+  </dialog>
+</div>
+
+<h2 class="mt-8 l-ui-heading--section">Combobox fields</h2>
+
+<p class="mt-4">Use <code>as: :combobox</code> for a token select with type-ahead filtering. The field renders its own label and hint, and the current value of the attribute is selected by default. Every <code>l_ui_combobox</code> option - <code>multiple:</code>, <code>create:</code>, <code>create_name:</code>, <code>reorder:</code>, <code>url:</code>, <code>min_chars:</code>, <code>text:</code>, <code>selected:</code> - passes straight through from the field hash. Options come either from <code>collection:</code>, filtered in the browser, or from <code>url:</code>, fetched from an endpoint as the user types.</p>
+
+<p class="mt-4">Unlike a bare <code>l_ui_combobox</code>, which is a multiple select by default, a combobox field infers <code>multiple:</code> from the attribute: an <code>_ids</code> attribute, an array column, or one already holding an array is multiple, and anything else is single. A scalar attribute therefore posts a scalar rather than an array, which Active Record would cast to <code>nil</code>. Pass <code>multiple:</code> to override the inference.</p>
+
+<p class="mt-4">Because the record's value is selected by default, an edit form needs <code>selected: [[@post.user.name, @post.user_id]]</code> whenever that value might not be among the options - a <code>url:</code> collection cannot be searched for the label of a value already set, and a <code>collection:</code> that is scoped, paginated or filtered may not contain it. Pass the selection with its label rather than widening the collection; without it, the field raises.</p>
+
+<p class="mt-4">A combobox has no blank option, so <code>prompt:</code> and <code>include_blank:</code> raise rather than being quietly dropped when an <code>as: :select</code> field becomes <code>as: :combobox</code>. Use <code>placeholder:</code> for the text shown until something is selected.</p>
+
+<%= l_ui_form(@post, fields: [
+      { attribute: :title, required: true },
+      { attribute: :user_id, as: :combobox, label: "Author",
+        hint: "Start typing to filter the list",
+        collection: @users.map { |u| [u.name, u.id] } },
+      { attribute: :reviewer_ids, as: :combobox, label: "Reviewers",
+        url: combobox_options_path, min_chars: 2 },
+    ],
+    url: "#") %>
+
+<div class="mt-6" data-controller="l-ui--modal">
+  <button class="l-ui-button l-ui-button--outline l-ui-button--small" data-action="l-ui--modal#open">View code</button>
+  <dialog class="l-ui-modal" data-l-ui--modal-target="dialog" data-action="click->l-ui--modal#closeOnBackdrop" aria-labelledby="modal-form-combobox-heading">
+    <div class="l-ui-modal__header">
+      <h3 id="modal-form-combobox-heading">Combobox fields</h3>
+      <button class="l-ui-button l-ui-button--icon" data-action="l-ui--modal#close" aria-label="Close">
+        <%= image_tag "layered_ui/icon_close.svg", alt: "", class: "l-ui-icon l-ui-icon--sm", aria: { hidden: true } %>
+      </button>
+    </div>
+    <div class="l-ui-modal__body">
+      <pre class="l-ui-surface"><code>&lt;%= l_ui_form(@post, fields: [
+      { attribute: :title, required: true },
+      { attribute: :user_id, as: :combobox, label: "Author",
+        hint: "Start typing to filter the list",
+        collection: User.pluck(:name, :id) },
+      { attribute: :reviewer_ids, as: :combobox, label: "Reviewers",
+        url: options_users_path, min_chars: 2 },
+      { attribute: :tag_ids, as: :combobox, label: "Tags",
+        create: true, create_name: :new_tag_names,
+        collection: Tag.pluck(:name, :id) },
     ],
     url: posts_path) %&gt;</code></pre>
     </div>
@@ -176,7 +222,7 @@
       <tr>
         <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>as:</code></th>
         <td class="l-ui-table__cell">Symbol</td>
-        <td class="l-ui-table__cell">Field type (<code>:string</code>, <code>:text</code>, <code>:email</code>, <code>:password</code>, <code>:number</code>, <code>:tel</code>, <code>:url</code>, <code>:search</code>, <code>:date</code>, <code>:datetime</code>, <code>:time</code>, <code>:month</code>, <code>:week</code>, <code>:color</code>, <code>:range</code>, <code>:file</code>, <code>:select</code>, <code>:checkbox</code>, <code>:hidden</code>). Inferred from column type when omitted.</td>
+        <td class="l-ui-table__cell">Field type (<code>:string</code>, <code>:text</code>, <code>:email</code>, <code>:password</code>, <code>:number</code>, <code>:tel</code>, <code>:url</code>, <code>:search</code>, <code>:date</code>, <code>:datetime</code>, <code>:time</code>, <code>:month</code>, <code>:week</code>, <code>:color</code>, <code>:range</code>, <code>:file</code>, <code>:select</code>, <code>:combobox</code>, <code>:checkbox</code>, <code>:hidden</code>). Inferred from column type when omitted.</td>
       </tr>
       <tr>
         <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>label:</code></th>
@@ -201,12 +247,17 @@
       <tr>
         <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>collection:</code></th>
         <td class="l-ui-table__cell">Array / Proc</td>
-        <td class="l-ui-table__cell">Options for <code>:select</code> fields. Array of <code>[label, value]</code> pairs or a callable.</td>
+        <td class="l-ui-table__cell">Options for <code>:select</code> and <code>:combobox</code> fields. Array of <code>[label, value]</code> pairs or a callable.</td>
       </tr>
       <tr>
         <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>prompt:</code></th>
         <td class="l-ui-table__cell">String</td>
         <td class="l-ui-table__cell">Prompt text for <code>:select</code> fields (e.g. "Choose an author"). Shown as the first option; only selectable when no value is set. Setting <code>prompt:</code> suppresses the default blank option.</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>url:</code></th>
+        <td class="l-ui-table__cell">String</td>
+        <td class="l-ui-table__cell">For <code>:combobox</code> fields. Endpoint searched as the user types, instead of filtering a collection in the browser. Either <code>collection:</code> or <code>url:</code> is required.</td>
       </tr>
       <tr>
         <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>include_blank:</code></th>

@@ -2,6 +2,7 @@ require "test_helper"
 
 class FormHelperTest < ActionView::TestCase
   include Layered::Ui::FormHelper
+  include Layered::Ui::ComboboxHelper
 
   # -- type auto-detection (via normalise) --
 
@@ -265,6 +266,164 @@ class FormHelperTest < ActionView::TestCase
     assert_includes result, 'enctype="multipart/form-data"'
   end
 
+  # -- combobox --
+
+  test "renders combobox field with static collection" do
+    result = render_field({
+      attribute: :user_id, as: :combobox, label: "Author", multiple: false,
+      collection: [["Ada", 1], ["Grace", 2]]
+    })
+    assert_includes result, "l-ui-combobox"
+    assert_includes result, 'role="combobox"'
+    assert_includes result, 'name="post[user_id]"'
+    assert_includes result, "Grace"
+  end
+
+  test "combobox field renders its own label rather than the shared one" do
+    result = render_field({
+      attribute: :user_id, as: :combobox, label: "Author",
+      collection: [["Ada", 1]]
+    })
+    assert_equal 1, result.scan("Author").size
+    assert_includes result, 'class="l-ui-label"'
+  end
+
+  test "combobox field describes the error element" do
+    result = render_field({
+      attribute: :user_id, as: :combobox, collection: [["Ada", 1]]
+    })
+    assert_includes result, "post_user_id_error"
+    assert_match(/aria-describedby="[^"]*post_user_id_error/, result)
+  end
+
+  test "combobox field renders its hint once, bound to the input" do
+    result = render_field({
+      attribute: :user_id, as: :combobox, hint: "Start typing a name",
+      collection: [["Ada", 1]]
+    })
+    assert_equal 1, result.scan("Start typing a name").size
+    assert_includes result, "l-ui-form__hint"
+  end
+
+  test "combobox field selects the record's current value" do
+    record = Post.new(user_id: 2)
+    config = l_ui_normalise_field(record, {
+      attribute: :user_id, as: :combobox, multiple: false,
+      collection: [["Ada", 1], ["Grace", 2]]
+    })
+    builder = ActionView::Helpers::FormBuilder.new(
+      record.model_name.param_key, record, self, {}
+    )
+    render partial: "layered/ui/managed_resource/field",
+           locals: { form: builder, record: record, config: config }
+    assert_includes rendered, "l-ui-combobox__token"
+    assert_includes rendered, "Grace"
+  end
+
+  test "remote combobox field raises when the record has a value and no selection" do
+    error = assert_raises(ArgumentError) do
+      l_ui_normalise_field(Post.new(user_id: 2), {
+        attribute: :user_id, as: :combobox, multiple: false, url: "/options/users"
+      })
+    end
+    assert_includes error.message, ":selected"
+  end
+
+  test "remote combobox field renders a labelled selection for an existing value" do
+    record = Post.new(user_id: 2)
+    config = l_ui_normalise_field(record, {
+      attribute: :user_id, as: :combobox, multiple: false, url: "/options/users",
+      selected: [["Grace", 2]]
+    })
+    builder = ActionView::Helpers::FormBuilder.new(
+      record.model_name.param_key, record, self, {}
+    )
+    render partial: "layered/ui/managed_resource/field",
+           locals: { form: builder, record: record, config: config }
+    assert_includes rendered, "l-ui-combobox__token"
+    assert_includes rendered, "Grace"
+  end
+
+  test "combobox field is single by default, so a scalar attribute posts a scalar" do
+    result = render_field({
+      attribute: :user_id, as: :combobox, collection: [["Ada", 1], ["Grace", 2]]
+    })
+    assert_includes result, 'name="post[user_id]"'
+    assert_not_includes result, 'name="post[user_id][]"'
+    assert_includes result, 'data-l-ui--combobox-multiple-value="false"'
+  end
+
+  test "combobox field on an _ids attribute is multiple" do
+    result = render_field({
+      attribute: :tag_ids, as: :combobox, collection: [["Ada", 1], ["Grace", 2]]
+    })
+    assert_includes result, 'name="post[tag_ids][]"'
+    assert_includes result, 'data-l-ui--combobox-multiple-value="true"'
+  end
+
+  test "combobox field on an array column is multiple even when the value is nil" do
+    record = ArrayColumnRecord.new
+    assert_nil record.tags
+    config = l_ui_normalise_field(record, {
+      attribute: :tags, as: :combobox, collection: [["Urgent", "urgent"]]
+    })
+    assert_equal true, config[:extras][:multiple]
+  end
+
+  test "combobox field honours an explicit multiple over the inferred one" do
+    result = render_field({
+      attribute: :user_id, as: :combobox, multiple: true, collection: [["Ada", 1]]
+    })
+    assert_includes result, 'name="post[user_id][]"'
+    assert_includes result, 'data-l-ui--combobox-multiple-value="true"'
+  end
+
+  test "combobox field passes remote options through" do
+    result = render_field({
+      attribute: :user_id, as: :combobox, url: "/options/users", min_chars: 2
+    })
+    assert_includes result, 'data-l-ui--combobox-url-value="/options/users"'
+    assert_includes result, 'data-l-ui--combobox-min-chars-value="2"'
+  end
+
+  test "combobox field keeps the error element alongside a given describedby" do
+    result = render_field({
+      attribute: :user_id, as: :combobox, collection: [["Ada", 1]],
+      describedby: "extra-note"
+    })
+    assert_match(/aria-describedby="[^"]*post_user_id_error[^"]*extra-note/, result)
+  end
+
+  test "combobox field raises for an option it cannot take" do
+    error = assert_raises(ArgumentError) do
+      l_ui_normalise_field(Post.new, {
+        attribute: :user_id, as: :combobox, collection: [["Ada", 1]], autofocus: true
+      })
+    end
+    assert_includes error.message, ":autofocus"
+    assert_includes error.message, "container:"
+  end
+
+  test "combobox field raises for a select-only prompt" do
+    error = assert_raises(ArgumentError) do
+      l_ui_normalise_field(Post.new, {
+        attribute: :user_id, as: :combobox, collection: [["Ada", 1]], prompt: "Choose an author"
+      })
+    end
+    assert_includes error.message, ":prompt"
+    assert_includes error.message, "placeholder:"
+  end
+
+  test "combobox field raises for a select-only include_blank" do
+    error = assert_raises(ArgumentError) do
+      l_ui_normalise_field(Post.new, {
+        attribute: :user_id, as: :combobox, collection: [["Ada", 1]], include_blank: false
+      })
+    end
+    assert_includes error.message, ":include_blank"
+    assert_includes error.message, "already blank"
+  end
+
   # -- type validation --
 
   test "raises ArgumentError for unsupported field type" do
@@ -281,6 +440,15 @@ class FormHelperTest < ActionView::TestCase
     end
     assert_includes error.message, ":select"
     assert_includes error.message, ":collection"
+  end
+
+  test "raises ArgumentError for combobox without collection or url" do
+    error = assert_raises(ArgumentError) do
+      l_ui_normalise_field(Post.new, { attribute: :user_id, as: :combobox })
+    end
+    assert_includes error.message, ":combobox"
+    assert_includes error.message, ":collection"
+    assert_includes error.message, ":url"
   end
 
   private
@@ -302,5 +470,26 @@ class FormHelperTest < ActionView::TestCase
            locals: { record: record, fields: fields, url: "/posts",
                      method: nil, submit: nil, multipart: multipart }
     rendered
+  end
+
+  # Array columns are PostgreSQL-only and the dummy app runs on SQLite, so the
+  # column is stood in for, as is the record carrying it: normalising a field
+  # with an explicit :as asks the class only for its columns and the record only
+  # for its value. The column has no default, which is what leaves a new
+  # record's value nil rather than an empty array.
+  class ArrayColumn
+    def array?
+      true
+    end
+  end
+
+  class ArrayColumnRecord
+    def self.columns_hash
+      { "tags" => ArrayColumn.new }
+    end
+
+    def tags
+      nil
+    end
   end
 end
