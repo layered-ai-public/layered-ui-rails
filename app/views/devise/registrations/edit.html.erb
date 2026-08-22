@@ -13,7 +13,7 @@
   <div class="l-ui-tabs__panel" role="tabpanel"
        data-l-ui--tabs-target="panel"
        id="l-ui-settings-panel-account" aria-labelledby="l-ui-settings-tab-account">
-    <%= form_with(model: resource, as: resource_name, url: registration_path(resource_name), method: :put, class: 'l-ui-form l-ui-mt-3') do |f| %>
+    <%= form_with(model: resource, scope: resource_name, url: registration_path(resource_name), method: :put, class: 'l-ui-form l-ui-mt-3') do |f| %>
       <%= render 'layered_ui/shared/form_errors', item: resource %>
 
       <% if resource.class.column_names.include?('name') %>

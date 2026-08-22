@@ -37,6 +37,8 @@
 <pre class="l-ui-surface mt-4"><code>Layered::Ui.current_user_method = :current_admin</code></pre>
 
 <p class="mt-4">If your Devise mapping isn't <code>:user</code> (e.g. <code>devise_for :admins</code>), also set the scope so the header and sidebar link to the right registration, session, and logout paths:</p>
+
+<p class="mt-4">Both settings work together: <code>current_user_method</code> tells the engine who is signed in, and <code>devise_scope</code> tells it which routes to build. Set both, or the sidebar will treat the visitor as signed out.</p>
 <pre class="l-ui-surface mt-4"><code>Layered::Ui.devise_scope = :admin</code></pre>
 
 <p class="mt-4">The sidebar displays the signed-in user's email. If your user model has a <code>name</code> attribute, it will be displayed as well. To support this, add a name column to your users migration:</p>

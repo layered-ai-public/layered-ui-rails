@@ -2,7 +2,7 @@
   <div class="l-ui-page__narrow">
     <h1>Change your password</h1>
 
-    <%= form_with(model: resource, as: resource_name, url: password_path(resource_name), method: :put, class: 'l-ui-form l-ui-mt-3') do |f| %>
+    <%= form_with(model: resource, scope: resource_name, url: password_path(resource_name), method: :put, class: 'l-ui-form l-ui-mt-3') do |f| %>
       <%= render 'layered_ui/shared/form_errors', item: resource %>
       <%= f.hidden_field :reset_password_token %>
 

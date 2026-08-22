@@ -7,6 +7,14 @@ class AuthenticationHelperTest < ActionView::TestCase
     @current_user
   end
 
+  def with_devise_scope(scope)
+    previous = Layered::Ui.devise_scope
+    Layered::Ui.devise_scope = scope
+    yield
+  ensure
+    Layered::Ui.devise_scope = previous
+  end
+
   test "detects Devise is installed" do
     assert l_ui_devise_installed?
   end
@@ -31,5 +39,13 @@ class AuthenticationHelperTest < ActionView::TestCase
 
   test "returns the Devise account settings path" do
     assert_equal "/users/edit", l_ui_edit_registration_path
+  end
+
+  test "builds Devise paths for the configured scope" do
+    with_devise_scope(:admin) do
+      assert_nil l_ui_edit_registration_path
+      assert_nil l_ui_new_session_path
+      assert_nil l_ui_destroy_session_path
+    end
   end
 end

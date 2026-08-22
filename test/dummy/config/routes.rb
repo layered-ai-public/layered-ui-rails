@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   devise_for :users
+  # A second mapping whose name differs from its model, covering scope-agnostic
+  # behaviour in the engine's Devise views and helpers.
+  devise_for :members, class_name: "User"
 
   root "pages#home"
 
