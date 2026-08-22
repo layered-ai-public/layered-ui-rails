@@ -13,9 +13,9 @@
 <p class="mt-4">The engine automatically detects Devise and provides:</p>
 
 <ul class="l-ui-list mt-4">
-  <li>Styled sign in, registration, and password reset, confirmation, and unlock views</li>
+  <li>Styled sign in, registration, account settings, and password reset, confirmation, and unlock views</li>
   <li>Header links that adapt to authentication state</li>
-  <li>User info display in sidebar when signed in</li>
+  <li>User info in the sidebar when signed in, with a menu holding Settings and Logout</li>
 </ul>
 
 <h2 class="mt-8 l-ui-heading--section">Installation</h2>
@@ -49,6 +49,26 @@ protected
 
 def configure_permitted_parameters
   devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+end</code></pre>
+
+<h2 class="mt-8 l-ui-heading--section">Settings screen</h2>
+
+<p class="mt-4">Devise's <code>registrations#edit</code> action is styled as a Settings screen at <code>/users/edit</code>, with the account details under an "Account" tab. It lets a signed-in user update their email (and name, if the model has one), change their password, and cancel their account. All changes require the current password, as Devise expects.</p>
+
+<p class="mt-4">When a user is signed in, the sidebar shows a menu button next to their name and email holding Settings and Logout, so no wiring is needed. To link to the screen elsewhere, use the <code>l_ui_edit_registration_path</code> helper, which respects the configured Devise scope and returns <code>nil</code> when the route is not available:</p>
+<pre class="l-ui-surface mt-4"><code>&lt;%= l_ui_navigation_item "Settings", l_ui_edit_registration_path %&gt;</code></pre>
+
+<p class="mt-4">If your layout hides application chrome on Devise views, make an exception for this screen with <code>l_ui_settings_screen?</code> - it is part of the signed-in app, so it should keep the navigation:</p>
+<pre class="l-ui-surface mt-4"><code>&lt;% unless devise_controller? &amp;&amp; !l_ui_settings_screen? %&gt;
+  &lt;% content_for :l_ui_navigation_items do %&gt;
+    ...
+  &lt;% end %&gt;
+&lt;% end %&gt;</code></pre>
+
+<p class="mt-4">If your user model has a <code>name</code> attribute, permit it for account updates as well as sign up:</p>
+<pre class="l-ui-surface mt-4"><code>def configure_permitted_parameters
+  devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+  devise_parameter_sanitizer.permit(:account_update, keys: [:name])
 end</code></pre>
 
 <h2 class="mt-8 l-ui-heading--section">Helper methods</h2>

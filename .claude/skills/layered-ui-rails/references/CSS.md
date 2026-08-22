@@ -398,6 +398,9 @@ The listbox and filtered-out options are hidden with the `hidden` attribute, so 
 .l-ui-navigation__section-chevron       Toggle chevron (rotates when closed)
 .l-ui-navigation__section-items         Section body (ul, hidden when closed)
 .l-ui-navigation__user            User info section
+.l-ui-navigation__user-button     Unpadded full-width account menu trigger (pair with .l-ui-button)
+.l-ui-navigation__user-chevron    Upward chevron inside the account menu trigger
+.l-ui-navigation__user-popover    Account menu popover sized to the sidebar's inner column
 .l-ui-navigation__user-name       User name text
 .l-ui-navigation__user-email      User email text
 ```
@@ -488,6 +491,7 @@ Always combine the base block with one size modifier (e.g. `class="l-ui-icon l-u
 ```
 .l-ui-mt-0/2/3/4/6/8            Margin top (fixed scale)
 .l-ui-mb-0                      Margin bottom zero
+.l-ui-mb-4                      Margin bottom (1rem)
 .l-ui-sr-only                   Visually hidden, screen reader only
 .l-ui-skip-link                 Accessibility skip link
 .l-ui-list                      Styled list
@@ -533,6 +537,7 @@ Tier 2 - Full palette (override individually as needed):
 --error-text            Error text
 --header-height         Header height (default 63px)
 --l-ui-gutter           Page/header horizontal + bottom padding (default 1rem)
+--l-ui-navigation-width Sidebar navigation width (default 256px)
 --l-ui-contained-width  Max width of contained content - header + .l-ui-page__contained (default 80rem)
 ```
 

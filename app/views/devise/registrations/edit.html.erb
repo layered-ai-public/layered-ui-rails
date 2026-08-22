@@ -1,0 +1,86 @@
+<h1>Settings</h1>
+
+<div class="l-ui-tabs l-ui-mt-4" data-controller="l-ui--tabs">
+  <div class="l-ui-tabs__list" role="tablist" data-action="keydown->l-ui--tabs#keydown">
+    <button class="l-ui-tabs__tab l-ui-tabs__tab--active" role="tab"
+            data-action="l-ui--tabs#select"
+            data-l-ui--tabs-target="tab"
+            aria-selected="true" aria-controls="l-ui-settings-panel-account" id="l-ui-settings-tab-account">
+      Account
+    </button>
+  </div>
+
+  <div class="l-ui-tabs__panel" role="tabpanel"
+       data-l-ui--tabs-target="panel"
+       id="l-ui-settings-panel-account" aria-labelledby="l-ui-settings-tab-account">
+    <%= form_with(model: resource, as: resource_name, url: registration_path(resource_name), method: :put, class: 'l-ui-form l-ui-mt-3') do |f| %>
+      <%= render 'layered_ui/shared/form_errors', item: resource %>
+
+      <% if resource.class.column_names.include?('name') %>
+        <div class="l-ui-form__group">
+          <%= render 'layered_ui/shared/label', form: f, field: :name, required: true %>
+          <%= f.text_field :name, autocomplete: "name", class: "l-ui-form__field", aria: { describedby: l_ui_field_describedby(resource, :name) } %>
+          <%= render 'layered_ui/shared/field_error', object: resource, field: :name %>
+        </div>
+      <% end %>
+
+      <div class="l-ui-form__group">
+        <%= render 'layered_ui/shared/label', form: f, field: :email, required: true %>
+        <%= f.email_field :email, autocomplete: "email", class: "l-ui-form__field", aria: { describedby: l_ui_field_describedby(resource, :email, hint: devise_mapping.confirmable? && resource.pending_reconfirmation?) } %>
+        <%= render 'layered_ui/shared/field_error', object: resource, field: :email %>
+
+        <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+          <div class="l-ui-form__hint" id="<%= l_ui_field_hint_id(resource, :email) %>">
+            Currently waiting confirmation for: <%= resource.unconfirmed_email %>
+          </div>
+        <% end %>
+      </div>
+
+      <h2 class="l-ui-mt-8 l-ui-mb-4 l-ui-heading--section">
+        Change your password
+      </h2>
+
+      <p>Leave these blank if you do not want to change your password.</p>
+
+      <div class="l-ui-form__group">
+        <%= render 'layered_ui/shared/label', form: f, field: :password, name: "New password", required: false %>
+        <%= f.password_field :password, autocomplete: "new-password", class: "l-ui-form__field", aria: { describedby: l_ui_field_describedby(resource, :password, hint: @minimum_password_length.present?) } %>
+        <%= render 'layered_ui/shared/field_error', object: resource, field: :password %>
+        <% if @minimum_password_length %>
+          <div class="l-ui-form__hint" id="<%= l_ui_field_hint_id(resource, :password) %>">
+            (<%= @minimum_password_length %> characters minimum)
+          </div>
+        <% end %>
+      </div>
+
+      <div class="l-ui-form__group">
+        <%= render 'layered_ui/shared/label', form: f, field: :password_confirmation, name: "Confirm new password", required: false %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "l-ui-form__field", aria: { describedby: l_ui_field_describedby(resource, :password_confirmation) } %>
+        <%= render 'layered_ui/shared/field_error', object: resource, field: :password_confirmation %>
+      </div>
+
+      <div class="l-ui-form__group l-ui-form__group--large-gap">
+        <%= render 'layered_ui/shared/label', form: f, field: :current_password, name: "Current password", required: true %>
+        <%= f.password_field :current_password, autocomplete: "current-password", class: "l-ui-form__field", aria: { describedby: l_ui_field_describedby(resource, :current_password, hint: true) } %>
+        <%= render 'layered_ui/shared/field_error', object: resource, field: :current_password %>
+        <div class="l-ui-form__hint" id="<%= l_ui_field_hint_id(resource, :current_password) %>">
+          We need your current password to confirm your changes
+        </div>
+      </div>
+
+      <div class="l-ui-form__actions">
+        <%= f.submit "Save changes", class: "l-ui-button l-ui-button--primary" %>
+      </div>
+    <% end %>
+
+    <h2 class="l-ui-mt-8 l-ui-mb-4 l-ui-heading--section">
+      Cancel your account
+    </h2>
+
+    <p>Cancelling your account is permanent and cannot be undone.</p>
+
+    <div class="l-ui-form__group">
+      <%= button_to "Cancel my account", registration_path(resource_name), method: :delete, class: "l-ui-button l-ui-button--outline-danger", form: { data: { turbo_confirm: "Are you sure? This cannot be undone." } } %>
+    </div>
+  </div>
+</div>

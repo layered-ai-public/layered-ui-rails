@@ -14,8 +14,19 @@ module Layered
         l_ui_current_user.present?
       end
 
+      # True on the account settings screen (Devise's registrations#edit). Layouts
+      # that strip app chrome from Devise views want an exception for it, as it is
+      # part of the signed-in app rather than the authentication flow.
+      def l_ui_settings_screen?
+        controller_name == "registrations" && action_name == "edit"
+      end
+
       def l_ui_new_registration_path
         l_ui_devise_path(:new, :registration)
+      end
+
+      def l_ui_edit_registration_path
+        l_ui_devise_path(:edit, :registration)
       end
 
       def l_ui_new_session_path

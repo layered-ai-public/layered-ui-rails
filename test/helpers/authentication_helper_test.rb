@@ -28,4 +28,8 @@ class AuthenticationHelperTest < ActionView::TestCase
     @current_user = User.new(email: "test@example.com", name: "Test")
     assert l_ui_user_signed_in?
   end
+
+  test "returns the Devise account settings path" do
+    assert_equal "/users/edit", l_ui_edit_registration_path
+  end
 end

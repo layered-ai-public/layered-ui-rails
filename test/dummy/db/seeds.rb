@@ -31,7 +31,7 @@ users.each do |attrs|
   User.find_or_create_by!(email: attrs[:email]) do |user|
     user.name = attrs[:name]
     if user[:email] == 'test.user@example.com'
-      user.password = 'notasecret123'
+      user.password = 'Notasecret123-'
     else
       user.password = SecureRandom.hex(12)
     end

@@ -7,13 +7,13 @@
 
       <div class="l-ui-form__group">
         <%= render 'layered_ui/shared/label', form: f, field: :email, required: true %>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "l-ui-form__field", "aria-describedby": "#{resource_name}_email_error" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "l-ui-form__field", aria: { describedby: l_ui_field_describedby(resource, :email) } %>
         <%= render 'layered_ui/shared/field_error', object: resource, field: :email %>
       </div>
 
       <div class="l-ui-form__group">
         <%= render 'layered_ui/shared/label', form: f, field: :password, required: true %>
-        <%= f.password_field :password, autocomplete: "current-password", class: "l-ui-form__field", "aria-describedby": "#{resource_name}_password_error" %>
+        <%= f.password_field :password, autocomplete: "current-password", class: "l-ui-form__field", aria: { describedby: l_ui_field_describedby(resource, :password) } %>
         <%= render 'layered_ui/shared/field_error', object: resource, field: :password %>
       </div>
 

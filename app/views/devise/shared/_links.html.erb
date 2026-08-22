@@ -10,21 +10,25 @@
   </p>
 <% end %>
 
-<%- if devise_mapping.recoverable? || devise_mapping.confirmable? || (devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email)) %>
-  <h2 class="l-ui-mt-6 l-ui-heading--section">
+<%- show_password_reset = devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+<%- show_confirmation = devise_mapping.confirmable? && controller_name != 'confirmations' %>
+<%- show_unlock = devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
+
+<%- if show_password_reset || show_confirmation || show_unlock %>
+  <h2 class="l-ui-mt-6 l-ui-mb-4 l-ui-heading--section">
     Need assistance?
   </h2>
 <% end %>
 
-<%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+<%- if show_password_reset %>
   <p><%= link_to "Reset your password", new_password_path(resource_name) %></p>
 <% end %>
 
-<%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
+<%- if show_confirmation %>
   <p><%= link_to "Resend account confirmation email", new_confirmation_path(resource_name) %></p>
 <% end %>
 
-<%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
+<%- if show_unlock %>
   <p><%= link_to "Resend account unlock email", new_unlock_path(resource_name) %></p>
 <% end %>
 
