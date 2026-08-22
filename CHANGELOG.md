@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.24.0] - 2026-08-22
+
+### Added
+
+- Devise account settings: Devise's `registrations#edit` is styled as a Settings screen at `/users/edit`, with the account details under an "Account" tab. A signed-in user can change their email (and their name, if the model has one), set a new password, or cancel their account - all of it confirmed with the current password, as Devise expects. If your user model has a `name` attribute, permit it for `:account_update` as well as `:sign_up`. Link to the screen with `l_ui_edit_registration_path`, and use `l_ui_settings_screen?` to keep application chrome that a layout otherwise strips from Devise views.
+- Sidebar account menu: the signed-in user's name and email in the sidebar are now a menu button opening a popover holding Settings and Logout, replacing the standalone logout button. The menu is sized to the sidebar's inner column so it lines up with the name and email, and only the entries whose Devise routes exist are rendered.
+- Ejecting a view: any engine view can be replaced by copying it to the matching path in your application - `app/views/devise/registrations/edit.html.erb` takes over the Settings screen, `app/views/layouts/layered_ui/_navigation.html.erb` the sidebar - with no configuration. The engine's views are still prepended so they beat Devise's own, but your `app/views` is prepended back on top, restoring the precedence Rails gives you by default. Note that `bin/rails generate devise:views` generates *every* Devise view, so it replaces the whole styled set rather than the one you meant to change. See `UPGRADING.md`.
+- `--l-ui-navigation-width`: the sidebar navigation width (default 256px), previously hard-coded, now overridable alongside the other layout tokens.
+
+### Fixed
+
+- Devise form fields are scoped to the mapping rather than the model, so an app whose mapping name differs from its model (`devise_for :members, class_name: "User"`) submits parameters under the name Devise looks for. Previously the fields were named after the model, and nothing the user typed reached the controller.
+- Field hints on the Devise views carry an id and are referenced by their input's `aria-describedby` (assembled by the new `l_ui_field_describedby` helper), so a screen reader announces the password length requirement along with the field instead of leaving it unlinked.
+- The "Need assistance?" heading on the Devise views is rendered only when at least one of the links beneath it is. Previously it appeared whenever the matching Devise modules were enabled, so a page whose only link was suppressed showed a heading over nothing.
+
+### Changed
+
+- Logout has moved out of the sidebar into the account menu. A host that targeted the sidebar's `l-ui-button--outline-danger` logout button, in CSS or in a system test, will need to look inside `l-ui-navigation__user-popover` instead.
+
 ## [0.23.0] - 2026-08-22
 
 ### Added

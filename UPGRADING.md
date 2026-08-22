@@ -1,5 +1,26 @@
 # Upgrading
 
+## 0.24.0
+
+### Logout has moved into the sidebar account menu
+
+The signed-in user's name and email in the sidebar are now a menu button. Logout lives inside that menu alongside Settings, so the standalone `l-ui-button--outline-danger` logout button is gone. Nothing to do unless you targeted that button in your own CSS or in a system test - look inside `l-ui-navigation__user-popover` instead.
+
+### Permit `name` for account updates
+
+If your user model has a `name` attribute and you want the new Settings screen to save it, permit it for `:account_update` as well as `:sign_up`:
+
+```ruby
+def configure_permitted_parameters
+  devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+  devise_parameter_sanitizer.permit(:account_update, keys: [:name])
+end
+```
+
+### Views generated into your application now win over the engine's
+
+Application views resolve before engine views again, which is what lets you eject any engine view by copying it to the matching path. If you previously ran `bin/rails generate devise:views` and were still seeing the engine's styled views, your generated copies now take over - Devise generates *every* view, so delete the ones you did not mean to change and keep only the individual views you are customising.
+
 ## 0.19.0
 
 ### Headings no longer carry a divider by default
