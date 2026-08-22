@@ -361,6 +361,15 @@ class FormHelperTest < ActionView::TestCase
     assert_includes result, 'data-l-ui--combobox-multiple-value="true"'
   end
 
+  test "combobox field on an array column is multiple even when the value is nil" do
+    record = ArrayColumnRecord.new
+    assert_nil record.tags
+    config = l_ui_normalise_field(record, {
+      attribute: :tags, as: :combobox, collection: [["Urgent", "urgent"]]
+    })
+    assert_equal true, config[:extras][:multiple]
+  end
+
   test "combobox field honours an explicit multiple over the inferred one" do
     result = render_field({
       attribute: :user_id, as: :combobox, multiple: true, collection: [["Ada", 1]]
@@ -461,5 +470,26 @@ class FormHelperTest < ActionView::TestCase
            locals: { record: record, fields: fields, url: "/posts",
                      method: nil, submit: nil, multipart: multipart }
     rendered
+  end
+
+  # Array columns are PostgreSQL-only and the dummy app runs on SQLite, so the
+  # column is stood in for, as is the record carrying it: normalising a field
+  # with an explicit :as asks the class only for its columns and the record only
+  # for its value. The column has no default, which is what leaves a new
+  # record's value nil rather than an empty array.
+  class ArrayColumn
+    def array?
+      true
+    end
+  end
+
+  class ArrayColumnRecord
+    def self.columns_hash
+      { "tags" => ArrayColumn.new }
+    end
+
+    def tags
+      nil
+    end
   end
 end

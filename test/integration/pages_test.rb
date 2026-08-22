@@ -147,6 +147,13 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "forms_helper page renders" do
+    create_test_users
+    get "/forms_helper"
+    assert_response :success
+    assert_select ".l-ui-combobox"
+  end
+
   test "pagination page renders" do
     create_test_users
     get "/pagination"

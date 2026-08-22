@@ -126,11 +126,24 @@ module Layered
       # to a multiple select, but a form field is more often a single scalar
       # attribute, which would silently cast an array of values to nil. So a
       # field is multiple only when the attribute is plainly a collection: an
-      # +_ids+ association writer, or an attribute already holding an array.
+      # +_ids+ association writer, an array column, or an attribute already
+      # holding an array. The column is asked before the value, so an array
+      # column with no default stays multiple on a new record, where its value
+      # is nil rather than an empty array.
       def l_ui_field_multiple?(record, attribute)
         return true if attribute.to_s.end_with?("_ids")
+        return true if l_ui_field_array_column?(record.class, attribute)
 
         l_ui_field_value(record, attribute).is_a?(Array)
+      end
+
+      # Array columns are a PostgreSQL feature, so the flag is only carried by
+      # some adapters' columns.
+      def l_ui_field_array_column?(model_class, attribute)
+        return false unless model_class.respond_to?(:columns_hash)
+
+        column = model_class.columns_hash[attribute.to_s]
+        column.respond_to?(:array?) && column.array?
       end
 
       def l_ui_field_type_for(model_class, attribute)
