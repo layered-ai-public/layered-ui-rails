@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.25.1] - 2026-08-28
+
+### Fixed
+
+- A popover no longer clips its content. `[popover]` takes `overflow: auto` from the UA stylesheet, which made the panel a scroll container; since the panel is `height: fit-content`, an absolutely positioned child never counted towards its height and so was cut off - a combobox inside a popover showed a listbox clipped to the height of its own label and input. `.l-ui-popover` now sets `overflow: visible`, and a popover that genuinely needs to scroll can set its own `max-height` and `overflow-y`.
+
 ## [0.25.0] - 2026-08-23
 
 ### Added
