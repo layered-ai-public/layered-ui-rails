@@ -346,6 +346,8 @@ The listbox and filtered-out options are hidden with the `hidden` attribute, so 
 .l-ui-popover__menu-divider      Horizontal rule separating groups of items (apply to an <hr>)
 ```
 
+The panel takes `overflow: visible`, overriding the UA stylesheet's `overflow: auto` for `[popover]`. It is `height: fit-content` with no max-height, so in-flow content can't overflow it anyway, and the UA rule only did harm: it made the panel a scroll container that clipped any child painting outside it - a combobox's absolutely positioned listbox above all, which is out of flow and so never counted in the panel's height. A popover lives in the top layer, so a child hanging past its edge paints cleanly over the page. Give a popover that genuinely needs to scroll its own `max-height` and `overflow-y`.
+
 ## Breadcrumbs
 
 ```

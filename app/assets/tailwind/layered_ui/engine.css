@@ -2647,6 +2647,15 @@ pre.l-ui-surface {
          text-sm text-foreground
          bg-background
          border border-border rounded-sm;
+
+  /* The UA stylesheet gives [popover] `overflow: auto`, which makes the panel
+     a scroll container and so clips any child that paints outside it - a
+     combobox's absolutely positioned listbox, most of all, which is out of
+     flow and therefore never counted in the panel's height. The panel is
+     `height: fit-content` with no max-height, so in-flow content can't
+     overflow it and the UA rule has nothing else to do; a popover lives in the
+     top layer, so a child hanging past its edge paints cleanly over the page. */
+  overflow: visible;
 }
 
 /* A list of actions inside a popover (e.g. a table row's "more" menu).
