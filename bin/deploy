@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# Deploy the dummy app with Kamal, reading the target from .env.deploy so the
+# three KAMAL_* vars don't have to be exported by hand every time.
+#
+#   bin/deploy           # kamal deploy
+#   bin/deploy setup     # first run on a new server
+#   bin/deploy logs      # any other kamal subcommand passes straight through
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+if [[ ! -f .env.deploy ]]; then
+  echo "bin/deploy: missing .env.deploy - copy .env.deploy.example and fill in the target." >&2
+  exit 1
+fi
+
+set -a
+source ./.env.deploy
+set +a
+
+for var in KAMAL_DEPLOY_IP KAMAL_DEPLOY_DOMAIN KAMAL_SSH_KEY; do
+  if [[ -z "${!var:-}" ]]; then
+    echo "bin/deploy: $var is not set in .env.deploy" >&2
+    exit 1
+  fi
+done
+
+# Kamal reads config/deploy.yml relative to the working directory.
+cd test/dummy
+exec kamal "${@:-deploy}"
