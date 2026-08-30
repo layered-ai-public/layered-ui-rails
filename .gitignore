@@ -8,6 +8,7 @@ test/dummy/.bundle
 
 # Ignore all environment files.
 test/dummy/.env
+.env.deploy
 
 # Ignore all logfiles and tempfiles.
 test/dummy/log/*
