@@ -528,6 +528,7 @@ Tier 2 - Full palette (override individually as needed):
 --button-primary-text   Primary button text (defaults to --accent-foreground)
 --button-primary-icon   Icon color on filled icon buttons (defaults to --button-primary-text)
 --danger                Danger/error color
+--danger-foreground     Text/icon color on solid danger buttons
 --danger-light          Light danger background
 --danger-text           Danger text color
 --success-bg            Success background
