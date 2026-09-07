@@ -192,6 +192,9 @@ Always combine the `l-ui-surface` base class with any modifiers (e.g. `l-ui-surf
 .l-ui-select-container           Select wrapper (custom arrow)
 
 .l-ui-search-inline            Inline search form layout
+.l-ui-search-control             Field + clear button wrapper (own positioning context)
+.l-ui-search-control--clearable  Leaves room in the field for the clear button
+.l-ui-search-control__clear      Clear button inside the field's trailing edge (24x24)
 
 .l-ui-radio                    Radio button group
 .l-ui-radio__item              Radio item wrapper

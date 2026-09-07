@@ -66,7 +66,8 @@ end</code></pre>
       action: "click->l-ui--search-form#rewriteLink" } do %>
   <div class="mt-4">
     <%= l_ui_search_form(@users_q, url: ransack_path, fields: [:name, :email],
-                         clear: true, turbo_frame: "users_collection") %>
+                         label: "Search users", count: @users_pagy.count,
+                         turbo_frame: "users_collection") %>
   </div>
 
   <div class="mt-4">
@@ -91,7 +92,8 @@ end</code></pre>
       action: "click->l-ui--search-form#rewriteLink" } do %>
   <div class="mt-4">
     <%= l_ui_search_form(@posts_q, url: ransack_path, fields: [:title],
-                         clear: true, turbo_frame: "posts_collection") %>
+                         label: "Search posts", count: @posts_pagy.count,
+                         turbo_frame: "posts_collection") %>
   </div>
 
   <div class="mt-4">
@@ -126,7 +128,8 @@ end</code></pre>
       controller: "l-ui--search-form", l_ui__search_form_scope_value: "users_q",
       action: "click-&gt;l-ui--search-form#rewriteLink" } do %&gt;
   &lt;%= l_ui_search_form(@users_q, url: users_path, fields: [:name, :email],
-                       clear: true, turbo_frame: "users_collection") %&gt;
+                       label: "Search users", count: @users_pagy.count,
+                       turbo_frame: "users_collection") %&gt;
   &lt;%= l_ui_table(@users,
       columns: [
         { attribute: :name, primary: true, render: -&gt;(u) { u.name } },
@@ -139,7 +142,11 @@ end</code></pre>
   &lt;%= l_ui_pagy(@users_pagy) %&gt;
 &lt;% end %&gt;</code></pre>
 
-<p class="mt-4">The <code>search_key</code> flows through automatically - <code>l_ui_search_form</code> reads it from the query object and passes it as <code>as:</code> to <code>search_form_for</code>. The clear button preserves other collections' params. <code>data-turbo-action="advance"</code> pushes state to the URL for back/forward navigation. The <code>rewriteLink</code> action merges current URL params into pagination links so other collections' page positions are preserved.</p>
+<p class="mt-4">The <code>search_key</code> flows through automatically - <code>l_ui_search_form</code> reads it from the query object and passes it as <code>as:</code> to <code>search_form_for</code>. Clearing preserves the other collection's params, as every submit does.</p>
+
+<p class="mt-4">Two Turbo actions are in play, and the difference matters. Each search form carries <code>data-turbo-action="replace"</code>, so typing does not fill the history with a entry per keystroke; the frame keeps <code>advance</code>, so sort links and pagination still push state for back/forward navigation. Turbo reads the action from the submitter, then the form, then the frame, which is what lets the two coexist. The <code>rewriteLink</code> action merges current URL params into pagination links so other collections' page positions are preserved.</p>
+
+<p class="mt-4">Each form is given a <code>label:</code> and a <code>count:</code>. The label names the <code>search</code> landmark, so a screen-reader user can tell the two search boxes apart; the count is what gets announced when results change with no button press.</p>
 
 <h2 class="mt-8 l-ui-heading--section">Sort link options</h2>
 

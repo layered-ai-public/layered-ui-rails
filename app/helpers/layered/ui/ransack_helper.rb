@@ -11,13 +11,35 @@ module Layered
       #     render "layered_ui/shared/search_field", form: f, field: :name_cont, label: "Name"
       #     f.submit "Go", class: "l-ui-button l-ui-button--primary"
       #   end
-      def l_ui_search_form(query, url: nil, fields: [], predicate: :cont, combinator: :or, label: "Search", placeholder: nil, button: "Search", clear: nil, turbo_frame: nil, html: {}, &block)
+      #
+      # Given a turbo_frame:, the form searches as the user types - there is no
+      # Search button to press, and the field carries its own clear button. Pass
+      # count: to have the size of the result set announced, and live: false for
+      # a form that submits only when asked to.
+      def l_ui_search_form(query, url: nil, fields: [], predicate: :cont, combinator: :or,
+                           label: "Search", placeholder: nil, button: nil, clear: true,
+                           live: nil, count: nil, min_chars: 0,
+                           turbo_frame: nil, html: {}, &block)
         result = require_ransack("l_ui_search_form") { |msg| tag.p(msg, class: "l-ui-notice l-ui-notice--warning") }
         return result unless result == true
 
         scope = query.context&.search_key || :q
-        turbo_action = "advance"
+        # Typing into a form with no frame would mean a full page load per
+        # keystroke, so searching as you type is offered only where a frame can
+        # absorb it.
+        live = turbo_frame.present? if live.nil?
+        # Each keystroke's search replaces the history entry rather than pushing
+        # one, so Back leaves the collection rather than replaying the term
+        # letter by letter. Set on the form, which Turbo reads before the
+        # frame's own action, so sort links and pagination inside the same frame
+        # still advance.
+        turbo_action = live ? "replace" : "advance"
         html = html.merge(class: ["l-ui-form", html[:class]].compact.join(" "))
+
+        if live
+          html[:role] ||= "search"
+          html[:aria] = { label: label }.merge(html[:aria] || {})
+        end
 
         if turbo_frame
           existing_data = (html[:data] || {}).symbolize_keys
@@ -27,10 +49,17 @@ module Layered
           action = [existing_action, "submit->l-ui--search-form#preserve"].compact.join(" ")
           turbo_action = existing_data[:turbo_action] || turbo_action
 
+          values = { l_ui__search_form_scope_value: scope }
+          if live
+            values[:l_ui__search_form_live_value] = true
+            values[:l_ui__search_form_min_chars_value] = min_chars if min_chars.to_i.positive?
+            values[:l_ui__search_form_count_value] = count unless count.nil?
+          end
+
           html[:data] = existing_data.except(:controller, :action, :l_ui__search_form_scope_value).merge(
             turbo_frame: turbo_frame, turbo_action: turbo_action,
             controller: controller, action: action,
-            l_ui__search_form_scope_value: scope
+            **values
           )
         end
 
@@ -43,20 +72,55 @@ module Layered
           placeholder ||= "Search by #{fields.map { |f| f.to_s.humanize.downcase }.join(', ')}"
 
           search_form_for(query, url: url, html: html, as: scope) do |f|
-            f.label(combined_field, label, class: "l-ui-sr-only") +
-              tag.div(class: "l-ui-search-inline") do
-                content = f.text_field(combined_field, class: "l-ui-form__field", placeholder: placeholder) +
-                  f.submit(button, class: "l-ui-button l-ui-button--primary")
-                if clear
-                  raise ArgumentError, "l_ui_search_form requires an explicit url: when clear: is set" unless url
-                  clear_options = { class: "l-ui-button l-ui-button--outline" }
-                  clear_options[:data] = { turbo_frame: turbo_frame, turbo_action: turbo_action, action: "click->l-ui--search-form#clear" } if turbo_frame
-                  content += link_to(clear == true ? "Clear" : clear, url, **clear_options)
-                end
-                content
-              end
+            tag.div(class: "l-ui-search-inline") do
+              l_ui_search_control(f, combined_field,
+                                  label: label, placeholder: placeholder,
+                                  button: button, clear: clear, live: live,
+                                  clear_url: (url unless live))
+            end
           end
         end
+      end
+
+      # The search control itself - the field, a clear button built into its
+      # trailing edge, and the submit that keeps Enter and a JavaScript-less
+      # browser working. Rendered by l_ui_search_form's simple mode, and
+      # available on its own to a caller who passes a block and builds the row
+      # by hand:
+      #
+      #   <%= l_ui_search_form(@q, url: users_path, turbo_frame: "users", count: @pagy.count) do |f| %>
+      #     <div class="l-ui-search-inline">
+      #       <%= my_filter_hidden_fields %>
+      #       <%= l_ui_search_control(f, :name_or_email_cont, placeholder: "Search users") %>
+      #     </div>
+      #   <% end %>
+      #
+      # Searching as you type needs the l-ui--search-form controller, which
+      # l_ui_search_form puts on the form when given a turbo_frame:.
+      def l_ui_search_control(form, attribute, label: "Search", placeholder: nil,
+                              clear: true, button: nil, live: true, clear_url: nil)
+        hint_id = ("#{form.object_name}_#{attribute}_hint" if live)
+
+        field = form.text_field(
+          attribute,
+          class: "l-ui-form__field",
+          placeholder: placeholder,
+          autocomplete: "off",
+          # Not type="search": WebKit draws its own cancel button, which would
+          # sit under this one and take the same tap.
+          aria: { describedby: hint_id }.compact,
+          data: (live ? { "l-ui--search-form-target" => "input",
+                          action: "input->l-ui--search-form#search keydown.esc->l-ui--search-form#clearSearch" } : {})
+        )
+
+        parts = [ form.label(attribute, label, class: "l-ui-sr-only"), field ]
+        parts << tag.span("Results update as you type.", id: hint_id, class: "l-ui-sr-only") if live
+        parts << l_ui_search_clear_button(form, attribute, clear, live: live, clear_url: clear_url) if clear
+
+        control = tag.div(safe_join(parts.compact),
+                          class: [ "l-ui-search-control", ("l-ui-search-control--clearable" if clear) ].compact.join(" "))
+
+        safe_join([ control, l_ui_search_submit(form, button) ].compact)
       end
 
       SORT_INDICATORS = {
@@ -110,6 +174,62 @@ module Layered
       end
 
       private
+
+      # A visible primary button when one is asked for, and otherwise a submit
+      # that is present but neither seen nor tabbed to: it is what implicit
+      # submission (Enter in the field) and a browser with no JavaScript submit
+      # through, without leaving a focus stop nobody can see (WCAG 2.4.7).
+      def l_ui_search_submit(form, button)
+        if button.is_a?(String)
+          form.submit(button, class: "l-ui-button l-ui-button--primary")
+        else
+          form.submit("Search", class: "l-ui-sr-only", tabindex: -1)
+        end
+      end
+
+      def l_ui_search_clear_button(form, attribute, clear, live:, clear_url:)
+        name = clear.is_a?(String) ? clear : "Clear search"
+
+        unless live
+          raise ArgumentError, "l_ui_search_form requires an explicit url: when clear: is set" unless clear_url
+          return link_to(name, clear_url, class: "l-ui-button l-ui-button--outline")
+        end
+
+        # Hidden until there is something to clear; the controller corrects this
+        # on connect, so a term already in the field shows it without a round
+        # trip. Ransack answers a combined reader like `name_or_email_cont`
+        # through method_missing, which respond_to? does not always admit to, so
+        # the value is asked for rather than checked for.
+        blank = begin
+          form.object.public_send(attribute).blank?
+        rescue NoMethodError
+          true
+        end
+
+        tag.button(
+          safe_join([ l_ui_search_clear_icon, tag.span(name, class: "l-ui-sr-only") ]),
+          type: "button",
+          class: "l-ui-search-control__clear",
+          hidden: blank,
+          data: { "l-ui--search-form-target" => "clear", action: "l-ui--search-form#clearSearch" }
+        )
+      end
+
+      # Rendered inline rather than via image_tag so it inherits the surrounding
+      # currentColor, as the combobox icons do; an <img>-loaded SVG cannot, and
+      # would need the dark:invert of .l-ui-icon.
+      def l_ui_search_clear_icon
+        tag.svg(
+          tag.path("d" => "M6 6 18 18M18 6 6 18",
+                   "stroke-linecap" => "round", "stroke-linejoin" => "round"),
+          class: "l-ui-icon--xs",
+          fill: "none",
+          stroke: "currentColor",
+          "stroke-width" => "2",
+          "viewBox" => "0 0 24 24",
+          "aria-hidden" => "true"
+        )
+      end
 
       def ransack_available?
         defined?(Ransack)

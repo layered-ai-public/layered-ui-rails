@@ -1,5 +1,28 @@
 # Upgrading
 
+## 0.27.0
+
+### The search box searches as you type
+
+A `l_ui_search_form` given a `turbo_frame:` now submits as the field changes, and renders its clear button inside the field rather than beside it. Nothing is required of a host app to get this - existing call sites pick it up.
+
+Two defaults changed, so check any call site that relied on them:
+
+- `button:` no longer renders a visible **Search** button. The submit is still there, just neither seen nor tabbed to, so Enter and a JavaScript-less browser still work. Pass `button: "Search"` to bring the visible button back.
+- `clear:` now defaults to `true` and means the in-field clear button. Pass `clear: false` to omit it.
+
+To keep a framed form submitting only when asked to, pass `live: false`. That also restores the old separate clear button, and with it the "requires an explicit `url:` when `clear:` is set" error.
+
+### Have results announced
+
+With no button to press, a screen reader is told nothing when results change. Pass the size of the result set so it is announced:
+
+```erb
+<%= l_ui_search_form(@q, url: users_path, fields: [:name], turbo_frame: "users", count: @pagy.count) %>
+```
+
+Without `count:` nothing is announced.
+
 ## 0.26.0
 
 ### Danger button labels take their colour from `--danger-foreground`

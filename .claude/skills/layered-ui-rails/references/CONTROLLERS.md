@@ -196,22 +196,32 @@ Drag handle for resizing the panel width on desktop.
 
 ## Search form (`l-ui--search-form`)
 
-Manages multi-scope search forms with parameter preservation and Turbo frame support.
+Searches as the user types, and manages multi-scope search forms with parameter preservation and Turbo frame support.
 
-**Values:** `scope` (String, default `"q"`)
-**Actions:** `preserve`, `clear`, `rewriteLink`
+**Targets:** `input`, `clear`
+**Values:** `scope` (String, default `"q"`), `live` (Boolean, default `false`), `minChars` (Number, default `0`), `count` (Number, default `-1` - meaning no count was given, so nothing is announced)
+**Actions:** `search`, `clearSearch`, `submitNow`, `preserve`, `clear`, `rewriteLink`
 
 ```html
 <form data-controller="l-ui--search-form"
       data-l-ui--search-form-scope-value="q"
+      data-l-ui--search-form-live-value="true"
+      data-l-ui--search-form-count-value="12"
       data-action="submit->l-ui--search-form#preserve"
-      data-turbo-frame="results">
-  <!-- search fields -->
-  <button type="button" data-action="click->l-ui--search-form#clear">
-    Clear
-  </button>
+      data-turbo-frame="results"
+      data-turbo-action="replace"
+      role="search" aria-label="Search">
+  <input data-l-ui--search-form-target="input"
+         data-action="input->l-ui--search-form#search keydown.esc->l-ui--search-form#clearSearch">
+  <button type="button" data-l-ui--search-form-target="clear"
+          data-action="l-ui--search-form#clearSearch" hidden>Clear search</button>
 </form>
 ```
+
+- **`search`** - debounced (300ms, longer than the combobox's, since a search here re-renders a whole collection). Submits with `requestSubmit()`, not `submit()`, so the `submit` event fires and `preserve` still runs. A keystroke arriving mid-request is fine: Turbo stops a frame submission already in flight, so no `AbortController` is needed here.
+- **`clearSearch`** - the ✕ and Escape in the field. Skips the debounce, and focuses the input *before* the button hides itself, so focus does not fall to the body (WCAG 2.4.3).
+- **Caret preservation** - a frame render replaces the form and the input being typed into. The value, selection and focus are stashed in module state (the only thing that survives the swap), keyed per form, and restored by the controller that connects in its place. Only a render answering one of this form's own searches restores focus, so a sort link or a page link never steals it; entries older than 5s are ignored.
+- **Announcements** - after a search, the result count goes to the layout's `#l-ui-live-region`, which sits outside every frame. The term is included in the message because a live region does not re-announce text identical to what it already holds.
 
 When multiple search forms exist on one page (each with a different `scope` value), submitting one form automatically preserves the other forms' query parameters. The `page` param and any scoped page param matching the scope (e.g. `users_page` for scope `users_q`) are reset on submit so pagination returns to page 1.
 

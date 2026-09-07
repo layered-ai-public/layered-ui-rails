@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.27.0] - 2026-09-20
+
+### Added
+
+- The search box searches as you type. Given a `turbo_frame:`, `l_ui_search_form` debounces a submit as the field changes, so results narrow without a button to press. Each search replaces the history entry rather than pushing one, so Back leaves the collection instead of replaying the term letter by letter - the URL still carries the term, so a search stays shareable and survives a reload. The action is set on the form, which Turbo reads before the frame's own, so sort links and pagination inside the same frame still advance.
+- The field carries its own clear button, built into its trailing edge and shown only once there is something to clear. Escape in the field clears it too, and focus returns to the input rather than falling to the body. `clear: false` omits the button; a string names it.
+- `l_ui_search_control` renders the control - field, clear button and submit - on its own, for a caller who passes a block to `l_ui_search_form` and builds the row by hand.
+- `count:` has the size of the result set announced after each search. Without it nothing is announced: a screen reader is otherwise told nothing when results change with no button press. The message goes to the layout's live region, which sits outside every frame, since a live region replaced in the same render as its own text is not reliably announced.
+- `min_chars:` holds a search back until the term is worth asking about.
+- The caret survives the frame render that answers a search, so a typed word is never interrupted mid-letter.
+
+### Changed
+
+- **Breaking.** `button:` now defaults to `nil` and renders a submit that is present but neither seen nor tabbed to - it is what Enter in the field and a browser with no JavaScript submit through. Pass a string (`button: "Search"`) to get the visible primary button back.
+- **Breaking.** `clear:` now defaults to `true` and means the clear button inside the field rather than a separate outline button beside it. Its old form still renders for a form with no `turbo_frame:`, which is also where the "requires an explicit `url:`" error still applies.
+- **Breaking.** A framed search form is now a `search` landmark, labelled from `label:`.
+- Pass `live: false` for a framed form that submits only when asked to, as before.
+
 ## [0.26.0] - 2026-09-19
 
 ### Added

@@ -131,8 +131,9 @@ l_ui_pagy(pagy)
 
 ```ruby
 l_ui_search_form(query, url: nil, fields: [], predicate: :cont, combinator: :or,
-                 label: "Search", placeholder: nil, button: "Search",
-                 clear: nil, turbo_frame: nil, html: {}, &block)
+                 label: "Search", placeholder: nil, button: nil, clear: true,
+                 live: nil, count: nil, min_chars: 0,
+                 turbo_frame: nil, html: {}, &block)
 ```
 
 - `query` (Ransack::Search) - the `@q` object from controller
@@ -140,19 +141,24 @@ l_ui_search_form(query, url: nil, fields: [], predicate: :cont, combinator: :or,
 - `fields` (Array<Symbol>) - fields to search (simple mode)
 - `predicate` (Symbol) - ransack predicate, default `:cont`
 - `combinator` (Symbol) - `:or` or `:and` for multiple fields
-- `label` (String) - hidden label for the search input
+- `label` (String) - hidden label for the search input; also labels the `search` landmark in live mode
 - `placeholder` (String) - input placeholder
-- `button` (String) - submit button text
-- `clear` (String|Boolean) - clear button text; `true` for default, `false` to hide
+- `button` (String) - text for a *visible* submit button. Omitted, the submit is present but neither seen nor tabbed to, which is what Enter and a JS-less browser submit through
+- `clear` (String|Boolean) - the clear button built into the field; `false` to omit, a string to name it. Without a `turbo_frame:` this falls back to a separate outline link and then requires `url:`
+- `live` (Boolean) - search as the user types. Defaults to on whenever `turbo_frame:` is given, since typing into an unframed form would mean a page load per keystroke. `live: false` submits only when asked to
+- `count` (Integer) - size of the result set, announced after each search. Without it nothing is announced
+- `min_chars` (Integer) - hold the search back until the term is this long
 - `turbo_frame` (String) - turbo frame to target
 - `html` (Hash) - additional form HTML attributes
 - `&block` - custom form markup (overrides simple mode)
 
-Simple mode:
+A live search sets `data-turbo-action="replace"` on the *form*, so a keystroke does not push a history entry. Turbo reads the action from the submitter, then the form, then the frame, so sort links and pagination inside the same frame still advance.
+
+Simple mode - searches as you type, with a clear button in the field:
 
 ```erb
 <%= l_ui_search_form(@q, url: users_path, fields: [:name, :email],
-    placeholder: "Search users", clear: true, turbo_frame: "users") %>
+    placeholder: "Search users", turbo_frame: "users", count: @pagy.count) %>
 ```
 
 Custom mode:
@@ -165,6 +171,26 @@ Custom mode:
   <%= f.submit "Search", class: "l-ui-button l-ui-button--primary" %>
 <% end %>
 ```
+
+## Search control (requires ransack gem)
+
+```ruby
+l_ui_search_control(form, attribute, label: "Search", placeholder: nil,
+                    clear: true, button: nil, live: true, clear_url: nil)
+```
+
+The control on its own - field, in-field clear button and submit - for a caller who passes a block to `l_ui_search_form` and builds the row by hand. Searching as you type needs the `l-ui--search-form` controller, which `l_ui_search_form` puts on the form when given a `turbo_frame:`.
+
+```erb
+<%= l_ui_search_form(@q, url: users_path, turbo_frame: "users", count: @pagy.count) do |f| %>
+  <div class="l-ui-search-inline">
+    <%= my_filter_hidden_fields %>
+    <%= l_ui_search_control(f, :name_or_email_cont, placeholder: "Search users") %>
+  </div>
+<% end %>
+```
+
+The input is deliberately `type="text"`, not `type="search"`: WebKit draws its own cancel button on the latter, which would sit under this one and take the same tap.
 
 ## Sort link (requires ransack gem)
 
