@@ -106,11 +106,22 @@ class RansackHelperTest < ActionView::TestCase
     assert_no_match(/<button[^>]*l-ui-search-control__clear[^>]*hidden/, result)
   end
 
-  test "without a frame the clear falls back to a link" do
+  # Clearing means clearing the field and submitting, which only the controller
+  # can do, so a form it is not on offers no clear button rather than one that
+  # would do nothing.
+  test "a form that does not search as you type has no clear button" do
     q = User.ransack({})
     result = l_ui_search_form(q, url: "/search", fields: [:name])
-    assert_includes result, "l-ui-button--outline"
     assert_not_includes result, "l-ui-search-control__clear"
+    assert_not_includes result, "l-ui-search-control--clearable"
+    assert_not_includes result, "Clear"
+  end
+
+  test "a framed form with live: false has no clear button either" do
+    q = User.ransack({})
+    result = l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", live: false)
+    assert_not_includes result, "l-ui-search-control__clear"
+    assert_not_includes result, "Clear"
   end
 
   test "simple mode raises when fields is empty" do
@@ -118,9 +129,19 @@ class RansackHelperTest < ActionView::TestCase
     assert_raises(ArgumentError) { l_ui_search_form(q, url: "/search") }
   end
 
-  test "raises when a non-live clear has no url to point at" do
+  # A form that submits only when asked to needs a button that can be asked.
+  test "a form that does not search as you type keeps a visible Search button" do
     q = User.ransack({})
-    assert_raises(ArgumentError) { l_ui_search_form(q, fields: [:name], clear: true) }
+    result = l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", live: false)
+    assert_includes result, "l-ui-button--primary"
+    assert_not_includes result, "tabindex=\"-1\""
+  end
+
+  test "an unframed form keeps a visible Search button" do
+    q = User.ransack({})
+    result = l_ui_search_form(q, url: "/search", fields: [:name])
+    assert_includes result, "l-ui-button--primary"
+    assert_not_includes result, "tabindex=\"-1\""
   end
 
   # -- searching as you type --

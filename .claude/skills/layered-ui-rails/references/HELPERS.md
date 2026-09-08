@@ -143,8 +143,8 @@ l_ui_search_form(query, url: nil, fields: [], predicate: :cont, combinator: :or,
 - `combinator` (Symbol) - `:or` or `:and` for multiple fields
 - `label` (String) - hidden label for the search input; also labels the `search` landmark in live mode
 - `placeholder` (String) - input placeholder
-- `button` (String) - text for a *visible* submit button. Omitted, the submit is present but neither seen nor tabbed to, which is what Enter and a JS-less browser submit through
-- `clear` (String|Boolean) - the clear button built into the field; `false` to omit, a string to name it. Without a `turbo_frame:` this falls back to a separate outline link and then requires `url:`
+- `button` (String) - text for a *visible* submit button. In live mode, omitting it renders a submit that is present but neither seen nor tabbed to, which is what Enter and a JS-less browser submit through. A non-live form always gets a visible button, since it needs one that can be pressed
+- `clear` (String|Boolean) - the clear button built into the field; `false` to omit, a string to name it. Only offered in live mode: clearing means clearing the field and submitting, which only the controller can do, so a non-live form has no clear button rather than one that would do nothing
 - `live` (Boolean) - search as the user types. Defaults to on whenever `turbo_frame:` is given, since typing into an unframed form would mean a page load per keystroke. `live: false` submits only when asked to
 - `count` (Integer) - size of the result set, announced after each search. Without it nothing is announced
 - `min_chars` (Integer) - hold the search back until the term is this long
@@ -176,7 +176,7 @@ Custom mode:
 
 ```ruby
 l_ui_search_control(form, attribute, label: "Search", placeholder: nil,
-                    clear: true, button: nil, live: true, clear_url: nil)
+                    clear: true, button: nil, live: true)
 ```
 
 The control on its own - field, in-field clear button and submit - for a caller who passes a block to `l_ui_search_form` and builds the row by hand. Searching as you type needs the `l-ui--search-form` controller, which `l_ui_search_form` puts on the form when given a `turbo_frame:`.
@@ -191,6 +191,8 @@ The control on its own - field, in-field clear button and submit - for a caller 
 ```
 
 The input is deliberately `type="text"`, not `type="search"`: WebKit draws its own cancel button on the latter, which would sit under this one and take the same tap.
+
+With `live: false` there is no clear button and the Search button is visible. To put a clear beside a non-live form, build the link yourself and give it `data-action="click->l-ui--search-form#clear"`, which rewrites the href to carry any other scope's params.
 
 ## Sort link (requires ransack gem)
 

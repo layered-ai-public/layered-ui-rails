@@ -14,8 +14,14 @@ module Layered
       #
       # Given a turbo_frame:, the form searches as the user types - there is no
       # Search button to press, and the field carries its own clear button. Pass
-      # count: to have the size of the result set announced, and live: false for
-      # a form that submits only when asked to.
+      # count: to have the size of the result set announced.
+      #
+      # Pass live: false for a form that submits only when asked to. That form
+      # keeps a visible Search button and has no clear button: clearing means
+      # clearing the field and submitting, which only the controller can do. A
+      # host that wants a clear button beside a non-live form can build the link
+      # itself and wire it to the controller's `clear` action, which rewrites
+      # the href to carry any other scope's params.
       def l_ui_search_form(query, url: nil, fields: [], predicate: :cont, combinator: :or,
                            label: "Search", placeholder: nil, button: nil, clear: true,
                            live: nil, count: nil, min_chars: 0,
@@ -75,8 +81,7 @@ module Layered
             tag.div(class: "l-ui-search-inline") do
               l_ui_search_control(f, combined_field,
                                   label: label, placeholder: placeholder,
-                                  button: button, clear: clear, live: live,
-                                  clear_url: (url unless live))
+                                  button: button, clear: clear, live: live)
             end
           end
         end
@@ -96,9 +101,16 @@ module Layered
       #   <% end %>
       #
       # Searching as you type needs the l-ui--search-form controller, which
-      # l_ui_search_form puts on the form when given a turbo_frame:.
+      # l_ui_search_form puts on the form when given a turbo_frame:. Without it
+      # (live: false) there is no clear button and the Search button is visible.
       def l_ui_search_control(form, attribute, label: "Search", placeholder: nil,
-                              clear: true, button: nil, live: true, clear_url: nil)
+                              clear: true, button: nil, live: true)
+        # The clear button clears the field and submits, which is the
+        # controller's job - so it is offered only where the controller is.
+        # A form that submits only when asked to keeps its visible Search
+        # button instead; a host that wants a clear alongside it can build the
+        # link itself and wire it to the controller's `clear` action.
+        clear = false unless live
         hint_id = ("#{form.object_name}_#{attribute}_hint" if live)
 
         field = form.text_field(
@@ -115,12 +127,12 @@ module Layered
 
         parts = [ form.label(attribute, label, class: "l-ui-sr-only"), field ]
         parts << tag.span("Results update as you type.", id: hint_id, class: "l-ui-sr-only") if live
-        parts << l_ui_search_clear_button(form, attribute, clear, live: live, clear_url: clear_url) if clear
+        parts << l_ui_search_clear_button(form, attribute, clear) if clear
 
         control = tag.div(safe_join(parts.compact),
                           class: [ "l-ui-search-control", ("l-ui-search-control--clearable" if clear) ].compact.join(" "))
 
-        safe_join([ control, l_ui_search_submit(form, button) ].compact)
+        safe_join([ control, l_ui_search_submit(form, button, live: live) ].compact)
       end
 
       SORT_INDICATORS = {
@@ -175,25 +187,21 @@ module Layered
 
       private
 
-      # A visible primary button when one is asked for, and otherwise a submit
-      # that is present but neither seen nor tabbed to: it is what implicit
-      # submission (Enter in the field) and a browser with no JavaScript submit
-      # through, without leaving a focus stop nobody can see (WCAG 2.4.7).
-      def l_ui_search_submit(form, button)
-        if button.is_a?(String)
-          form.submit(button, class: "l-ui-button l-ui-button--primary")
-        else
-          form.submit("Search", class: "l-ui-sr-only", tabindex: -1)
-        end
+      # A visible primary button when one is named, and when searching happens
+      # as you type a submit that is present but neither seen nor tabbed to: it
+      # is what implicit submission (Enter in the field) and a browser with no
+      # JavaScript submit through, without leaving a focus stop nobody can see
+      # (WCAG 2.4.7). A form that submits only when asked to needs a button that
+      # can actually be asked, so it gets a visible one.
+      def l_ui_search_submit(form, button, live: true)
+        return form.submit(button, class: "l-ui-button l-ui-button--primary") if button.is_a?(String)
+        return form.submit("Search", class: "l-ui-button l-ui-button--primary") unless live
+
+        form.submit("Search", class: "l-ui-sr-only", tabindex: -1)
       end
 
-      def l_ui_search_clear_button(form, attribute, clear, live:, clear_url:)
+      def l_ui_search_clear_button(form, attribute, clear)
         name = clear.is_a?(String) ? clear : "Clear search"
-
-        unless live
-          raise ArgumentError, "l_ui_search_form requires an explicit url: when clear: is set" unless clear_url
-          return link_to(name, clear_url, class: "l-ui-button l-ui-button--outline")
-        end
 
         # Hidden until there is something to clear; the controller corrects this
         # on connect, so a term already in the field shows it without a round

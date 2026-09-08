@@ -15,8 +15,8 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Changed
 
-- **Breaking.** `button:` now defaults to `nil` and renders a submit that is present but neither seen nor tabbed to - it is what Enter in the field and a browser with no JavaScript submit through. Pass a string (`button: "Search"`) to get the visible primary button back.
-- **Breaking.** `clear:` now defaults to `true` and means the clear button inside the field rather than a separate outline button beside it. Its old form still renders for a form with no `turbo_frame:`, which is also where the "requires an explicit `url:`" error still applies.
+- **Breaking.** `button:` now defaults to `nil`. In live mode that renders a submit which is present but neither seen nor tabbed to - it is what Enter in the field and a browser with no JavaScript submit through. A form that submits only when asked to still gets a visible button, since it needs one that can be pressed; pass a string to name it.
+- **Breaking.** `clear:` now defaults to `true` and means the clear button inside the field. The separate outline clear button is **gone**, along with the "requires an explicit `url:`" error it raised. Clearing means clearing the field and submitting, which only the Stimulus controller can do, so a form the controller is not on (`live: false`, or no `turbo_frame:`) renders no clear button rather than one that would do nothing. The controller's `clear` action remains for a hand-built clear link on such a form.
 - **Breaking.** A framed search form is now a `search` landmark, labelled from `label:`.
 - Pass `live: false` for a framed form that submits only when asked to, as before.
 

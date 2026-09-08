@@ -124,7 +124,7 @@
   <li>The caret is preserved across the frame render that answers a search, so a typed word is never interrupted mid-letter. This is handled for you.</li>
 </ul>
 
-<p class="mt-4">A form with no <code>turbo_frame:</code> never searches as you type - a keystroke would mean a full page load. Pass <code>live: false</code> to opt a framed form out.</p>
+<p class="mt-4">A form with no <code>turbo_frame:</code> never searches as you type - a keystroke would mean a full page load. Pass <code>live: false</code> to opt a framed form out; that form keeps a visible Search button and has no clear button, since clearing means clearing the field and submitting and only the controller can do that. To put a clear beside such a form, build the link yourself and give it <code>data-action="click-&gt;l-ui--search-form#clear"</code>, which rewrites the href so another collection's params survive the navigation.</p>
 
 <h3 class="mt-4">Options</h3>
 
@@ -167,12 +167,12 @@
       <tr>
         <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>button</code></th>
         <td class="l-ui-table__cell"><code>nil</code></td>
-        <td class="l-ui-table__cell">Text for a <em>visible</em> submit button. Left unset, the submit is present but neither seen nor tabbed to - it is what Enter and a browser with no JavaScript submit through.</td>
+        <td class="l-ui-table__cell">Text for a <em>visible</em> submit button. In live mode, left unset, the submit is present but neither seen nor tabbed to - it is what Enter and a browser with no JavaScript submit through. A non-live form always gets a visible button, since it needs one that can be pressed.</td>
       </tr>
       <tr>
         <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>clear</code></th>
         <td class="l-ui-table__cell"><code>true</code></td>
-        <td class="l-ui-table__cell">The clear button built into the field. Pass <code>false</code> to omit it, or a string to name it. Without a <code>turbo_frame:</code> this falls back to a separate button beside the field, and then requires <code>url:</code>.</td>
+        <td class="l-ui-table__cell">The clear button built into the field. Pass <code>false</code> to omit it, or a string to name it. Offered in live mode only - clearing means clearing the field and submitting, which only the Stimulus controller can do, so a non-live form gets no clear button rather than one that would do nothing.</td>
       </tr>
       <tr>
         <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>live</code></th>
