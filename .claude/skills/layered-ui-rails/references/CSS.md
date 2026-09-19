@@ -11,11 +11,14 @@ Two patterns deviate from strict BEM by design - leave them in place rather than
 **Bare-link styling.** `.l-ui-page` and `.l-ui-panel__body` style descendant `<a>` elements that do not already carry an `l-ui-` class:
 
 ```css
-.l-ui-page a:not([class*="l-ui-"]),
-.l-ui-panel__body a:not([class*="l-ui-"]) { ... }
+:where(.l-ui-page, .l-ui-panel__body) :where(a:not([class*="l-ui-"])) { ... }
 ```
 
-This gives author-written links inside long-form content (Markdown, prose, ad-hoc views) consistent underline/colour treatment without forcing an explicit class on every link. Engine elements opt out automatically because their class names contain `l-ui-`. Side effect: any host-app class containing the substring `l-ui-` will also opt an `<a>` out of bare-link styling.
+This gives author-written links inside long-form content (Markdown, prose, ad-hoc views) consistent underline/colour treatment without forcing an explicit class on every link. Engine elements opt out automatically because their class names contain `l-ui-`.
+
+The whole selector is wrapped in `:where()`, so it has zero specificity. That matters: host apps build their own components, and those class names do not contain `l-ui-`, so their links are caught by this rule. With zero specificity a single host-app class (`.calculator-rail__link { ... }`) overrides it by ordinary cascade rules, with no `!important` and no specificity games. Keep it that way - this is a default, and a default must never beat author styles. Note the `focus-ring` state styles still carry the specificity of their own `:focus-visible` pseudo-class.
+
+Side effect: any host-app class containing the substring `l-ui-` will also opt an `<a>` out of bare-link styling.
 
 ## Body modifiers
 
