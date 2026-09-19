@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.26.0] - 2026-09-19
+
+### Added
+
+- `--danger-foreground`: the text and icon colour on a solid danger button, split out of the hard-coded `text-white` on `.l-ui-button--danger`. It mirrors the way `--accent-foreground` pairs with `--accent` - white in light mode (7.47:1 on `#A71B1B`), near-black in dark mode (4.75:1 on `#F04242`). The previous white label in dark mode gave 3.78:1, short of the 4.5:1 WCAG 2.2 AA needs for the button's 14px text.
+
+### Changed
+
+- Bare-link prose styling carries zero specificity: the selector on `.l-ui-page` and `.l-ui-panel__body` descendant links is now wrapped in `:where()`. It is a default, so a single host-app class overrides it by ordinary cascade order, with no `!important` and no specificity games. The `focus-ring` state styles still carry the specificity of their own `:focus-visible` pseudo-class.
+- Breaking: a host that overrides `--danger` to a darker red in dark mode now gets the near-black label from `--danger-foreground`, and should set `--danger-foreground: oklch(1 0 0)` to restore white.
+
 ## [0.25.1] - 2026-08-28
 
 ### Fixed

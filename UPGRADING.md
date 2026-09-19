@@ -1,5 +1,20 @@
 # Upgrading
 
+## 0.26.0
+
+### Danger button labels take their colour from `--danger-foreground`
+
+`.l-ui-button--danger` no longer hard-codes a white label; it uses the new `--danger-foreground` token, which is white in light mode and near-black in dark mode so the label keeps its 4.5:1 contrast against the default `--danger`.
+
+Nothing to do unless you override `--danger` yourself. If your dark-mode danger colour is dark enough to need a white label, set the matching foreground alongside it:
+
+```css
+.dark {
+  --danger: oklch(0.45 0.18 27);
+  --danger-foreground: oklch(1 0 0);
+}
+```
+
 ## 0.24.0
 
 ### Logout has moved into the sidebar account menu
