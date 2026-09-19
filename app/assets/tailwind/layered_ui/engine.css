@@ -518,8 +518,10 @@
   @apply mx-[calc(var(--l-ui-gutter)*-1)];
 }
 
-.l-ui-page a:not([class*="l-ui-"]),
-.l-ui-panel__body a:not([class*="l-ui-"]) {
+/* Bare-link styling for author-written prose. Wrapped in :where() so the whole selector carries
+   zero specificity: it is a default, and any host-app rule (even a single class) must be able to
+   win without out-specifying the engine. */
+:where(.l-ui-page, .l-ui-panel__body) :where(a:not([class*="l-ui-"])) {
   @apply text-foreground underline underline-offset-4 decoration-foreground-muted/60
          rounded-sm
          focus-ring;
