@@ -36,19 +36,31 @@ class PagesTest < ActionDispatch::IntegrationTest
   test "ransack page renders a search box that searches as you type" do
     get "/ransack"
     assert_response :success
-    assert_select "form[role=search][data-turbo-action=replace]", minimum: 2
-    assert_select "input[data-l-ui--search-form-target=input]", minimum: 2
-    assert_select "button.l-ui-search-control__clear[hidden]", minimum: 2
-    # No Search button to press, and no separate Clear beside the field.
-    assert_select "input[type=submit].l-ui-button--primary", false
+    assert_select "form[role=search][data-turbo-action=replace]", 1
+    assert_select "input[data-l-ui--search-form-target=input]", 1
+    assert_select "button.l-ui-search-control__clear[hidden]", 1
+    # No separate Clear beside the field.
     assert_select "a.l-ui-button--outline", text: "Clear", count: 0
+  end
+
+  test "ransack page renders a search box that submits only when asked to" do
+    get "/ransack"
+    assert_response :success
+    # The posts form passes live: false, so it keeps a visible Search button,
+    # takes no search-as-you-type wiring, and is not a search landmark.
+    assert_select "form[data-turbo-action=advance]:not([role=search])" do
+      assert_select "input[type=submit].l-ui-button--primary", 1
+      assert_select "input[data-l-ui--search-form-target=input]", 0
+      assert_select "button.l-ui-search-control__clear", 0
+    end
   end
 
   test "ransack page hands the result count over to be announced" do
     create_test_users
     get "/ransack"
     assert_response :success
-    assert_select "form[data-l-ui--search-form-count-value]", minimum: 2
+    # Only the live form announces: a deliberate submit is its own cue.
+    assert_select "form[data-l-ui--search-form-count-value]", 1
   end
 
   test "ransack page renders search results" do

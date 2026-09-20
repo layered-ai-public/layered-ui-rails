@@ -25,6 +25,9 @@ export default class extends Controller {
   static targets = ["input", "clear"]
   static values = {
     scope: String,
+    // Pagy's page key, which the host chooses and which bears no fixed
+    // relation to the Ransack search key - so it is given, not derived.
+    pageParam: { type: String, default: "page" },
     live: { type: Boolean, default: false },
     minChars: { type: Number, default: 0 },
     // -1 means the caller passed no count, so there is nothing to announce.
@@ -206,15 +209,10 @@ export default class extends Controller {
     const result = new URLSearchParams()
 
     for (const [key, value] of currentParams) {
-      if (key === scope || key.startsWith(scope + "[") || key === "commit" || key === "page" || key === this.#pageParam) continue
+      if (key === scope || key.startsWith(scope + "[") || key === "commit" || key === this.pageParamValue) continue
       result.append(key, value)
     }
 
     return result
-  }
-
-  get #pageParam() {
-    const scope = this.scopeValue
-    return scope.endsWith("_q") ? scope.slice(0, -2) + "_page" : null
   }
 }

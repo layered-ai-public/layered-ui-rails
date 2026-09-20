@@ -12,28 +12,31 @@ module Layered
       #     f.submit "Go", class: "l-ui-button l-ui-button--primary"
       #   end
       #
-      # Given a turbo_frame:, the form searches as the user types - there is no
-      # Search button to press, and the field carries its own clear button. Pass
-      # count: to have the size of the result set announced.
+      # Pass live: true (with a turbo_frame:) and the form searches as the user
+      # types - there is no Search button to press, the field carries its own
+      # clear button, and count: has the size of the result set announced.
       #
-      # Pass live: false for a form that submits only when asked to. That form
-      # keeps a visible Search button and has no clear button: clearing means
-      # clearing the field and submitting, which only the controller can do. A
-      # host that wants a clear button beside a non-live form can build the link
-      # itself and wire it to the controller's `clear` action, which rewrites
-      # the href to carry any other scope's params.
+      # Searching as you type is opt-in. A frame says where a response lands;
+      # whether typing should submit at all is a separate decision about the
+      # collection, so it is asked for rather than inferred. Left alone, the
+      # form submits only when asked to: a visible Search button, and no clear
+      # button, since clearing means clearing the field and submitting, which
+      # only the controller can do. A host that wants a clear button beside such
+      # a form can build the link itself and wire it to the controller's `clear`
+      # action, which rewrites the href to carry any other scope's params.
       def l_ui_search_form(query, url: nil, fields: [], predicate: :cont, combinator: :or,
-                           label: "Search", placeholder: nil, button: nil, clear: true,
-                           live: nil, count: nil, min_chars: 0,
-                           turbo_frame: nil, html: {}, &block)
+                           label: "Search", placeholder: nil, button: nil, clear: nil,
+                           live: false, count: nil, min_chars: nil,
+                           page_param: "page", turbo_frame: nil, html: {}, &block)
         result = require_ransack("l_ui_search_form") { |msg| tag.p(msg, class: "l-ui-notice l-ui-notice--warning") }
         return result unless result == true
 
+        validate_live_search!("l_ui_search_form", live, turbo_frame,
+                              clear: clear, count: count, min_chars: min_chars)
+        warn_missing_search_count if live && count.nil?
+
         scope = query.context&.search_key || :q
-        # Typing into a form with no frame would mean a full page load per
-        # keystroke, so searching as you type is offered only where a frame can
-        # absorb it.
-        live = turbo_frame.present? if live.nil?
+        clear = live if clear.nil?
         # Each keystroke's search replaces the history entry rather than pushing
         # one, so Back leaves the collection rather than replaying the term
         # letter by letter. Set on the form, which Turbo reads before the
@@ -55,14 +58,20 @@ module Layered
           action = [existing_action, "submit->l-ui--search-form#preserve"].compact.join(" ")
           turbo_action = existing_data[:turbo_action] || turbo_action
 
-          values = { l_ui__search_form_scope_value: scope }
+          # Pagy's page key is the host's to choose and bears no fixed relation
+          # to Ransack's search key, so it is passed rather than guessed: it is
+          # what `preserve` and `rewriteLink` drop when carrying other
+          # collections' params across a submit.
+          values = { l_ui__search_form_scope_value: scope,
+                     l_ui__search_form_page_param_value: page_param }
           if live
             values[:l_ui__search_form_live_value] = true
             values[:l_ui__search_form_min_chars_value] = min_chars if min_chars.to_i.positive?
             values[:l_ui__search_form_count_value] = count unless count.nil?
           end
 
-          html[:data] = existing_data.except(:controller, :action, :l_ui__search_form_scope_value).merge(
+          html[:data] = existing_data.except(:controller, :action, :l_ui__search_form_scope_value,
+                                             :l_ui__search_form_page_param_value).merge(
             turbo_frame: turbo_frame, turbo_action: turbo_action,
             controller: controller, action: action,
             **values
@@ -101,16 +110,14 @@ module Layered
       #   <% end %>
       #
       # Searching as you type needs the l-ui--search-form controller, which
-      # l_ui_search_form puts on the form when given a turbo_frame:. Without it
-      # (live: false) there is no clear button and the Search button is visible.
+      # l_ui_search_form puts on the form when given a turbo_frame:. A
+      # hand-built form may not carry it, so live: is off here unless asked
+      # for - matching l_ui_search_form, and defaulting to the mode that works
+      # with no controller at all.
       def l_ui_search_control(form, attribute, label: "Search", placeholder: nil,
-                              clear: true, button: nil, live: true)
-        # The clear button clears the field and submits, which is the
-        # controller's job - so it is offered only where the controller is.
-        # A form that submits only when asked to keeps its visible Search
-        # button instead; a host that wants a clear alongside it can build the
-        # link itself and wire it to the controller's `clear` action.
-        clear = false unless live
+                              clear: nil, button: nil, live: false)
+        validate_live_search!("l_ui_search_control", live, nil, clear: clear, frame_required: false)
+        clear = live if clear.nil?
         hint_id = ("#{form.object_name}_#{attribute}_hint" if live)
 
         field = form.text_field(
@@ -186,6 +193,46 @@ module Layered
       end
 
       private
+
+      # Options that only mean something once the Stimulus controller is
+      # driving the form. Passing one to a form that submits when asked to is a
+      # mistake with no visible symptom, so it names itself rather than being
+      # quietly dropped.
+      LIVE_ONLY_OPTIONS = {
+        clear: "the clear button clears the field and submits, which only the Stimulus controller can do",
+        count: "there is nothing to announce when the user pressed the button themselves",
+        min_chars: "nothing is sent until the form is submitted"
+      }.freeze
+
+      def validate_live_search!(helper, live, turbo_frame, frame_required: true, **options)
+        if live && frame_required && turbo_frame.blank?
+          raise ArgumentError,
+                "#{helper} requires a turbo_frame: for live: true - typing into an unframed form " \
+                "would mean a full page load per keystroke"
+        end
+
+        return if live
+
+        options.each do |key, value|
+          # false and nil both say "not asked for", which is never a conflict.
+          next if value.nil? || value == false
+
+          raise ArgumentError,
+                "#{helper}'s #{key}: applies to live: true only - #{LIVE_ONLY_OPTIONS.fetch(key)}"
+        end
+      end
+
+      # count: is what a screen reader hears when results change with no button
+      # press, so its absence is a hole rather than a default. A log line and
+      # not markup: the form is fine, it just announces nothing.
+      def warn_missing_search_count
+        return unless Rails.env.development?
+
+        Rails.logger.warn(
+          "[layered-ui-rails] l_ui_search_form with live: true was given no count:, so nothing is " \
+          "announced when results change. Pass count: @pagy.count (or the size of the result set)."
+        )
+      end
 
       # A visible primary button when one is named, and when searching happens
       # as you type a submit that is present but neither seen nor tabbed to: it

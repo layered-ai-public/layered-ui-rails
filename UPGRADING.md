@@ -2,18 +2,23 @@
 
 ## 0.27.0
 
-### The search box searches as you type
+### The search box can search as you type
 
-A `l_ui_search_form` given a `turbo_frame:` now submits as the field changes, and renders its clear button inside the field rather than beside it. Nothing is required of a host app to get this - existing call sites pick it up.
+`l_ui_search_form` can now submit as the field changes, with its clear button inside the field rather than beside it. It is opt-in: pass `live: true`, along with the `turbo_frame:` the response lands in.
+
+```erb
+<%= l_ui_search_form(@q, url: users_path, fields: [:name], turbo_frame: "users",
+                     live: true, count: @pagy.count, page_param: "users_page") %>
+```
+
+Existing call sites keep submitting when asked to, so nothing breaks by standing still. A frame on its own does not turn typing on - where a response renders and whether typing should submit are separate decisions - and `live: true` without a `turbo_frame:` raises.
 
 Two defaults changed, so check any call site that relied on them:
 
-- `button:` no longer renders a visible **Search** button. The submit is still there, just neither seen nor tabbed to, so Enter and a JavaScript-less browser still work. Pass `button: "Search"` to bring the visible button back.
-- `clear:` now defaults to `true` and means the in-field clear button. Pass `clear: false` to omit it.
+- `button:` no longer renders a visible **Search** button *in live mode*. The submit is still there, just neither seen nor tabbed to, so Enter and a JavaScript-less browser still work. Pass `button: "Search"` to bring the visible button back. A form that is not live still gets a visible one.
+- `clear:` now means the in-field clear button, on by default in live mode.
 
-The separate outline clear button is gone, and so is the "requires an explicit `url:` when `clear:` is set" error. Clearing means clearing the field and submitting, which only the Stimulus controller can do, so a form the controller is not on renders no clear button rather than one that would do nothing.
-
-To keep a framed form submitting only when asked to, pass `live: false`. Such a form keeps a visible Search button and has no clear button. If you want one beside it, build the link yourself and wire it to the controller's `clear` action, which rewrites the href so another collection's params survive:
+The separate outline clear button is gone, and so is the "requires an explicit `url:` when `clear:` is set" error. Clearing means clearing the field and submitting, which only the Stimulus controller can do, so a form the controller is not driving renders no clear button rather than one that would do nothing. If you want one beside such a form, build the link yourself and wire it to the controller's `clear` action, which rewrites the href so another collection's params survive:
 
 ```erb
 <%= link_to "Clear", users_path, class: "l-ui-button l-ui-button--outline",
@@ -21,15 +26,40 @@ To keep a framed form submitting only when asked to, pass `live: false`. Such a 
               action: "click->l-ui--search-form#clear" } %>
 ```
 
+### Live-only options now raise
+
+`clear:`, `count:` and `min_chars:` only mean something once the Stimulus controller is driving the form. Passing one to a form that is not live used to be dropped in silence, leaving a form that looked configured and was not; it now raises and names itself. `clear: false` is never a conflict.
+
 ### Have results announced
 
 With no button to press, a screen reader is told nothing when results change. Pass the size of the result set so it is announced:
 
 ```erb
-<%= l_ui_search_form(@q, url: users_path, fields: [:name], turbo_frame: "users", count: @pagy.count) %>
+<%= l_ui_search_form(@q, url: users_path, fields: [:name], turbo_frame: "users",
+                     live: true, count: @pagy.count) %>
 ```
 
-Without `count:` nothing is announced.
+Without `count:` nothing is announced, and `live: true` with no `count:` now logs a warning in development.
+
+### Name each collection's page param
+
+When two scoped collections share a page, a search preserves the other's params and resets its own page. Which param is its own used to be guessed from the Ransack `search_key` - `users_q` meant `users_page` - but Pagy's `page_key:` is yours to choose and need not follow that shape. Name it instead, on both the form and the frame carrying `rewriteLink`:
+
+```erb
+<%= turbo_frame_tag "users_collection", data: { turbo_action: "advance",
+      controller: "l-ui--search-form", l_ui__search_form_scope_value: "users_q",
+      l_ui__search_form_page_param_value: "users_page",
+      action: "click->l-ui--search-form#rewriteLink" } do %>
+  <%= l_ui_search_form(@users_q, url: users_path, fields: [:name],
+                       page_param: "users_page", turbo_frame: "users_collection") %>
+<% end %>
+```
+
+It defaults to `"page"`, which is right for a single unscoped collection. If your `page_key:` happened to match the old guess, naming it changes nothing; if it did not, this fixes a page param that was leaking into every preserved submit.
+
+### `l_ui_search_control` defaults to non-live
+
+The standalone control is for hand-built forms, which are exactly the forms that may not carry the `l-ui--search-form` controller, so `live:` is now off there too. Pass `live: true` where you want the typing behaviour.
 
 ## 0.26.0
 
