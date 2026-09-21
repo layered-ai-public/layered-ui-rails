@@ -70,6 +70,12 @@ export default class extends Controller {
     // body, losing the user's place (WCAG 2.4.3).
     this.inputTarget.focus()
     this._refreshClear()
+    // Clearing changes the field without an input event, and submitNow may
+    // decline to send (the empty term may already be the one in flight), in
+    // which case nothing else records it. A stash still holding the old text
+    // would be restored over the cleared field by the pending response, and
+    // then searched for again.
+    this._stash()
     this.submitNow()
   }
 
@@ -165,12 +171,23 @@ export default class extends Controller {
     // in flight is newer, and wins.
     if (this.inputTarget.value !== stash.value) this.inputTarget.value = stash.value
 
-    if (stash.focused) {
+    // Focus is taken back only when the render left it nowhere: the input being
+    // typed into was destroyed with the rest of the frame, so activeElement
+    // fell to the body. If the user moved to a control outside the frame while
+    // the request was in flight, that control still holds focus and keeps it -
+    // an answer arriving must not pull the user back out of where they went
+    // (WCAG 3.2.5). The stash cannot say this, being a snapshot from before.
+    const focusWentNowhere = !document.activeElement || document.activeElement === document.body
+    if (stash.focused && focusWentNowhere) {
       this.inputTarget.focus({ preventScroll: true })
       this.inputTarget.setSelectionRange(stash.start, stash.end)
     }
 
-    this._announceResults(stash.value)
+    // The count belongs to the term that was submitted, not to whatever has
+    // been typed since, so it is announced only once the two agree. While they
+    // differ a fresh search is already scheduled below, and its answer is the
+    // one worth announcing.
+    if (stash.value === stash.submitted) this._announceResults(stash.submitted)
 
     // Keystrokes that landed after the request went out are still unsearched.
     if (stash.value !== stash.submitted) this._schedule()

@@ -14,6 +14,12 @@ All notable changes to this project will be documented in this file. This projec
 - The caret survives the frame render that answers a search, so a typed word is never interrupted mid-letter.
 - `page_param:` names the collection's Pagy page key, which is reset when a search carries the other collections' params across a submit. It was previously guessed from the Ransack `search_key` (`users_q` -> `users_page`), which is a convention nothing enforces: a host whose `page_key:` did not follow it leaked the page param into every preserved submit.
 
+### Fixed
+
+- A response no longer pulls focus back into the search field. Whether the field had focus was a snapshot taken when the request went out, so a user who tabbed to something outside the frame while it was in flight was dragged back (WCAG 3.2.5). Focus is now taken back only when the render left it nowhere - the input that held it was destroyed with the frame - which a control outside the frame, still alive and still focused, is not.
+- Clearing the field no longer risks the old term coming back. Clearing changes the field without an input event, and the submit it asks for is declined when the empty term is already the one in flight, so nothing recorded the clear; the pending response then restored the text that had been typed and searched for it again.
+- The result count is announced against the term it actually counted. A response that answered `a` while `ada` was being typed announced its count as results for `ada`. Announcements now wait until the field and the answered term agree, which is the point at which the count is the answer to what the user can see.
+
 ### Changed
 
 - **Breaking.** Searching as you type is opt-in. `live:` defaults to `false` and is no longer inferred from `turbo_frame:`: a frame says where a response lands, and whether typing should submit at all is a separate decision about the collection. `live: true` without a `turbo_frame:` raises. Existing framed call sites keep their current behaviour and need `live: true` added to take up the new one.
