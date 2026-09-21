@@ -12,18 +12,15 @@ module Layered
       #     f.submit "Go", class: "l-ui-button l-ui-button--primary"
       #   end
       #
-      # Pass live: true (with a turbo_frame:) and the form searches as the user
-      # types - there is no Search button to press, the field carries its own
-      # clear button, and count: has the size of the result set announced.
+      # Pass live: true (with a turbo_frame:) to search as the user types: no
+      # Search button to press, a clear button in the field, and count: to have
+      # the size of the result set announced. It is opt-in rather than inferred
+      # from turbo_frame:, which only says where a response lands.
       #
-      # Searching as you type is opt-in. A frame says where a response lands;
-      # whether typing should submit at all is a separate decision about the
-      # collection, so it is asked for rather than inferred. Left alone, the
-      # form submits only when asked to: a visible Search button, and no clear
-      # button, since clearing means clearing the field and submitting, which
-      # only the controller can do. A host that wants a clear button beside such
-      # a form can build the link itself and wire it to the controller's `clear`
-      # action, which rewrites the href to carry any other scope's params.
+      # Left alone the form submits when asked to, and has no clear button:
+      # clearing means clearing the field and submitting, which only the
+      # controller can do. For one beside such a form, build the link and wire
+      # it to the controller's `clear` action.
       def l_ui_search_form(query, url: nil, fields: [], predicate: :cont, combinator: :or,
                            label: "Search", placeholder: nil, button: nil, clear: nil,
                            live: false, count: nil, min_chars: nil,
@@ -37,11 +34,9 @@ module Layered
 
         scope = query.context&.search_key || :q
         clear = live if clear.nil?
-        # Each keystroke's search replaces the history entry rather than pushing
-        # one, so Back leaves the collection rather than replaying the term
-        # letter by letter. Set on the form, which Turbo reads before the
-        # frame's own action, so sort links and pagination inside the same frame
-        # still advance.
+        # Replace, so Back leaves the collection rather than replaying the term
+        # letter by letter. On the form, which Turbo reads before the frame's
+        # own, so sort links and pagination in that frame still advance.
         turbo_action = live ? "replace" : "advance"
         html = html.merge(class: ["l-ui-form", html[:class]].compact.join(" "))
 
@@ -58,10 +53,9 @@ module Layered
           action = [existing_action, "submit->l-ui--search-form#preserve"].compact.join(" ")
           turbo_action = existing_data[:turbo_action] || turbo_action
 
-          # Pagy's page key is the host's to choose and bears no fixed relation
-          # to Ransack's search key, so it is passed rather than guessed: it is
-          # what `preserve` and `rewriteLink` drop when carrying other
-          # collections' params across a submit.
+          # What `preserve` and `rewriteLink` drop when carrying other
+          # collections' params across a submit. Passed rather than guessed from
+          # the search key: Pagy's page key is the host's to choose.
           values = { l_ui__search_form_scope_value: scope,
                      l_ui__search_form_page_param_value: page_param }
           if live
@@ -102,18 +96,17 @@ module Layered
       # available on its own to a caller who passes a block and builds the row
       # by hand:
       #
-      #   <%= l_ui_search_form(@q, url: users_path, turbo_frame: "users", count: @pagy.count) do |f| %>
+      #   <%= l_ui_search_form(@q, url: users_path, turbo_frame: "users",
+      #                        live: true, count: @pagy.count) do |f| %>
       #     <div class="l-ui-search-inline">
       #       <%= my_filter_hidden_fields %>
-      #       <%= l_ui_search_control(f, :name_or_email_cont, placeholder: "Search users") %>
+      #       <%= l_ui_search_control(f, :name_or_email_cont, live: true) %>
       #     </div>
       #   <% end %>
       #
       # Searching as you type needs the l-ui--search-form controller, which
       # l_ui_search_form puts on the form when given a turbo_frame:. A
-      # hand-built form may not carry it, so live: is off here unless asked
-      # for - matching l_ui_search_form, and defaulting to the mode that works
-      # with no controller at all.
+      # hand-built form may not carry it, so live: is off unless asked for.
       def l_ui_search_control(form, attribute, label: "Search", placeholder: nil,
                               clear: nil, button: nil, live: false)
         validate_live_search!("l_ui_search_control", live, nil, clear: clear, frame_required: false)
@@ -194,10 +187,9 @@ module Layered
 
       private
 
-      # Options that only mean something once the Stimulus controller is
-      # driving the form. Passing one to a form that submits when asked to is a
-      # mistake with no visible symptom, so it names itself rather than being
-      # quietly dropped.
+      # Options that need the Stimulus controller driving the form. Passing one
+      # to a form that submits when asked to has no visible symptom, so it
+      # names itself rather than being quietly dropped.
       LIVE_ONLY_OPTIONS = {
         clear: "the clear button clears the field and submits, which only the Stimulus controller can do",
         count: "there is nothing to announce when the user pressed the button themselves",
@@ -223,8 +215,8 @@ module Layered
       end
 
       # count: is what a screen reader hears when results change with no button
-      # press, so its absence is a hole rather than a default. A log line and
-      # not markup: the form is fine, it just announces nothing.
+      # press, so its absence is a hole rather than a default - and one nothing
+      # on screen would reveal. A log line, not markup: the form itself is fine.
       def warn_missing_search_count
         return unless Rails.env.development?
 
@@ -234,12 +226,10 @@ module Layered
         )
       end
 
-      # A visible primary button when one is named, and when searching happens
-      # as you type a submit that is present but neither seen nor tabbed to: it
-      # is what implicit submission (Enter in the field) and a browser with no
-      # JavaScript submit through, without leaving a focus stop nobody can see
-      # (WCAG 2.4.7). A form that submits only when asked to needs a button that
-      # can actually be asked, so it gets a visible one.
+      # Live, an unnamed submit is present but neither seen nor tabbed to: what
+      # Enter in the field and a JavaScript-less browser submit through, without
+      # a focus stop nobody can see (WCAG 2.4.7). A form that submits when asked
+      # to needs a button that can be asked, so it always gets a visible one.
       def l_ui_search_submit(form, button, live: true)
         return form.submit(button, class: "l-ui-button l-ui-button--primary") if button.is_a?(String)
         return form.submit("Search", class: "l-ui-button l-ui-button--primary") unless live
@@ -250,11 +240,10 @@ module Layered
       def l_ui_search_clear_button(form, attribute, clear)
         name = clear.is_a?(String) ? clear : "Clear search"
 
-        # Hidden until there is something to clear; the controller corrects this
-        # on connect, so a term already in the field shows it without a round
-        # trip. Ransack answers a combined reader like `name_or_email_cont`
-        # through method_missing, which respond_to? does not always admit to, so
-        # the value is asked for rather than checked for.
+        # Hidden until there is something to clear; the controller corrects it
+        # on connect. Ransack answers a combined reader like `name_or_email_cont`
+        # through method_missing and denies respond_to?, so the value is asked
+        # for rather than checked for.
         blank = begin
           form.object.public_send(attribute).blank?
         rescue NoMethodError

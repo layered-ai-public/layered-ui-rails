@@ -1,20 +1,18 @@
 import { Controller } from "@hotwired/stimulus"
 import { announce, clearAnnounceTimeout } from "layered_ui/utilities/announce"
 
-// Long enough that a typed word is one request rather than one per letter.
-// Longer than the combobox's debounce: a search here re-renders a whole
-// collection, so a keystroke costs more than a listbox fetch does.
+// Longer than the combobox's: a search re-renders a whole collection, so a
+// keystroke costs more here than a listbox fetch does.
 const SEARCH_DEBOUNCE = 300
 
-// A frame render replaces the form, and with it the input being typed into, so
-// what was typed, where the caret was, and whether the field had focus are held
-// here - outside the DOM, which is the only place that survives - and restored
-// by the controller that connects in the replacement's place. Keyed per form,
-// so two collections on one page never restore into each other.
+// A frame render destroys the input being typed into, so the field's state is
+// held outside the DOM and restored by the controller that connects in its
+// place. Keyed per form: two collections on a page must not restore into each
+// other.
 const stashes = new Map()
 
-// Older than this and the search has been walked away from (a full load, a sort
-// link, the back button), so focus is left where the user put it.
+// Older than this and the search has been walked away from, so focus is left
+// where the user since put it.
 const STASH_TTL = 5000
 
 // When multiple scoped Ransack collections share one page, preserves other
@@ -25,8 +23,8 @@ export default class extends Controller {
   static targets = ["input", "clear"]
   static values = {
     scope: String,
-    // Pagy's page key, which the host chooses and which bears no fixed
-    // relation to the Ransack search key - so it is given, not derived.
+    // Given, not derived from scope: Pagy's page key is the host's choice and
+    // follows no rule relating it to the Ransack search key.
     pageParam: { type: String, default: "page" },
     live: { type: Boolean, default: false },
     minChars: { type: Number, default: 0 },
@@ -42,14 +40,11 @@ export default class extends Controller {
 
   disconnect() {
     clearTimeout(this._searchTimer)
-    // An announcement schedules the shared region to be blanked a few seconds
-    // later. This instance is about to be replaced by the frame render that
-    // answers the search, and its pending blank would wipe whatever the
-    // instance connecting in its place has just announced.
+    // An announcement schedules the shared region to be blanked. Left pending,
+    // it would wipe what the instance replacing this one has just announced.
     clearAnnounceTimeout(this)
   }
 
-  // Typing searches. Debounced, so a fast typist sends one request for a word.
   search(event) {
     // A half-composed IME string is not a term yet.
     if (event && event.isComposing) return
@@ -59,22 +54,20 @@ export default class extends Controller {
     this._schedule()
   }
 
-  // The in-field clear button, and Escape in the field. Clearing is a search for
-  // the empty term, and an intentional one, so it skips the debounce.
+  // The in-field clear button, and Escape in the field. An intentional search
+  // for the empty term, so it skips the debounce.
   clearSearch(event) {
     if (event) event.preventDefault()
     if (!this.hasInputTarget) return
 
     this.inputTarget.value = ""
-    // Focused before the button hides itself: focus would otherwise fall to the
-    // body, losing the user's place (WCAG 2.4.3).
+    // Focused before the button hides itself, or focus falls to the body and
+    // the user loses their place (WCAG 2.4.3).
     this.inputTarget.focus()
     this._refreshClear()
-    // Clearing changes the field without an input event, and submitNow may
-    // decline to send (the empty term may already be the one in flight), in
-    // which case nothing else records it. A stash still holding the old text
-    // would be restored over the cleared field by the pending response, and
-    // then searched for again.
+    // No input event fires for this, and submitNow declines when the empty term
+    // is already in flight - so without this the stash keeps the old text, and
+    // the pending response restores it over the cleared field and searches it.
     this._stash()
     this.submitNow()
   }
@@ -92,9 +85,8 @@ export default class extends Controller {
     this.element.requestSubmit()
   }
 
-  // Every submit - typed, Enter, or the clear button - lands here, so this is
-  // where the pending search is settled and the field's state is recorded for
-  // the render that is about to replace it.
+  // Every submit lands here - typed, Enter, or the clear button - so it is
+  // where the field's state is recorded for the render about to replace it.
   preserve(event) {
     clearTimeout(this._searchTimer)
     this._sent = this._term
@@ -167,44 +159,40 @@ export default class extends Controller {
 
     this._sent = stash.submitted
 
-    // The response echoes the term it searched for; anything typed while it was
-    // in flight is newer, and wins.
+    // Anything typed while the request was in flight is newer than the term the
+    // response echoes, and wins.
     if (this.inputTarget.value !== stash.value) this.inputTarget.value = stash.value
 
-    // Focus is taken back only when the render left it nowhere: the input being
-    // typed into was destroyed with the rest of the frame, so activeElement
-    // fell to the body. If the user moved to a control outside the frame while
-    // the request was in flight, that control still holds focus and keeps it -
-    // an answer arriving must not pull the user back out of where they went
-    // (WCAG 3.2.5). The stash cannot say this, being a snapshot from before.
+    // The stash says the field had focus when the request went out, not whether
+    // it still should. A control outside the frame survives the render and is
+    // still focused; only focus left on the body was destroyed with the input,
+    // and an answer arriving must not pull the user back (WCAG 3.2.5).
     const focusWentNowhere = !document.activeElement || document.activeElement === document.body
     if (stash.focused && focusWentNowhere) {
       this.inputTarget.focus({ preventScroll: true })
       this.inputTarget.setSelectionRange(stash.start, stash.end)
     }
 
-    // The count belongs to the term that was submitted, not to whatever has
-    // been typed since, so it is announced only once the two agree. While they
-    // differ a fresh search is already scheduled below, and its answer is the
-    // one worth announcing.
+    // The count answers the term submitted, not what has been typed since, so
+    // announcing waits until they agree - the scheduling below means a truer
+    // answer is already on its way.
     if (stash.value === stash.submitted) this._announceResults(stash.submitted)
 
     // Keystrokes that landed after the request went out are still unsearched.
     if (stash.value !== stash.submitted) this._schedule()
   }
 
-  // The count is rendered onto the form by the response, so it is the new count
-  // by the time this runs. The region it goes to lives in the layout, outside
-  // every frame: a live region replaced in the same render as its own text is
-  // not reliably announced.
+  // The response renders the count onto the form, so it is already the new one
+  // here. It goes to the layout's region, outside every frame: a live region
+  // replaced in the same render as its own text is not reliably announced.
   _announceResults(term) {
     if (this.countValue < 0) return
 
     const count = this.countValue
     const results = count === 0 ? "No results" : count === 1 ? "1 result" : `${count} results`
 
-    // The term is included so consecutive searches never repeat a string
-    // verbatim - identical text in a live region is not announced again.
+    // The term is included so no two announcements repeat verbatim - identical
+    // text in a live region is not announced again.
     announce(term ? `${results} for ${term}` : results, this)
   }
 
