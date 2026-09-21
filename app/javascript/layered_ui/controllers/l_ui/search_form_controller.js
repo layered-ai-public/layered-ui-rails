@@ -72,6 +72,12 @@ export default class extends Controller {
     this.submitNow()
   }
 
+  // A form that does not search as you type runs nothing on a keystroke, so the
+  // clear button needs telling that the field has gained or lost its term.
+  toggleClear() {
+    this._refreshClear()
+  }
+
   submitNow() {
     clearTimeout(this._searchTimer)
 

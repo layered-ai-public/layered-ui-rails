@@ -16,9 +16,9 @@ Existing call sites keep submitting when asked to, so nothing breaks by standing
 Two defaults changed, so check any call site that relied on them:
 
 - `button:` no longer renders a visible **Search** button *in live mode*. The submit is still there, just neither seen nor tabbed to, so Enter and a JavaScript-less browser still work. Pass `button: "Search"` to bring the visible button back. A form that is not live still gets a visible one.
-- `clear:` now means the in-field clear button, on by default in live mode.
+- `clear:` now means the in-field clear button, on by default whenever `turbo_frame:` is given.
 
-The separate outline clear button is gone, and so is the "requires an explicit `url:` when `clear:` is set" error. Clearing means clearing the field and submitting, which only the Stimulus controller can do, so a form the controller is not driving renders no clear button rather than one that would do nothing. If you want one beside such a form, build the link yourself and wire it to the controller's `clear` action, which rewrites the href so another collection's params survive:
+The separate outline clear button is gone, and so is the "requires an explicit `url:` when `clear:` is set" error. Clearing means clearing the field and submitting, which the `l-ui--search-form` controller does - and that goes on any form given a `turbo_frame:`, to preserve the other scopes - so a form that submits when asked to clears from inside the field too. Only an unframed form has no controller and so no clear button; asking for `clear:` without a frame raises. If you want a clear beside such a form, build the link yourself and wire it to the controller's `clear` action, which rewrites the href so another collection's params survive:
 
 ```erb
 <%= link_to "Clear", users_path, class: "l-ui-button l-ui-button--outline",
@@ -28,7 +28,7 @@ The separate outline clear button is gone, and so is the "requires an explicit `
 
 ### Live-only options now raise
 
-`clear:`, `count:` and `min_chars:` only mean something once the Stimulus controller is driving the form. Passing one to a form that is not live used to be dropped in silence, leaving a form that looked configured and was not; it now raises and names itself. `clear: false` is never a conflict.
+`count:` and `min_chars:` describe typing, so they mean nothing to a form that submits when asked to. Passing one to a form that is not live used to be dropped in silence, leaving a form that looked configured and was not; it now raises and names itself. `clear:` is not one of these - it follows the controller rather than live mode, so it is fine on a framed form either way.
 
 ### Have results announced
 
@@ -59,7 +59,7 @@ It defaults to `"page"`, which is right for a single unscoped collection. If you
 
 ### `l_ui_search_control` defaults to non-live
 
-The standalone control is for hand-built forms, which are exactly the forms that may not carry the `l-ui--search-form` controller, so `live:` is now off there too. Pass `live: true` where you want the typing behaviour.
+The standalone control is for hand-built forms, which are exactly the forms that may not carry the `l-ui--search-form` controller, so `live:` is now off there too. Pass `live: true` where you want the typing behaviour. Its `clear:` follows `live:`, since `live: true` vouches for the controller being there; pass `clear: true` for a form that carries the controller but should not submit as you type.
 
 ## 0.26.0
 

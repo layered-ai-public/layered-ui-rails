@@ -106,10 +106,9 @@ class RansackHelperTest < ActionView::TestCase
     assert_no_match(/<button[^>]*l-ui-search-control__clear[^>]*hidden/, result)
   end
 
-  # Clearing means clearing the field and submitting, which only the controller
-  # can do, so a form it is not driving offers no clear button rather than one
-  # that would do nothing.
-  test "a form that does not search as you type has no clear button" do
+  # An unframed form is the one the controller is not on, so it is the one that
+  # offers no clear button rather than one that would do nothing.
+  test "an unframed form has no clear button" do
     q = User.ransack({})
     result = l_ui_search_form(q, url: "/search", fields: [:name])
     assert_not_includes result, "l-ui-search-control__clear"
@@ -117,11 +116,14 @@ class RansackHelperTest < ActionView::TestCase
     assert_not_includes result, "Clear"
   end
 
-  test "a framed form left non-live has no clear button either" do
+  # The clear button needs the controller, not live mode, and the controller is
+  # on every framed form - so a form that submits when asked to still clears.
+  test "a framed form left non-live still has a clear button" do
     q = User.ransack({})
     result = l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", live: false)
-    assert_not_includes result, "l-ui-search-control__clear"
-    assert_not_includes result, "Clear"
+    assert_includes result, "l-ui-search-control__clear"
+    assert_includes result, "l-ui--search-form#clearSearch"
+    assert_not_includes result, "l-ui--search-form#search"
   end
 
   test "simple mode raises when fields is empty" do
@@ -284,7 +286,7 @@ class RansackHelperTest < ActionView::TestCase
   # not, so each names itself instead.
   test "a live-only option on a form that is not live raises" do
     q = User.ransack({})
-    { clear: true, count: 12, min_chars: 3 }.each do |key, value|
+    { count: 12, min_chars: 3 }.each do |key, value|
       error = assert_raises(ArgumentError, "expected #{key} to raise") do
         l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", **{ key => value })
       end
@@ -292,10 +294,19 @@ class RansackHelperTest < ActionView::TestCase
     end
   end
 
-  test "clear: false is not a conflict on a form that is not live" do
+  test "clear: false omits the button on a form that is not live" do
     q = User.ransack({})
     result = l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", clear: false)
     assert_not_includes result, "l-ui-search-control__clear"
+  end
+
+  # Without a frame there is no controller to clear the field and resubmit.
+  test "clear: without a frame raises" do
+    q = User.ransack({})
+    error = assert_raises(ArgumentError) do
+      l_ui_search_form(q, url: "/search", fields: [:name], clear: true)
+    end
+    assert_match(/clear: requires a turbo_frame:/, error.message)
   end
 
   # -- page_param --
@@ -333,11 +344,28 @@ class RansackHelperTest < ActionView::TestCase
     assert_includes result, "Results update as you type."
   end
 
-  test "the control raises for a clear button it could not drive" do
-    error = assert_raises(ArgumentError) do
-      l_ui_search_control(MockFormBuilder.new, :name_cont, clear: true)
-    end
-    assert_match(/clear: applies to live: true only/, error.message)
+  # The control takes clear: on its own, for a hand-built form that carries the
+  # controller but does not want typing to submit.
+  test "the control clears without searching as you type" do
+    result = l_ui_search_control(MockFormBuilder.new, :name_cont, clear: true)
+    assert_includes result, "l-ui-search-control__clear"
+    assert_includes result, "keydown.esc->l-ui--search-form#clearSearch"
+    assert_not_includes result, "input->l-ui--search-form#search"
+    assert_not_includes result, "Results update as you type."
+  end
+
+  # Nothing else runs on a keystroke there, so the button would otherwise stay
+  # as the server rendered it - visible over a field the user has just emptied.
+  test "a non-live clear button keeps up with the field" do
+    q = User.ransack({})
+    result = l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results")
+    assert_includes result, "input->l-ui--search-form#toggleClear"
+  end
+
+  test "a live form leaves that to its own search action" do
+    q = User.ransack({})
+    result = l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", live: true)
+    assert_not_includes result, "toggleClear"
   end
 
   # -- search_key / as: --

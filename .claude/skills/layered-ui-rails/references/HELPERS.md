@@ -144,7 +144,7 @@ l_ui_search_form(query, url: nil, fields: [], predicate: :cont, combinator: :or,
 - `label` (String) - hidden label for the search input; also labels the `search` landmark in live mode
 - `placeholder` (String) - input placeholder
 - `button` (String) - text for a *visible* submit button. In live mode, omitting it renders a submit that is present but neither seen nor tabbed to, which is what Enter and a JS-less browser submit through. A non-live form always gets a visible button, since it needs one that can be pressed
-- `clear` (String|Boolean) - the clear button built into the field; defaults to on in live mode, `false` to omit, a string to name it. Live mode only: clearing means clearing the field and submitting, which only the controller can do, so a non-live form has no clear button rather than one that would do nothing
+- `clear` (String|Boolean) - the clear button built into the field; defaults to on whenever `turbo_frame:` is given, `false` to omit, a string to name it. Clearing means clearing the field and submitting, which the `l-ui--search-form` controller does, and that goes on any framed form - so a non-live form clears too. Asking for it without a frame raises, since there is no controller to drive it
 - `live` (Boolean, default `false`) - search as the user types. **Opt-in, and requires `turbo_frame:`** - passing `live: true` without one raises, since typing into an unframed form would mean a page load per keystroke. A frame alone does not turn it on: where a response lands and whether typing submits are separate decisions
 - `count` (Integer) - size of the result set, announced after each search. Live mode only. Without it nothing is announced, and `live: true` with no `count:` logs a warning in development
 - `min_chars` (Integer) - hold the search back until the term is this long. Live mode only
@@ -153,7 +153,7 @@ l_ui_search_form(query, url: nil, fields: [], predicate: :cont, combinator: :or,
 - `html` (Hash) - additional form HTML attributes
 - `&block` - custom form markup (overrides simple mode)
 
-`clear:`, `count:` and `min_chars:` mean nothing without the Stimulus controller driving the form, so passing one alongside `live: false` raises rather than being quietly dropped. `clear: false` is never a conflict.
+`count:` and `min_chars:` describe typing, so they mean nothing to a form that submits when asked to: passing one alongside `live: false` raises rather than being quietly dropped. `clear:` is not one of these - it follows the controller, not live mode.
 
 A live search sets `data-turbo-action="replace"` on the *form*, so a keystroke does not push a history entry. Turbo reads the action from the submitter, then the form, then the frame, so sort links and pagination inside the same frame still advance.
 
@@ -190,7 +190,7 @@ l_ui_search_control(form, attribute, label: "Search", placeholder: nil,
                     clear: nil, button: nil, live: false)
 ```
 
-The control on its own - field, clear button and submit - for a caller who passes a block to `l_ui_search_form` and builds the row by hand. Searching as you type needs the `l-ui--search-form` controller, which `l_ui_search_form` puts on the form when given a `turbo_frame:`. A hand-built form may not carry it, so `live:` is off here unless asked for, matching `l_ui_search_form`; `clear: true` with `live: false` raises.
+The control on its own - field, clear button and submit - for a caller who passes a block to `l_ui_search_form` and builds the row by hand. Both `live:` and `clear:` need the `l-ui--search-form` controller, which `l_ui_search_form` puts on the form when given a `turbo_frame:`. A hand-built form may not carry it, so `live:` is off unless asked for. `clear:` follows `live:` - `live: true` vouches for the controller being there - so pass `clear: true` explicitly for a form that carries the controller but should not submit as you type.
 
 ```erb
 <%= l_ui_search_form(@q, url: users_path, turbo_frame: "users", live: true,
@@ -204,7 +204,7 @@ The control on its own - field, clear button and submit - for a caller who passe
 
 The input is deliberately `type="text"`, not `type="search"`: WebKit draws its own cancel button on the latter, which would sit under this one and take the same tap.
 
-Left non-live there is no clear button and the Search button is visible. To put a clear beside a non-live form, build the link yourself and give it `data-action="click->l-ui--search-form#clear"`, which rewrites the href to carry any other scope's params.
+Left non-live the Search button is visible and the field still clears. Only a form with no `turbo_frame:` goes without a clear button; to put one beside such a form, build the link yourself and give it `data-action="click->l-ui--search-form#clear"`, which rewrites the href to carry any other scope's params.
 
 ## Sort link (requires ransack gem)
 

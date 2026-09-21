@@ -59,7 +59,7 @@ end</code></pre>
 
 <p class="mt-4">Two independent collections on one page, each in a Turbo Frame. Searching or sorting one does not affect the other. The URL updates for back/forward navigation.</p>
 
-<p class="mt-4">The two also show the two modes of the search form. <strong>Users</strong> passes <code>live: true</code> and searches as you type - no button to press, and a clear button inside the field. <strong>Posts</strong> leaves it alone and so submits only when asked to: a visible Search button, and no clear button, since clearing means clearing the field and submitting and only the Stimulus controller can do that.</p>
+<p class="mt-4">The two also show the two modes of the search form. <strong>Users</strong> passes <code>live: true</code> and searches as you type, with no button to press. <strong>Posts</strong> leaves it alone and so submits only when asked to, with a visible Search button. Both clear from inside the field: the clear button needs the Stimulus controller, and a framed form carries it either way.</p>
 
 <h3 class="mt-6">Users - searching as you type</h3>
 

@@ -129,9 +129,11 @@
 
 <p class="mt-4">The <%= link_to "Ransack integration", ransack_path %> page runs both modes side by side: the Users collection passes <code>live: true</code> and searches as you type, the Posts collection leaves it alone and submits only when asked to.</p>
 
-<p class="mt-4">A form left non-live keeps a visible Search button and has no clear button, since clearing means clearing the field and submitting and only the controller can do that. To put a clear beside such a form, build the link yourself and give it <code>data-action="click-&gt;l-ui--search-form#clear"</code>, which rewrites the href so another collection's params survive the navigation.</p>
+<p class="mt-4">A form left non-live keeps a visible Search button, and still clears from inside the field: clearing means clearing the field and submitting, which the Stimulus controller does, and that goes on any form given a <code>turbo_frame:</code>. Escape in the field clears it too.</p>
 
-<p class="mt-4"><code>clear:</code>, <code>count:</code> and <code>min_chars:</code> mean nothing without the Stimulus controller driving the form, so passing one to a form that is not live raises rather than being quietly dropped. <code>clear: false</code> is never a conflict.</p>
+<p class="mt-4">Only a form with no <code>turbo_frame:</code> has no controller, and so no clear button. To put a clear beside one, build the link yourself and give it <code>data-action="click-&gt;l-ui--search-form#clear"</code>, which rewrites the href so another collection's params survive the navigation. Asking for <code>clear:</code> without a frame raises.</p>
+
+<p class="mt-4"><code>count:</code> and <code>min_chars:</code> describe typing, so they mean nothing to a form that submits when asked to: passing one to a form that is not live raises rather than being quietly dropped.</p>
 
 <h3 class="mt-4">Options</h3>
 
@@ -179,7 +181,7 @@
       <tr>
         <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>clear</code></th>
         <td class="l-ui-table__cell"><code>true</code></td>
-        <td class="l-ui-table__cell">The clear button built into the field, on by default in live mode. Pass <code>false</code> to omit it, or a string to name it. Live mode only - clearing means clearing the field and submitting, which only the Stimulus controller can do, so passing it to a non-live form raises.</td>
+        <td class="l-ui-table__cell">The clear button built into the field, on by default whenever <code>turbo_frame:</code> is given. Pass <code>false</code> to omit it, or a string to name it. Clearing means clearing the field and submitting, which the Stimulus controller does, so asking for it without a frame raises.</td>
       </tr>
       <tr>
         <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>live</code></th>
