@@ -1559,6 +1559,37 @@ pre.l-ui-surface {
   }
 }
 
+/* The field and its clear button share a positioning context of their own, so
+   the button sits inside the input's edge whatever else the row holds. */
+.l-ui-search-control {
+  @apply relative flex-1;
+}
+
+/* Room for the button, so a long term scrolls under it rather than behind it. */
+.l-ui-search-control--clearable .l-ui-form__field {
+  @apply pr-10;
+}
+
+/* 24x24 is the smallest target WCAG 2.2 SC 2.5.8 accepts; the mark inside is
+   16px, so the rest is padding rather than a heavier glyph. Drawn in
+   currentColor from the foreground tokens, so it needs no dark-mode invert. */
+.l-ui-search-control__clear {
+  @apply absolute top-1/2 right-2 flex items-center justify-center
+         w-6 h-6
+         p-0
+         text-foreground-muted hover:text-foreground
+         bg-transparent
+         border-0 rounded-full
+         focus-ring
+         transition-colors
+         cursor-pointer;
+  transform: translateY(-50%);
+}
+
+.l-ui-search-control__clear[hidden] {
+  @apply hidden;
+}
+
 /* Switch */
 
 .l-ui-switch {

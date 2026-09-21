@@ -33,6 +33,37 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "ransack page renders a search box that searches as you type" do
+    get "/ransack"
+    assert_response :success
+    assert_select "form[role=search][data-turbo-action=replace]", 1
+    assert_select "input[data-action*=?]", "input->l-ui--search-form#search", count: 1
+    # Both collections clear in the field; neither has a separate Clear beside it.
+    assert_select "button.l-ui-search-control__clear[hidden]", 2
+    assert_select "a.l-ui-button--outline", text: "Clear", count: 0
+  end
+
+  test "ransack page renders a search box that submits only when asked to" do
+    get "/ransack"
+    assert_response :success
+    # The posts form is left non-live, so it keeps a visible Search button, is
+    # not a search landmark, and does not submit as the field changes - but it
+    # still clears, since the controller that does the clearing is on it.
+    assert_select "form[data-turbo-action=advance]:not([role=search])" do
+      assert_select "input[type=submit].l-ui-button--primary", 1
+      assert_select "input[data-action*=?]", "input->l-ui--search-form#search", count: 0
+      assert_select "button.l-ui-search-control__clear", 1
+    end
+  end
+
+  test "ransack page hands the result count over to be announced" do
+    create_test_users
+    get "/ransack"
+    assert_response :success
+    # Only the live form announces: a deliberate submit is its own cue.
+    assert_select "form[data-l-ui--search-form-count-value]", 1
+  end
+
   test "ransack page renders search results" do
     create_test_users
     get "/ransack", params: { users_q: { name_cont: "Test" } }

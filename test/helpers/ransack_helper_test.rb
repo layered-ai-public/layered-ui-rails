@@ -11,7 +11,12 @@ class RansackHelperTest < ActionView::TestCase
     define_singleton_method(:search_form_for) do |_q, url: nil, html: {}, as: :q, &block|
       @captured_html = html
       @captured_as = as
-      block ? block.call(MockFormBuilder.new) : ""
+      term = begin
+        _q.name_cont
+      rescue StandardError
+        nil
+      end
+      block ? block.call(MockFormBuilder.new(term)) : ""
     end
 
     # Stub sort_url to return a plausible URL string (mirrors Ransack's sort_url).
@@ -65,23 +70,60 @@ class RansackHelperTest < ActionView::TestCase
     assert_includes result, "Search by name, email"
   end
 
-  test "simple mode omits clear button by default" do
+  test "a live form renders a clear button by default" do
+    q = User.ransack({})
+    result = l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", live: true)
+    assert_includes result, "l-ui-search-control__clear"
+    assert_includes result, "Clear search"
+  end
+
+  test "a live form omits the clear button with false" do
+    q = User.ransack({})
+    result = l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", live: true, clear: false)
+    assert_not_includes result, "l-ui-search-control__clear"
+    assert_not_includes result, "l-ui-search-control--clearable"
+  end
+
+  test "a live form names the clear button from a string" do
+    q = User.ransack({})
+    result = l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", live: true, clear: "Reset")
+    assert_includes result, "Reset"
+  end
+
+  test "the clear button starts hidden when the field is empty" do
+    q = User.ransack({})
+    result = l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", live: true)
+    assert_match(/<button[^>]*l-ui-search-control__clear[^>]*hidden/, result)
+  end
+
+  # Ransack answers a combined reader like name_or_email_cont through
+  # method_missing, which respond_to? does not always admit to, so the helper
+  # asks for the value rather than checking for the method.
+  test "the clear button shows when the field already holds a term" do
+    q = User.ransack({ "name_cont" => "ada" })
+    result = l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", live: true)
+    assert_includes result, "l-ui-search-control__clear"
+    assert_no_match(/<button[^>]*l-ui-search-control__clear[^>]*hidden/, result)
+  end
+
+  # An unframed form is the one the controller is not on, so it is the one that
+  # offers no clear button rather than one that would do nothing.
+  test "an unframed form has no clear button" do
     q = User.ransack({})
     result = l_ui_search_form(q, url: "/search", fields: [:name])
+    assert_not_includes result, "l-ui-search-control__clear"
+    assert_not_includes result, "l-ui-search-control--clearable"
     assert_not_includes result, "Clear"
   end
 
-  test "simple mode renders clear button with true" do
+  # The clear button needs the controller, not live mode, and the controller is
+  # on every framed form - so a form that submits when asked to still clears.
+  test "a framed form left non-live still has a clear button" do
     q = User.ransack({})
-    result = l_ui_search_form(q, url: "/search", fields: [:name], clear: true)
-    assert_includes result, "Clear"
-    assert_includes result, "l-ui-button--outline"
-  end
-
-  test "simple mode renders clear button with custom label" do
-    q = User.ransack({})
-    result = l_ui_search_form(q, url: "/search", fields: [:name], clear: "Reset")
-    assert_includes result, "Reset"
+    result = l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", live: false)
+    assert_includes result, "l-ui-search-control__clear"
+    assert_includes result, "l-ui--search-form#clearSearch"
+    assert_not_includes result, "l-ui--search-form#search"
   end
 
   test "simple mode raises when fields is empty" do
@@ -89,9 +131,121 @@ class RansackHelperTest < ActionView::TestCase
     assert_raises(ArgumentError) { l_ui_search_form(q, url: "/search") }
   end
 
-  test "simple mode raises when clear is set without url" do
+  # A form that submits only when asked to needs a button that can be asked.
+  test "a form that does not search as you type keeps a visible Search button" do
     q = User.ransack({})
-    assert_raises(ArgumentError) { l_ui_search_form(q, fields: [:name], clear: true) }
+    result = l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", live: false)
+    assert_includes result, "l-ui-button--primary"
+    assert_not_includes result, "tabindex=\"-1\""
+  end
+
+  test "an unframed form keeps a visible Search button" do
+    q = User.ransack({})
+    result = l_ui_search_form(q, url: "/search", fields: [:name])
+    assert_includes result, "l-ui-button--primary"
+    assert_not_includes result, "tabindex=\"-1\""
+  end
+
+  # -- searching as you type --
+
+  test "a framed form searches as the user types" do
+    q = User.ransack({})
+    result = l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", live: true)
+    assert_equal true, @captured_html[:data][:l_ui__search_form_live_value]
+    assert_includes result, "input->l-ui--search-form#search"
+    assert_includes result, "keydown.esc->l-ui--search-form#clearSearch"
+    assert_includes result, "l-ui--search-form-target=\"input\""
+  end
+
+  test "a form with no frame does not search as the user types" do
+    q = User.ransack({})
+    result = l_ui_search_form(q, url: "/search", fields: [:name])
+    assert_nil @captured_html[:data]
+    assert_not_includes result, "l-ui--search-form#search"
+  end
+
+  test "a framed form does not search as you type unless asked to" do
+    q = User.ransack({})
+    result = l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", live: false)
+    assert_nil @captured_html[:data][:l_ui__search_form_live_value]
+    assert_equal "advance", @captured_html[:data][:turbo_action]
+    assert_not_includes result, "l-ui--search-form#search"
+  end
+
+  test "a live search replaces the history entry rather than pushing one" do
+    q = User.ransack({})
+    l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", live: true)
+    assert_equal "replace", @captured_html[:data][:turbo_action]
+  end
+
+  test "an explicit turbo_action still wins" do
+    q = User.ransack({})
+    l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", live: true,
+                     html: { data: { turbo_action: "advance" } })
+    assert_equal "advance", @captured_html[:data][:turbo_action]
+  end
+
+  test "a live form is a search landmark" do
+    q = User.ransack({})
+    l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", live: true, label: "Search users")
+    assert_equal "search", @captured_html[:role]
+    assert_equal "Search users", @captured_html[:aria][:label]
+  end
+
+  test "the field describes itself as updating while you type" do
+    q = User.ransack({})
+    result = l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", live: true)
+    assert_includes result, "Results update as you type."
+    assert_includes result, "aria-describedby=\"q_name_cont_hint\""
+  end
+
+  # -- submit button --
+
+  test "the submit is present but hidden by default" do
+    q = User.ransack({})
+    result = l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", live: true)
+    assert_includes result, "l-ui-sr-only"
+    assert_includes result, "tabindex=\"-1\""
+    assert_not_includes result, "l-ui-button--primary"
+  end
+
+  test "a named button renders a visible submit" do
+    q = User.ransack({})
+    result = l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", live: true, button: "Go")
+    assert_includes result, "l-ui-button--primary"
+    assert_includes result, "Go"
+  end
+
+  # -- result count --
+
+  test "a count is handed to the controller to announce" do
+    q = User.ransack({})
+    l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", live: true, count: 12)
+    assert_equal 12, @captured_html[:data][:l_ui__search_form_count_value]
+  end
+
+  test "a count of zero is still announced" do
+    q = User.ransack({})
+    l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", live: true, count: 0)
+    assert_equal 0, @captured_html[:data][:l_ui__search_form_count_value]
+  end
+
+  test "no count means nothing is announced" do
+    q = User.ransack({})
+    l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", live: true)
+    assert_nil @captured_html[:data][:l_ui__search_form_count_value]
+  end
+
+  test "min_chars is passed through when set" do
+    q = User.ransack({})
+    l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", live: true, min_chars: 3)
+    assert_equal 3, @captured_html[:data][:l_ui__search_form_min_chars_value]
+  end
+
+  test "min_chars is left unsaid at its default" do
+    q = User.ransack({})
+    l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", live: true)
+    assert_nil @captured_html[:data][:l_ui__search_form_min_chars_value]
   end
 
   test "block mode yields form builder" do
@@ -106,6 +260,112 @@ class RansackHelperTest < ActionView::TestCase
       result = l_ui_search_form(nil, url: "/search", fields: [:name])
       assert_nil result
     end
+  end
+
+  # -- live: is asked for, and its options are checked --
+
+  # A frame says where a response lands; whether typing should submit is a
+  # separate decision, so live: is never inferred from turbo_frame:.
+  test "a framed form is not live unless asked" do
+    q = User.ransack({})
+    result = l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results")
+    assert_nil @captured_html[:data][:l_ui__search_form_live_value]
+    assert_equal "advance", @captured_html[:data][:turbo_action]
+    assert_not_includes result, "l-ui--search-form#search"
+  end
+
+  test "live: true without a frame raises" do
+    q = User.ransack({})
+    error = assert_raises(ArgumentError) do
+      l_ui_search_form(q, url: "/search", fields: [:name], live: true)
+    end
+    assert_match(/requires a turbo_frame:/, error.message)
+  end
+
+  # Quietly dropping one of these leaves a form that looks configured and is
+  # not, so each names itself instead.
+  test "a live-only option on a form that is not live raises" do
+    q = User.ransack({})
+    { count: 12, min_chars: 3 }.each do |key, value|
+      error = assert_raises(ArgumentError, "expected #{key} to raise") do
+        l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", **{ key => value })
+      end
+      assert_match(/#{key}: applies to live: true only/, error.message)
+    end
+  end
+
+  test "clear: false omits the button on a form that is not live" do
+    q = User.ransack({})
+    result = l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", clear: false)
+    assert_not_includes result, "l-ui-search-control__clear"
+  end
+
+  # Without a frame there is no controller to clear the field and resubmit.
+  test "clear: without a frame raises" do
+    q = User.ransack({})
+    error = assert_raises(ArgumentError) do
+      l_ui_search_form(q, url: "/search", fields: [:name], clear: true)
+    end
+    assert_match(/clear: requires a turbo_frame:/, error.message)
+  end
+
+  # -- page_param --
+
+  # Pagy's page key is the host's to choose and bears no fixed relation to the
+  # Ransack search key, so it is passed rather than guessed from the scope.
+  test "the page param is handed to the controller" do
+    q = User.ransack({}, search_key: :users_q)
+    l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", page_param: "users_page")
+    assert_equal "users_page", @captured_html[:data][:l_ui__search_form_page_param_value]
+  end
+
+  test "the page param defaults to page" do
+    q = User.ransack({})
+    l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results")
+    assert_equal "page", @captured_html[:data][:l_ui__search_form_page_param_value]
+  end
+
+  # -- l_ui_search_control on its own --
+
+  # The standalone control exists for hand-built forms, which are exactly the
+  # forms that may not carry the Stimulus controller - so it defaults to the
+  # mode that needs no controller at all.
+  test "the control is not live unless asked" do
+    result = l_ui_search_control(MockFormBuilder.new, :name_cont)
+    assert_not_includes result, "l-ui--search-form#search"
+    assert_not_includes result, "l-ui-search-control__clear"
+    assert_includes result, "l-ui-button--primary"
+  end
+
+  test "the control searches as you type when asked" do
+    result = l_ui_search_control(MockFormBuilder.new, :name_cont, live: true)
+    assert_includes result, "input->l-ui--search-form#search"
+    assert_includes result, "l-ui-search-control__clear"
+    assert_includes result, "Results update as you type."
+  end
+
+  # The control takes clear: on its own, for a hand-built form that carries the
+  # controller but does not want typing to submit.
+  test "the control clears without searching as you type" do
+    result = l_ui_search_control(MockFormBuilder.new, :name_cont, clear: true)
+    assert_includes result, "l-ui-search-control__clear"
+    assert_includes result, "keydown.esc->l-ui--search-form#clearSearch"
+    assert_not_includes result, "input->l-ui--search-form#search"
+    assert_not_includes result, "Results update as you type."
+  end
+
+  # Nothing else runs on a keystroke there, so the button would otherwise stay
+  # as the server rendered it - visible over a field the user has just emptied.
+  test "a non-live clear button keeps up with the field" do
+    q = User.ransack({})
+    result = l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results")
+    assert_includes result, "input->l-ui--search-form#toggleClear"
+  end
+
+  test "a live form leaves that to its own search action" do
+    q = User.ransack({})
+    result = l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "results", live: true)
+    assert_not_includes result, "toggleClear"
   end
 
   # -- search_key / as: --
@@ -128,7 +388,7 @@ class RansackHelperTest < ActionView::TestCase
     q = User.ransack({})
     l_ui_search_form(q, url: "/search", fields: [:name], turbo_frame: "my_frame")
     assert_equal "my_frame", @captured_html[:data][:turbo_frame]
-    assert_equal "advance", @captured_html[:data][:turbo_action]
+    assert_equal :q, @captured_html[:data][:l_ui__search_form_scope_value]
   end
 
   test "search_form turbo_frame does not clobber existing data in html" do
@@ -250,19 +510,47 @@ class RansackHelperTest < ActionView::TestCase
   end
 
 
-  # Minimal form builder stand-in for unit tests
+  # Minimal form builder stand-in for unit tests. `data:` and `aria:` hashes are
+  # flattened the way Rails flattens them, so a test can assert on the
+  # attributes the search control actually emits.
   class MockFormBuilder
+    # Stands in for the searched-for object. Ransack answers attribute readers
+    # through method_missing, and denies respond_to? for a combined one, which
+    # is the shape the helper has to cope with.
+    class SearchObject
+      def initialize(term) = @term = term
+      def respond_to_missing?(_name, _include_private = false) = false
+      def method_missing(_name, *) = @term
+    end
+
+    def initialize(term = nil) = @term = term
+
+    def object_name = "q"
+
+    def object = @object ||= SearchObject.new(@term)
+
     def label(field, text = nil, **opts)
-      "<label for=\"#{field}\">#{text}</label>"
+      "<label for=\"#{field}\">#{text}</label>".html_safe
     end
 
     def text_field(field, **opts)
-      attrs = opts.map { |k, v| "#{k}=\"#{v}\"" }.join(" ")
-      "<input name=\"#{field}\" #{attrs} />"
+      "<input name=\"#{field}\" #{attributes(opts)} />".html_safe
     end
 
     def submit(text, **opts)
-      "<button>#{text}</button>"
+      "<button #{attributes(opts)}>#{text}</button>".html_safe
+    end
+
+    private
+
+    def attributes(opts)
+      opts.flat_map { |key, value|
+        if value.is_a?(Hash)
+          value.map { |k, v| "#{key}-#{k.to_s.tr('_', '-')}=\"#{v}\"" }
+        else
+          "#{key}=\"#{value}\""
+        end
+      }.join(" ")
     end
   end
 end

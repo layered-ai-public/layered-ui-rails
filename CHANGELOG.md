@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.27.0] - 2026-09-20
+
+### Added
+
+- The search box can search as you type. Pass `live: true` with a `turbo_frame:` and `l_ui_search_form` debounces a submit as the field changes, so results narrow without a button to press. Each search replaces the history entry rather than pushing one, so Back leaves the collection instead of replaying the term letter by letter - the URL still carries the term, so a search stays shareable and survives a reload. The action is set on the form, which Turbo reads before the frame's own, so sort links and pagination inside the same frame still advance.
+- The field carries its own clear button, built into its trailing edge and shown only once there is something to clear. Escape in the field clears it too, and focus returns to the input rather than falling to the body. `clear: false` omits the button; a string names it.
+- `l_ui_search_control` renders the control - field, clear button and submit - on its own, for a caller who passes a block to `l_ui_search_form` and builds the row by hand.
+- `count:` has the size of the result set announced after each search. Without it nothing is announced: a screen reader is otherwise told nothing when results change with no button press. The message goes to the layout's live region, which sits outside every frame, since a live region replaced in the same render as its own text is not reliably announced.
+- `min_chars:` holds a search back until the term is worth asking about.
+- The caret survives the frame render that answers a search, so a typed word is never interrupted mid-letter.
+- `page_param:` names the collection's Pagy page key, which is reset when a search carries the other collections' params across a submit. It was previously guessed from the Ransack `search_key` (`users_q` -> `users_page`), which is a convention nothing enforces: a host whose `page_key:` did not follow it leaked the page param into every preserved submit.
+
+### Fixed
+
+- The clear button keeps up with the field on a form that does not search as you type. Nothing ran on a keystroke there, so it stayed as the server rendered it: still showing over a field the user had just emptied, and still hidden when they typed a term into an empty one.
+- A response no longer pulls focus back into the search field. Whether the field had focus was a snapshot taken when the request went out, so a user who tabbed to something outside the frame while it was in flight was dragged back (WCAG 3.2.5). Focus is now taken back only when the render left it nowhere - the input that held it was destroyed with the frame - which a control outside the frame, still alive and still focused, is not.
+- Clearing the field no longer risks the old term coming back. Clearing changes the field without an input event, and the submit it asks for is declined when the empty term is already the one in flight, so nothing recorded the clear; the pending response then restored the text that had been typed and searched for it again.
+- The result count is announced against the term it actually counted. A response that answered `a` while `ada` was being typed announced its count as results for `ada`. Announcements now wait until the field and the answered term agree, which is the point at which the count is the answer to what the user can see.
+
+### Changed
+
+- **Breaking.** Searching as you type is opt-in. `live:` defaults to `false` and is no longer inferred from `turbo_frame:`: a frame says where a response lands, and whether typing should submit at all is a separate decision about the collection. `live: true` without a `turbo_frame:` raises. Existing framed call sites keep their current behaviour and need `live: true` added to take up the new one.
+- **Breaking.** `count:` and `min_chars:` describe typing, so they mean nothing to a form that submits when asked to: passing one alongside `live: false` now raises rather than being quietly dropped - the same treatment `l_ui_combobox` gives an option it cannot take.
+- **Breaking.** `l_ui_search_control` defaults to `live: false`, matching `l_ui_search_form`. It exists for hand-built forms, which are exactly the forms that may not carry the controller, so the default that works without one is the right one. Its `clear:` follows `live:`, since `live: true` vouches for the controller being present; pass `clear: true` for a form that carries the controller but should not submit as you type.
+- `live: true` with no `count:` logs a warning in development. Nothing is announced when results change without it, which is an accessibility hole rather than a default, and it had no symptom a sighted developer would notice.
+- **Breaking.** `button:` now defaults to `nil`. In live mode that renders a submit which is present but neither seen nor tabbed to - it is what Enter in the field and a browser with no JavaScript submit through. A form that submits only when asked to still gets a visible button, since it needs one that can be pressed; pass a string to name it.
+- **Breaking.** `clear:` now means the clear button inside the field, and defaults to on whenever `turbo_frame:` is given - it follows the `l-ui--search-form` controller, which goes on every framed form to preserve the other scopes, not live mode. A form that submits when asked to clears from inside the field too. Asking for `clear:` without a frame raises, since there is then no controller to drive it. The separate outline clear button is **gone**, along with the "requires an explicit `url:`" error it raised; the controller's `clear` action remains for a hand-built clear link beside an unframed form.
+- **Breaking.** A live search form is now a `search` landmark, labelled from `label:`.
+
 ## [0.26.0] - 2026-09-19
 
 ### Added

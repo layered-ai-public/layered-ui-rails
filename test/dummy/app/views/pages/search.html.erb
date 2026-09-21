@@ -10,9 +10,16 @@
 <h2 class="mt-8 l-ui-heading--section">Basic usage</h2>
 
 <form action="/search" method="get" class="l-ui-form mt-4">
-  <label for="query" class="l-ui-sr-only">Search</label>
   <div class="l-ui-search-inline">
-    <input type="text" id="query" name="query" class="l-ui-form__field" placeholder="Search...">
+    <div class="l-ui-search-control l-ui-search-control--clearable">
+      <label for="query" class="l-ui-sr-only">Search</label>
+      <input type="text" id="query" name="query" class="l-ui-form__field" placeholder="Search...">
+      <button type="button" class="l-ui-search-control__clear" aria-label="Clear search">
+        <svg class="l-ui-icon--xs" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 6 18 18M18 6 6 18" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+    </div>
     <button type="submit" class="l-ui-button l-ui-button--primary">Search</button>
   </div>
 </form>
@@ -28,10 +35,14 @@
     </div>
     <div class="l-ui-modal__body">
       <pre class="l-ui-surface"><code>&lt;form action="/search" method="get" class="l-ui-form"&gt;
-  &lt;label for="query" class="l-ui-sr-only"&gt;Search&lt;/label&gt;
   &lt;div class="l-ui-search-inline"&gt;
-    &lt;input type="text" id="query" name="query"
-           class="l-ui-form__field" placeholder="Search..."&gt;
+    &lt;div class="l-ui-search-control l-ui-search-control--clearable"&gt;
+      &lt;label for="query" class="l-ui-sr-only"&gt;Search&lt;/label&gt;
+      &lt;input type="text" id="query" name="query"
+             class="l-ui-form__field" placeholder="Search..."&gt;
+      &lt;button type="button" class="l-ui-search-control__clear"
+              aria-label="Clear search"&gt;...&lt;/button&gt;
+    &lt;/div&gt;
     &lt;button type="submit" class="l-ui-button l-ui-button--primary"&gt;Search&lt;/button&gt;
   &lt;/div&gt;
 &lt;/form&gt;</code></pre>
@@ -54,6 +65,18 @@
       <tr>
         <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-search-inline</code></th>
         <td class="l-ui-table__cell">Inline layout for a search input and button side by side</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-search-control</code></th>
+        <td class="l-ui-table__cell">Wraps the field and its clear button, giving them a positioning context of their own</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-search-control--clearable</code></th>
+        <td class="l-ui-table__cell">Leaves room in the field so a long term scrolls under the button rather than behind it</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-search-control__clear</code></th>
+        <td class="l-ui-table__cell">The clear button inside the field's trailing edge. 24x24, the smallest target WCAG 2.2 SC 2.5.8 accepts</td>
       </tr>
       <tr>
         <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>l-ui-form__field</code></th>
@@ -84,6 +107,33 @@
 <pre class="l-ui-surface mt-4"><code>&lt;%= l_ui_search_form(@q, url: users_path, fields: [:name, :email]) %&gt;</code></pre>
 
 <p class="mt-4">This generates a combined <code>name_or_email_cont</code> predicate - a single input that matches any of the listed fields.</p>
+
+<h3 class="mt-8">Searching as you type</h3>
+
+<p class="mt-4">Pass <code>live: true</code>, with a <code>turbo_frame:</code> for the response to land in, and there is no Search button to press: the form submits as the field changes, debounced so a typed word is one request rather than one per letter. The field carries its own clear button, which appears only once there is something to clear, and Escape in the field clears it too.</p>
+
+<pre class="l-ui-surface mt-4"><code>&lt;%= l_ui_search_form(@q, url: users_path, fields: [:name, :email],
+                     turbo_frame: "users", live: true, count: @pagy.count,
+                     page_param: "users_page") %&gt;</code></pre>
+
+<p class="mt-4">It is opt-in, and a frame alone does not turn it on: where a response renders and whether typing should submit at all are separate decisions. <code>live: true</code> without a <code>turbo_frame:</code> raises, since a keystroke would otherwise mean a full page load.</p>
+
+<p class="mt-4">Each search <em>replaces</em> the history entry rather than pushing one, so Back leaves the collection instead of replaying the term letter by letter. The URL still carries the term, so a search stays shareable and survives a reload. The action is set on the form, which Turbo reads before the frame's own, so sort links and pagination inside the same frame still advance.</p>
+
+<p class="mt-4">Two details matter for accessibility, and both need something from you:</p>
+
+<ul class="l-ui-list mt-4">
+  <li>Pass <code>count:</code>. With no button to press, a screen reader is told nothing when results change - the count is announced through the layout's live region, which sits outside every frame so it is not replaced by the render it is describing.</li>
+  <li>The caret is preserved across the frame render that answers a search, so a typed word is never interrupted mid-letter. This is handled for you.</li>
+</ul>
+
+<p class="mt-4">The <%= link_to "Ransack integration", ransack_path %> page runs both modes side by side: the Users collection passes <code>live: true</code> and searches as you type, the Posts collection leaves it alone and submits only when asked to.</p>
+
+<p class="mt-4">A form left non-live keeps a visible Search button, and still clears from inside the field: clearing means clearing the field and submitting, which the Stimulus controller does, and that goes on any form given a <code>turbo_frame:</code>. Escape in the field clears it too.</p>
+
+<p class="mt-4">Only a form with no <code>turbo_frame:</code> has no controller, and so no clear button. To put a clear beside one, build the link yourself and give it <code>data-action="click-&gt;l-ui--search-form#clear"</code>, which rewrites the href so another collection's params survive the navigation. Asking for <code>clear:</code> without a frame raises.</p>
+
+<p class="mt-4"><code>count:</code> and <code>min_chars:</code> describe typing, so they mean nothing to a form that submits when asked to: passing one to a form that is not live raises rather than being quietly dropped.</p>
 
 <h3 class="mt-4">Options</h3>
 
@@ -125,13 +175,33 @@
       </tr>
       <tr>
         <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>button</code></th>
-        <td class="l-ui-table__cell"><code>"Search"</code></td>
-        <td class="l-ui-table__cell">Submit button text</td>
+        <td class="l-ui-table__cell"><code>nil</code></td>
+        <td class="l-ui-table__cell">Text for a <em>visible</em> submit button. In live mode, left unset, the submit is present but neither seen nor tabbed to - it is what Enter and a browser with no JavaScript submit through. A non-live form always gets a visible button, since it needs one that can be pressed.</td>
       </tr>
       <tr>
         <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>clear</code></th>
+        <td class="l-ui-table__cell"><code>true</code></td>
+        <td class="l-ui-table__cell">The clear button built into the field, on by default whenever <code>turbo_frame:</code> is given. Pass <code>false</code> to omit it, or a string to name it. Clearing means clearing the field and submitting, which the Stimulus controller does, so asking for it without a frame raises.</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>live</code></th>
+        <td class="l-ui-table__cell"><code>false</code></td>
+        <td class="l-ui-table__cell">Search as the user types. Opt-in, and requires <code>turbo_frame:</code> - without one it raises, since a keystroke would mean a full page load. Left alone, the form submits only when asked to.</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>count</code></th>
         <td class="l-ui-table__cell"><code>nil</code></td>
-        <td class="l-ui-table__cell">Pass <code>true</code> for a "Clear" button, or a string for a custom label. Requires <code>url:</code> to be set.</td>
+        <td class="l-ui-table__cell">The size of the result set, announced to screen readers after each search. Live mode only. Without it nothing is announced, and <code>live: true</code> with no count logs a warning in development.</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>min_chars</code></th>
+        <td class="l-ui-table__cell"><code>0</code></td>
+        <td class="l-ui-table__cell">Hold the search back until the term is this long. Live mode only</td>
+      </tr>
+      <tr>
+        <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>page_param</code></th>
+        <td class="l-ui-table__cell"><code>"page"</code></td>
+        <td class="l-ui-table__cell">Pagy's page key for this collection, dropped when carrying other collections' params across a submit. Pagy's <code>page_key:</code> is yours to choose and bears no fixed relation to the Ransack <code>search_key</code>, so it is passed rather than guessed.</td>
       </tr>
       <tr>
         <th class="l-ui-table__cell l-ui-table__cell--primary" scope="row"><code>url</code></th>

@@ -59,14 +59,18 @@ end</code></pre>
 
 <p class="mt-4">Two independent collections on one page, each in a Turbo Frame. Searching or sorting one does not affect the other. The URL updates for back/forward navigation.</p>
 
-<h3 class="mt-6">Users</h3>
+<p class="mt-4">The two also show the two modes of the search form. <strong>Users</strong> passes <code>live: true</code> and searches as you type, with no button to press. <strong>Posts</strong> leaves it alone and so submits only when asked to, with a visible Search button. Both clear from inside the field: the clear button needs the Stimulus controller, and a framed form carries it either way.</p>
+
+<h3 class="mt-6">Users - searching as you type</h3>
 
 <%= turbo_frame_tag "users_collection", data: { turbo_action: "advance",
       controller: "l-ui--search-form", l_ui__search_form_scope_value: "users_q",
+      l_ui__search_form_page_param_value: "users_page",
       action: "click->l-ui--search-form#rewriteLink" } do %>
   <div class="mt-4">
     <%= l_ui_search_form(@users_q, url: ransack_path, fields: [:name, :email],
-                         clear: true, turbo_frame: "users_collection") %>
+                         label: "Search users", live: true, count: @users_pagy.count,
+                         page_param: "users_page", turbo_frame: "users_collection") %>
   </div>
 
   <div class="mt-4">
@@ -84,14 +88,16 @@ end</code></pre>
   <%= l_ui_pagy(@users_pagy) %>
 <% end %>
 
-<h3 class="mt-6">Posts</h3>
+<h3 class="mt-6">Posts - submitting when asked to</h3>
 
 <%= turbo_frame_tag "posts_collection", data: { turbo_action: "advance",
       controller: "l-ui--search-form", l_ui__search_form_scope_value: "posts_q",
+      l_ui__search_form_page_param_value: "posts_page",
       action: "click->l-ui--search-form#rewriteLink" } do %>
   <div class="mt-4">
     <%= l_ui_search_form(@posts_q, url: ransack_path, fields: [:title],
-                         clear: true, turbo_frame: "posts_collection") %>
+                         label: "Search posts", page_param: "posts_page",
+                         turbo_frame: "posts_collection") %>
   </div>
 
   <div class="mt-4">
@@ -120,13 +126,15 @@ end</code></pre>
   @posts   = @posts_q.result(distinct: true)
 end</code></pre>
 
-<p class="mt-4">In your view, wrap each collection in a <code>turbo_frame_tag</code> and pass <code>turbo_frame:</code> to the helpers. Add the <code>l-ui--search-form</code> controller with <code>rewriteLink</code> on the frame to preserve URL params in pagination links:</p>
+<p class="mt-4">In your view, wrap each collection in a <code>turbo_frame_tag</code> and pass <code>turbo_frame:</code> to the helpers. Add the <code>l-ui--search-form</code> controller with <code>rewriteLink</code> on the frame to preserve URL params in pagination links, and give both the frame and the form the collection's <code>page_param</code> so the other collection's page position is the only one carried:</p>
 
 <pre class="l-ui-surface mt-4"><code>&lt;%= turbo_frame_tag "users_collection", data: { turbo_action: "advance",
       controller: "l-ui--search-form", l_ui__search_form_scope_value: "users_q",
+      l_ui__search_form_page_param_value: "users_page",
       action: "click-&gt;l-ui--search-form#rewriteLink" } do %&gt;
   &lt;%= l_ui_search_form(@users_q, url: users_path, fields: [:name, :email],
-                       clear: true, turbo_frame: "users_collection") %&gt;
+                       label: "Search users", live: true, count: @users_pagy.count,
+                       page_param: "users_page", turbo_frame: "users_collection") %&gt;
   &lt;%= l_ui_table(@users,
       columns: [
         { attribute: :name, primary: true, render: -&gt;(u) { u.name } },
@@ -139,7 +147,11 @@ end</code></pre>
   &lt;%= l_ui_pagy(@users_pagy) %&gt;
 &lt;% end %&gt;</code></pre>
 
-<p class="mt-4">The <code>search_key</code> flows through automatically - <code>l_ui_search_form</code> reads it from the query object and passes it as <code>as:</code> to <code>search_form_for</code>. The clear button preserves other collections' params. <code>data-turbo-action="advance"</code> pushes state to the URL for back/forward navigation. The <code>rewriteLink</code> action merges current URL params into pagination links so other collections' page positions are preserved.</p>
+<p class="mt-4">The <code>search_key</code> flows through automatically - <code>l_ui_search_form</code> reads it from the query object and passes it as <code>as:</code> to <code>search_form_for</code>. Clearing preserves the other collection's params, as every submit does.</p>
+
+<p class="mt-4">Two Turbo actions are in play, and the difference matters. A live search form carries <code>data-turbo-action="replace"</code>, so typing does not fill the history with an entry per keystroke; the frame keeps <code>advance</code>, so sort links and pagination still push state for back/forward navigation. Turbo reads the action from the submitter, then the form, then the frame, which is what lets the two coexist. A form that is not live keeps <code>advance</code>, since one deliberate submit is worth a history entry. The <code>rewriteLink</code> action merges current URL params into pagination links so other collections' page positions are preserved.</p>
+
+<p class="mt-4">Both forms are given a <code>label:</code>, which labels the field. On the live form it also names the <code>search</code> landmark, so a screen-reader user can tell the two search boxes apart. Only the live form is given a <code>count:</code>: that is what gets announced when results change with no button press. A form that submits when asked to does not need it, since the submit itself is the user's cue that results have changed.</p>
 
 <h2 class="mt-8 l-ui-heading--section">Sort link options</h2>
 
