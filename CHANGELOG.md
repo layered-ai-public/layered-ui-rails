@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.27.1] - 2026-10-04
+
+### Fixed
+
+- Top-level navigation items are now spaced like the items inside a section. `.l-ui-navigation__links` used a 2px gap against a section's 8px; both now use 8px. The extra `mt-2` between adjacent `.l-ui-navigation__section`s is gone, so sections sit the same 8px apart.
+
 ## [0.27.0] - 2026-09-20
 
 ### Added
