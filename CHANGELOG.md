@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Fixed
+
+- `.l-ui-checkbox` no longer shrinks beside a long label. It sat in a flex row with nothing stopping it shrinking, so a label that wrapped squeezed the box below 24px and checkboxes in one form came out at different sizes. It is now `shrink-0`.
+
 ## [0.27.1] - 2026-10-04
 
 ### Fixed
