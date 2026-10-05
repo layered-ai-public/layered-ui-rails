@@ -1537,7 +1537,7 @@ pre.l-ui-surface {
 }
 
 .l-ui-checkbox {
-  @apply w-6 h-6
+  @apply w-6 h-6 shrink-0
          accent-foreground
          rounded-sm
          focus-ring
