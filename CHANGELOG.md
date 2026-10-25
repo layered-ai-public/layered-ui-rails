@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.28.0] - 2026-10-25
+
+### Added
+
+- `--button-danger-bg` sets the background of `.l-ui-button--danger`. It defaults to `--danger` in light mode and a deeper red in dark mode.
+- `--button-outline-danger-text` sets the label colour of `.l-ui-button--outline-danger`. It defaults to `--foreground` in light mode and white in dark mode.
+
+### Changed
+
+- Danger buttons are easier to read in dark mode. The solid button's label is now white on a deeper red (6.1:1), rather than near-black on a bright red. The outline button's label is white in dark mode and the default text colour in light mode; its border stays red. If you override `--danger` to recolour solid danger buttons, set `--button-danger-bg` instead.
+
 ## [0.27.2] - 2026-10-05
 
 ### Fixed
