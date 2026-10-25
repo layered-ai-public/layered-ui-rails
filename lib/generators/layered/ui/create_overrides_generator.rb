@@ -79,6 +79,9 @@ module Layered
               --button-primary-text: var(--accent-foreground);
               --button-primary-icon: var(--button-primary-text);
               --danger: oklch(0.47 0.1742 27.23);
+              --danger-foreground: oklch(1 0 0);
+              --button-danger-bg: var(--danger);
+              --button-outline-danger-text: var(--foreground);
               --danger-light: oklch(0.9663 0.0166 17.44);
               --danger-text: oklch(0.443 0.1634 27.14);
               --success-bg: oklch(0.8395 0.1698 152.91);
@@ -102,6 +105,9 @@ module Layered
               --button-primary-text: var(--accent-foreground);
               --button-primary-icon: var(--button-primary-text);
               --danger: oklch(0.6362 0.2102 25.49);
+              --danger-foreground: oklch(1 0 0);
+              --button-danger-bg: oklch(0.52 0.19 27);
+              --button-outline-danger-text: oklch(1 0 0);
               --danger-light: oklch(0.2596 0.1021 28.32);
               --danger-text: oklch(0.6607 0.1921 24.02);
               --success-bg: oklch(0.3385 0.0852 150.45);
