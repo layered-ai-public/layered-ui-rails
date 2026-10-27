@@ -2177,6 +2177,14 @@ pre.l-ui-surface {
          outline-none;
 }
 
+/* A single select holds one value, so once a token is chosen the placeholder
+   would read as a second value beside it. It is made transparent rather than
+   removed so the input keeps its width and the attribute stays intact. */
+.l-ui-combobox[data-l-ui--combobox-multiple-value="false"]
+  .l-ui-combobox__tokens:not(:empty) ~ .l-ui-combobox__input::placeholder {
+  @apply text-transparent;
+}
+
 .l-ui-combobox__listbox {
   @apply absolute right-0 left-0 z-30
          max-h-64
