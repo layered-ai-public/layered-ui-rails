@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.28.1] - 2026-10-28
+
+### Fixed
+
+- A single-select `l_ui_combobox` no longer shows its placeholder once a value is chosen. The placeholder stayed visible beside the token and read as a second value. It is now transparent while a token is selected; multi-select comboboxes are unchanged.
+
 ## [0.28.0] - 2026-10-25
 
 ### Added
