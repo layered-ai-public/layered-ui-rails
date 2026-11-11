@@ -132,12 +132,22 @@ export default class extends Controller {
     this._repositionHandler = () => this.position()
     window.addEventListener("resize", this._repositionHandler)
     window.addEventListener("scroll", this._repositionHandler, true)
+
+    // Also watch the trigger itself: hiding it (e.g. switching tabs with the
+    // keyboard) shrinks it to 0x0 without any scroll or resize, and position()
+    // then closes the popover. Moving or resizing the trigger re-anchors it.
+    if (this.hasTriggerTarget) {
+      this._triggerObserver = new ResizeObserver(this._repositionHandler)
+      this._triggerObserver.observe(this.triggerTarget)
+    }
   }
 
   _removeRepositionListeners() {
     if (!this._repositionHandler) return
     window.removeEventListener("resize", this._repositionHandler)
     window.removeEventListener("scroll", this._repositionHandler, true)
+    this._triggerObserver?.disconnect()
+    this._triggerObserver = null
     this._repositionHandler = null
   }
 }

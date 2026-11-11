@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file. This projec
 ### Fixed
 
 - Popovers no longer flash in the top-left corner of the screen before moving into place when opened.
-- A popover now closes if its trigger is hidden while it's open (e.g. inside a collapsed sidebar or hidden tab panel), rather than being left in the top-left corner of the screen.
+- A popover now closes as soon as its trigger is hidden while it's open (e.g. inside a collapsed sidebar or hidden tab panel), rather than staying open or being left in the top-left corner of the screen.
 - An open popover now follows the page when Turbo restores the scroll position on back navigation.
 
 ## [0.28.1] - 2026-10-28
