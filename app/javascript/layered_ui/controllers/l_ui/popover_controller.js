@@ -16,29 +16,39 @@ export default class extends Controller {
   static GAP = 8
 
   popoverTargetConnected(element) {
-    this._toggleHandler = (event) => {
+    // Handled on `beforetoggle` rather than `toggle`: the native toggle event
+    // is dispatched asynchronously, so positioning there lets the browser paint
+    // the popover at the viewport origin for a frame first, and attaching the
+    // scroll listener there misses any scroll that lands in between (e.g.
+    // Turbo restoring the scroll position on back navigation). `beforetoggle`
+    // fires synchronously just before the popover opens - too early to measure
+    // it, as it isn't rendered yet - so position in the next animation frame,
+    // which runs after it opens but before the first paint.
+    this._beforeToggleHandler = (event) => {
       if (event.newState === "open") {
-        this.position()
         this._addRepositionListeners()
+        requestAnimationFrame(() => this.position())
       } else {
         this._removeRepositionListeners()
       }
     }
-    element.addEventListener("toggle", this._toggleHandler)
+    element.addEventListener("beforetoggle", this._beforeToggleHandler)
 
-    // Open on connect when requested (e.g. re-opening a filter popover after
-    // a form submission re-renders the page). showPopover() and position()
-    // must run back-to-back in the same task: the native toggle event is
-    // dispatched asynchronously, so relying on the listener alone would paint
-    // the popover unpositioned at the viewport origin for one frame.
-    if (this.openValue && !element.matches(":popover-open")) {
+    if (element.matches(":popover-open")) {
+      // Already open when connected (e.g. preserved across a Turbo morph).
+      this._addRepositionListeners()
+      this.position()
+    } else if (this.openValue) {
+      // Open on connect when requested (e.g. re-opening a filter popover after
+      // a form submission re-renders the page). Position in the same task so
+      // it never paints unpositioned.
       element.showPopover()
       this.position()
     }
   }
 
   popoverTargetDisconnected(element) {
-    element.removeEventListener("toggle", this._toggleHandler)
+    element.removeEventListener("beforetoggle", this._beforeToggleHandler)
     this._removeRepositionListeners()
   }
 
@@ -51,6 +61,15 @@ export default class extends Controller {
   // the viewport.
   position() {
     if (!this.hasTriggerTarget || !this.hasPopoverTarget) return
+    if (!this.popoverTarget.matches(":popover-open")) return
+
+    // A trigger that isn't rendered (e.g. inside a collapsed sidebar or a
+    // hidden tab panel) measures as a 0x0 box at the viewport origin, which
+    // would strand the popover in the top-left corner. Close it instead.
+    if (this.triggerTarget.getClientRects().length === 0) {
+      this.popoverTarget.hidePopover()
+      return
+    }
 
     const gap = this.constructor.GAP
     const trigger = this.triggerTarget.getBoundingClientRect()
@@ -109,6 +128,7 @@ export default class extends Controller {
   // Private
 
   _addRepositionListeners() {
+    if (this._repositionHandler) return
     this._repositionHandler = () => this.position()
     window.addEventListener("resize", this._repositionHandler)
     window.addEventListener("scroll", this._repositionHandler, true)
