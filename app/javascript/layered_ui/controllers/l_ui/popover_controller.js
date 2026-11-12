@@ -52,6 +52,14 @@ export default class extends Controller {
     this._removeRepositionListeners()
   }
 
+  triggerTargetConnected(element) {
+    this._triggerObserver?.observe(element)
+  }
+
+  triggerTargetDisconnected(element) {
+    this._triggerObserver?.unobserve(element)
+  }
+
   disconnect() {
     this._removeRepositionListeners()
   }
@@ -136,10 +144,10 @@ export default class extends Controller {
     // Also watch the trigger itself: hiding it (e.g. switching tabs with the
     // keyboard) shrinks it to 0x0 without any scroll or resize, and position()
     // then closes the popover. Moving or resizing the trigger re-anchors it.
-    if (this.hasTriggerTarget) {
-      this._triggerObserver = new ResizeObserver(this._repositionHandler)
-      this._triggerObserver.observe(this.triggerTarget)
-    }
+    // triggerTargetConnected/Disconnected keep it on the current trigger if
+    // one is swapped in while open (e.g. by a Turbo morph).
+    this._triggerObserver = new ResizeObserver(this._repositionHandler)
+    if (this.hasTriggerTarget) this._triggerObserver.observe(this.triggerTarget)
   }
 
   _removeRepositionListeners() {
